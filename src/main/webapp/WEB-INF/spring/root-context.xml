@@ -19,13 +19,4 @@
 			<value>bigdata2</value>
 		</property>
 	</bean>
-	
-	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
-		<property name="dataSource" ref="dataSource"/>
-		<property name="typeAliasesPackage" value="com.ezen709.ezenStop.model"/>
-		<property name="mapperLocations" value="classpath:com/ezen709/ezenStop/model/*.xml"></property>
-	</bean>
-	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
-		<constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory"/>
-	</bean>
 </beans>

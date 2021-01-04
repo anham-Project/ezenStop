@@ -1,4 +1,4 @@
-package com.ezen709.ezenStop.model;
+package com.ezen709.ezenStop.chat.model;
 
 public class ChatDTO {
 	private int chatId;
