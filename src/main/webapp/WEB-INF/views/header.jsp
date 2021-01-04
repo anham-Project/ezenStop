@@ -21,7 +21,9 @@
 <!-- Custom styles for this template -->
 <link href="<c:url value='resources/css/heroic-features.css'/>"
 	rel="stylesheet">
-
+<link
+	href="resources/vendor/bootstrap/css/custom.css"
+	rel="stylesheet">
 </head>
 <style>
 .dropdown:hover>.dropdown-menu {
@@ -53,7 +55,7 @@
 							<a class="dropdown-item" href="#">자유게시판</a> 
 							<a class="dropdown-item" href="#">중고책 거래 게시판</a>
 							<a class="dropdown-item" href="#">지역별 강의 후기 게시판</a>
-							<a class="dropdown-item active" href="#">정보 공유 게시판</a>
+							<a class="dropdown-item" href="#">정보 공유 게시판</a>
 						</div></li>
 					<li class="nav-item dropdown"><a
 						class="nav-link dropdown-toggle" href=""
