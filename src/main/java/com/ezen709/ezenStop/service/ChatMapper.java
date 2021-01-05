@@ -40,4 +40,20 @@ public class ChatMapper {
 		map.put("chatContent", chatContent);
 		return sqlSession.insert("submitChat",map);
 	}
+	public List<ChatDTO> getMessageBox(String userId){
+		Map<String,String> map = new Hashtable<>();
+		map.put("userId", userId);
+		return sqlSession.selectList("listRecentChatContent",map);
+	}
+	public int readChat(String fromId, String toId) {
+		Map<String,String> map = new Hashtable<>();
+		map.put("fromId", fromId);
+		map.put("toId", toId);
+		return sqlSession.update("readChat", map);
+		
+	}
+	public int getAllUnreadChat(String userId) {
+		return sqlSession.selectOne("getAllUnreadChat", userId);
+		
+	}
 }
