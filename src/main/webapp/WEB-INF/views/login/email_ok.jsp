@@ -20,9 +20,6 @@ function check(){
 <body>
 	<div align="center">
 	<b>이 메 일 인 증 </b>
-
-	<h1>${toEmail}</h1>
-	<h1>${hardNumber}</h1>
 	<form action="sign_up.login" method="post" name="f" onsubmit="return check()">
 	<input type="text" name="hardNumber" class="box" size="20" placeholder="인증번호를 입력해주세요"> 
 	<input type="submit" value="확인"> <br>

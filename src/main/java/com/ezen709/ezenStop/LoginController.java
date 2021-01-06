@@ -2,22 +2,25 @@ package com.ezen709.ezenStop;
 
 import java.util.*;
 import javax.mail.*;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
+import javax.mail.internet.*;
+import javax.servlet.http.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.ezen709.ezenStop.model.Ezen_memberDTO;
 import com.ezen709.ezenStop.service.LoginMapper;
 
 @Controller
 public class LoginController {
+	
 	
 	@Autowired
 	private LoginMapper	loginMapper;
@@ -27,17 +30,49 @@ public class LoginController {
 		return "login/login";
 	}
 	@RequestMapping(value="/login.login", method=RequestMethod.POST)//
-	public String login_ok() {
-		return "login/login";
+	public ModelAndView login_ok(HttpServletRequest req) {
+		List<Ezen_memberDTO> list = loginMapper.login(req.getParameter("id"),req.getParameter("passwd"));
+		HttpSession session = req.getSession();
+		ModelAndView mav;
+		if(list.size()==0) {
+			mav = new ModelAndView("message2");
+			String msg="없는 회원이거나 아이디 혹은 비밀번호가 일치하지 않습니다.";
+			String url="login.login";
+			mav.addObject("msg",msg);
+			mav.addObject("url",url);
+			return mav;
+		}else {
+		Ezen_memberDTO dto =list.get(0);
+		mav = new ModelAndView("index");
+		session.setAttribute("userId", dto.getId());
+		session.setAttribute("userGrade", dto.getGrade());
+		return mav;
+		}
 	}	
 	@RequestMapping(value="/sign_up.login", method=RequestMethod.POST)//회원가입버튼 눌렀을 떄
 	public String sign_up(HttpServletRequest req) {
 		return "login/sign_up";
 	}
 	@RequestMapping(value="/sign_up_ok.login", method=RequestMethod.POST)
-	public String sign_up_ok(HttpServletRequest request) {
-		
-		return "message2";
+	public ModelAndView sign_up_ok(HttpServletRequest req, @ModelAttribute Ezen_memberDTO dto, BindingResult result) {
+		if(result.hasErrors()) {
+			System.out.println("예외처리");
+		}
+		dto.setAcademyLocation("none");
+		dto.setGrade(0);
+		dto.setStatus(0);
+		System.out.println(dto.getAcademyLocation());
+		int res = loginMapper.createMember(dto);
+		String msg=null,url="cancel";
+		if(res>0) {
+			msg="회원가입 완료했습니다";
+		}else {
+			msg="회원가입에서 오류가 발생했습니다.";
+			}
+		ModelAndView mav = new ModelAndView("message2");
+		mav.addObject("msg",msg);
+		mav.addObject("url",url);
+		return mav;
 	}
 	@RequestMapping(value="/email.login", method=RequestMethod.GET)//회원가입버튼 눌렀을 때 이메일 인증페이지
 	public String email() {
@@ -45,19 +80,50 @@ public class LoginController {
 	}
 	@RequestMapping(value="/email_ok.login")	//인증번호적기 페이지
 	public ModelAndView email_ok(HttpServletRequest req) {
-		
-		
-		return new ModelAndView("login/email_ok");
+		String hardNumber = req.getParameter("hardNumber");
+		return new ModelAndView("login/email_ok","hardNumber",hardNumber);
 	}
 	@RequestMapping("/find.login")
 	public String find() {
 		return "login/find";
 	}
+	@RequestMapping("/find_id.login")
+	public ModelAndView findId(@RequestParam String name,@RequestParam String email) {
+		String id = loginMapper.find_id(name, email);
+		String msg=null, url="find.login";
+		ModelAndView mav = new ModelAndView("message2");
+		if(StringUtils.isEmpty(id)){
+			msg = "일치하는 회원이 없습니다";}
+		else {
+			int blind = id.length()-3;
+			String blindId = id.substring(0,blind);
+			msg = "회원님의 아이디는 "+blindId+"*** 입니다";
+		}
+		mav.addObject("msg",msg);
+		mav.addObject("url",url);
+		return mav;
+	}
+	@RequestMapping("/find_passwd.login")
+	public ModelAndView findPasswd(@RequestParam String name,@RequestParam String email,@RequestParam String id) {
+		ModelAndView mav = new ModelAndView();
+		String msg=null, url="find.login";
+		int count = loginMapper.find_passwd(name,email,id);
+		if(count>0) {
+				String passwd = loginMapper.change_passwd(name, email, id);
+				msg="발급되신 임시 비밀번호는 '"+passwd+"'입니다";
+		}else {
+				msg="일치하는 회원이 없습니다";
+		}
+		mav.addObject("msg",msg);
+		mav.addObject("url",url);
+		mav.setViewName("message2");
+		System.out.println(url);
+		return mav;
+	}
 	@RequestMapping("/email_confirm.login") //인증번호 발송 
 	public ModelAndView email_confirm(HttpServletRequest request, ModelMap mo) throws Exception{
 			ModelAndView mav = new ModelAndView("message2");
 			String toEmail = request.getParameter("email"); // 받는사람메일
-			
 		try {
 			HttpSession session = request.getSession();
 			String mailProtocol = "smtp";
@@ -72,7 +138,6 @@ public class LoginController {
 			String mailTitle = "이젠그만 이메일 인증번호 입니다.";
 			String mailContents = 
 					"안녕하세요 EZEN's TOP 회원가입 입니다 인증번호는 '"+hardNumber+"' 입니다.";
-			request.setAttribute("hardNumber", hardNumber);
 			session.setAttribute("email", toEmail);
 			String debugMode = "false";
 			String authMode = "true";

@@ -6,9 +6,15 @@ public class Ezen_memberDTO {
 	private String passwd;		//패스워드
 	private String name;		//이름
 	private String reg_date;	//가입일
-	private String where;		//학원지점
-	private int grade;			//회원등급
-	private int status;			//인증대기,인증완료
+	private String academyLocation;	//학원지점
+	private int grade;			//회원등급 0 = 인증전회원, 1 = 인증 후 회원, 2 = 관리자 등급, -1= 블락된 회원
+	private int status;			//0 = 인증신청 안한 회원, 1 = 인증 신청하고 대기중 회원, 2 = 인증완료 회원
+	public String getAcademyLocation() {
+		return academyLocation;
+	}
+	public void setAcademyLocation(String academyLocation) {
+		this.academyLocation = academyLocation;
+	}
 	public int getStatus() {
 		return status;
 	}
@@ -44,12 +50,6 @@ public class Ezen_memberDTO {
 	}
 	public void setReg_date(String reg_date) {
 		this.reg_date = reg_date;
-	}
-	public String getWhere() {
-		return where;
-	}
-	public void setWhere(String where) {
-		this.where = where;
 	}
 	public int getGrade() {
 		return grade;

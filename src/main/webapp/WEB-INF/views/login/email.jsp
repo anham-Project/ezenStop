@@ -7,7 +7,6 @@
 </head>
 <body>
 	<div align="center">
-	<h2>${email}</h2>
 	<b>이 메 일 인 증</b>
 	<form action="email_confirm.login" method="post" name="f">
 	<input type="text" id="email" name="email" class="box" size="20" placeholder="이메일을 입력해주세요"> 
