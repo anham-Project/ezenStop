@@ -10,15 +10,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	select *  from chat where ((fromId = #{fromId1} and toId = #{toId1}) or (fromId = #{fromId2} and toId = #{toId2})) and chatId > (select max(chatId) - TO_NUMBER(#{number}) from chat where (fromId = #{fromId1} and toId = #{toId1}) or (fromId = #{fromId2} and toId = #{toId2})) order by chattime
   	</select>
   	<insert id="submitChat" parameterType="java.util.Map">
-  	insert into chat values (chat_seq.nextval, #{fromId}, #{toId}, #{chatContent}, systimestamp, 0)
+  	insert into chat values (chat_seq.nextval, #{fromId}, #{toId}, #{chatContent}, #{chatTime}, 0)
   	</insert>
   	<select id="getMessageBox" resultType="chatDTO" parameterType="java.util.Map">
-  	select * from chat where chatid in (select max(chatid) from chat where toid = #{userId} and fromid=#{userId} group by fromid, toId)
+  	select * from chat where chatid in (select max(chatid) from chat where toid = #{userId} or fromid=#{userId} group by fromid, toId)
   	</select>
   	<update id="readChat" parameterType = "java.util.Map">
   	update chat set chatRead = 1 where (fromid = #{toId} and toid = #{fromId})
   	</update>
   	<select id="getAllUnreadChat" resultType="Integer">
   	select count(chatid) from chat where toId = #{toId} and chatread = 0
+  	</select>
+  	<select id="getUnreadChat" resultType="Integer" parameterType="java.util.Map">
+  	select count(chatid) from chat where toId = #{toId} and fromid = #{fromId} and chatread = 0
   	</select>
 </mapper>

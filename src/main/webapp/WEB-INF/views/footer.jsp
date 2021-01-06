@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
 	pageEncoding="EUC-KR"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 	<!-- Footer -->
 	<footer class="py-5 bg-dark">
 		<div class="container">
@@ -8,11 +9,14 @@
 		</div>
 		<!-- /.container -->
 	</footer>
-
-	<!-- Bootstrap core JavaScript -->
-	<script src="resources/vendor/jquery/jquery.min.js"></script>
-	<script src="resources/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
+<c:if test="${!empty userId }">
+<script type="text/javascript">
+	$(document).ready(function(){
+		getUnread();
+		getInfiniteUnread();
+	});
+</script>
+</c:if>
 </body>
 
 </html>

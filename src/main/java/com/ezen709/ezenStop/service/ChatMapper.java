@@ -1,5 +1,7 @@
 package com.ezen709.ezenStop.service;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
@@ -38,12 +40,16 @@ public class ChatMapper {
 		map.put("fromId", fromId);
 		map.put("toId", toId);
 		map.put("chatContent", chatContent);
+		Date date = new Date();
+		SimpleDateFormat format = new SimpleDateFormat("MM월 dd일 HH시 mm분 ss초");
+		String time = format.format(date);
+		map.put("chatTime", time);
 		return sqlSession.insert("submitChat",map);
 	}
 	public List<ChatDTO> getMessageBox(String userId){
 		Map<String,String> map = new Hashtable<>();
 		map.put("userId", userId);
-		return sqlSession.selectList("listRecentChatContent",map);
+		return sqlSession.selectList("getMessageBox",map);
 	}
 	public int readChat(String fromId, String toId) {
 		Map<String,String> map = new Hashtable<>();
@@ -54,6 +60,13 @@ public class ChatMapper {
 	}
 	public int getAllUnreadChat(String userId) {
 		return sqlSession.selectOne("getAllUnreadChat", userId);
+		
+	}
+	public int getUnreadChat(String fromId, String toId) {
+		Map<String,String> map = new Hashtable<>();
+		map.put("fromId", fromId);
+		map.put("toId", toId);
+		return sqlSession.selectOne("getUnreadChat", map);
 		
 	}
 }

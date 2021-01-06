@@ -1,9 +1,9 @@
 package com.ezen709.ezenStop;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -12,9 +12,8 @@ public class HomeController {
 	
 	@RequestMapping(value="/", method=RequestMethod.GET)
 	public String home(HttpServletRequest req) {
-		req.setAttribute("userId", "userId");
-		req.setAttribute("toId", "toId");
-		
-		return "chat/message";
+		HttpSession session = req.getSession();
+		session.setAttribute("userId", "userId");
+		return "index";
 	}
 }
