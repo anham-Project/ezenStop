@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="com.ezen709.ezenstop.model">
+ <select id="emailCheck" parameterType="String" resultType="Integer">
+		 select count(*) from ezen_member where email=#{email}
+ </select>
+ <insert id="createMember" parameterType="ezen_memberDTO">
+ 		insert into ezen_member values(#{email},#{id},#{passwd},#{name},sysdate,#{academyLocation},#{grade},#{status})
+ </insert>
+ <select id="login" parameterType="String" resultType="ezen_memberDTO">
+		 select * from ezen_member where id=#{id} and passwd=#{passwd}
+ </select>
+  <select id="find_id" parameterType="String" resultType="String">
+		 select id from ezen_member where name=#{name} and email=#{email}
+ </select>
+ <select id="find_passwd" parameterType="String" resultType="Integer">
+		 select count(*) from ezen_member where name=#{name} and email=#{email} and id=#{id}
+ </select>
+ <update id="change_passwd" parameterType="String">
+ 		update ezen_member set passwd=#{passwd} where name=#{name} and email=#{email} and id=#{id}
+ </update>
+ </mapper>
+ 
+ <!-- select * 
+		 from (select rownum rn, A.* from (select * from board order by re_step asc)A) 
+		 where rn between #{start} and #{end} -->
+ 
