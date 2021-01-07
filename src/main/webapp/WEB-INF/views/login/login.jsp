@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
 <!-- login.jsp-->
+<jsp:include page="../header.jsp" />
 <script type="text/javascript">
 		function checkMember(){
 			window.open('email.login', "이메일 인증", "width=750, height=500")
@@ -37,3 +38,4 @@
 </body>
 	
 </html>
+<jsp:include page="../footer.jsp" />

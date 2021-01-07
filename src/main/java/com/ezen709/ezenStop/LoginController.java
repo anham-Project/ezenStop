@@ -25,6 +25,10 @@ public class LoginController {
 	@Autowired
 	private LoginMapper	loginMapper;
 	
+	@RequestMapping(value="/index.do", method=RequestMethod.GET)//로그인버튼 눌렀을 떄
+	public String index() {
+		return "index";
+	}
 	@RequestMapping(value="/login.login", method=RequestMethod.GET)//로그인버튼 눌렀을 떄
 	public String login() {
 		return "login/login";
@@ -48,7 +52,17 @@ public class LoginController {
 		session.setAttribute("userGrade", dto.getGrade());
 		return mav;
 		}
-	}	
+	}
+	@RequestMapping(value="/logout.login")//로그아웃버튼 눌렀을 떄
+	public ModelAndView logout(HttpServletRequest req ) {
+		ModelAndView mav = new ModelAndView("message2");
+		HttpSession session = req.getSession();
+		session.invalidate();
+		String msg = "로그아웃 되었습니다!", url = "index.do";
+		mav.addObject("msg",msg);
+		mav.addObject("url",url);
+		return mav;
+	}
 	@RequestMapping(value="/sign_up.login", method=RequestMethod.POST)//회원가입버튼 눌렀을 떄
 	public String sign_up(HttpServletRequest req) {
 		return "login/sign_up";

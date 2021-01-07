@@ -245,13 +245,13 @@
 							<div class="dropdown-menu" aria-labelledby="navbarDropdown">
 							<a class="dropdown-item" href="#">회원정보</a>
 							<a class="dropdown-item" href="#">회원정보</a>
-							<a class="dropdown-item" href="#">회원정보</a>
+							<a class="dropdown-item" href="logout.login">로그아웃</a>
 							</div></li>
 					</ul>
 				</c:if>
 				<c:if test="${empty sessionScope.userId }">
 					<div class="align-right">
-						<a class="btn btn-primary">로그인</a>
+						<a class="btn btn-primary" href="login.login">로그인</a>
 					</div>
 				</c:if>
 			</div>
