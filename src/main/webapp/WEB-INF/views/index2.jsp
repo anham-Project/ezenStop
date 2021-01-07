@@ -8,7 +8,7 @@
 <body>
 	<h1>spring으로 해보는  프로그램</h1>
 	<h1>현재세션</h1><br>
-	<b>${sessionScope.userId} , ${sessionScope.userGrade }</b>
+	<b>${sessionScope.userId} , ${sessionScope.userGrade}</b>
 	
 	<ul>
 		<li><a href="login.login">로그인으로 가기</a></li>
