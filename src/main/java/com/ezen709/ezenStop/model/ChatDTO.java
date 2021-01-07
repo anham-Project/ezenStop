@@ -6,6 +6,13 @@ public class ChatDTO {
 	private String toId;
 	private String chatContent;
 	private String chatTime;
+	private int chatRead;
+	public int getChatRead() {
+		return chatRead;
+	}
+	public void setChatRead(int chatRead) {
+		this.chatRead = chatRead;
+	}
 	public int getChatId() {
 		return chatId;
 	}
