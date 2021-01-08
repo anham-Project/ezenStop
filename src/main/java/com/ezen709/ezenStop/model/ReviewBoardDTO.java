@@ -7,6 +7,7 @@ public class ReviewBoardDTO {
 	private String id;				/*작성자*/
 	private String content;			/*내용*/
 	private String regdate;			/*작성일*/
+	private String regdate_time;	/*작성시간*/
 	private int readCount;			/*조회수*/
 	private int replyCount;			/*댓글수*/
 	private int upCount;			/*추천 받은 수*/
@@ -50,6 +51,12 @@ public class ReviewBoardDTO {
 	}
 	public void setRegdate(String regdate) {
 		this.regdate = regdate;
+	}
+	public String getRegdate_time() {
+		return regdate_time;
+	}
+	public void setRegdate_time(String regdate_time) {
+		this.regdate_time = regdate_time;
 	}
 	public int getReadCount() {
 		return readCount;
