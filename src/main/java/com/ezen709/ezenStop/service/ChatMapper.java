@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ezen709.ezenStop.model.ChatDTO;
+import com.ezen709.ezenStop.model.Ezen_memberDTO;
 
 @Service
 public class ChatMapper {
@@ -68,5 +69,9 @@ public class ChatMapper {
 		map.put("toId", toId);
 		return sqlSession.selectOne("getUnreadChat", map);
 		
+	}
+	public int userCheck(String userId) {
+		int res = sqlSession.selectOne("getUser", userId);
+		return res;
 	}
 }
