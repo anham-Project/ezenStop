@@ -25,4 +25,10 @@ public class BoardMapper {
 	public int reviewGetCount() {
 		return sqlSession.selectOne("reviewGetCount");
 	}
+	public int reviewInsert(ReviewBoardDTO dto) {
+		return sqlSession.insert("reviewInsert", dto);
+	}
+	public ReviewBoardDTO reviewDetail(int article_num) {
+		return sqlSession.selectOne("reviewDetail", article_num);
+	}
 }
