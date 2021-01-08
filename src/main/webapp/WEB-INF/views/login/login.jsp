@@ -29,8 +29,8 @@
 	    <p th:if="${param.error}"class="text-danger">로그인 정보가 유효하지 않습니다.</p>
 	    <form action="login.login" method="post" name="f" onsubmit="return login()">
 	        <div class="form-group">
-	            <input type="text" id="username" name="username" class="form-control" placeholder="아이디를 입력해주세요."/>
-	            <input type="password" id="password" name="password" class="form-control" placeholder="비밀번호를 입력해주세요."/>
+	            <input type="text" name="id" class="form-control" placeholder="아이디를 입력해주세요."/>
+	            <input type="password" name="passwd" class="form-control" placeholder="비밀번호를 입력해주세요."/>
 	        </div>
 	        <div class="form-group">
 	            <input type="submit" value="로그인" class="btn btn-primary btn-block">
@@ -50,7 +50,7 @@
 	<a href="javascript:checkMember()">회원가입</a>
 	<a href="javascript:findMember()">아이디|비밀번호 찾기</a>
 	</div>
-	-->
+-->
 </body>
 	
 </html>

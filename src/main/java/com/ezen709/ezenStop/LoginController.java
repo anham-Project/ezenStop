@@ -146,7 +146,7 @@ public class LoginController {
 			String mailId = "ezenstop@gmail.com"; // 구글계정
 			String mailPassword = "ezen9510008"; // 구글계정 비밀번호
 			String fromName = "이젠그만";			//보내는사람 이름
-			String fromEmail = "ezenstop@gamil.com"; // 보내는 사람 메일
+			String fromEmail = "ezenstop@gmail.com"; // 보내는 사람 메일
 			String toName = "받는사람이름";
 			String hardNumber =String.valueOf((int)(Math.random()*900000+100000));
 			String mailTitle = "이젠그만 이메일 인증번호 입니다.";
