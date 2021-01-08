@@ -76,6 +76,9 @@
 				var parsed = JSON.parse(data);
 				var result = parsed.result;
 				for (var i = 0; i < result.length; i++) {
+					if(result[i][0].value==fromId){
+						result[i][0].value = '나';
+					}
 					addChat(result[i][0].value, result[i][2].value,
 							result[i][3].value);
 				}
@@ -237,6 +240,7 @@
 				</ul>
 				<c:if test="${!empty sessionScope.userId }">
 					<ul class="navbar-nav navbar-right">
+						<li class="mr-3"><a href="findChatId.chat">친구찾기</a></li>
 						<li class="mr-3"><a href="moveChatBox.chat">메세지함</a><span id="unread"
 							class="badge badge-info"></span></li>
 						<li class="dropdown"><a href="#" class="dropdown-toggle"

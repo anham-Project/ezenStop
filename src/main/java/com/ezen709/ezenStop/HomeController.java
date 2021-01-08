@@ -12,8 +12,8 @@ public class HomeController {
 	
 	@RequestMapping(value="/", method=RequestMethod.GET)
 	public String home(HttpServletRequest req) {
-		HttpSession session = req.getSession();
-		session.setAttribute("userId", "userId");
+		//HttpSession session = req.getSession();
+		//session.setAttribute("userId", "userId");
 		return "index";
 	}
 }
