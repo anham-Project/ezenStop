@@ -156,4 +156,8 @@ public class ChatController {
 	public String moveChatBox() {
 		return "chat/messagebox";
 	}
+	@RequestMapping(value="/findChatId.chat", method= {RequestMethod.GET,RequestMethod.POST})
+	public String findChatId() {
+		return "chat/findId";
+	}
 }

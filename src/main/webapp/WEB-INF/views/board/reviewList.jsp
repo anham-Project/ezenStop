@@ -1,0 +1,80 @@
+<%@ page language="java" contentType="text/html; charset=EUC-KR"
+    pageEncoding="EUC-KR"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<jsp:include page="../header.jsp" />
+<div class="container" style="margin-top:30px; margin-bottom:10px">
+	
+	<h5><font size="3">이젠'sTop게시판 > </font><b>지역별 강의 후기게시판</b></h5>
+	<div class="row" style="padding-bottom:5px">
+		<div class="col-md-6">
+		</div>    
+        <div class="col-md-6">
+		    <div class="input-group">
+                <select class="form-control" name="searchType" style="width:20%;">
+	 				<option value="id">작성자</option>
+	 				<option value="subject">제목</option>
+					<option value="content">내용</option>
+				</select>
+                <input type="text" class="form-control" name="searchString" placeholder="검색어를 입력하세요." style="width:65%;">
+                <span class="input-group-btn">
+                    <button class="btn btn-secondary" type="button">검색</button>
+                </span>
+            </div>
+        </div>
+	</div>
+	<table class="table table-hover text-center">
+	<thead>
+		<tr>
+			<th width="8%"></th>
+			<th width="50%">제 목</th>
+			<th>작성자</th>
+			<th>작성일</th>
+			<th>조회</th>
+		</tr>
+	</thead>
+	<tbody>
+<c:if test="${empty reviewList}">		
+		<tr>
+			<td colspan="5">등록된 게시글이 없습니다.</td>
+		</tr>
+</c:if>		
+<c:forEach var="dto" items="${reviewList}">
+		<tr>
+			<td align="center"><c:out value="${startNum}"/></td>
+			<c:set var="startNum" value="${startNum-1}"/>
+			<td align="left">			
+				<a href="review_detail.board?article_num=${dto.article_num}">
+				${dto.category} ${dto.subject}
+	<c:if test="${dto.replyCount != 0}">
+		<font color="orange" size="2">[${dto.replyCount}]</font>
+	</c:if>
+				</a>	
+			</td>
+			<td align="center">${dto.id}</td>
+			<td align="center">${dto.regdate}</td>
+			<td align="center">${dto.readCount}</td>
+		</tr>
+</c:forEach>
+	</tbody>
+	</table>
+	<hr/>
+	<div align = "right">
+	<a class="btn btn-secondary pull-right" href="review_write.board">글쓰기</a>
+	</div>
+<c:if test="${count>0}">
+<div align="center">
+	<ul class = "pagination">
+	<c:if test="${startPage > pageBlock}">	
+		<li>[<a href="review_list.board?pageNum=${startPage-pageBlock}">이전</a>]</li>
+	</c:if>
+	<c:forEach var="i" begin="${startPage}" end="${endPage}">
+			<li>[<a href="review_list.board?pageNum=${i}">${i}</a>]</li>
+	</c:forEach>
+	<c:if test="${endPage < pageCount}">
+		<li>[<a href="review_list.board?pageNum=${endPage+pageBlock}">다음</a>]</li>
+	</c:if>
+	</ul>
+</div>
+</c:if>
+</div>
+<jsp:include page="../footer.jsp" />
