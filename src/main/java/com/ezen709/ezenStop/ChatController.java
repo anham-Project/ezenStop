@@ -160,4 +160,15 @@ public class ChatController {
 	public String findChatId() {
 		return "chat/findId";
 	}
+	@RequestMapping(value="/userCheck.chat", method= {RequestMethod.GET,RequestMethod.POST})
+	public void userCheck(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+		HttpSession session = req.getSession();
+		String currentId = (String)session.getAttribute("userId");
+		String userId = req.getParameter("userId");
+		if(userId.equals(currentId)) {
+			resp.getWriter().write(-1+"");
+			return;
+		}
+		resp.getWriter().write(chatMapper.userCheck(userId)+"");
+	}
 }

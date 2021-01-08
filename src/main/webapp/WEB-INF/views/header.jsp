@@ -193,7 +193,7 @@
 			<div class="collapse navbar-collapse" id="navbarSupportedContent">
 				<ul class="navbar-nav mr-auto">
 					<li class="nav-item dropdown"><a
-						class="nav-link dropdown-toggle" href=""
+						class="nav-link dropdown-toggle" href="index.do"
 						id="navbarDropdownMenuLink" data-toggle="dropdown"
 						aria-haspopup="true" aria-expanded="false"> 이젠'sTop게시판 </a>
 						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
