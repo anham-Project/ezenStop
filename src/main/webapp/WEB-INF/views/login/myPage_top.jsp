@@ -9,7 +9,7 @@
 </head>
 <body>
 <b>마이페이지</b>
-<a href="myInfo.login">내 정보</a>|
+<a href="myInfo.login?id=${sessionScope.userId}">내 정보</a>|
 <a href="changePasswd.login">비밀번호 변경 </a>|
 <a href="certification.login">학생 인증 신청</a>|
 <a href="dropId.login">회원탈퇴 </a>

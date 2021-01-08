@@ -3,24 +3,38 @@
  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
  <mapper namespace="com.ezen709.ezenstop.model">
+  <insert id="createMember" parameterType="ezen_memberDTO">
+ 		insert into ezen_member values(#{email},#{id},#{passwd},#{name},sysdate,#{academyLocation},#{grade},#{status})
+ </insert>
+ <insert id= "insert_certification" parameterType="ezen_certificationDTO">
+ 		insert into ezen_certification values(#{id},#{name},#{image},#{filesize},sysdate)
+ </insert>
+
  <select id="emailCheck" parameterType="String" resultType="Integer">
 		 select count(*) from ezen_member where email=#{email}
  </select>
- <insert id="createMember" parameterType="ezen_memberDTO">
- 		insert into ezen_member values(#{email},#{id},#{passwd},#{name},sysdate,#{academyLocation},#{grade},#{status})
- </insert>
- <select id="login" parameterType="String" resultType="ezen_memberDTO">
+ <select id="login" parameterType="java.util.Map" resultType="ezen_memberDTO">
 		 select * from ezen_member where id=#{id} and passwd=#{passwd}
  </select>
-  <select id="find_id" parameterType="String" resultType="String">
+  <select id="find_id" parameterType="java.util.Map" resultType="String">
 		 select id from ezen_member where name=#{name} and email=#{email}
  </select>
- <select id="find_passwd" parameterType="String" resultType="Integer">
+ <select id="find_passwd" parameterType="java.util.Map" resultType="Integer">
 		 select count(*) from ezen_member where name=#{name} and email=#{email} and id=#{id}
  </select>
- <update id="change_passwd" parameterType="String">
- 		update ezen_member set passwd=#{passwd} where name=#{name} and email=#{email} and id=#{id}
+ <select id="getMemberDTO" parameterType="String" resultType="ezen_memberDTO">
+		 select * from ezen_member where id=#{id}
+ </select>
+ 
+ 
+ <update id="change_passwd" parameterType="java.util.Map">
+ 		update ezen_member set passwd=#{passwd} where id=#{id}
  </update>
+ 
+ 
+ <delete id="dropId" parameterType="String">
+ 		delete from ezen_member where id=#{id}
+ </delete>
  </mapper>
  
  <!-- select * 

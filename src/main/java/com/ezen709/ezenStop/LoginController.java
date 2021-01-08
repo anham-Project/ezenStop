@@ -1,6 +1,10 @@
 package com.ezen709.ezenStop;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.*;
+
+import javax.annotation.Resource;
 import javax.mail.*;
 import javax.mail.internet.*;
 import javax.servlet.http.*;
@@ -13,15 +17,19 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.multipart.MultipartRequest;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.ezen709.ezenStop.model.Ezen_memberDTO;
+import com.ezen709.ezenStop.model.*;
 import com.ezen709.ezenStop.service.LoginMapper;
 
 @Controller
 public class LoginController {
 	
-	
+	@Resource(name="uploadPath")
+	private String uploadPath;
 	@Autowired
 	private LoginMapper	loginMapper;
 	
@@ -75,7 +83,6 @@ public class LoginController {
 		dto.setAcademyLocation("none");
 		dto.setGrade(0);
 		dto.setStatus(0);
-		System.out.println(dto.getAcademyLocation());
 		int res = loginMapper.createMember(dto);
 		String msg=null,url="cancel";
 		if(res>0) {
@@ -123,7 +130,7 @@ public class LoginController {
 		String msg=null, url="find.login";
 		int count = loginMapper.find_passwd(name,email,id);
 		if(count>0) {
-				String passwd = loginMapper.change_passwd(name, email, id);
+				String passwd = loginMapper.change_passwd(id);
 				msg="발급되신 임시 비밀번호는 '"+passwd+"'입니다";
 		}else {
 				msg="일치하는 회원이 없습니다";
@@ -131,7 +138,6 @@ public class LoginController {
 		mav.addObject("msg",msg);
 		mav.addObject("url",url);
 		mav.setViewName("message2");
-		System.out.println(url);
 		return mav;
 	}
 	@RequestMapping("/email_confirm.login") //인증번호 발송 
@@ -192,6 +198,102 @@ public class LoginController {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+		}
+		return mav;
+	}
+	@RequestMapping(value="/myInfo.login") //마이페이지 정보 보기
+	public ModelAndView myInfo(@RequestParam String id) {
+		ModelAndView mav = new ModelAndView("login/myInfo");
+		List<Ezen_memberDTO> al = loginMapper.getMemberDTO(id);
+		Ezen_memberDTO dto = al.get(0);
+		mav.addObject("myPageDTO",dto);
+		return mav;
+	}
+	@RequestMapping(value="/changePasswd.login", method=RequestMethod.GET) //비밀번호변경 페이지로 이동
+	public String changePasswd() {
+		return "login/dropId";
+	}
+	@RequestMapping(value="/changePasswd.login", method=RequestMethod.POST) //비밀번호변경
+	public ModelAndView changePasswd_ok(@RequestParam String id,@RequestParam String passwd) {
+		ModelAndView mav = new ModelAndView("message2");
+		loginMapper.change_passwd(id, passwd);
+		String msg="비밀번호가 변경되었습니다!", url="changePasswd.login";
+		mav.addObject("msg",msg);
+		mav.addObject("url",url);
+		return mav;
+	}
+	@RequestMapping(value="/dropId.login", method=RequestMethod.GET) //회원탈퇴 페이지로 이동
+	public String dropId() {
+		return "login/dropId";
+	}
+	@RequestMapping(value="/dropId_ok.login", method=RequestMethod.POST) //회원탈퇴
+	public ModelAndView dropId_ok(HttpServletRequest req,@RequestParam String id,@RequestParam String passwd) {
+		ModelAndView mav = new ModelAndView("message2");
+		List<Ezen_memberDTO> al = loginMapper.getMemberDTO(id);
+		Ezen_memberDTO dto = al.get(0);
+		String msg=null, url=null;
+		if(dto.getPasswd().equals(passwd)) {
+			loginMapper.dropId(id);
+			msg="회원탈퇴 하였습니다!";
+			url="cancel";
+		}else {
+			msg="비밀번호가 일치하지 않습니다.!";
+			url="dropId.login";
+		}
+		mav.addObject("msg",msg);
+		mav.addObject("url",url);
+		HttpSession session = req.getSession();
+		session.invalidate();
+		return mav;
+	}
+	@RequestMapping(value="/certification.login", method=RequestMethod.GET) //회원인증 페이지로 이동
+	public String certification() {
+		return "login/certification";
+	}
+	@RequestMapping(value="/certification.login", method=RequestMethod.POST) //회원 인증
+	public ModelAndView certification_ok(@ModelAttribute Ezen_certificationDTO, @RequestParam String id, HttpServletRequest req) {
+		
+		ModelAndView mav = new ModelAndView("message");
+		List<Ezen_memberDTO> al = loginMapper.getMemberDTO(id);
+		Ezen_memberDTO dto = al.get(0);
+		int status = dto.getStatus();
+		MultipartHttpServletRequest mr = (MultipartHttpServletRequest)req;
+		MultipartFile file = mr.getFile("image");
+		File target = new File(uploadPath, file.getOriginalFilename());
+		int filesize = 0;
+		String image = "파일없음";
+		if(file.getSize() > 0 ) {
+			if(status==0) {
+				try {
+					file.transferTo(target);
+					filesize = (int)file.getSize();
+					image = file.getOriginalFilename();
+					loginMapper.insert_certification();//회원 인증 신청 db에 insert
+				} catch (IllegalStateException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}else {
+				try {
+				Ezen_certificationDTO certDTO = loginMapper.getFile();
+				File original = new File(uploadPath,certDTO.getImage());
+				if(original.delete()) {	//실험용 나중에 삭제
+					System.out.println("파일삭제성공");
+				}else {
+					System.out.println("파일삭제실패");
+				}
+
+				file.transferTo(target);
+				filesize = (int)file.getSize();
+				image = file.getOriginalFilename();
+				loginMapper.update_certification();//회원 인증 신청 db에 update
+				}catch (IllegalStateException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
 		}
 		return mav;
 	}

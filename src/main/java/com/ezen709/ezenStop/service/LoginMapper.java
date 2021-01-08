@@ -48,16 +48,30 @@ public class LoginMapper {
 		int count = sqlSession.selectOne("find_passwd",map);
 		return count;
 	}
-	public String change_passwd(String name, String email, String id) {
+	public String change_passwd(String id) {
 		Map<String,String> map = new Hashtable<>();
 		String passwd = String.valueOf((int)(Math.random()*900000+100000));
 		map.put("passwd", passwd);
-		map.put("name", name);
-		map.put("email", email);
 		map.put("id",id);
-		sqlSession.selectOne("change_passwd",map);
+		sqlSession.update("change_passwd",map);
 		return passwd;
 	}
-
+	public void change_passwd(String id,String passwd) {
+		Map<String,String> map = new Hashtable<>();
+		map.put("passwd", passwd);
+		map.put("id",id);
+		sqlSession.update("change_passwd",map);
+	}
+	public List<Ezen_memberDTO> getMemberDTO(String id) {
+		List<Ezen_memberDTO> al = sqlSession.selectList("change_passwd",id);
+		return al;
+	}
+	public void dropId(String id) {
+		sqlSession.delete("change_passwd",id);
+	}
+	public int insert_certification() {
+		int res=0;
+		return res;
+	}
 
 }
