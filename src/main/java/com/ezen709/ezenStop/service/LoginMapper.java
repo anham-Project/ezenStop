@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ezen709.ezenStop.model.ChatDTO;
-import com.ezen709.ezenStop.model.Ezen_memberDTO;
+import com.ezen709.ezenStop.model.*;
 
 @Service
 public class LoginMapper {
@@ -15,15 +15,15 @@ public class LoginMapper {
 	@Autowired
 	private SqlSession sqlSession;
 	
-	public List<ChatDTO> getChatListById(String fromId,String toId, String chatId){
-		Map<String,String> map = new Hashtable<>();
-		map.put("fromId1", fromId);
-		map.put("toId1", toId);
-		map.put("fromId2", toId);
-		map.put("toId2", fromId);
-		map.put("chatId", chatId);
-		return sqlSession.selectList("listChatContent",map);
-	}
+//	public List<ChatDTO> getChatListById(String fromId,String toId, String chatId){
+//		Map<String,String> map = new Hashtable<>();
+//		map.put("fromId1", fromId);
+//		map.put("toId1", toId);
+//		map.put("fromId2", toId);
+//		map.put("toId2", fromId);
+//		map.put("chatId", chatId);
+//		return sqlSession.selectList("listChatContent",map);
+//	}
 	public int createMember(Ezen_memberDTO dto) {
 		return sqlSession.insert("createMember", dto);
 	}
@@ -72,6 +72,13 @@ public class LoginMapper {
 	public int insert_certification() {
 		int res=0;
 		return res;
+	}
+	public Ezen_certificationDTO getFile(String id) {
+		Ezen_certificationDTO dto = sqlSession.selectOne("getFile",id);
+		return dto;
+	}
+	public void update_certification(String id,String image,int filesize) {
+		sqlSession.update("update_certification");
 	}
 
 }
