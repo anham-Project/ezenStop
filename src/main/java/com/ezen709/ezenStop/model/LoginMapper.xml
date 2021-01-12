@@ -25,12 +25,17 @@
  <select id="getMemberDTO" parameterType="String" resultType="ezen_memberDTO">
 		 select * from ezen_member where id=#{id}
  </select>
+ <select id="getFile" parameterType="String" resultType="ezen_certificationDTO">
+ 		 select * from ezen_certification where id=#{id}
+ </select>
  
  
  <update id="change_passwd" parameterType="java.util.Map">
  		update ezen_member set passwd=#{passwd} where id=#{id}
  </update>
- 
+ <update id="update_certification" parameterType="java.util.Map">
+ 		update ezen_certification set image=#{image}, filesize=#{filesize} where id=#{id}
+ </update>
  
  <delete id="dropId" parameterType="String">
  		delete from ezen_member where id=#{id}

@@ -250,53 +250,54 @@ public class LoginController {
 	public String certification() {
 		return "login/certification";
 	}
-//	@RequestMapping(value="/certification.login", method=RequestMethod.POST) //회원 인증
-//	public ModelAndView certification_ok(@ModelAttribute Ezen_certificationDTO dto, @RequestParam String id, HttpServletRequest req) {
-//		
-//		ModelAndView mav = new ModelAndView("message");
-//		List<Ezen_memberDTO> al = loginMapper.getMemberDTO(id);
-//		Ezen_memberDTO dto = al.get(0);
-//		int status = dto.getStatus();
-//		MultipartHttpServletRequest mr = (MultipartHttpServletRequest)req;
-//		MultipartFile file = mr.getFile("image");
-//		File target = new File(uploadPath, file.getOriginalFilename());
-//		int filesize = 0;
-//		String image = "파일없음";
-//		if(file.getSize() > 0 ) {
-//			if(status==0) {
-//				try {
-//					file.transferTo(target);
-//					filesize = (int)file.getSize();
-//					image = file.getOriginalFilename();
-//					loginMapper.insert_certification();//회원 인증 신청 db에 insert
-//				} catch (IllegalStateException e) {
-//					e.printStackTrace();
-//				} catch (IOException e) {
-//					e.printStackTrace();
-//				}
-//			}else {
-//				try {
-//				Ezen_certificationDTO certDTO = loginMapper.getFile();
-//				File original = new File(uploadPath,certDTO.getImage());
-//				if(original.delete()) {	//실험용 나중에 삭제
-//					System.out.println("파일삭제성공");
-//				}else {
-//					System.out.println("파일삭제실패");
-//				}
-//
-//				file.transferTo(target);
-//				filesize = (int)file.getSize();
-//				image = file.getOriginalFilename();
-//				loginMapper.update_certification();//회원 인증 신청 db에 update
-//				}catch (IllegalStateException e) {
-//					e.printStackTrace();
-//				} catch (IOException e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		}
-//		return mav;
-//	}
+	@RequestMapping(value="/certification.login", method=RequestMethod.POST) //회원 인증
+	public ModelAndView certification_ok(@RequestParam String id, HttpServletRequest req) {
+		
+		ModelAndView mav = new ModelAndView("message");
+		List<Ezen_memberDTO> al = loginMapper.getMemberDTO(id);
+		Ezen_memberDTO dto = al.get(0);
+		int status = dto.getStatus();
+		MultipartHttpServletRequest mr = (MultipartHttpServletRequest)req;
+		MultipartFile file = mr.getFile("image");
+		File target = new File(uploadPath, file.getOriginalFilename());
+		int filesize = 0;
+		String image = "파일없음";
+		if(file.getSize() > 0 ) {
+			if(status==0) {
+				try {
+					file.transferTo(target);
+					filesize = (int)file.getSize();
+					image = file.getOriginalFilename();
+					loginMapper.insert_certification();//회원 인증 신청 db에 insert
+				} catch (IllegalStateException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}else {
+				try {
+				Ezen_certificationDTO certDTO = loginMapper.getFile(id);
+				File original = new File(uploadPath,certDTO.getImage());
+				if(original.delete()) {	//실험용 나중에 삭제
+					System.out.println("파일삭제성공");
+				}else {
+					System.out.println("파일삭제실패");
+				}
+				file.transferTo(target);
+				filesize = (int)file.getSize();
+				image = file.getOriginalFilename();
+				loginMapper.update_certification(id,image,filesize);//회원 인증 신청 db에 update
+				}catch (IllegalStateException e) {
+					System.out.println("status>0일때 오류");
+					e.printStackTrace();
+				} catch (IOException e) {
+					System.out.println("status>0일때 오류");
+					e.printStackTrace();
+				}
+			}
+		}
+		return mav;
+	}
 	class MyAuthentication extends Authenticator {
 	    PasswordAuthentication pa;
 	    public MyAuthentication(String mailId, String mailPass) {
