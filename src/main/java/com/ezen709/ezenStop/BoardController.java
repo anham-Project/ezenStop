@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,14 +19,19 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.ezen709.ezenStop.model.ReplyDTO;
 import com.ezen709.ezenStop.model.ReviewBoardDTO;
 import com.ezen709.ezenStop.service.BoardMapper;
+import com.ezen709.ezenStop.service.ReplyMapper;
 
 @Controller
 public class BoardController {
 	
 	@Autowired
 	private BoardMapper boardMapper;
+	
+	@Autowired
+	private ReplyMapper replyMapper;
 	
 	@Resource(name="uploadPath")
 	private String uploadPath;
@@ -95,13 +101,33 @@ public class BoardController {
 	}
 	@RequestMapping("/review_detail.board")
 	public ModelAndView reviewDetail(@RequestParam int article_num) {
+		boardMapper.plusReadCount(article_num);
 		ReviewBoardDTO reviewDetail = boardMapper.reviewDetail(article_num);
+		List<ReplyDTO> replyList = replyMapper.replyList(article_num);
 		ModelAndView mav = new ModelAndView("board/reviewDetail");
 		mav.addObject("reviewDetail", reviewDetail);
+		mav.addObject("replyList", replyList);
 		return mav;
 	}
 	@RequestMapping("/review_reply_write.board")
-	public String replyWritePro() {
-		return null;
+	public String replyWritePro(@RequestParam int article_num, HttpServletRequest req,
+			@RequestParam String id, @RequestParam String content) {
+		ReplyDTO dto = new ReplyDTO();
+		int reply_num2 = 0;
+		int reply_num =0;
+		if(StringUtils.isEmpty(req.getParameter("reply_num"))) {
+			System.out.print("에러발생");
+			reply_num = reply_num2;
+			dto.setRe_step(0);
+			dto.setRe_level(0);
+		}
+		dto.setId(id);
+		dto.setContent(content);
+		dto.setReply_num(reply_num);
+		dto.setAticle_num(article_num);
+		int res = replyMapper.insertReply(dto);
+		int replyCount = replyMapper.replyCount(dto.getAticle_num());
+		boardMapper.updateReplyCount(dto.getAticle_num(), replyCount);
+		return "redirect:review_detail.board?article_num="+article_num;
 	}
 }

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ezen709.ezenStop.model">
+ 	<select id="replyList" parameterType="java.util.Map" resultType="ReplyDTO">
+		select * 
+		from (select rownum rn, A.* from (select * from ezen_reply order by re_step desc)A) 
+		where article_num = #{article_num}
+ 	</select>
+ 	<update id="plusStep" parameterType="java.util.Map">
+ 		${sql}
+ 	</update>
+ 	<insert id="insertReply" parameterType="ReplyDTO">
+ 		insert into ezen_reply 
+ 		values (ezen_reply_seq.nextval, #{article_num}, #{re_step}, #{re_level}, #{id}, 
+ 		#{content}, to_char(sysdate,'yyyy-mm-dd'), to_char(sysdate,'hh24:mi'))
+ 	</insert>
+ 	<select id="replyCount" parameterType="java.util.Map" resultType="Integer">
+		select count(*)
+		from ezen_reply
+		where article_num = #{article_num}
+	</select>
+</mapper>
