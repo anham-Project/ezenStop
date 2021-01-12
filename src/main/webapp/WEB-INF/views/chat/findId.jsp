@@ -40,7 +40,7 @@
 	}
 </script>
 <jsp:include page="../header.jsp" />
-<div class="container">
+<div class="container" style="min-height: 600px">
 	<table class="table table-bordered table-hover"
 		style="text-align: center; border: 1px solid #dddddd">
 		<thead>

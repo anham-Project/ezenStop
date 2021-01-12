@@ -41,10 +41,11 @@
 		$.ajax({
 			type : "POST",
 			url : "chatSubmit.chat",
+			contentType: 'application/x-www-form-urlencoded; charset=euc-kr',
 			data : {
 				fromId : encodeURIComponent(fromId),
 				toId : encodeURIComponent(toId),
-				chatContent : encodeURIComponent(chatContent),
+				chatContent : chatContent,
 			},
 			success : function(result) {
 				if (result = 1) {
@@ -65,6 +66,7 @@
 		$.ajax({
 			type: "POST",
 			url: "chatList.chat",
+			contentType: 'application/x-www-form-urlencoded; charset=euc-kr',
 			data: {
 				fromId : encodeURIComponent(fromId),
 				toId : encodeURIComponent(toId),
@@ -110,6 +112,7 @@
 		$.ajax({
 			type: "POST",
 			url: "countUnreadMessage.chat",
+			contentType: 'application/x-www-form-urlencoded; charset=euc-kr',
 			data: {
 				userId: encodeURIComponent('${userId}'),
 			},
@@ -135,6 +138,7 @@
 		$.ajax({
 			type: "POST",
 			url: "getMessageBox.chat",
+			contentType: 'application/x-www-form-urlencoded; charset=euc-kr',
 			data: {
 				userId: encodeURIComponent(userId),
 			},

@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
 	pageEncoding="EUC-KR"%>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <jsp:include page="../header.jsp" />
 	<script type = "text/javascript">
 	$(document).ready(function(){
@@ -8,7 +8,7 @@
 		getInfiniteBox();
 	});
 	</script>
-<div class="container">
+<div class="container" style="min-height: 600px">
 	<table class="table" style = "margin: 0 auto;">
 		<thead>
 			<tr>
