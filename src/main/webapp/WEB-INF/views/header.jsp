@@ -241,7 +241,7 @@
 							<div class="dropdown-menu" aria-labelledby="navbarDropdown">
 								<a class="dropdown-item" href="#">신고 게시판</a> <a
 									class="dropdown-item" href="#">삭제 대기 게시판</a> <a
-									class="dropdown-item" href="#">회원 관리 게시판</a>
+									class="dropdown-item" href="member_management.login">회원 관리 게시판</a>
 							</div></li>
 					</c:if>
 				</ul>
