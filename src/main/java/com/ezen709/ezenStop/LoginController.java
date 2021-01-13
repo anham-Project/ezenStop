@@ -211,7 +211,7 @@ public class LoginController {
 	}
 	@RequestMapping(value="/changePasswd.login", method=RequestMethod.GET) //비밀번호변경 페이지로 이동
 	public String changePasswd() {
-		return "login/dropId";
+		return "login/changePasswd";
 	}
 	@RequestMapping(value="/changePasswd.login", method=RequestMethod.POST) //비밀번호변경
 	public ModelAndView changePasswd_ok(@RequestParam String id,@RequestParam String passwd) {
@@ -226,16 +226,16 @@ public class LoginController {
 	public String dropId() {
 		return "login/dropId";
 	}
-	@RequestMapping(value="/dropId_ok.login", method=RequestMethod.POST) //회원탈퇴
+	@RequestMapping(value="/dropId.login", method=RequestMethod.POST) //회원탈퇴
 	public ModelAndView dropId_ok(HttpServletRequest req,@RequestParam String id,@RequestParam String passwd) {
 		ModelAndView mav = new ModelAndView("message2");
 		List<Ezen_memberDTO> al = loginMapper.getMemberDTO(id);
 		Ezen_memberDTO dto = al.get(0);
 		String msg=null, url=null;
 		if(dto.getPasswd().equals(passwd)) {
-			loginMapper.dropId(id);
+//			loginMapper.dropId(id);
 			msg="회원탈퇴 하였습니다!";
-			url="cancel";
+			url="dropId";
 		}else {
 			msg="비밀번호가 일치하지 않습니다.!";
 			url="dropId.login";
@@ -253,22 +253,30 @@ public class LoginController {
 	@RequestMapping(value="/certification.login", method=RequestMethod.POST) //회원 인증
 	public ModelAndView certification_ok(@RequestParam String id, HttpServletRequest req) {
 		
-		ModelAndView mav = new ModelAndView("message");
+		ModelAndView mav = new ModelAndView("message2");
 		List<Ezen_memberDTO> al = loginMapper.getMemberDTO(id);
 		Ezen_memberDTO dto = al.get(0);
-		int status = dto.getStatus();
 		MultipartHttpServletRequest mr = (MultipartHttpServletRequest)req;
 		MultipartFile file = mr.getFile("image");
 		File target = new File(uploadPath, file.getOriginalFilename());
 		int filesize = 0;
-		String image = "파일없음";
+		String image;
+		String msg = null, url="certification.login";
+		Ezen_certificationDTO certDTO = new Ezen_certificationDTO();
+		System.out.println(dto.getStatus());
 		if(file.getSize() > 0 ) {
-			if(status==0) {
+			if(dto.getStatus()==0) {
 				try {
 					file.transferTo(target);
 					filesize = (int)file.getSize();
 					image = file.getOriginalFilename();
-					loginMapper.insert_certification();//회원 인증 신청 db에 insert
+					certDTO.setId(dto.getId());
+					certDTO.setName(dto.getName());
+					certDTO.setImage(image);
+					certDTO.setFilesize(filesize);
+					loginMapper.insert_certification(certDTO);//회원 인증 신청 db에 insert
+					loginMapper.member_upStatus(id);
+					msg = "인증 신청완료";
 				} catch (IllegalStateException e) {
 					e.printStackTrace();
 				} catch (IOException e) {
@@ -276,7 +284,7 @@ public class LoginController {
 				}
 			}else {
 				try {
-				Ezen_certificationDTO certDTO = loginMapper.getFile(id);
+				certDTO = loginMapper.getFile(id);
 				File original = new File(uploadPath,certDTO.getImage());
 				if(original.delete()) {	//실험용 나중에 삭제
 					System.out.println("파일삭제성공");
@@ -287,6 +295,7 @@ public class LoginController {
 				filesize = (int)file.getSize();
 				image = file.getOriginalFilename();
 				loginMapper.update_certification(id,image,filesize);//회원 인증 신청 db에 update
+				msg = "인증 수정완료";
 				}catch (IllegalStateException e) {
 					System.out.println("status>0일때 오류");
 					e.printStackTrace();
@@ -294,10 +303,44 @@ public class LoginController {
 					System.out.println("status>0일때 오류");
 					e.printStackTrace();
 				}
+				
 			}
 		}
+		mav.addObject("msg",msg);
+		mav.addObject("url",url);
 		return mav;
 	}
+	@RequestMapping("/member_management.login")
+	public ModelAndView memberList(HttpServletRequest req) {
+		String pageNum = req.getParameter("pageNum");
+		if (pageNum == null) {
+			pageNum = "1";
+		}
+		int pageSize = 10;
+		int currentPage = Integer.parseInt(pageNum);
+		int startRow = pageSize * currentPage - (pageSize - 1);
+		int endRow = pageSize * currentPage;
+		int count = loginMapper.memberGetCount();
+		if (endRow>count) endRow = count;
+		List<Ezen_memberDTO> list = loginMapper.getMemberList(startRow, endRow);
+		int startNum = count - ((currentPage-1) * pageSize);
+		int pageBlock = 3;
+		int pageCount = count/pageSize + (count%pageSize == 0 ? 0 : 1);
+		int startPage = (currentPage - 1)/pageBlock * pageBlock + 1;
+		int endPage = startPage + pageBlock - 1;
+		if (endPage>pageCount) endPage = pageCount;
+		ModelAndView mav = new ModelAndView("login/mbmt");
+		mav.addObject("memberList",list);
+		mav.addObject("count", count);
+		mav.addObject("startNum", startNum);
+		mav.addObject("pageCount", pageCount);
+		mav.addObject("startPage", startPage);
+		mav.addObject("endPage", endPage);
+		mav.addObject("pageBlock", pageBlock);
+		return mav;
+	}
+	
+	
 	class MyAuthentication extends Authenticator {
 	    PasswordAuthentication pa;
 	    public MyAuthentication(String mailId, String mailPass) {
@@ -307,4 +350,7 @@ public class LoginController {
 	        return pa;
 	    }
 	}
+	
+	
+	
 }

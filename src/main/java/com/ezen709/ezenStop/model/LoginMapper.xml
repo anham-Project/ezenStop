@@ -28,6 +28,20 @@
  <select id="getFile" parameterType="String" resultType="ezen_certificationDTO">
  		 select * from ezen_certification where id=#{id}
  </select>
+ <select id="getMemberList" parameterType="java.util.Map" resultType="ezen_memberDTO">
+ 		  		select * 
+		from (
+			select rownum rn, A.* 
+		 	from (
+		 		select * 
+		 		from ezen_member 
+		 		order by reg_date desc)A
+		 	) 
+		where rn between #{start} and #{end}
+ </select>
+ <select id="memberGetCount" resultType="Integer">
+ 		select count(*)	from ezen_member
+ </select>
  
  
  <update id="change_passwd" parameterType="java.util.Map">
@@ -35,6 +49,9 @@
  </update>
  <update id="update_certification" parameterType="java.util.Map">
  		update ezen_certification set image=#{image}, filesize=#{filesize} where id=#{id}
+ </update>
+ <update id="member_upStatus" parameterType="String">
+ 		update ezen_member set status = 1 where id=#{id} 
  </update>
  
  <delete id="dropId" parameterType="String">

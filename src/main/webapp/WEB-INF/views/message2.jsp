@@ -11,6 +11,10 @@
 	else if("${url}"=="confirm"){
 		alert("${msg}")
 		location.href="email_ok.login?hardNumber="+"${hardNumber}"
+	}else if("${url}"=="dropId"){
+		alert("${msg}")
+		opener.location.href="index.do"
+		self.close()
 	}else{
          alert("${msg}")
          location.href="${url}"

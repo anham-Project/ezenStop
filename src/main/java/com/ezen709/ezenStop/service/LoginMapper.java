@@ -63,22 +63,39 @@ public class LoginMapper {
 		sqlSession.update("change_passwd",map);
 	}
 	public List<Ezen_memberDTO> getMemberDTO(String id) {
-		List<Ezen_memberDTO> al = sqlSession.selectList("change_passwd",id);
+		List<Ezen_memberDTO> al = sqlSession.selectList("getMemberDTO",id);
 		return al;
 	}
 	public void dropId(String id) {
-		sqlSession.delete("change_passwd",id);
+		sqlSession.delete("dropId",id);
 	}
-	public int insert_certification() {
-		int res=0;
+	public int insert_certification(Ezen_certificationDTO dto) {
+		int res = sqlSession.insert("insert_certification",dto);
 		return res;
+	}
+	public void member_upStatus(String id) {
+		sqlSession.update("member_upStatus",id);
 	}
 	public Ezen_certificationDTO getFile(String id) {
 		Ezen_certificationDTO dto = sqlSession.selectOne("getFile",id);
 		return dto;
 	}
 	public void update_certification(String id,String image,int filesize) {
-		sqlSession.update("update_certification");
+		Map map = new Hashtable();
+		map.put("image",image);
+		map.put("filesize",filesize);
+		map.put("id",id);
+		sqlSession.update("update_certification",map);
 	}
-
+	public List<Ezen_memberDTO> getMemberList(int startrow, int endrow){
+		Map<String,Integer> map = new Hashtable<>();
+		map.put("start", startrow);
+		map.put("end", endrow);
+		List<Ezen_memberDTO> list = sqlSession.selectList("getMemberList",map);
+		return list;
+	}
+	public int memberGetCount() {
+		int count = sqlSession.selectOne("memberGetCount");
+		return count;
+	}
 }
