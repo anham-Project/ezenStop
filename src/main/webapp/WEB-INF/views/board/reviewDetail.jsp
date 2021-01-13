@@ -20,7 +20,7 @@
 	<h5><font size="3">이젠'sTop게시판 > <a href="review_list.board">지역별 강의 후기게시판</a> > </font><b>게시글보기</b></h5>
 	<div class="row" style="padding-left:10px; padding-top:10px; padding-bottom:10px; background-color:#EFF7EA;">
 		<div class="col-md-3">${reviewDetail.id}</div>
-		<div class="col-md-6"><b>${reviewDetail.subject}</b></div>
+		<div class="col-md-6 text-center"><b>${reviewDetail.subject}</b></div>
 		<div class="col-md-3" align="right">조회 ${reviewDetail.readCount} | 추천수 ${reviewDetail.upCount}</div>
 	</div>
 	<div class="row" style="padding-top:10px;">

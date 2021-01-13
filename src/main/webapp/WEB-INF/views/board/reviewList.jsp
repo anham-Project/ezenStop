@@ -26,10 +26,10 @@
 	<thead>
 		<tr>
 			<th width="8%"></th>
-			<th width="50%">力 格</th>
-			<th>累己磊</th>
-			<th>累己老</th>
-			<th>炼雀</th>
+			<th width="58%">力 格</th>
+			<th width="12%">累己磊</th>
+			<th width="12%">累己老</th>
+			<th width="10%">炼雀</th>
 		</tr>
 	</thead>
 	<tbody>
