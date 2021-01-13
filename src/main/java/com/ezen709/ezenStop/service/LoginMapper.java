@@ -98,4 +98,11 @@ public class LoginMapper {
 		int count = sqlSession.selectOne("memberGetCount");
 		return count;
 	}
+	public List<Ezen_memberDTO> getWaittingMemberList(int startrow, int endrow) {
+		Map<String,Integer> map = new Hashtable<>();
+		map.put("start", startrow);
+		map.put("end", endrow);
+		List<Ezen_memberDTO> list = sqlSession.selectList("getWaittingMemberList",map);
+		return list;
+	}
 }
