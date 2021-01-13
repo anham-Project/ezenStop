@@ -29,11 +29,11 @@
 </script>
 <div class="container" style="margin-top:30px; margin-bottom:10px;">
 	
-	<h5><font size="3">이젠'sTop게시판 > 지역별 강의 후기게시판 > </font><b>후기작성</b></h5>
+	<h5><font size="3">이젠'sTop게시판 > <a href="review_list.board">지역별 강의 후기게시판</a> > </font><b>후기작성</b></h5>
 	<div class="container" style="margin-top:30px; margin-bottom:10px;">
 	<form class="form-horizontal" name ="f" action="review_write.board" method="post" 
 		onsubmit="return check()" enctype="multipart/form-data">
-		<input type="hidden" name="id" value="testUser1">
+		<input type="hidden" name="id" value="${sessionScope.userId}">
 	<div class="input-group" style="padding-bottom:5px">
 		<label class="col-md-2 control-label">수강지역<font size="3" color="red">*</font></label>
 		<div class="col-md-3">

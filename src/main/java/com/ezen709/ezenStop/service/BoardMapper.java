@@ -31,4 +31,13 @@ public class BoardMapper {
 	public ReviewBoardDTO reviewDetail(int article_num) {
 		return sqlSession.selectOne("reviewDetail", article_num);
 	}
+	public void plusReadCount(int article_num) {
+		sqlSession.update("plusReadCount", article_num);
+	}
+	public void updateReplyCount(int article_num, int replyCount) {
+		Map<String, Integer> map = new Hashtable<>();
+		map.put("article_num", article_num);
+		map.put("replyCount", replyCount);
+		sqlSession.update("updateReplyCount", map);
+	}
 }
