@@ -330,6 +330,8 @@ public class LoginController {
 		int endPage = startPage + pageBlock - 1;
 		if (endPage>pageCount) endPage = pageCount;
 		ModelAndView mav = new ModelAndView("login/mbmt");
+		String[] locationList = {"노원","종로","신촌","상봉","당산","송파","강남","안양","의정부","구리","일산","안산","성남 분당","성남 모란","김포","전주","이젠IT"};
+		mav.addObject("locationList",locationList);
 		mav.addObject("memberList",list);
 		mav.addObject("count", count);
 		mav.addObject("startNum", startNum);
@@ -339,7 +341,29 @@ public class LoginController {
 		mav.addObject("pageBlock", pageBlock);
 		return mav;
 	}
-	
+	@RequestMapping("/view_waitting.login")
+	public ModelAndView view_all(HttpServletRequest req) {
+		ModelAndView mav = new ModelAndView("login/mbmt");
+		String pageNum = req.getParameter("pageNum");
+		if (pageNum == null) {
+			pageNum = "1";
+		}
+		int pageSize = 10;
+		int currentPage = Integer.parseInt(pageNum);
+		int startRow = pageSize * currentPage - (pageSize - 1);
+		int endRow = pageSize * currentPage;
+		int count = loginMapper.memberGetCount();
+		if (endRow>count) endRow = count;
+		List<Ezen_memberDTO> list = loginMapper.getWaittingMemberList(startRow, endRow);
+		int startNum = count - ((currentPage-1) * pageSize);
+		int pageBlock = 3;
+		int pageCount = count/pageSize + (count%pageSize == 0 ? 0 : 1);
+		int startPage = (currentPage - 1)/pageBlock * pageBlock + 1;
+		int endPage = startPage + pageBlock - 1;
+		if (endPage>pageCount) endPage = pageCount;
+		mav.addObject("memberList",list);
+		return mav;
+	}
 	
 	class MyAuthentication extends Authenticator {
 	    PasswordAuthentication pa;
@@ -350,7 +374,5 @@ public class LoginController {
 	        return pa;
 	    }
 	}
-	
-	
 	
 }

@@ -42,6 +42,14 @@
  <select id="memberGetCount" resultType="Integer">
  		select count(*)	from ezen_member
  </select>
+ <select id="getWaittingMemberList" parameterType="java.util.Map" resultType="ezen_memberDTO">
+ 		select * from (
+			select rownum rn, A.* from (
+		 		select * 
+		 		from ezen_member where status=1 
+		 		order by reg_date desc)A
+		 	)where rn between #{start} and #{end}
+ </select>
  
  
  <update id="change_passwd" parameterType="java.util.Map">

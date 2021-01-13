@@ -2,12 +2,27 @@
     pageEncoding="EUC-KR"%>
 <!-- mbmt.jsp (MemBer_ManagemenT) -->
 <%@ include file="../header.jsp"%>
+<script>
+	function check(){
+		if(f.searchString.value==""){
+			alert("값을 입력해주세요")
+			return false
+		}
+		return true
+	}
+	
+</script>
 <div class="container" style="margin-top:30px; margin-bottom:10px">
-	
 	<h5><font size="3">관리자 페이지 > </font><b>멤버관리</b></h5>
-	
+	<form action="memberSerch.login" name ="f" method="post" onsubmit="return check()">
 	<div class="row" style="padding-bottom:5px"> <!-- 검색대 -->
 		<div class="col-md-6">
+		<div class="input-group">
+			<span class="input-group-btn">
+				<button class="btn btn-secondary" type="button" onclick="location.href='member_management.login'">전체 보기</button>
+				<button class="btn btn-secondary" type="button" onclick="location.href='view_waitting.login'">인증대기 보기</button>
+			</span>
+		</div>
 		</div>    
         <div class="col-md-6">
 		    <div class="input-group">
@@ -18,12 +33,12 @@
 				</select>
                 <input type="text" class="form-control" name="searchString" placeholder="검색어를 입력하세요." style="width:65%;">
                 <span class="input-group-btn">
-                    <button class="btn btn-secondary" type="button">검색</button>
+                    <button class="btn btn-secondary" type="submit">검색</button>
                 </span>
             </div>
         </div>
 	</div>
-	
+	</form>
 	<table class="table table-hover text-center">
 	<thead>
 		<tr>
@@ -35,7 +50,7 @@
 			<th>상태</th>
 			<th>등급</th>
 			<th>인증 파일</th>
-			<th>수정|정지</th>
+			<th>변경</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -51,7 +66,13 @@
 			<td align="center">${dto.email}</td>
 			<td align="center">${dto.id}</td>
 			<td align="center">${dto.passwd}</td>
-			<td align="center">${dto.academyLocation}</td>
+			<td align="center">
+			<select name="status">
+			<c:forEach var="list" items="${locationList}">
+			<option <c:if test="${dto.academyLocation==list}">selected</c:if>>${list}</option>
+			</c:forEach>
+			</select>
+			</td>
 			<td align="center">
 			<select name="status">
 			<option value="0" <c:if test="${dto.status==0}">selected</c:if>>미신청</option>
@@ -61,16 +82,15 @@
 			</td>
 			<td align="center">
 			<select name="grade">
-			<option value="-1" <c:if test="${dto.status==-1}">selected</c:if>>일반 회원</option>
+			<option value="-1" <c:if test="${dto.status==-1}">selected</c:if>>정지 회원</option>
 			<option value="0" <c:if test="${dto.status==0}">selected</c:if>>일반 회원</option>
 			<option value="1" <c:if test="${dto.status==1}">selected</c:if>>인증 회원</option>
 			<option value="2" <c:if test="${dto.status==2}">selected</c:if>>관리자</option>
 			</select>
 			</td>
-			<td align="center"><a href="#">신청파일</a></td>
+			<td align="center"><a href="#">파일보기</a></td>
 			<td align="center">
-			<a href ="#">수정</a>|
-			<a href ="#">블락</a> 
+			<button class="btn btn-secondary" type="submit">검색</button> <!-- 여기 수정해야함 -->
 			</td>
 		</tr>
 </c:forEach>

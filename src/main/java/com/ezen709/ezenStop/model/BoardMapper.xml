@@ -10,6 +10,7 @@
 		 	from (
 		 		select * 
 		 		from ezen_review_board 
+				where visible = 1
 		 		order by article_num desc)A
 		 	) 
 		where rn between #{start} and #{end}
