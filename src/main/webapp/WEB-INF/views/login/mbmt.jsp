@@ -49,9 +49,31 @@
 			<td align="center"><c:out value="${startNum}"/></td>
 			<c:set var="startNum" value="${startNum-1}"/>
 			<td align="left">${dto.name}</td>
+			<td align="center">${dto.email}</td>
 			<td align="center">${dto.id}</td>
-			<td align="center">${dto.regdate}</td>
-			<td align="center">${dto.readCount}</td>
+			<td align="center">${dto.passwd}</td>
+			<td align="center">${dto.academyLocation}</td>
+			<td align="center">${dto.status}</td>
+			<td align="center">
+			<select name="status">
+			<option value="0" <c:if test="${dto.status==0}">selected</c:if>>미신청</option>
+			<option value="1" <c:if test="${dto.status==1}">selected</c:if>>인증대기</option>
+			<option value="2" <c:if test="${dto.status==2}">selected</c:if>>인증완료</option>
+			</select>
+			</td>
+			<td align="center">
+			<select name="status">
+			<option value="-1" <c:if test="${dto.status==-1}">selected</c:if>>일반 회원</option>
+			<option value="0" <c:if test="${dto.status==0}">selected</c:if>>일반 회원</option>
+			<option value="1" <c:if test="${dto.status==1}">selected</c:if>>인증 회원</option>
+			<option value="2" <c:if test="${dto.status==2}">selected</c:if>>관리자</option>
+			</select>
+			</td>
+			<td align="center">${dto.file}</td>
+			<td align="center">
+			<a href ="#">수정</a>|
+			<a href ="#">블락</a> 
+			</td>
 		</tr>
 </c:forEach>
 	</tbody>
@@ -76,40 +98,4 @@
 </div>
 </c:if>
 </div>
-<div class="row">
-	<div class="col-md-1">이름</div>
-	<div class="col-md-2">이메일</div>
-	<div class="col-md-1">패스워드</div>
-	<div class="col-md-1">학원지점</div>
-	<div class="col-md-1">가입일</div>
-	<div class="col-md-1">회원등급</div>
-	<div class="col-md-1">회원상태</div>
-	<div class="col-md-1">수정|정지</div>
-</div>
-<c:forEach var="dto" items="${reviewList}">
-		<tr>
-			<td align="center"><c:out value="${startNum}"/></td>
-			<c:set var="startNum" value="${startNum-1}"/>
-			<td align="left">			
-				<a href="review_detail.board?article_num=${dto.article_num}">
-				${dto.category} ${dto.subject}
-	<c:if test="${dto.replyCount != 0}">
-		<font color="orange" size="2">[${dto.replyCount}]</font>
-	</c:if>
-				</a>	
-			</td>
-			<td align="center">${dto.id}</td>
-			<td align="center">${dto.regdate}</td>
-			<td align="center">${dto.readCount}</td>
-		</tr>
-</c:forEach>
-	이름 이메일 패스워드 학원지점 가입일 회원등급 회원상태 수정완료 블락
-	private String email;		//이메일
-	private String id;			//아이디
-	private String passwd;		//패스워드
-	private String name;		//이름
-	private String reg_date;	//가입일
-	private String academyLocation;	//학원지점
-	private int grade;			//회원등급 0 = 인증전회원, 1 = 인증 후 회원, 2 = 관리자 등급, -1= 블락된 회원
-	private int status;			//0 = 인증신청 안한 회원, 1 = 인증 신청하고 대기중 회원, 2 = 인증완료 회원
 <%@ include file="../footer.jsp"%>
