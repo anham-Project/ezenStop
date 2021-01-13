@@ -12,16 +12,6 @@
 		return true
 	}
 </script>
-<script type="text/javascript">
-$(document).ready(function() {
-	$('.show1').show(); //페이지를 로드할 때 표시할 요소
-	$('.show2').hide(); //페이지를 로드할 때 숨길 요소
-	$('.show1').click(function(){
-	$(this).replaceWith($('.show2')); //클릭 시 두번째 요소로 변경
-	return false;
-	});
-});
-</script>
 <jsp:include page="../header.jsp" />
 <div class="container" style="margin-top:30px; margin-bottom:10px;">
 	<h5><font size="3">이젠'sTop게시판 > 지역별 강의 후기게시판 > </font><b>게시글보기</b></h5>
@@ -57,34 +47,47 @@ $(document).ready(function() {
 		<div class="col-md-12" align="left">${dto.id} <font color="gray">${dto.regdate} ${dto.regdate_time} | </font></div>
 		<div class="col-md-12" align="left">${dto.content}</div>
 		<div class="col-md-12" align="right" id="buttontype">
-<script>
-var reReply_open = new Array(0);
-var reReply_Value = new Array(0);
-
-function addInput() {
-reReply_open.push(reReply_open.length);
-reReply_Value.push("");
-reReInput();
-}
-</script>
-		<div class="show1">
-		<input type="button" class="btn btn-info btn-sm" value="답글쓰기">
-		</div>
-		<div class="show2">
-			<input type='hidden' name='reply_num' value='"+${dto.reply_num}+"'/>
-			<div class='input-group' style='padding:0px 0px 5px 5px; border:1; border-color:#F7F7F7;'>
-				<textarea class='form-control' rows='1' name='content' placeholder='댓글을 남겨주세요'></textarea>
-				<input class='btn btn-secondary btn-sm' type='button' value='취소' onclick='deleteInput();'/>
-				<input class='btn btn-info btn-sm' type='submit' value='댓글달기'/>
-			</div>
-		</div>
-	</div>
+		<input type="button" class="btn btn-info btn-sm" value="답글쓰기" onclick="addInput('${dto.reply_num}','${dto.id}');"/></div>
 	</div>
 	</c:forEach>
 	</c:if>
-	<div class="input-group" style="padding:5px 5px 5px 5px; border:1; border-color:#F7F7F7;">
+<script>
+var reReply_open = new Array(0);
+
+function addInput(num,id) {
+reReply_open.push(reReply_open.length);
+reReInput(num,id);
+f.content.focus();
+}
+function reReInput(num,id){
+	document.getElementById('inputReply').innerHTML=
+		"<div class='input-group' style='padding:5px 5px 5px 5px; border:1; border-color:#F7F7F7;'>"+
+		"<input type='hidden' name='reply_num' value='"+num+"'>"+
+		"<input type='button' class='btn btn-info btn-sm' value='@"+id+"' readonly>"+
+		"<input type='button' class='btn btn-info btn-sm' value='X' onclick='deleteTag()'>"+
+		"<textarea class='form-control' rows='2' name='content' placeholder='댓글을 남겨주세요'></textarea>"+
+		"<input class='btn btn-secondary btn-sm' type='submit' value='댓글달기'>"+
+		"</div>"
+}
+function deleteTag() {
+if (reReply_open.length > 0) { 
+   reReply_open.pop(); 
+}
+originReply(); 
+}
+function originReply(){
+	document.getElementById('inputReply').innerHTML=
+		"<div class='input-group' style='padding:5px 5px 5px 5px; border:1; border-color:#F7F7F7;'>"+
+		"<textarea class='form-control' rows='2' name='content' placeholder='댓글을 남겨주세요'></textarea>"+
+		"<input class='btn btn-secondary btn-sm' type='submit' value='댓글달기'>"+
+		"</div>"
+}
+</script>	
+	<div id="inputReply">
+		<div class="input-group" style="padding:5px 5px 5px 5px; border:1; border-color:#F7F7F7;">
 		<textarea class="form-control" rows="2" name="content" placeholder="댓글을 남겨주세요"></textarea>
-		<input class="btn btn-info btn-sm" type="submit" value="댓글달기">
+		<input class="btn btn-secondary btn-sm" type="submit" value="댓글달기">
+		</div>
 	</div>
 	</form>
 </div>
