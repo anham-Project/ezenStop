@@ -19,6 +19,16 @@
 		from ezen_review_board
 		where visible = 1
 	</select>
+	<update id="plusReadCount" parameterType="Integer">
+ 		update ezen_review_board 
+ 		set readcount = readcount + 1 
+ 		where article_num = #{article_num}
+ 	</update>
+ 	<update id="updateReplyCount" parameterType="java.util.Map">
+ 		update ezen_review_board 
+ 		set replycount = #{replyCount} 
+ 		where article_num = #{article_num}
+ 	</update>
 	<insert id="reviewInsert" parameterType="ReviewBoardDTO">
  		insert into ezen_review_board 
  		values (ezen_board_seq.nextval, #{category}, #{subject}, #{id}, #{content}, 

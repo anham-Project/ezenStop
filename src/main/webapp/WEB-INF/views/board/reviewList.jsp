@@ -26,10 +26,10 @@
 	<thead>
 		<tr>
 			<th width="8%"></th>
-			<th width="50%">제 목</th>
-			<th>작성자</th>
-			<th>작성일</th>
-			<th>조회</th>
+			<th width="58%">제 목</th>
+			<th width="12%">작성자</th>
+			<th width="12%">작성일</th>
+			<th width="10%">조회</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -57,24 +57,34 @@
 </c:forEach>
 	</tbody>
 	</table>
-	<hr/>
-	<div align = "right">
-	<a class="btn btn-secondary pull-right" href="review_write.board">글쓰기</a>
-	</div>
+	<div class="row">
 <c:if test="${count>0}">
-<div align="center">
+	<div class="col-md-4">
+	</div>
+	<div class="col-md-6">
 	<ul class = "pagination">
 	<c:if test="${startPage > pageBlock}">	
-		<li>[<a href="review_list.board?pageNum=${startPage-pageBlock}">이전</a>]</li>
+		<li class="page-item"><a class="page-link" href="review_list.board?pageNum=${startPage-pageBlock}">이전</a></li>
 	</c:if>
 	<c:forEach var="i" begin="${startPage}" end="${endPage}">
-			<li>[<a href="review_list.board?pageNum=${i}">${i}</a>]</li>
+			<li class="page-item"><a class="page-link" href="review_list.board?pageNum=${i}">${i}</a></li>
 	</c:forEach>
 	<c:if test="${endPage < pageCount}">
-		<li>[<a href="review_list.board?pageNum=${endPage+pageBlock}">다음</a>]</li>
+		<li class="page-item"><a class="page-link" href="review_list.board?pageNum=${endPage+pageBlock}">다음</a></li>
 	</c:if>
 	</ul>
-</div>
+	</div>
+	<div class="col-md-2 text-center">
+	<a class="btn btn-secondary pull-right" href="review_write.board">글쓰기</a>
+	</div>
 </c:if>
+<c:if test="${count == 0}">
+	<div class="col-md-10 text-center">
+	</div>
+	<div class="col-md-2 text-center">
+	<a class="btn btn-secondary pull-right" href="review_write.board">글쓰기</a>
+	</div>
+</c:if>
+	</div>
 </div>
 <jsp:include page="../footer.jsp" />
