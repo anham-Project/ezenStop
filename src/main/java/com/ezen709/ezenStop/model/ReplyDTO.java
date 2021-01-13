@@ -1,15 +1,28 @@
 package com.ezen709.ezenStop.model;
 
 public class ReplyDTO {
-	private int reply_num;
-	private int article_num;
-	private int re_step;
-	private int re_level;
-	private String id;
-	private String content;
-	private String regdate;
-	private String regdate_time;
+	private int reply_num;		/*´ñ±Û¹øÈ£*/
+	private int article_num;	/*¿ø±Û¹øÈ£*/
+	private int re_step;		/*´ñ±Û¼ø¼­*/
+	private int re_level;		/*´ñ±Û±íÀÌ*/
+	private int parent_num;		/*¿ø´ñ±Û¹øÈ£*/
+	private String id;			/*´ñ±Û¾´ÀÌ*/
+	private String content;		/*´ñ±Û³»¿ë*/
+	private String regdate;		/*´ñ±ÛÀÛ¼ºÀÏ*/
+	private String regdate_time;/*´ñ±ÛÀÛ¼º½Ã°£*/
 	
+	public int getArticle_num() {
+		return article_num;
+	}
+	public void setArticle_num(int article_num) {
+		this.article_num = article_num;
+	}
+	public int getParent_num() {
+		return parent_num;
+	}
+	public void setParent_num(int parent_num) {
+		this.parent_num = parent_num;
+	}
 	public int getReply_num() {
 		return reply_num;
 	}

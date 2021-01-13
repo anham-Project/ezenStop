@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ezen709.ezenStop.model.ReplyDTO;
+import com.ezen709.ezenStop.model.ReviewBoardDTO;
 
 @Service
 public class ReplyMapper {
@@ -24,11 +25,11 @@ public class ReplyMapper {
 	public int insertReply(ReplyDTO dto) {
 		String sql = null;
 		if (dto.getReply_num()==0) {
-			sql = "update ezen_reply set re_step = re_step + 1 where article_num = "+dto.getAticle_num();
+			sql = "update ezen_reply set re_step = re_step - 1 where article_num = "+dto.getAticle_num();
 		}else {
-			sql = "update ezen_reply set re_step = re_step + 1 where re_step > " + dto.getRe_step() + " and "
+			sql = "update ezen_reply set re_step = re_step - 1 where re_step <= " + dto.getRe_step() + " and "
 					+ "article_num = " + dto.getAticle_num();
-			dto.setRe_step(dto.getRe_step() + 1);
+			dto.setRe_step(dto.getRe_step());
 			dto.setRe_level(dto.getRe_level() + 1);
 		}
 		Map<String, String> map = new Hashtable<>();
@@ -46,5 +47,8 @@ public class ReplyMapper {
 		Map<String, Integer> map = new Hashtable<>();
 		map.put("reply_num", reply_num);
 		sqlSession.delete("replyDelete", map);
+	}
+	public ReplyDTO replyDetail(int reply_num) {
+		return sqlSession.selectOne("replyDetail", reply_num);
 	}
 }
