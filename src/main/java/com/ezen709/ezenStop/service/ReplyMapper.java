@@ -42,4 +42,9 @@ public class ReplyMapper {
 		map.put("article_num", article_num);
 		return sqlSession.selectOne("replyCount", map);
 	}
+	public void replyDelete(int reply_num) {
+		Map<String, Integer> map = new Hashtable<>();
+		map.put("reply_num", reply_num);
+		sqlSession.delete("replyDelete", map);
+	}
 }

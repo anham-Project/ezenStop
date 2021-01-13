@@ -42,7 +42,7 @@ public class BoardController {
 		if (pageNum == null) {
 			pageNum = "1";
 		}
-		int pageSize = 10;
+		int pageSize = 2;
 		int currentPage = Integer.parseInt(pageNum);
 		int startRow = pageSize * currentPage - (pageSize - 1);
 		int endRow = pageSize * currentPage;
@@ -113,13 +113,12 @@ public class BoardController {
 	public String replyWritePro(@RequestParam int article_num, HttpServletRequest req,
 			@RequestParam String id, @RequestParam String content) {
 		ReplyDTO dto = new ReplyDTO();
-		int reply_num2 = 0;
 		int reply_num =0;
 		if(StringUtils.isEmpty(req.getParameter("reply_num"))) {
-			System.out.print("에러발생");
-			reply_num = reply_num2;
 			dto.setRe_step(0);
 			dto.setRe_level(0);
+		}else {
+			reply_num = Integer.parseInt(req.getParameter("reply_num"));
 		}
 		dto.setId(id);
 		dto.setContent(content);
@@ -128,6 +127,12 @@ public class BoardController {
 		int res = replyMapper.insertReply(dto);
 		int replyCount = replyMapper.replyCount(dto.getAticle_num());
 		boardMapper.updateReplyCount(dto.getAticle_num(), replyCount);
+		return "redirect:review_detail.board?article_num="+article_num;
+	}
+	@RequestMapping("review_reply_delete.board")
+	public String replyDeletePro(@RequestParam int reply_num, @RequestParam int article_num) {
+		System.out.println("여기까지 오면 성공 리플번호 : "+reply_num+", 글번호 :"+article_num);
+		replyMapper.replyDelete(reply_num);
 		return "redirect:review_detail.board?article_num="+article_num;
 	}
 }

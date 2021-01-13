@@ -21,4 +21,9 @@
 		from ezen_reply
 		where article_num = #{article_num}
 	</select>
+	<delete id="replyDelete" parameterType="java.util.Map">
+		delete
+		from ezen_reply
+		where reply_num = #{reply_num}
+	</delete>
 </mapper>
