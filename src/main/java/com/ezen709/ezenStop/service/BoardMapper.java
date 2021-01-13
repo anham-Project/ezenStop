@@ -8,6 +8,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ezen709.ezenStop.model.BoardUpDownDTO;
 import com.ezen709.ezenStop.model.ReviewBoardDTO;
 
 @Service
@@ -39,5 +40,35 @@ public class BoardMapper {
 		map.put("article_num", article_num);
 		map.put("replyCount", replyCount);
 		sqlSession.update("updateReplyCount", map);
+	}
+	public int checkUserUpDown(int article_num, String userId) {
+		BoardUpDownDTO dto = new BoardUpDownDTO();
+		dto.setArticle_num(article_num);
+		dto.setUserId(userId);
+		return sqlSession.selectOne("checkUserUpDown", dto);
+	}
+	public int upBoard(int article_num, String userId) {
+		BoardUpDownDTO dto = new BoardUpDownDTO();
+		dto.setArticle_num(article_num);
+		dto.setUserId(userId);
+		dto.setBehavior(1);
+		int res = upCountBoard(article_num);
+		if(res<=0) return -1;
+		return sqlSession.insert("upBoard", dto);
+	}
+	public int downBoard(int article_num, String userId) {
+		BoardUpDownDTO dto = new BoardUpDownDTO();
+		dto.setArticle_num(article_num);
+		dto.setUserId(userId);
+		dto.setBehavior(-1);
+		int res = downCountBoard(article_num);
+		if(res<=0) return -1;
+		return sqlSession.insert("downBoard", dto);
+	}
+	public int upCountBoard(int article_num) {
+		return sqlSession.update("upCountBoard", article_num);
+	}
+	public int downCountBoard(int article_num) {
+		return sqlSession.update("downCountBoard", article_num);
 	}
 }

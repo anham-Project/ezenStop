@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -134,5 +135,23 @@ public class BoardController {
 		System.out.println("여기까지 오면 성공 리플번호 : "+reply_num+", 글번호 :"+article_num);
 		replyMapper.replyDelete(reply_num);
 		return "redirect:review_detail.board?article_num="+article_num;
+	}
+	@RequestMapping("/updownPro.board")
+	public void updownPro(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+		int article_num = Integer.parseInt(req.getParameter("article_num"));
+		String userId = req.getParameter("userId");
+		String somethingDo = req.getParameter("somethingDo");
+		String res;
+		int check = boardMapper.checkUserUpDown(article_num, userId);
+		if(check>0) {
+			res = "-2";
+		}else {
+			if(somethingDo.equals("up")) {
+				res = boardMapper.upBoard(article_num, userId)+"";
+			}else {
+				res = boardMapper.downBoard(article_num, userId)+"";
+			}
+		}
+		resp.getWriter().write(res);
 	}
 }

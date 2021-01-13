@@ -39,4 +39,20 @@
  		from ezen_review_board
  		where article_num = #{article_num}
  	</select>
+ 	<select id="checkUserUpDown" parameterType="BoardUpDownDTO" resultType="Integer">
+ 		select count(*) from board_updown where ((article_num = #{article_num}) and (userId = #{userId}))
+ 	</select>
+ 	<insert id="upBoard" parameterType="BoardUpDownDTO">
+ 		insert into board_updown values (#{article_num}, #{userId}, #{behavior})
+ 	</insert>
+ 	<update id="upCountBoard" parameterType="Integer">
+ 		update ezen_review_Board
+ 		set upcount = upcount + 1
+ 		where article_num = #{article_num}
+ 	</update>
+ 	<update id="downCountBoard" parameterType="Integer">
+ 		update ezen_review_Board
+ 		set downcount = downcount + 1
+ 		where article_num = #{article_num}
+ 	</update>
 </mapper>

@@ -207,7 +207,7 @@
 							<a class="dropdown-item" href="#">인기글 게시판</a> <a
 								class="dropdown-item" href="#">자유게시판</a> <a
 								class="dropdown-item" href="#">중고책 거래 게시판</a> <a
-								class="dropdown-item" href="#">지역별 강의 후기 게시판</a> <a
+								class="dropdown-item" href="review_list.board">지역별 강의 후기 게시판</a> <a
 								class="dropdown-item" href="#">정보 공유 게시판</a>
 						</div></li>
 					<li class="nav-item dropdown"><a
