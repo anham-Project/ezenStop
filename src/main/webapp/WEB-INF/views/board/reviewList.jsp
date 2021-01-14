@@ -3,8 +3,18 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="../header.jsp" />
 <div class="container" style="margin-top:30px; margin-bottom:10px">
-	
+<script type="text/javascript">
+	function check(){
+		if (f.searchString.value==""){
+			alert("검색어를 필수로 입력해야 합니다!!")
+			f.searchString.focus()
+			return false
+		}
+		return true
+	}
+</script>
 	<h5><font size="3">이젠'sTop게시판 > </font><b>지역별 강의 후기게시판</b></h5>
+<form name="f" action="review_find.board" method="post" onsubmit="return check()">
 	<div class="row" style="padding-bottom:5px">
 		<div class="col-md-6">
 		</div>    
@@ -17,11 +27,12 @@
 				</select>
                 <input type="text" class="form-control" name="searchString" placeholder="검색어를 입력하세요." style="width:65%;">
                 <span class="input-group-btn">
-                    <button class="btn btn-secondary" type="button">검색</button>
+                    <button class="btn btn-secondary" type="submit">검색</button>
                 </span>
             </div>
         </div>
 	</div>
+ </form>
 	<table class="table table-hover text-center">
 	<thead>
 		<tr>

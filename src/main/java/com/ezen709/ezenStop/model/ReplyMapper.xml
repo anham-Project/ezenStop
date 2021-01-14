@@ -5,7 +5,7 @@
 <mapper namespace="com.ezen709.ezenStop.model">
  	<select id="replyList" parameterType="java.util.Map" resultType="ReplyDTO">
 		select * 
-		from (select rownum rn, A.* from (select * from ezen_reply order by re_step desc)A) 
+		from (select rownum rn, A.* from (select * from ezen_reply order by re_step asc)A) 
 		where article_num = #{article_num}
  	</select>
  	<update id="plusStep" parameterType="java.util.Map">
@@ -13,8 +13,8 @@
  	</update>
  	<insert id="insertReply" parameterType="ReplyDTO">
  		insert into ezen_reply 
- 		values (ezen_reply_seq.nextval, #{article_num}, #{re_step}, #{re_level}, #{id}, 
- 		#{content}, to_char(sysdate,'yyyy-mm-dd'), to_char(sysdate,'hh24:mi'))
+ 		values (ezen_reply_seq.nextval, #{article_num}, #{re_step}, #{re_level}, #{parent_num},
+ 		 #{id}, #{content}, to_char(sysdate,'yyyy-mm-dd'), to_char(sysdate,'hh24:mi'))
  	</insert>
  	<select id="replyCount" parameterType="java.util.Map" resultType="Integer">
 		select count(*)
@@ -26,4 +26,9 @@
 		from ezen_reply
 		where reply_num = #{reply_num}
 	</delete>
+	<select id="replyDetail" parameterType="Integer" resultType="ReplyDTO">
+		select *
+		from ezen_reply
+		where reply_num = #{reply_num}
+	</select>
 </mapper>
