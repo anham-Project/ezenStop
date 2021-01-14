@@ -98,4 +98,13 @@ public class BoardMapper {
 	public int setUnvisible(int article_num) {
 		return sqlSession.update("setUnvisible", article_num);
 	}
+	public List<BoardReportDTO> getReportList(int start, int end){
+		Map<String, Integer> map = new Hashtable<>();
+		map.put("start", start);
+		map.put("end", end);
+		return sqlSession.selectList("getReportList", map);
+	}
+	public int reportGetCount() {
+		return sqlSession.selectOne("reportGetCount");
+	}
 }

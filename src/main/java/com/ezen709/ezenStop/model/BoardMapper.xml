@@ -73,4 +73,19 @@
  		set visible = 0
  		where article_num = #{article_num}
  	</update>
+ 	<select id="reportGetCount" resultType="Integer">
+		select count(*)
+		from board_report
+	</select>
+	<select id="getReportList" parameterType="java.util.Map" resultType="BoardReportDTO">
+		select * 
+		from (
+			select rownum rn, A.* 
+		 	from (
+		 		select * 
+		 		from board_report
+		 		order by article_num desc)A
+		 	) 
+		where rn between #{start} and #{end}
+ 	</select>
 </mapper>

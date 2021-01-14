@@ -20,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.ezen709.ezenStop.model.BoardReportDTO;
 import com.ezen709.ezenStop.model.ReplyDTO;
 import com.ezen709.ezenStop.model.ReviewBoardDTO;
 import com.ezen709.ezenStop.service.BoardMapper;
@@ -179,5 +180,34 @@ public class BoardController {
 		}
 		resp.getWriter().write(res);
 		
+	}
+	@RequestMapping("/reportBoard.board")
+	public ModelAndView reportBoard (HttpServletRequest req) {
+		String pageNum = req.getParameter("pageNum");
+		if (pageNum == null) {
+			pageNum = "1";
+		}
+		int pageSize = 2;
+		int currentPage = Integer.parseInt(pageNum);
+		int startRow = pageSize * currentPage - (pageSize - 1);
+		int endRow = pageSize * currentPage;
+		int count = boardMapper.reportGetCount();
+		if (endRow>count) endRow = count;
+		List<BoardReportDTO> reportList = boardMapper.getReportList(startRow, endRow);
+		int startNum = count - ((currentPage-1) * pageSize);
+		int pageBlock = 3;
+		int pageCount = count/pageSize + (count%pageSize == 0 ? 0 : 1);
+		int startPage = (currentPage - 1)/pageBlock * pageBlock + 1;
+		int endPage = startPage + pageBlock - 1;
+		if (endPage>pageCount) endPage = pageCount;
+		ModelAndView mav = new ModelAndView("board/reportList");
+		mav.addObject("count", count);
+		mav.addObject("startNum", startNum);
+		mav.addObject("pageCount", pageCount);
+		mav.addObject("startPage", startPage);
+		mav.addObject("endPage", endPage);
+		mav.addObject("pageBlock", pageBlock);
+		mav.addObject("reportList", reportList);
+		return mav;
 	}
 }
