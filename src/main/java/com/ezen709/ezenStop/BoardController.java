@@ -110,6 +110,71 @@ public class BoardController {
 		mav.addObject("replyList", replyList);
 		return mav;
 	}
+	@RequestMapping(value="/review_edit.board", method=RequestMethod.GET)
+	public ModelAndView reviewEdit(@RequestParam int article_num) {
+		ReviewBoardDTO reviewDetail = boardMapper.reviewDetail(article_num);
+		ModelAndView mav = new ModelAndView("board/reviewEdit");
+		String[] categoryList = {"[6개월 과정]","[3개월 과정]","[단기과정]","[기타]"};
+		String[] reviewAddrList = {"[노원]","[종로]"};
+		String addrAndSuject = reviewDetail.getSubject();
+		String reviewAddr = addrAndSuject.substring(addrAndSuject.lastIndexOf("]")+1);
+		int addrLength = reviewAddr.length();
+		int allLength = addrAndSuject.length();
+		String subject = addrAndSuject.substring(addrLength,allLength);
+		reviewDetail.setSubject(subject);
+		mav.addObject("reviewDetail", reviewDetail);
+		mav.addObject("reviewAddrList",reviewAddrList);
+		mav.addObject("categoryList", categoryList);
+		mav.addObject("reviewAddr", reviewAddr);
+		return mav;
+	}
+	@RequestMapping(value="/review_edit.board", method=RequestMethod.POST)
+	public String reviewEditPro(HttpServletRequest req, @ModelAttribute ReviewBoardDTO dto, 
+			BindingResult result, @RequestParam String reviewAddr) {
+		if(result.hasErrors()) {}
+		MultipartHttpServletRequest mr = (MultipartHttpServletRequest)req;
+		MultipartFile file = mr.getFile("image");
+		File target = new File(uploadPath, file.getOriginalFilename());
+		int filesize = 0;
+		String image = "파일없음";
+		if(file.getSize() > 0 ) {
+			try {
+				file.transferTo(target);
+				filesize = (int)file.getSize();
+				image = file.getOriginalFilename();
+			} catch (IllegalStateException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		String subject = reviewAddr + dto.getSubject();
+		dto.setSubject(subject);
+		dto.setImage(image);
+		dto.setFilesize(filesize);
+		int res = boardMapper.reviewInsert(dto);
+		return "redirect:review_list.board";
+	}
+	@RequestMapping("/review_delete.board")
+	public String reviewDelete(@RequestParam int article_num) {
+		ReviewBoardDTO reviewDetail = boardMapper.reviewDetail(article_num);
+		System.out.println(reviewDetail.getArticle_num()+"<글번호 파일크기>"+reviewDetail.getFilesize());
+		if(reviewDetail.getFilesize() == 0) {
+			boardMapper.reviewDelete(article_num);
+		}
+		else{
+			String image = reviewDetail.getImage();
+			int res = boardMapper.reviewDelete(article_num);
+			if(res>0) {
+				File target = new File(uploadPath, image);
+				reviewDetail.setFilesize(0);
+				target.delete();
+			}
+		}
+		return "redirect:review_list.board";
+	}
 	@RequestMapping("/review_reply_write.board")
 	public String replyWritePro(@RequestParam int article_num, HttpServletRequest req,
 			@RequestParam String id, @RequestParam String content) {

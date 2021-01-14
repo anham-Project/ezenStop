@@ -33,6 +33,12 @@ public class BoardMapper {
 	public ReviewBoardDTO reviewDetail(int article_num) {
 		return sqlSession.selectOne("reviewDetail", article_num);
 	}
+	public int reviewDelete(int article_num) {
+		return sqlSession.delete("reviewDelete", article_num);
+	}
+	public int reviewfileDelete(int article_num) {
+		return sqlSession.delete("reviewfileDelete", article_num);
+	}
 	public void plusReadCount(int article_num) {
 		sqlSession.update("plusReadCount", article_num);
 	}
