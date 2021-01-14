@@ -30,21 +30,24 @@
 			},
 			datatype : 'text',
 			success : function(result){
-				alert(result);
 				if(result === '-2'){
 					alert('이미 추천/비추천/신고 행동을 하였습니다.')
 				}else if(result === '1'){
 					if(somethingDo === 'up'){
 						alert('추천되었습니다.')
+						$('#upcount').html(${reviewDetail.upCount}+1);
 					}else{
 						alert('비추천되었습니다.')
+						$('#downcount').html(${reviewDetail.downCount}+1);
 					}
 				}else{
 					alert('추천/비추천 중 오류가 발생했습니다. 관리자에게 문의하세요.')
 				}
+				
 			}
 		})
 	}
+	
 </script>
 <jsp:include page="../header.jsp" />
 <div class="container" style="margin-top: 30px; margin-bottom: 10px;">
@@ -87,11 +90,10 @@
 		<div class="row">
 			<div class="col-md-12" align="center">
 				<button class="btn btn-info btn-sm" type="button"
-					onclick="javascript:somethingDo('up')" id="boardUp">${reviewDetail.upCount }추천</button>
+					onclick="javascript:somethingDo('up')" id="boardUp"><h5 id="upcount">${reviewDetail.upCount }</h5>추천</button>
 				<button class="btn btn-secondary btn-sm" type="button"
-					onclick="javascript:somethingDo('down')" id="boardDown">${reviewDetail.downCount }비추천</button>
-				<button class="btn btn-warning btn-sm" type="button"
-					onclick="javascript:reportBoard()" id="boardReport">신고하기</button>
+					onclick="javascript:somethingDo('down')" id="boardDown"><h5 id="downcount">${reviewDetail.downCount }</h5>비추천</button>
+				<a class="btn btn-warning btn-sm" data-target="#reportModal" data-toggle="modal">신고하기</a>
 			</div>
 		</div>
 	</c:if>
@@ -159,5 +161,53 @@
 			</div>
 		</div>
 	</form>
+</div>
+<div class ="row">
+	<div class="modal" id="reportModal" tabindex="-1">
+	<script type="text/javascript">
+	function reportBoard(){
+		var reportContent = $('#reportContent').val();
+		if(reportContent == null || reportContent ===""){
+			alert("신고내용을 입력하지않아 취소됩니다.");
+			return;
+		}
+		alert(reportContent);
+		$.ajax({
+			type: "POST",
+			url: "reportPro.board",
+			contentType: 'application/x-www-form-urlencoded; charset=euc-kr',
+			data : {
+				reportContent: reportContent,
+				userId : '${sessionScope.userId}',
+				article_num : '${reviewDetail.article_num}'
+			},
+			datatype : 'text',
+			success: function(result){
+				if(result === '-2'){
+					alert('중복신고는 불가합니다. 신고글 수정사항이나 취소는 관리자에게 문의하세요.')
+				}else if(result === '1'){
+					alert('신고처리 되었습니다.')
+				}else{
+					alert('신고처리 도중 에러가 발생했습니다. 관리자에게 문의하세요')
+				}
+			}
+		})
+	}
+	</script>
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					게시물 신고하기
+					<button class="close" data-dismiss="modal">&times;</button>
+				</div>
+				<div class="modal-body" style="text-align: center;">
+					신고 내용<br>
+					<textarea id="reportContent" placeholder="신고내역을 입력해주세요." style="resize: none;"></textarea>
+					<hr>
+					<button class="close btn-danger" data-dismiss="modal" onclick="javascript:reportBoard()">신고하기</button>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 <jsp:include page="../footer.jsp" />

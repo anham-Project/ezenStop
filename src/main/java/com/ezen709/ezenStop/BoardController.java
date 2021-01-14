@@ -118,22 +118,28 @@ public class BoardController {
 		if(StringUtils.isEmpty(req.getParameter("reply_num"))) {
 			dto.setRe_step(0);
 			dto.setRe_level(0);
+			dto.setParent_num(0);
 		}else {
 			reply_num = Integer.parseInt(req.getParameter("reply_num"));
+			ReplyDTO dto2 = replyMapper.replyDetail(reply_num);
+			dto.setRe_step(dto2.getRe_step());
+			dto.setRe_level(dto2.getRe_level());
+			dto.setParent_num(reply_num);
 		}
 		dto.setId(id);
 		dto.setContent(content);
 		dto.setReply_num(reply_num);
 		dto.setAticle_num(article_num);
 		int res = replyMapper.insertReply(dto);
-		int replyCount = replyMapper.replyCount(dto.getAticle_num());
-		boardMapper.updateReplyCount(dto.getAticle_num(), replyCount);
+		int replyCount = replyMapper.replyCount(dto.getArticle_num());
+		boardMapper.updateReplyCount(dto.getArticle_num(), replyCount);
 		return "redirect:review_detail.board?article_num="+article_num;
 	}
 	@RequestMapping("review_reply_delete.board")
 	public String replyDeletePro(@RequestParam int reply_num, @RequestParam int article_num) {
-		System.out.println("여기까지 오면 성공 리플번호 : "+reply_num+", 글번호 :"+article_num);
 		replyMapper.replyDelete(reply_num);
+		int replyCount = replyMapper.replyCount(article_num);
+		boardMapper.updateReplyCount(article_num, replyCount);
 		return "redirect:review_detail.board?article_num="+article_num;
 	}
 	@RequestMapping("/updownPro.board")
@@ -153,5 +159,25 @@ public class BoardController {
 			}
 		}
 		resp.getWriter().write(res);
+	}
+	@RequestMapping("/reportPro.board")
+	public void reportPro(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+		String userId = req.getParameter("userId");
+		String reportContent = req.getParameter("reportContent");
+		int article_num = Integer.parseInt(req.getParameter("article_num"));
+		int check = boardMapper.checkUserReport(article_num, userId);
+		String res;
+		if(check>0) {
+			res = "-2";
+		}else {
+			res = boardMapper.sendReportContent(article_num, userId, reportContent)+"";
+			String res1 = boardMapper.reportBoard(article_num, userId)+"";
+			if(!res.equals(res1)) res="-3";
+		}
+		if(res.equals("1") && boardMapper.checkReportCount(article_num) > 5) {
+			boardMapper.setUnvisible(article_num);
+		}
+		resp.getWriter().write(res);
+		
 	}
 }

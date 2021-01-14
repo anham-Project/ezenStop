@@ -56,4 +56,21 @@
  		set downcount = downcount + 1
  		where article_num = #{article_num}
  	</update>
+ 	<insert id="reportBoard" parameterType="BoardUpDownDTO">
+ 		insert into board_updown values (#{article_num}, #{userId}, 2)
+ 	</insert>
+ 	<select id="checkUserReport" parameterType="BoardUpDownDTO" resultType="Integer">
+ 		select count(*) from board_updown where ((article_num = #{article_num}) and (userId = #{userId}) and (behavior = 2))
+ 	</select>
+ 	<insert id="insertReportContent" parameterType="BoardReportDTO">
+ 		insert into board_report values (#{article_num}, #{userId}, #{reportContent}, sysdate)
+ 	</insert>
+ 	<select id="checkReportCount" parameterType = "Integer" resultType="Integer">
+ 		select count(*) from board_updown where ((article_num = #{article_num}) and (behavior = 2))
+ 	</select>
+ 	<update id="setUnvisible" parameterType="Integer">
+ 		update ezen_review_Board
+ 		set visible = 0
+ 		where article_num = #{article_num}
+ 	</update>
 </mapper>

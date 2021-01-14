@@ -8,6 +8,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ezen709.ezenStop.model.BoardReportDTO;
 import com.ezen709.ezenStop.model.BoardUpDownDTO;
 import com.ezen709.ezenStop.model.ReviewBoardDTO;
 
@@ -70,5 +71,31 @@ public class BoardMapper {
 	}
 	public int downCountBoard(int article_num) {
 		return sqlSession.update("downCountBoard", article_num);
+	}
+	public int reportBoard(int article_num, String userId) {
+		BoardUpDownDTO dto = new BoardUpDownDTO();
+		dto.setArticle_num(article_num);
+		dto.setUserId(userId);
+		return sqlSession.insert("reportBoard", dto);
+		
+	}
+	public int checkUserReport(int article_num, String userId) {
+		BoardUpDownDTO dto = new BoardUpDownDTO();
+		dto.setArticle_num(article_num);
+		dto.setUserId(userId);
+		return sqlSession.selectOne("checkUserReport", dto);
+	}
+	public int sendReportContent(int article_num, String userId, String reportContent) {
+		BoardReportDTO dto = new BoardReportDTO();
+		dto.setArticle_num(article_num);
+		dto.setReportContent(reportContent);
+		dto.setUserId(userId);
+		return sqlSession.insert("insertReportContent", dto);
+	}
+	public int checkReportCount(int article_num) {
+		return sqlSession.selectOne("checkReportCount", article_num);
+	}
+	public int setUnvisible(int article_num) {
+		return sqlSession.update("setUnvisible", article_num);
 	}
 }
