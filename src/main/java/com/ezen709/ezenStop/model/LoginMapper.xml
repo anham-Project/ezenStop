@@ -28,6 +28,7 @@
  <select id="getFile" parameterType="String" resultType="ezen_certificationDTO">
  		 select * from ezen_certification where id=#{id}
  </select>
+
  <select id="getMemberList" parameterType="java.util.Map" resultType="ezen_memberDTO">
  		  		select * 
 		from (
@@ -64,7 +65,7 @@
   <select id="searchMemberGetCount" parameterType="java.util.Map" resultType="Integer">
  		select count(*)	from ezen_member where ${searchtype} = #{searchstring} 
  </select>
- 
+
  
  <update id="change_passwd" parameterType="java.util.Map">
  		update ezen_member set passwd=#{passwd} where id=#{id}
@@ -74,6 +75,9 @@
  </update>
  <update id="member_upStatus" parameterType="String">
  		update ezen_member set status = 1 where id=#{id} 
+ </update>
+ <update id="updateMember" parameterType="java.util.Map">
+ 		update ezen_member set academylocation=#{academyLocation}, grade=#{grade}, status=#{status} where id=#{id}
  </update>
  
  <delete id="dropId" parameterType="String">
