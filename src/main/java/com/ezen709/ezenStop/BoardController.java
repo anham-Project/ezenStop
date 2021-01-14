@@ -160,4 +160,24 @@ public class BoardController {
 		}
 		resp.getWriter().write(res);
 	}
+	@RequestMapping("/reportPro.board")
+	public void reportPro(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+		String userId = req.getParameter("userId");
+		String reportContent = req.getParameter("reportContent");
+		int article_num = Integer.parseInt(req.getParameter("article_num"));
+		int check = boardMapper.checkUserReport(article_num, userId);
+		String res;
+		if(check>0) {
+			res = "-2";
+		}else {
+			res = boardMapper.sendReportContent(article_num, userId, reportContent)+"";
+			String res1 = boardMapper.reportBoard(article_num, userId)+"";
+			if(!res.equals(res1)) res="-3";
+		}
+		if(res.equals("1") && boardMapper.checkReportCount(article_num) > 5) {
+			boardMapper.setUnvisible(article_num);
+		}
+		resp.getWriter().write(res);
+		
+	}
 }
