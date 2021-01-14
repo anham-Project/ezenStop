@@ -12,6 +12,20 @@
 		}
 		return true
 	}
+	function findDetailPage(article_num){
+		$.ajax({
+			type: "POST",
+			url: "getDetail.board",
+			contentType: 'application/x-www-form-urlencoded; charset=euc-kr',
+			data: {
+				article_num: article_num
+			},
+			success: function(result){
+				location.href=result+'?article_num='+article_num;
+			}
+		})
+		
+	}
 </script>
 	<h5><font size="3">이젠'sTop게시판 > </font><b>신고 게시판</b></h5>
 <form name="f" action="review_find.board" method="post" onsubmit="return check()">
@@ -53,9 +67,9 @@
 			<td align="center"><c:out value="${dto.article_num}"/></td>
 			<c:set var="startNum" value="${startNum-1}"/>
 			<td align="left">			
-				<a href="review_detail.board?article_num=${dto.article_num}">
-				${dto.reportContent}
-				</a>	
+				<form name="f" onclick="javascript:findDetailPage('${dto.article_num}')">
+				<a href="#">${dto.reportContent }</a>
+				</form>
 			</td>
 			<td align="center">${dto.userId}</td>
 			<td align="center">${dto.reportDate}</td>
