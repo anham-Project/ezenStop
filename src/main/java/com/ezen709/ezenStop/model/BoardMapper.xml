@@ -33,7 +33,7 @@
 	<insert id="reviewInsert" parameterType="ReviewBoardDTO">
  		insert into ezen_review_board 
  		values (ezen_board_seq.nextval, #{category}, #{subject}, #{id}, #{content}, 
- 		to_char(sysdate,'yyyy-mm-dd'), to_char(sysdate,'hh24:mi'), 0, 0, 0, 0, 0, 1, #{image}, #{filesize})
+ 		to_char(sysdate,'yyyy-mm-dd'), to_char(sysdate,'hh24:mi'), 0, 0, 0, 0, 'review_detail.board', 1, #{image}, #{filesize})
  	</insert>
  	<select id="reviewDetail" parameterType="Integer" resultType="ReviewBoardDTO">
  		select * 
