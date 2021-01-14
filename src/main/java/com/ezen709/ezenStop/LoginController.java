@@ -352,7 +352,7 @@ public class LoginController {
 		int currentPage = Integer.parseInt(pageNum);
 		int startRow = pageSize * currentPage - (pageSize - 1);
 		int endRow = pageSize * currentPage;
-		int count = loginMapper.memberGetCount();
+		int count = loginMapper.waittingMemberGetCount();
 		if (endRow>count) endRow = count;
 		List<Ezen_memberDTO> list = loginMapper.getWaittingMemberList(startRow, endRow);
 		int startNum = count - ((currentPage-1) * pageSize);
@@ -361,6 +361,34 @@ public class LoginController {
 		int startPage = (currentPage - 1)/pageBlock * pageBlock + 1;
 		int endPage = startPage + pageBlock - 1;
 		if (endPage>pageCount) endPage = pageCount;
+		mav.addObject("memberList",list);
+		return mav;
+	}
+	@RequestMapping("/search_member.login")
+	public ModelAndView searchMember(HttpServletRequest req) throws IOException {
+		
+		String searchType = req.getParameter("searchType");
+		String searchString = req.getParameter("searchString");
+		String pageNum = req.getParameter("pageNum");
+		if (pageNum == null) {
+			pageNum = "1";
+		}
+		int pageSize = 10;
+		int currentPage = Integer.parseInt(pageNum);
+		int startRow = pageSize * currentPage - (pageSize - 1);
+		int endRow = pageSize * currentPage;
+		int count = loginMapper.searchMemberGetCount(searchType,searchString);
+		if (endRow>count) endRow = count;
+		List<Ezen_memberDTO> list = loginMapper.searchMember(searchType,searchString, startRow, endRow);
+		int startNum = count - ((currentPage-1) * pageSize);
+		int pageBlock = 3;
+		int pageCount = count/pageSize + (count%pageSize == 0 ? 0 : 1);
+		int startPage = (currentPage - 1)/pageBlock * pageBlock + 1;
+		int endPage = startPage + pageBlock - 1;
+		if (endPage>pageCount) endPage = pageCount;
+		String[] locationList = {"노원","종로","신촌","상봉","당산","송파","강남","안양","의정부","구리","일산","안산","성남 분당","성남 모란","김포","전주","이젠IT"};
+		ModelAndView mav = new ModelAndView("login/mbmt");
+		mav.addObject("loactionList",locationList);
 		mav.addObject("memberList",list);
 		return mav;
 	}

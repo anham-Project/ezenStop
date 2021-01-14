@@ -50,6 +50,20 @@
 		 		order by reg_date desc)A
 		 	)where rn between #{start} and #{end}
  </select>
+  <select id="waittingMemberGetCount" resultType="Integer">
+ 		select count(*)	from ezen_member where status=1
+ </select>
+ <select id="searchMember" parameterType="java.util.Map" resultType="ezen_memberDTO">
+  		select * from (
+			select rownum rn, A.* from (
+		 		select * 
+		 		from ezen_member where ${searchtype} = #{searchstring} 
+		 		order by reg_date desc)A
+		 	)where rn between #{start} and #{end}
+ </select>
+  <select id="searchMemberGetCount" parameterType="java.util.Map" resultType="Integer">
+ 		select count(*)	from ezen_member where ${searchtype} = #{searchstring} 
+ </select>
  
  
  <update id="change_passwd" parameterType="java.util.Map">

@@ -10,11 +10,11 @@
 		}
 		return true
 	}
-	
+
 </script>
 <div class="container" style="margin-top:30px; margin-bottom:10px">
 	<h5><font size="3">관리자 페이지 > </font><b>멤버관리</b></h5>
-	<form action="memberSerch.login" name ="f" method="post" onsubmit="return check()">
+	<form action="search_member.login" name ="f" method="post" onsubmit="return check()">
 	<div class="row" style="padding-bottom:5px"> <!-- 검색대 -->
 		<div class="col-md-6">
 		<div class="input-group">

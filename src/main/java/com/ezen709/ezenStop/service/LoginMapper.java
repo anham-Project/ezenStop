@@ -98,11 +98,32 @@ public class LoginMapper {
 		int count = sqlSession.selectOne("memberGetCount");
 		return count;
 	}
+	public int waittingMemberGetCount() {
+		int count = sqlSession.selectOne("waittingMemberGetCount");
+		return count;
+	}
+	public int searchMemberGetCount(String searchType, String searchString) {
+		Map<String,String> map = new Hashtable();
+		map.put("searchtype", searchType);
+		map.put("searchstring", searchString);
+		int count = sqlSession.selectOne("searchMemberGetCount",map);
+		return count;
+	}
 	public List<Ezen_memberDTO> getWaittingMemberList(int startrow, int endrow) {
 		Map<String,Integer> map = new Hashtable<>();
 		map.put("start", startrow);
 		map.put("end", endrow);
 		List<Ezen_memberDTO> list = sqlSession.selectList("getWaittingMemberList",map);
+		return list;
+	}
+	public List<Ezen_memberDTO> searchMember(String searchType, String searchString,int startrow, int endrow){
+		Map map = new Hashtable();
+		map.put("searchtype", searchType);
+		map.put("searchstring", searchString);
+		map.put("start", startrow);
+		map.put("end", endrow);
+		List<Ezen_memberDTO> list = sqlSession.selectList("searchMember",map);
+		System.out.println("리스트 사이즈는"+list.size());
 		return list;
 	}
 }
