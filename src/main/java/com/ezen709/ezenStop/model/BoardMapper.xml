@@ -33,13 +33,23 @@
 	<insert id="reviewInsert" parameterType="ReviewBoardDTO">
  		insert into ezen_review_board 
  		values (ezen_board_seq.nextval, #{category}, #{subject}, #{id}, #{content}, 
- 		to_char(sysdate,'yyyy-mm-dd'), to_char(sysdate,'hh24:mi'), 0, 0, 0, 0, 0, 1, #{image}, #{filesize})
+ 		to_char(sysdate,'yyyy-mm-dd'), to_char(sysdate,'hh24:mi'), 0, 0, 0, 0, 'review_detail.board', 1, #{image}, #{filesize})
  	</insert>
  	<select id="reviewDetail" parameterType="Integer" resultType="ReviewBoardDTO">
  		select * 
  		from ezen_review_board
  		where article_num = #{article_num}
  	</select>
+ 	<delete id="reviewDelete" parameterType="Integer">
+ 		delete
+ 		from ezen_review_board
+ 		where article_num = #{article_num}
+ 	</delete>
+ 	<delete id="reviewfileDelete" parameterType="Integer">
+ 		delete image
+ 		from ezen_review_board
+ 		where article_num = #{article_num}
+ 	</delete>
  	<select id="checkUserUpDown" parameterType="BoardUpDownDTO" resultType="Integer">
  		select count(*) from board_updown where ((article_num = #{article_num}) and (userId = #{userId}))
  	</select>
@@ -73,4 +83,25 @@
  		set visible = 0
  		where article_num = #{article_num}
  	</update>
+ 	<select id="reportGetCount" resultType="Integer">
+		select count(*)
+		from board_report
+	</select>
+	<select id="getReportList" parameterType="java.util.Map" resultType="BoardReportDTO">
+		select * 
+		from (
+			select rownum rn, A.* 
+		 	from (
+		 		select * 
+		 		from board_report
+		 		order by article_num desc)A
+		 	) 
+		where rn between #{start} and #{end}
+ 	</select>
+ 	<select id="getTableHasLocation" resultType="String">
+ 		select TABLE_NAME from user_tab_columns where column_name = 'DETAILLOCATION'
+ 	</select>
+ 	<select id="getLocation" parameterType="java.util.Map" resultType="String">
+ 		select detaillocation from ${tableName} where article_num = to_number(#{article_num})
+ 	</select>
 </mapper>

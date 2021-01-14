@@ -20,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.ezen709.ezenStop.model.BoardReportDTO;
 import com.ezen709.ezenStop.model.ReplyDTO;
 import com.ezen709.ezenStop.model.ReviewBoardDTO;
 import com.ezen709.ezenStop.service.BoardMapper;
@@ -110,6 +111,71 @@ public class BoardController {
 		mav.addObject("replyList", replyList);
 		return mav;
 	}
+	@RequestMapping(value="/review_edit.board", method=RequestMethod.GET)
+	public ModelAndView reviewEdit(@RequestParam int article_num) {
+		ReviewBoardDTO reviewDetail = boardMapper.reviewDetail(article_num);
+		ModelAndView mav = new ModelAndView("board/reviewEdit");
+		String[] categoryList = {"[6개월 과정]","[3개월 과정]","[단기과정]","[기타]"};
+		String[] reviewAddrList = {"[노원]","[종로]"};
+		String addrAndSuject = reviewDetail.getSubject();
+		String reviewAddr = addrAndSuject.substring(addrAndSuject.lastIndexOf("]")+1);
+		int addrLength = reviewAddr.length();
+		int allLength = addrAndSuject.length();
+		String subject = addrAndSuject.substring(addrLength,allLength);
+		reviewDetail.setSubject(subject);
+		mav.addObject("reviewDetail", reviewDetail);
+		mav.addObject("reviewAddrList",reviewAddrList);
+		mav.addObject("categoryList", categoryList);
+		mav.addObject("reviewAddr", reviewAddr);
+		return mav;
+	}
+	@RequestMapping(value="/review_edit.board", method=RequestMethod.POST)
+	public String reviewEditPro(HttpServletRequest req, @ModelAttribute ReviewBoardDTO dto, 
+			BindingResult result, @RequestParam String reviewAddr) {
+		if(result.hasErrors()) {}
+		MultipartHttpServletRequest mr = (MultipartHttpServletRequest)req;
+		MultipartFile file = mr.getFile("image");
+		File target = new File(uploadPath, file.getOriginalFilename());
+		int filesize = 0;
+		String image = "파일없음";
+		if(file.getSize() > 0 ) {
+			try {
+				file.transferTo(target);
+				filesize = (int)file.getSize();
+				image = file.getOriginalFilename();
+			} catch (IllegalStateException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		String subject = reviewAddr + dto.getSubject();
+		dto.setSubject(subject);
+		dto.setImage(image);
+		dto.setFilesize(filesize);
+		int res = boardMapper.reviewInsert(dto);
+		return "redirect:review_list.board";
+	}
+	@RequestMapping("/review_delete.board")
+	public String reviewDelete(@RequestParam int article_num) {
+		ReviewBoardDTO reviewDetail = boardMapper.reviewDetail(article_num);
+		System.out.println(reviewDetail.getArticle_num()+"<글번호 파일크기>"+reviewDetail.getFilesize());
+		if(reviewDetail.getFilesize() == 0) {
+			boardMapper.reviewDelete(article_num);
+		}
+		else{
+			String image = reviewDetail.getImage();
+			int res = boardMapper.reviewDelete(article_num);
+			if(res>0) {
+				File target = new File(uploadPath, image);
+				reviewDetail.setFilesize(0);
+				target.delete();
+			}
+		}
+		return "redirect:review_list.board";
+	}
 	@RequestMapping("/review_reply_write.board")
 	public String replyWritePro(@RequestParam int article_num, HttpServletRequest req,
 			@RequestParam String id, @RequestParam String content) {
@@ -179,5 +245,41 @@ public class BoardController {
 		}
 		resp.getWriter().write(res);
 		
+	}
+	@RequestMapping("/reportBoard.board")
+	public ModelAndView reportBoard (HttpServletRequest req) {
+		String pageNum = req.getParameter("pageNum");
+		if (pageNum == null) {
+			pageNum = "1";
+		}
+		int pageSize = 2;
+		int currentPage = Integer.parseInt(pageNum);
+		int startRow = pageSize * currentPage - (pageSize - 1);
+		int endRow = pageSize * currentPage;
+		int count = boardMapper.reportGetCount();
+		if (endRow>count) endRow = count;
+		List<BoardReportDTO> reportList = boardMapper.getReportList(startRow, endRow);
+		int startNum = count - ((currentPage-1) * pageSize);
+		int pageBlock = 3;
+		int pageCount = count/pageSize + (count%pageSize == 0 ? 0 : 1);
+		int startPage = (currentPage - 1)/pageBlock * pageBlock + 1;
+		int endPage = startPage + pageBlock - 1;
+		if (endPage>pageCount) endPage = pageCount;
+		ModelAndView mav = new ModelAndView("board/reportList");
+		mav.addObject("count", count);
+		mav.addObject("startNum", startNum);
+		mav.addObject("pageCount", pageCount);
+		mav.addObject("startPage", startPage);
+		mav.addObject("endPage", endPage);
+		mav.addObject("pageBlock", pageBlock);
+		mav.addObject("reportList", reportList);
+		return mav;
+	}
+	@RequestMapping("/getDetail.board")
+	public void getDetail(HttpServletRequest req, HttpServletResponse resp) throws IOException{
+		String article_num = req.getParameter("article_num");
+		List<String> hasDetaillocationTable = boardMapper.getTableHasLocation();
+		String location = boardMapper.getLocation(hasDetaillocationTable,article_num);
+		resp.getWriter().write(location);
 	}
 }

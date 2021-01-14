@@ -12,7 +12,7 @@ public class ReviewBoardDTO {
 	private int replyCount;			/*댓글수*/
 	private int upCount;			/*추천 받은 수*/
 	private int downCount;			/*비추천 받은 수*/
-	private int reportCount;		/*신고 받은 수*/
+	private String detaillocation;		/*신고 받은 수*/
 	private int visible;			/*활성화-1/비활성화-0*/
 	private String image;			/*이미지 파일이름*/
 	private int filesize;			/*파일크기*/
@@ -82,11 +82,12 @@ public class ReviewBoardDTO {
 	public void setDownCount(int downCount) {
 		this.downCount = downCount;
 	}
-	public int getReportCount() {
-		return reportCount;
+	
+	public String getDetaillocation() {
+		return detaillocation;
 	}
-	public void setReportCount(int reportCount) {
-		this.reportCount = reportCount;
+	public void setDetaillocation(String detaillocation) {
+		this.detaillocation = detaillocation;
 	}
 	public int getVisible() {
 		return visible;

@@ -33,6 +33,12 @@ public class BoardMapper {
 	public ReviewBoardDTO reviewDetail(int article_num) {
 		return sqlSession.selectOne("reviewDetail", article_num);
 	}
+	public int reviewDelete(int article_num) {
+		return sqlSession.delete("reviewDelete", article_num);
+	}
+	public int reviewfileDelete(int article_num) {
+		return sqlSession.delete("reviewfileDelete", article_num);
+	}
 	public void plusReadCount(int article_num) {
 		sqlSession.update("plusReadCount", article_num);
 	}
@@ -97,5 +103,29 @@ public class BoardMapper {
 	}
 	public int setUnvisible(int article_num) {
 		return sqlSession.update("setUnvisible", article_num);
+	}
+	public List<BoardReportDTO> getReportList(int start, int end){
+		Map<String, Integer> map = new Hashtable<>();
+		map.put("start", start);
+		map.put("end", end);
+		return sqlSession.selectList("getReportList", map);
+	}
+	public int reportGetCount() {
+		return sqlSession.selectOne("reportGetCount");
+	}
+	public List<String> getTableHasLocation(){
+		return sqlSession.selectList("getTableHasLocation");
+	}
+	public String getLocation(List<String> list, String article_num) {
+		for(String tableName : list) {
+			Map<String,String> map = new Hashtable<>();
+			map.put("tableName", tableName);
+			map.put("article_num", article_num);
+			String result = sqlSession.selectOne("getLocation", map);
+			if(result != null) {
+				return result;
+			}
+		}
+		return null;
 	}
 }
