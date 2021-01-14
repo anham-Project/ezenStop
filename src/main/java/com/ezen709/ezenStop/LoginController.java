@@ -258,7 +258,8 @@ public class LoginController {
 		Ezen_memberDTO dto = al.get(0);
 		MultipartHttpServletRequest mr = (MultipartHttpServletRequest)req;
 		MultipartFile file = mr.getFile("image");
-		File target = new File(uploadPath, file.getOriginalFilename());
+		String file_name= dto.getId()+"-"+file.getOriginalFilename();
+		File target = new File(uploadPath, file_name);
 		int filesize = 0;
 		String image;
 		String msg = null, url="certification.login";
@@ -268,7 +269,7 @@ public class LoginController {
 				try {
 					file.transferTo(target);
 					filesize = (int)file.getSize();
-					image = file.getOriginalFilename();
+					image = file_name;
 					certDTO.setId(dto.getId());
 					certDTO.setName(dto.getName());
 					certDTO.setImage(image);
@@ -292,7 +293,7 @@ public class LoginController {
 				}
 				file.transferTo(target);
 				filesize = (int)file.getSize();
-				image = file.getOriginalFilename();
+				image = file_name;
 				loginMapper.update_certification(id,image,filesize);//회원 인증 신청 db에 update
 				msg = "인증 수정완료";
 				}catch (IllegalStateException e) {

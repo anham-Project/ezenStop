@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
+<%@taglib uri="http://www.springframework.org/tags" prefix="spring"%> 
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,6 +9,6 @@
 </head>
 <body>
 <h1>${upPath}\${CMDTO.image}</h1>
-<img src="C:\springFile\ ${CMDTO.image}" width="600" height="600">
+<img src="<spring:url value='/image/${CMDTO.image}'/>"/>
 </body>
 </html>
