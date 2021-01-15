@@ -22,20 +22,18 @@ function check(){
 	<div class = "container" style="margin-top:10px; margin-bottom:10px">
 		<div align="center">
        	<h4><b>이 메 일 인 증</b></h4>
-            <font color="gray" size="2px">중복되지 않은 이메일을 입력해주세요.</font>
         <hr/>
         </div>
         <div class="row">
       		<form action="sign_up.login" method="post" name="f" onsubmit="return check()">
-        	<div class="col-12">
 	        	<div class="input-group" style="padding-left:10px;">
 					<input class="form-control" type="text" name="hardNumber" class="box" size="20" placeholder="인증번호를 입력해주세요"> 			
 					<input class="btn btn-outline-secondary btn-sm" type="reset" value="취소">
 					<input class="btn btn-outline-secondary btn-sm" type="submit" value="확인">	
-				</div>
 			</div>
 			</form>
 		</div>
 	</div>
 </body>
 </html>
+<head>
