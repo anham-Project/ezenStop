@@ -20,6 +20,20 @@
 		from ezen_review_board
 		where visible = 1
 	</select>
+	<select id="searchReview" parameterType="java.util.Map" resultType="ReviewBoardDTO">
+  		select * from (
+			select rownum rn, A.* from (
+		 		select * 
+		 		from ezen_review_board where ${searchtype} like #{searchstring} and visible = 1
+		 		order by article_num desc)A
+		 	)
+		 where rn between #{start} and #{end}
+	</select>
+	<select id="searchReviewGetCount" parameterType="java.util.Map" resultType="Integer">
+	 	select count(*)	
+	 	from ezen_review_board 
+	 	where ${searchtype} like #{searchstring} and visible = 1
+	</select>
 	<update id="plusReadCount" parameterType="Integer">
  		update ezen_review_board 
  		set readcount = readcount + 1 

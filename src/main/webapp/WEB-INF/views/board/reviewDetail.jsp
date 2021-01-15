@@ -97,6 +97,10 @@
 		style="padding: 0px 10px 20px 20px; min-height: 300px;">
 		<div class="col-md-12">${reviewDetail.content}</div>
 	</div>
+	<div class="row">
+		<div class="col-md-12">첨부된 파일 : <img src="${uploadPath}/${reviewDetail.image}" border="0" alt="메인"
+			style="max-width:300px; max-height:300px;"></div>
+	</div>
 	<c:if test="${sessionScope.userId == reviewDetail.id}">
 		<div class="row">
 			<div class="col-md-12" align="center">
@@ -143,7 +147,7 @@
 					style="padding: 5px 5px 5px 5px; background-color: #F7F7F7;">
 					<div class="col-md-12" align="left">${dto.id}
 						<font color="gray">${dto.regdate} ${dto.regdate_time} | </font>
-						<c:if test="${sessionScope.userId == dto.id}">
+						<c:if test="${sessionScope.userId == dto.id || sessionScope.userGrade == 2}">
 							<a
 								href="javascript:deleteReply('${dto.reply_num}','${reviewDetail.article_num}');">[삭제]</a>
 						</c:if>

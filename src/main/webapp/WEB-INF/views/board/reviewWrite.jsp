@@ -26,6 +26,19 @@
 		}
 		return true
 	}
+	function fileCheck(obj){
+		pathpoint = obj.value.lastIndexOf('.');
+		filepoint = obj.value.substring(pathpoint+1,obj.length);
+		filetype=filepoint.toLowerCase();
+		if(filetype=='jpg'||filetype=='gif'||filetype=='jpeg'){
+			return true
+		}else{
+			alert('이미지 파일만 선택할 수 있습니다.');
+			parentObj = obj.parentNode
+			node = parentObj.replaceChild(obj.cloneNode(true),obj);
+			return false
+		}
+	}
 </script>
 <div class="container" style="margin-top:30px; margin-bottom:10px;">
 	
@@ -63,7 +76,10 @@
 		<textarea class="form-control" rows="13" name="content" placeholder="자유롭게 수강후기를 남겨주세요"></textarea>
 	</div>
 	<div class="input-group" style="padding-bottom:5px">
-		<input class="form-control" type="file" name="image">
+		<input class="form-control" type="file" onchange="fileCheck(this)"name="image" accept="image/gif,image/jpeg,image/png">
+	</div>
+	<div class="input-group" style="padding-bottom:5px">
+	<font color="gray">이미지 파일만 첨부 가능합니다. jpeg, png, gif</font>
 	</div>
 	<div class="input-group pull-right" style="padding-bottom:5px">
 		<input class="btn btn-secondary btn-sm" type="submit" value="작성완료">&nbsp;
