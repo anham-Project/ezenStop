@@ -39,6 +39,9 @@ public class BoardMapper {
 	public int reviewfileDelete(int article_num) {
 		return sqlSession.delete("reviewfileDelete", article_num);
 	}
+	public int reviewEdit(ReviewBoardDTO dto) {
+		return sqlSession.update("reviewEdit", dto);
+	}
 	public void plusReadCount(int article_num) {
 		sqlSession.update("plusReadCount", article_num);
 	}

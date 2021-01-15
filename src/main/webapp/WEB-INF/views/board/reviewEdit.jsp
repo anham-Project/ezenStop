@@ -29,17 +29,19 @@
 			f.content.focus()
 			return false
 		}
+		if (f.image.value!=""){
+			if (confirm("기존 파일이 첨부한 파일로 변경되어 저장됩니다.") == true){
+			}else{
+			   return false;
+			}
+		}
 		return true
 	}
 	function deleteImage(){
-		document.getElementById('fileNameChange').innerHTML = 
-			"<div class='input-group mb-3' style='padding-bottom:5px'>"+
-			"<div class='custom-file'>"+ 
-			"<input type='file' class='custom-file-input' name='image'>"+
-			"<label class='custom-file-label'>"+
-			"</label>"+
-			"</div>"+
-			"</div>"
+		document.getElementById('delbefore').innerHTML = 
+			"<input type='hidden' name='image0' value='0'>"+
+			"<input type='hidden' name='filesize0' value='0'>"+
+			"<b>&nbsp;첨부파일이 없습니다.&nbsp;&nbsp;</b>"
 	}
 </script>
 
@@ -47,9 +49,9 @@
 	
 	<h5><font size="3">이젠'sTop게시판 > <a href="review_list.board">지역별 강의 후기게시판</a> > </font><b>게시글 수정</b></h5>
 	<div class="container" style="margin-top:30px; margin-bottom:10px;">
-	<form class="form-horizontal" name ="f" action="review_write.board" method="post" 
+	<form class="form-horizontal" name ="f" action="review_edit.board" method="post" 
 		onsubmit="return check()" enctype="multipart/form-data">
-		<input type="hidden" name="id" value="${sessionScope.userId}">
+		<input type="hidden" name="article_num" value="${reviewDetail.article_num}">
 	<div class="input-group" style="padding-bottom:5px">
 		<label class="col-md-2 control-label">수강지역<font size="3" color="red">*</font></label>
 		<div class="col-md-3">
@@ -77,16 +79,23 @@
 	<div class="input-group" style="padding-bottom:5px">
 		<textarea class="form-control" rows="13" name="content">${reviewDetail.content}</textarea>
 	</div>
-	<div class="row">
-    <c:if test="${reviewDetail.filesize == 0}"><font color="gray">첨부된 파일 : </font><b>${reviewDetail.image}</b>
-    <button class="input-group-text pull-right" type="button" onclick="javascript:deleteImage()">파일삭제</button>
-    </c:if>
-    </div>
+    <div class="input-group" style="padding-bottom:5px">
+    	<font color="gray">첨부된 파일 :</font>
+    	<div id="delbefore">
+    	<c:if test="${reviewDetail.filesize != 0}"><b>&nbsp;${reviewDetail.image}&nbsp;&nbsp;</b>
+    		<input type="hidden" name="image0" value="${reviewDetail.image}">
+    		<input type="hidden" name="filesize0" value="${reviewDetail.filesize}">
+    		<button class="btn btn-outline-secondary btn-sm" type="button" onclick="javascript:deleteImage()">파일삭제</button>
+    	</c:if>
+    	</div>
+    	<c:if test="${reviewDetail.filesize == 0}"><b>&nbsp;첨부파일이 없습니다.&nbsp;&nbsp;</b>
+    	</c:if>
+	</div>
 	<div class="input-group" style="padding-bottom:5px"> 
-		<input type="file" class="file-input" name="image"> 
+		<input class="form-control" type="file" name="image"> 
 	</div>
 	<div class="input-group pull-right" style="padding-bottom:5px">
-		<input class="btn btn-secondary btn-sm" type="submit" value="작성완료">&nbsp;
+		<input class="btn btn-secondary btn-sm" type="submit" value="수정하기">&nbsp;
 		<input class="btn btn-secondary btn-sm" type="button" value="목록으로" onclick="window.location='review_list.board'">&nbsp;
 		<input class="btn btn-secondary btn-sm" type="reset" value="원래대로">
 	</div>
