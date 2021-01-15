@@ -102,6 +102,14 @@ public class LoginMapper {
 		int count = sqlSession.selectOne("waittingMemberGetCount");
 		return count;
 	}
+	public int id_check(String id) {
+		int count = sqlSession.selectOne("id_check",id);
+		return count;
+	}
+	public int emailCheck(String email) {
+		int count = sqlSession.selectOne("emailCheck",email);
+		return count;
+	}
 	public int searchMemberGetCount(String searchType, String searchString) {
 		Map<String,String> map = new Hashtable();
 		map.put("searchtype", searchType);
@@ -125,6 +133,7 @@ public class LoginMapper {
 		List<Ezen_memberDTO> list = sqlSession.selectList("searchMember",map);
 		return list;
 	}
+	
 	public void updateMember(String academyLocation,String id,int grade, int status) {
 		Map map = new Hashtable();
 		map.put("academyLocation",academyLocation);

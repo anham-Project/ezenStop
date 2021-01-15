@@ -95,6 +95,12 @@ public class LoginController {
 		mav.addObject("url",url);
 		return mav;
 	}
+	@RequestMapping("/id_check.login")
+	public void id_check(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+		String id = req.getParameter("id");
+		String res = String.valueOf(loginMapper.id_check(id));
+		resp.getWriter().write(res);
+	}
 	@RequestMapping(value="/email.login", method=RequestMethod.GET)//회원가입버튼 눌렀을 때 이메일 인증페이지
 	public String email() {
 		return "login/email";
@@ -140,6 +146,14 @@ public class LoginController {
 		mav.setViewName("message2");
 		return mav;
 	}
+	@RequestMapping("/email_check.login")
+	public void email_check(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+		String email = req.getParameter("email");
+		String res = String.valueOf(loginMapper.emailCheck(email));
+		System.out.println(res);
+		resp.getWriter().write(res);
+	}
+
 	@RequestMapping("/email_confirm.login") //인증번호 발송 
 	public ModelAndView email_confirm(HttpServletRequest request, ModelMap mo) throws Exception{
 			ModelAndView mav = new ModelAndView("message2");
