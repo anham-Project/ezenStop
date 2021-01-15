@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="../header.jsp" />
 <div class="container" style="margin-top:30px; margin-bottom:10px">
 <script type="text/javascript">
@@ -24,9 +23,10 @@
 				location.href=result+'?article_num='+article_num;
 			}
 		})
+		
 	}
 </script>
-	<h5><font size="3">이젠'sTop게시판 > </font><b>신고 게시판</b></h5>
+	<h5><font size="3">내 게시판 </font></h5>
 <form name="f" action="report_find.board" method="post" onsubmit="return check()">
 	<div class="row" style="padding-bottom:5px">
 		<div class="col-md-6">
@@ -34,9 +34,8 @@
         <div class="col-md-6">
 		    <div class="input-group">
                 <select class="form-control" name="searchType" style="width:20%;">
-	 				<option value="userId">신고자</option>
-	 				<option value="article_num">신고된 글번호</option>
-					<option value="reportContent">신고내용</option>
+	 				<option value="article_num">글번호</option>
+					<option value="reportContent">내용</option>
 				</select>
                 <input type="text" class="form-control" name="searchString" placeholder="검색어를 입력하세요." style="width:65%;">
                 <span class="input-group-btn">
@@ -49,35 +48,35 @@
 	<table class="table table-hover text-center">
 	<thead>
 		<tr>
-			<th width="8%">신고된<br>글 번호</th>
-			<th width="58%">신고내용</th>
-			<th width="12%">신고자</th>
-			<th width="12%">신고일</th>
+			<th width="8%">글 번호</th>
+			<th width="58%">제목</th>
+			<th width="12%">작성일</th>
+			<th width="12%">조회수</th>
 		</tr>
 	</thead>
 	<tbody>
-<c:if test="${empty reportList}">		
+	<c:if test="${empty myBoardList}">		
 		<tr>
 			<td colspan="4">신고된 게시글이 없습니다.</td>
 		</tr>
-</c:if>		
-<c:forEach var="dto" items="${reportList}">
+	</c:if>		
+	<c:forEach var="dto" items="${myBoardList}">
 		<tr>
 			<td align="center"><c:out value="${dto.article_num}"/></td>
 			<c:set var="startNum" value="${startNum-1}"/>
 			<td align="left">			
 				<form name="f" onclick="javascript:findDetailPage('${dto.article_num}')">
-				<a href="#">${dto.reportContent}</a>
+				<a href="#">${dto.reportContent }</a>
 				</form>
 			</td>
 			<td align="center">${dto.userId}</td>
 			<td align="center">${dto.reportDate}</td>
 		</tr>
-</c:forEach>
+	</c:forEach>
 	</tbody>
 	</table>
 	<div class="row">
-<c:if test="${count>0}">
+	<c:if test="${count>0}">
 	<div class="col-md-4">
 	</div>
 	<div class="col-md-6">

@@ -142,15 +142,15 @@ public class LoginMapper {
 		map.put("status",status);
 		sqlSession.update("updateMember",map);
 	}
-	public List<String> getTableHasLocation(){
-		return sqlSession.selectList("getTableHasLocation");
+	public List<String> myBoardLocation(){
+		return sqlSession.selectList("myBoardLocation");
 	}
-	public String getLocation(List<String> list, int article_num) {
+	public List<Map> getLocation(List<String> list, String id) {
 		for(String tableName : list) {
-			Map<String,Object> map = new Hashtable<>();
+			Map map = new Hashtable<>();
 			map.put("tableName", tableName);
-			map.put("article_num", article_num);
-			String result = sqlSession.selectOne("getLocation", map);
+			map.put("id", id);
+			List<Map> result = sqlSession.selectList("myBoard", map);
 			if(result != null) {
 				return result;
 			}
