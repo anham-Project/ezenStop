@@ -27,17 +27,17 @@
 		
 	}
 </script>
-	<h5><font size="3">이젠'sTop게시판 > </font><b>신고 게시판</b></h5>
-<form name="f" action="report_find.board" method="post" onsubmit="return check()">
+	<h5><font size="3">이젠'sTop게시판 > </font><b>비활성화된 게시판</b></h5>
+<form name="f" action="unvisible_find.board" method="post" onsubmit="return check()">
 	<div class="row" style="padding-bottom:5px">
 		<div class="col-md-6">
 		</div>    
-        <div class="col-md-6">
+         <div class="col-md-6">
 		    <div class="input-group">
                 <select class="form-control" name="searchType" style="width:20%;">
-	 				<option value="userId">신고자</option>
-	 				<option value="article_num">신고된 글번호</option>
-					<option value="reportContent">신고내용</option>
+	 				<option value="id">작성자</option>
+	 				<option value="subject">제목</option>
+					<option value="content">내용</option>
 				</select>
                 <input type="text" class="form-control" name="searchString" placeholder="검색어를 입력하세요." style="width:65%;">
                 <span class="input-group-btn">
@@ -57,22 +57,26 @@
 		</tr>
 	</thead>
 	<tbody>
-<c:if test="${empty reportList}">		
+<c:if test="${empty unvisibleList}">		
 		<tr>
-			<td colspan="4">신고된 게시글이 없습니다.</td>
+			<td colspan="4">비활성화된 게시글이 없습니다.</td>
 		</tr>
 </c:if>		
-<c:forEach var="dto" items="${reportList}">
+<c:forEach var="dto" items="${unvisibleList}">
 		<tr>
-			<td align="center"><c:out value="${dto.article_num}"/></td>
+			<td align="center"><c:out value="${startNum}"/></td>
 			<c:set var="startNum" value="${startNum-1}"/>
 			<td align="left">			
-				<form name="f" onclick="javascript:findDetailPage('${dto.article_num}')">
-				<a href="#">${dto.reportContent }</a>
-				</form>
+				<a href="review_detail.board?article_num=${dto.article_num}">
+				${dto.category} ${dto.subject}
+	<c:if test="${dto.replyCount != 0}">
+		<font color="orange" size="2">[${dto.replyCount}]</font>
+	</c:if>
+				</a>	
 			</td>
-			<td align="center">${dto.userId}</td>
-			<td align="center">${dto.reportDate}</td>
+			<td align="center">${dto.id}</td>
+			<td align="center">${dto.regdate}</td>
+			<td align="center">${dto.readCount}</td>
 		</tr>
 </c:forEach>
 	</tbody>
@@ -84,15 +88,25 @@
 	<div class="col-md-6">
 	<ul class = "pagination">
 	<c:if test="${startPage > pageBlock}">	
-		<li class="page-item"><a class="page-link" href="reportBoard.board?pageNum=${startPage-pageBlock}">이전</a></li>
+		<li class="page-item"><a class="page-link" href="review_list.board?pageNum=${startPage-pageBlock}">이전</a></li>
 	</c:if>
 	<c:forEach var="i" begin="${startPage}" end="${endPage}">
-			<li class="page-item"><a class="page-link" href="reportBoard.board?pageNum=${i}">${i}</a></li>
+			<li class="page-item"><a class="page-link" href="review_list.board?pageNum=${i}">${i}</a></li>
 	</c:forEach>
 	<c:if test="${endPage < pageCount}">
-		<li class="page-item"><a class="page-link" href="reportBoard.board?pageNum=${endPage+pageBlock}">다음</a></li>
+		<li class="page-item"><a class="page-link" href="review_list.board?pageNum=${endPage+pageBlock}">다음</a></li>
 	</c:if>
 	</ul>
+	</div>
+	<div class="col-md-2 text-center">
+	<a class="btn btn-secondary pull-right" href="review_write.board">글쓰기</a>
+	</div>
+</c:if>
+<c:if test="${count == 0}">
+	<div class="col-md-10 text-center">
+	</div>
+	<div class="col-md-2 text-center">
+	<a class="btn btn-secondary pull-right" href="review_write.board">글쓰기</a>
 	</div>
 </c:if>
 	</div>
