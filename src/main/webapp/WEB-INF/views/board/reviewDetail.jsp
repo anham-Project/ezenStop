@@ -53,7 +53,22 @@
 			}
 		})
 	}
-	
+	function changeVisibleStatus(){
+		var article_num = '${reviewDetail.article_num}';
+		$.ajax({
+			type: "POST",
+			url: "changeVisibleStatus.board",
+			contentType: 'application/x-www-form-urlencoded; charset=euc-kr',
+			data: {
+				article_num: article_num
+			},
+			datatype: 'text',
+			success: function(result){
+				alert("처리되었습니다.")
+				window.location.reload();
+			}
+		})
+	}
 </script>
 <jsp:include page="../header.jsp" />
 <div class="container" style="margin-top: 30px; margin-bottom: 10px;">
@@ -92,17 +107,30 @@
 			</div>
 		</div>
 	</c:if>
-	<c:if test="${!empty sessionScope.userId && sessionScope.userId != reviewDetail.id}">
+	<c:if test="${sessionScope.userGrade ==2 }">
+	<br>
+		<div align="center">
+			<button class="btn btn-danger btn-sm" type="button"
+				onclick="javascript:changeVisibleStatus()" id="visibleStatus">
+				<c:if test="${reviewDetail.visible == 1 }">비활성화</c:if>
+				<c:if test="${reviewDetail.visible == -1 }">활성화</c:if>
+			</button>
+		</div>
+	</c:if>
+
+	<c:if
+		test="${!empty sessionScope.userId && sessionScope.userId != reviewDetail.id}">
 		<div class="row">
 			<div class="col-md-12" align="center">
 				<button class="btn btn-info btn-sm" type="button"
-					onclick="javascript:somethingDo('up')" id="boardUp"><h5 id="upcount">${reviewDetail.upCount }</h5>추천</button>
+					onclick="javascript:somethingDo('up')" id="boardUp"><h5 id="upcount">${reviewDetail.upCount}</h5>추천</button>
 				<button class="btn btn-secondary btn-sm" type="button"
-					onclick="javascript:somethingDo('down')" id="boardDown"><h5 id="downcount">${reviewDetail.downCount }</h5>비추천</button>
+					onclick="javascript:somethingDo('down')" id="boardDown"><h5 id="downcount">${reviewDetail.downCount}</h5>비추천</button>
 				<a class="btn btn-warning btn-sm" data-target="#reportModal" data-toggle="modal">신고하기</a>
 			</div>
 		</div>
 	</c:if>
+
 	<hr />
 	<form class="form-horizontal" name="f" method="post"
 		action="review_reply_write.board" onsubmit="return check()">
@@ -168,9 +196,9 @@
 		</div>
 	</form>
 </div>
-<div class ="row">
+<div class="row">
 	<div class="modal" id="reportModal" tabindex="-1">
-	<script type="text/javascript">
+		<script type="text/javascript">
 	function reportBoard(){
 		var reportContent = $('#reportContent').val();
 		if(reportContent == null || reportContent ===""){
@@ -208,9 +236,11 @@
 				</div>
 				<div class="modal-body" style="text-align: center;">
 					신고 내용<br>
-					<textarea id="reportContent" placeholder="신고내역을 입력해주세요." style="resize: none;"></textarea>
+					<textarea id="reportContent" placeholder="신고내역을 입력해주세요."
+						style="resize: none;"></textarea>
 					<hr>
-					<button class="close btn-danger" data-dismiss="modal" onclick="javascript:reportBoard()">신고하기</button>
+					<button class="close btn-danger" data-dismiss="modal"
+						onclick="javascript:reportBoard()">신고하기</button>
 				</div>
 			</div>
 		</div>

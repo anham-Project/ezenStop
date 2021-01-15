@@ -45,11 +45,16 @@
  		from ezen_review_board
  		where article_num = #{article_num}
  	</delete>
- 	<delete id="reviewfileDelete" parameterType="Integer">
- 		delete image
- 		from ezen_review_board
+ 	<update id="reviewfileDelete" parameterType="Integer">
+ 		update ezen_review_Board
+ 		set image = '파일없음', filesize = 0
  		where article_num = #{article_num}
- 	</delete>
+ 	</update>
+ 	<update id="reviewEdit" parameterType="ReviewBoardDTO">
+ 		update ezen_review_Board
+ 		set category = #{category}, subject = #{subject}, content = #{content}, image = #{image}, filesize = #{filesize}
+ 		where article_num = #{article_num}
+ 	</update>
  	<select id="checkUserUpDown" parameterType="BoardUpDownDTO" resultType="Integer">
  		select count(*) from board_updown where ((article_num = #{article_num}) and (userId = #{userId}))
  	</select>
@@ -80,7 +85,7 @@
  	</select>
  	<update id="setUnvisible" parameterType="Integer">
  		update ezen_review_Board
- 		set visible = 0
+ 		set visible = -1
  		where article_num = #{article_num}
  	</update>
  	<select id="reportGetCount" resultType="Integer">
@@ -104,4 +109,9 @@
  	<select id="getLocation" parameterType="java.util.Map" resultType="String">
  		select detaillocation from ${tableName} where article_num = to_number(#{article_num})
  	</select>
+ 	<update id="changeVisibleStatus" parameterType="Integer">
+ 		update ezen_review_board
+ 		set visible = (visible * -1)
+ 		where article_num = #{article_num}
+ 	</update>
 </mapper>
