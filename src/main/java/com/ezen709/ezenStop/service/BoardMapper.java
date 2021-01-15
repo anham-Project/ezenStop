@@ -128,4 +128,7 @@ public class BoardMapper {
 		}
 		return null;
 	}
+	public int changeVisibleStatus(int article_num) {
+		return sqlSession.update("changeVisibleStatus",article_num);
+	}
 }

@@ -80,7 +80,7 @@
  	</select>
  	<update id="setUnvisible" parameterType="Integer">
  		update ezen_review_Board
- 		set visible = 0
+ 		set visible = -1
  		where article_num = #{article_num}
  	</update>
  	<select id="reportGetCount" resultType="Integer">
@@ -104,4 +104,9 @@
  	<select id="getLocation" parameterType="java.util.Map" resultType="String">
  		select detaillocation from ${tableName} where article_num = to_number(#{article_num})
  	</select>
+ 	<update id="changeVisibleStatus" parameterType="Integer">
+ 		update ezen_review_board
+ 		set visible = (visible * -1)
+ 		where article_num = #{article_num}
+ 	</update>
 </mapper>

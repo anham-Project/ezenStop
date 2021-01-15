@@ -240,8 +240,19 @@ public class BoardController {
 			String res1 = boardMapper.reportBoard(article_num, userId)+"";
 			if(!res.equals(res1)) res="-3";
 		}
-		if(res.equals("1") && boardMapper.checkReportCount(article_num) > 5) {
+		if(res.equals("1") && boardMapper.checkReportCount(article_num) == 5) {
 			boardMapper.setUnvisible(article_num);
+			ReplyDTO dto = new ReplyDTO();
+			dto.setRe_step(0);
+			dto.setRe_level(0);
+			dto.setParent_num(0);
+			dto.setId("master");
+			dto.setContent("과도한 논란으로 비활성화 처리되었습니다. 관리자에게 문의해주세요.");
+			dto.setReply_num(0);
+			dto.setAticle_num(article_num);
+			replyMapper.insertReply(dto);
+			int replyCount = replyMapper.replyCount(dto.getArticle_num());
+			boardMapper.updateReplyCount(dto.getArticle_num(), replyCount);
 		}
 		resp.getWriter().write(res);
 		
@@ -281,5 +292,10 @@ public class BoardController {
 		List<String> hasDetaillocationTable = boardMapper.getTableHasLocation();
 		String location = boardMapper.getLocation(hasDetaillocationTable,article_num);
 		resp.getWriter().write(location);
+	}
+	@RequestMapping("/changeVisibleStatus.board")
+	public void changeVisibleStatus(HttpServletRequest req, HttpServletResponse resp) throws IOException{
+		String article_num = req.getParameter("article_num");
+		int res = boardMapper.changeVisibleStatus(Integer.parseInt(article_num));
 	}
 }
