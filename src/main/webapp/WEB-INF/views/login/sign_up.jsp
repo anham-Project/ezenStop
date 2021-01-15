@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
     <script type="text/javascript"
 	src="https://code.jquery.com/jquery-3.2.0.min.js"></script>
 <!-- sign_up.jsp -->
@@ -27,11 +28,11 @@
 				if(result == '1'){
 					alert('이미 사용중인 아이디입니다.')
 					$('#idCheck').val('false')
-					$('#str').html('<h6>사용불가</h6>')
+					$('#str').html('<h6>다른 아이디로 중복체크를 해주세요.</h6>')
 				}else {
 					alert('사용 가능한 아이디입니다.')
 					$('#idCheck').val('true')
-					$('#str').html('<h6>사용가능</h6>')
+					$('#str').html('<h6>아이디 중복체크 완료!</h6>')
 				}
 			}
 		})
@@ -68,16 +69,40 @@
 <title>회 원 가 입</title>
 </head>
 <body>
-	<form name="f" method="post" action="sign_up_ok.login" onsubmit="return validate()">
-		<input type="text" id="name" name="name" placeholder="이름"><br>
-		<input type="text" id="id" name="id" placeholder="아이디"> <h6>※ 아이디는 4~12자의 영문 대소문자와 숫자로만 입력하세요</h6>
-		<input type="button" onclick="javascript:id_check()" value="중복체크"><div id="str"><font style=>사용불가</font></div><br>
-		<input type="hidden" id="idCheck" name="idCheck" value="false">
-		<input type="password" id="passwd" name="passwd" placeholder="비밀번호"><br>
-		<input type="password" name="checkpasswd" placeholder="비밀번호 확인"><br>
-		<input type="hidden" name="email" value="${sessionScope.email}">
-		<input type="submit" value="확인">
-		<input type="button" value="취소">
-	</form>
+	<div class = "container" style="margin-top:10px; margin-bottom:10px;">
+		<div align="center">
+       	<h4><b>회 원 가 입</b></h4>
+        <hr/>
+        </div>
+        <div class="row">
+      		<form name="f" method="post" action="sign_up_ok.login" onsubmit="return validate()">
+	        	<div class="input-group" style="padding-left:10%; padding-right:5%; padding-bottom:3px;">
+					<input class="form-control" type="text" id="name" name="name" placeholder="이름">	
+				</div>
+				<div class="input-group" style="padding-left:10%; padding-right:5%;">
+					<input class="form-control" type="text" id="id" name="id" placeholder="아이디">
+					<input class="btn btn-outline-secondary btn-sm" type="button" onclick="javascript:id_check()" value="중복체크">
+				</div>
+				<div class="input-group" style="padding-left:15px; padding-bottom:3px;">
+					<font size="2" color="gray">※ 아이디는 4~12자의 영문 대소문자와 숫자로만 입력하세요</font>
+				</div>
+				<input type="hidden" id="idCheck" name="idCheck" value="false">
+				<input type="hidden" name="email" value="${sessionScope.email}">
+				<div class="input-group" style="padding-left:10%; padding-right:5%; padding-bottom:3px;">
+					<input class="form-control" type="password" id="passwd" name="passwd" placeholder="비밀번호">
+				</div>
+				<div class="input-group" style="padding-left:10%; padding-right:5%; padding-bottom:3px;">
+					<input class="form-control" type="password" name="checkpasswd" placeholder="비밀번호 확인">
+				</div>
+				<div class="input-group" style="padding-left:10%; padding-right:5%; padding-bottom:3px;">
+					<div id="str"><font size="2" color="gray">아이디 중복체크를 해주세요.</font></div>
+				</div>
+				<div class="input-group" style="padding-left:43%;">
+					<input class="btn btn-outline-secondary btn-sm" type="submit" value="확인">&nbsp;
+					<input class="btn btn-outline-secondary btn-sm" type="button" value="취소">
+				</div>
+			</form>
+		</div>
+	</div>
 </body>
 </html>
