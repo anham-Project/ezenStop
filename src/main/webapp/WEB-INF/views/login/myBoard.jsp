@@ -2,6 +2,7 @@
     pageEncoding="EUC-KR"%>
 <jsp:include page="../header.jsp" />
 <div class="container" style="margin-top:30px; margin-bottom:10px">
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <script type="text/javascript">
 	function check(){
 		if (f.searchString.value==""){
@@ -34,8 +35,8 @@
         <div class="col-md-6">
 		    <div class="input-group">
                 <select class="form-control" name="searchType" style="width:20%;">
-	 				<option value="article_num">글번호</option>
-					<option value="reportContent">내용</option>
+	 				<option value="subject">제목</option>
+					<option value="content">내용</option>
 				</select>
                 <input type="text" class="form-control" name="searchString" placeholder="검색어를 입력하세요." style="width:65%;">
                 <span class="input-group-btn">
@@ -62,15 +63,15 @@
 	</c:if>		
 	<c:forEach var="dto" items="${myBoardList}">
 		<tr>
-			<td align="center"><c:out value="${dto.article_num}"/></td>
+			<td align="center"><c:out value="${startNum}" /></td>
 			<c:set var="startNum" value="${startNum-1}"/>
 			<td align="left">			
 				<form name="f" onclick="javascript:findDetailPage('${dto.article_num}')">
-				<a href="#">${dto.reportContent }</a>
+				<a href="#">${dto.subject}</a>
 				</form>
 			</td>
-			<td align="center">${dto.userId}</td>
-			<td align="center">${dto.reportDate}</td>
+			<td align="center">${dto.regdate}</td>
+			<td align="center">${dto.readcount}</td>
 		</tr>
 	</c:forEach>
 	</tbody>

@@ -185,4 +185,41 @@ public class BoardMapper {
 	public int unvisibleGetCount() {
 		return getBoard(getTableHasLocation()).size();
 	}
+	public int searchUnvisibleGetCount(String searchType,String searchString) {
+		List<String> list = getTableHasLocation();
+		List<ReviewBoardDTO> unvisibleList = new ArrayList<>();
+		for(String tableName : list) {
+			Map<String,String> map = new Hashtable<String,String>();
+			map.put("tableName", tableName);
+			map.put("searchType", searchType);
+			map.put("searchString", searchString);
+			List<ReviewBoardDTO> result = sqlSession.selectList("searchUnvisibleBoard",map);
+			for(ReviewBoardDTO dto : result) {
+				unvisibleList.add(dto);
+			}
+		}
+		return unvisibleList.size();
+	}
+	public List<ReviewBoardDTO> SearchUnvisibleList(String searchType,String searchString,int start, int end){
+		List<String> list = getTableHasLocation();
+		List<ReviewBoardDTO> unvisibleList = new ArrayList<>();
+		for(String tableName : list) {
+			Map<String,String> map = new Hashtable<String,String>();
+			map.put("tableName", tableName);
+			map.put("searchType", searchType);
+			map.put("searchString", searchString);
+			List<ReviewBoardDTO> result = sqlSession.selectList("searchUnvisibleBoard",map);
+			for(ReviewBoardDTO dto : result) {
+				unvisibleList.add(dto);
+			}
+		}
+		Collections.sort(unvisibleList);
+		List<ReviewBoardDTO> sortedList = new ArrayList<>();
+		System.out.println(start +"//"+end+"\n"+unvisibleList.size());
+		for(int i = start -1 ; i <= end -1 ; i++) {
+			sortedList.add(unvisibleList.get(i));
+			
+		}
+		return sortedList;
+	}
 	}

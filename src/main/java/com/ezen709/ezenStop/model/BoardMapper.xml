@@ -142,4 +142,7 @@
  	<select id="selectUnvisibleBoard" parameterType="java.util.Map" resultType="ReviewBoardDTO">
  		select * from ${tableName} where visible = '-1' 
  	</select>
+ 	<select id="searchUnvisibleBoard" parameterType="java.util.Map" resultType="ReviewBoardDTO">
+ 		select * from ${tableName} where visible = '-1' and ${searchType} like #{searchString}
+ 	</select>
 </mapper>
