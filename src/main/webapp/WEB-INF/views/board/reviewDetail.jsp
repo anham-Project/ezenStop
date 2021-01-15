@@ -98,7 +98,7 @@
 		<div class="col-md-12">${reviewDetail.content}</div>
 	</div>
 	<div class="row">
-		<div class="col-md-12">첨부된 파일 : <img src="${uploadPath}/${reviewDetail.image}" border="0" alt="메인"
+		<div class="col-md-12">첨부된 파일 : <img src="${uploadPath}/${reviewDetail.image}" border="0" alt="파일이 손상되었습니다."
 			style="max-width:300px; max-height:300px;"></div>
 	</div>
 	<c:if test="${sessionScope.userId == reviewDetail.id}">

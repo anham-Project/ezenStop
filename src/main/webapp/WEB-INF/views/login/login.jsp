@@ -4,7 +4,7 @@
 <jsp:include page="../header.jsp" />
 <script type="text/javascript">
 		function checkMember(){
-			window.open('email.login', "이메일 인증", "width=750, height=500")
+			window.open('email.login', "이메일 인증", "width=450, height=180")
 		}	
 		function findMember(){
 			window.open('find.login', "아이디/비밀번호 찾기", "width=750, height=500")
@@ -20,7 +20,7 @@
 			return true
 		}
 </script>
-<div class="container align-items-center mt-5" style="width: 50% ;min-height: 400px">
+<div class="container align-items-center mt-5" style="width: 30%;min-height: 400px;">
 	<form action="login.login" method="post" name="f"
 		onsubmit="return login()">
 		<div class="form-group">
@@ -32,8 +32,10 @@
 			<input type="submit" value="로그인" class="btn btn-primary btn-block">
 		</div>
 	</form>
-	<a href="javascript:checkMember()">회원가입</a> <a
-		href="javascript:findMember()">아이디|비밀번호 찾기</a>
+	<div align="center" style="padding:0px 0px 0px 0px;">
+	<a class="btn btn-outline-secondary btn-sm" href="javascript:checkMember()">회원가입</a> <a
+		class="btn btn-outline-secondary btn-sm" href="javascript:findMember()">아이디|비밀번호 찾기</a>
+	</div>
 </div>
 <!-- 
 	<div align="center">
