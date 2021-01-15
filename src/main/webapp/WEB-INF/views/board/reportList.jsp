@@ -35,7 +35,7 @@
         <div class="col-md-6">
 		    <div class="input-group">
                 <select class="form-control" name="searchType" style="width:20%;">
-	 				<option value="id">신고자</option>
+	 				<option value="userId">신고자</option>
 	 				<option value="article_num">신고된 글번호</option>
 					<option value="reportContent">신고내용</option>
 				</select>

@@ -188,7 +188,6 @@ public class BoardController {
 	}
 	@RequestMapping("/review_find.board")
 	public ModelAndView searchMember(HttpServletRequest req) throws IOException {
-		
 		String searchType = req.getParameter("searchType");
 		String searchString = "%"+req.getParameter("searchString")+"%";
 		String pageNum = req.getParameter("pageNum");
@@ -312,6 +311,37 @@ public class BoardController {
 		int count = boardMapper.reportGetCount();
 		if (endRow>count) endRow = count;
 		List<BoardReportDTO> reportList = boardMapper.getReportList(startRow, endRow);
+		int startNum = count - ((currentPage-1) * pageSize);
+		int pageBlock = 3;
+		int pageCount = count/pageSize + (count%pageSize == 0 ? 0 : 1);
+		int startPage = (currentPage - 1)/pageBlock * pageBlock + 1;
+		int endPage = startPage + pageBlock - 1;
+		if (endPage>pageCount) endPage = pageCount;
+		ModelAndView mav = new ModelAndView("board/reportList");
+		mav.addObject("count", count);
+		mav.addObject("startNum", startNum);
+		mav.addObject("pageCount", pageCount);
+		mav.addObject("startPage", startPage);
+		mav.addObject("endPage", endPage);
+		mav.addObject("pageBlock", pageBlock);
+		mav.addObject("reportList", reportList);
+		return mav;
+	}
+	@RequestMapping("/report_find.board")
+	public ModelAndView report_find(HttpServletRequest req){
+		String pageNum = req.getParameter("pageNum");
+		String searchType = req.getParameter("searchType");
+		String searchString = "%"+req.getParameter("searchString")+"%";
+		if (pageNum == null) {
+			pageNum = "1";
+		}
+		int pageSize = 2;
+		int currentPage = Integer.parseInt(pageNum);
+		int startRow = pageSize * currentPage - (pageSize - 1);
+		int endRow = pageSize * currentPage;
+		int count = boardMapper.reportGetCount();
+		if (endRow>count) endRow = count;
+		List<BoardReportDTO> reportList = boardMapper.SearchReportList(searchType,searchString,startRow, endRow);
 		int startNum = count - ((currentPage-1) * pageSize);
 		int pageBlock = 3;
 		int pageCount = count/pageSize + (count%pageSize == 0 ? 0 : 1);
