@@ -26,7 +26,7 @@ function check(){
         </div>
         <div class="row">
       		<form action="sign_up.login" method="post" name="f" onsubmit="return check()">
-	        	<div class="input-group" style="padding-left:10px;">
+	        	<div class="input-group" style="padding-left:40px;">
 					<input class="form-control" type="text" name="hardNumber" class="box" size="20" placeholder="인증번호를 입력해주세요"> 			
 					<input class="btn btn-outline-secondary btn-sm" type="reset" value="취소">
 					<input class="btn btn-outline-secondary btn-sm" type="submit" value="확인">	

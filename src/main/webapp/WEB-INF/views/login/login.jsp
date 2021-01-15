@@ -4,7 +4,7 @@
 <jsp:include page="../header.jsp" />
 <script type="text/javascript">
 		function checkMember(){
-			window.open('email.login', "이메일 인증", "width=450, height=180")
+			window.open('email.login', "이메일 인증", "width=450, height=400")
 		}	
 		function findMember(){
 			window.open('find.login', "아이디/비밀번호 찾기", "width=300, height=500")

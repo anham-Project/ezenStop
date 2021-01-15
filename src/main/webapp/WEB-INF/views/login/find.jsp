@@ -14,10 +14,10 @@
         </div>
         <div class="row">
       		<form action="find_id.login" method="post" name="f">
-	        	<div class="input-group" style="padding-left:30px;">
+	        	<div class="input-group" style="padding-left:30px; padding-bottom:3px;">
 					<input class="form-control" type="text" name="name" placeholder="이름"> 			
 				</div>
-				<div class="input-group" style="padding-left:30px;">
+				<div class="input-group" style="padding-left:30px; padding-bottom:10px;">
 					<input class="form-control" type="text" name="email" placeholder="이메일">
 				</div>
 				<div class="input-group" style="padding-left:130px;">
@@ -34,13 +34,13 @@
         </div>
         <div class="row">
       		<form action="find_passwd.login" method="post" name="f">
-	        	<div class="input-group" style="padding-left:30px;">
+	        	<div class="input-group" style="padding-left:30px; padding-bottom:3px;">
 					<input class="form-control" type="text" name="name" placeholder="이름">
 				</div>
-	        	<div class="input-group" style="padding-left:30px;">
+	        	<div class="input-group" style="padding-left:30px; padding-bottom:3px;">
 					<input class="form-control" type="text" name="email" placeholder="이메일">
 				</div>
-	        	<div class="input-group" style="padding-left:30px;">
+	        	<div class="input-group" style="padding-left:30px; padding-bottom:10px;">
 					<input class="form-control" type="text" name="id" placeholder="아이디">
 				</div>		
 				<div class="input-group" style="padding-left:100px;">
