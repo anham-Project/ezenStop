@@ -1,5 +1,7 @@
 package com.ezen709.ezenStop.service;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
@@ -155,7 +157,32 @@ public class BoardMapper {
 		}
 		return null;
 	}
+	public List<ReviewBoardDTO> getBoard(List<String> list) {
+		List<ReviewBoardDTO> unvisibleList = new ArrayList<>();
+		for(String tableName : list) {
+			Map<String,String> map = new Hashtable<String,String>();
+			map.put("tableName", tableName);
+			List<ReviewBoardDTO> result = sqlSession.selectList("selectUnvisibleBoard",map);
+			for(ReviewBoardDTO dto : result) {
+				unvisibleList.add(dto);
+			}
+		}
+		return unvisibleList;
+	}
 	public int changeVisibleStatus(int article_num) {
 		return sqlSession.update("changeVisibleStatus",article_num);
 	}
-}
+	public List<ReviewBoardDTO> unvisibleList(int start, int end){
+		List<String> list = getTableHasLocation();
+		List<ReviewBoardDTO> unvisibleList = getBoard(list);
+		Collections.sort(unvisibleList);
+		List<ReviewBoardDTO> sortedList = new ArrayList<>();
+		for(int i = start -1 ; i <= end -1 ; i++) {
+			sortedList.add(unvisibleList.get(i));
+		}
+		return sortedList;
+	}
+	public int unvisibleGetCount() {
+		return getBoard(getTableHasLocation()).size();
+	}
+	}
