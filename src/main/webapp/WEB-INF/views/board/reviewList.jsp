@@ -54,12 +54,20 @@
 			<td align="center"><c:out value="${startNum}"/></td>
 			<c:set var="startNum" value="${startNum-1}"/>
 			<td align="left">			
+	<c:if test="${sessionScope.userId != null}">
 				<a href="review_detail.board?article_num=${dto.article_num}">
 				${dto.category} ${dto.subject}
-	<c:if test="${dto.replyCount != 0}">
-		<font color="orange" size="2">[${dto.replyCount}]</font>
+		<c:if test="${dto.replyCount != 0}">
+			<font color="orange" size="2">[${dto.replyCount}]</font>
+		</c:if>
+				</a>
 	</c:if>
-				</a>	
+	<c:if test="${sessionScope.userId == null}">
+		${dto.category} ${dto.subject}
+		<c:if test="${dto.replyCount != 0}">
+			<font color="orange" size="2">[${dto.replyCount}]</font>
+		</c:if>
+	</c:if>
 			</td>
 			<td align="center">${dto.id}</td>
 			<td align="center">${dto.regdate}</td>
@@ -86,14 +94,18 @@
 	</ul>
 	</div>
 	<div class="col-md-2 text-center">
+	<c:if test="${sessionScope.userId != null}">
 	<a class="btn btn-secondary pull-right" href="review_write.board">글쓰기</a>
+	</c:if>
 	</div>
 </c:if>
 <c:if test="${count == 0}">
 	<div class="col-md-10 text-center">
 	</div>
 	<div class="col-md-2 text-center">
-	<a class="btn btn-secondary pull-right" href="review_write.board">글쓰기</a>
+	<c:if test="${sessionScope.userId != null}">
+		<a class="btn btn-secondary pull-right" href="review_write.board">글쓰기</a>
+	</c:if>
 	</div>
 </c:if>
 	</div>

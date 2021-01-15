@@ -254,7 +254,7 @@
 							data-toggle="dropdown" role="button" aria-haspopup="true"
 							aria-expanded="false"> ${sessionScope.userId }로그인된세션아이디 </a>
 							<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-							<a class="dropdown-item" href="#">회원정보</a>
+							<a class="dropdown-item" href="myBoard.login">내 게시글</a>
 							<a class="dropdown-item" href="javascript:myPage()">마이페이지</a>
 							<a class="dropdown-item" href="logout.login">로그아웃</a>
 							</div></li>
