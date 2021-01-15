@@ -67,7 +67,12 @@
   <select id="searchMemberGetCount" parameterType="java.util.Map" resultType="Integer">
  		select count(*)	from ezen_member where ${searchtype} = #{searchstring} 
  </select>
-
+ <select id="getTableHasLocation" resultType="String">
+ 		select TABLE_NAME from user_tab_columns where column_name = 'DETAILLOCATION'
+ </select>
+ <select id="getLocation" parameterType="java.util.Map" resultType="String">
+ 		select detaillocation from ${tableName} where article_num = #{article_num}
+ </select>
  
  <update id="change_passwd" parameterType="java.util.Map">
  		update ezen_member set passwd=#{passwd} where id=#{id}

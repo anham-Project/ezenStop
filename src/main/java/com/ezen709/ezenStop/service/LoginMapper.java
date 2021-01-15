@@ -142,4 +142,19 @@ public class LoginMapper {
 		map.put("status",status);
 		sqlSession.update("updateMember",map);
 	}
+	public List<String> getTableHasLocation(){
+		return sqlSession.selectList("getTableHasLocation");
+	}
+	public String getLocation(List<String> list, int article_num) {
+		for(String tableName : list) {
+			Map<String,Object> map = new Hashtable<>();
+			map.put("tableName", tableName);
+			map.put("article_num", article_num);
+			String result = sqlSession.selectOne("getLocation", map);
+			if(result != null) {
+				return result;
+			}
+		}
+		return null;
+	}
 }
