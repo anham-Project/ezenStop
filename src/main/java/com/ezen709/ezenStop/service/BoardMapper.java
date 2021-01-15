@@ -116,4 +116,19 @@ public class BoardMapper {
 	public int reportGetCount() {
 		return sqlSession.selectOne("reportGetCount");
 	}
+	public List<String> getTableHasLocation(){
+		return sqlSession.selectList("getTableHasLocation");
+	}
+	public String getLocation(List<String> list, String article_num) {
+		for(String tableName : list) {
+			Map<String,String> map = new Hashtable<>();
+			map.put("tableName", tableName);
+			map.put("article_num", article_num);
+			String result = sqlSession.selectOne("getLocation", map);
+			if(result != null) {
+				return result;
+			}
+		}
+		return null;
+	}
 }

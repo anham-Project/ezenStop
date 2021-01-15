@@ -284,4 +284,11 @@ public class BoardController {
 		mav.addObject("reportList", reportList);
 		return mav;
 	}
+	@RequestMapping("/getDetail.board")
+	public void getDetail(HttpServletRequest req, HttpServletResponse resp) throws IOException{
+		String article_num = req.getParameter("article_num");
+		List<String> hasDetaillocationTable = boardMapper.getTableHasLocation();
+		String location = boardMapper.getLocation(hasDetaillocationTable,article_num);
+		resp.getWriter().write(location);
+	}
 }

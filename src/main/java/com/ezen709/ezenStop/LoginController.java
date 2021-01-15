@@ -258,18 +258,18 @@ public class LoginController {
 		Ezen_memberDTO dto = al.get(0);
 		MultipartHttpServletRequest mr = (MultipartHttpServletRequest)req;
 		MultipartFile file = mr.getFile("image");
-		File target = new File(uploadPath, file.getOriginalFilename());
+		String file_name= dto.getId()+"-"+file.getOriginalFilename();
+		File target = new File(uploadPath, file_name);
 		int filesize = 0;
 		String image;
 		String msg = null, url="certification.login";
 		Ezen_certificationDTO certDTO = new Ezen_certificationDTO();
-		System.out.println(dto.getStatus());
 		if(file.getSize() > 0 ) {
 			if(dto.getStatus()==0) {
 				try {
 					file.transferTo(target);
 					filesize = (int)file.getSize();
-					image = file.getOriginalFilename();
+					image = file_name;
 					certDTO.setId(dto.getId());
 					certDTO.setName(dto.getName());
 					certDTO.setImage(image);
@@ -293,7 +293,7 @@ public class LoginController {
 				}
 				file.transferTo(target);
 				filesize = (int)file.getSize();
-				image = file.getOriginalFilename();
+				image = file_name;
 				loginMapper.update_certification(id,image,filesize);//회원 인증 신청 db에 update
 				msg = "인증 수정완료";
 				}catch (IllegalStateException e) {
@@ -392,7 +392,29 @@ public class LoginController {
 		mav.addObject("memberList",list);
 		return mav;
 	}
-	
+	@RequestMapping("/edit_ok.login")
+	public ModelAndView edit_ok(@ModelAttribute(value="MultiRowMember") MultiRowMember dtolist) {
+		ModelAndView mav = new ModelAndView("message2");
+		String msg="변경 완료되었습니다.", url="member_management.login";
+		mav.addObject("msg",msg);
+		mav.addObject("url",url);
+		List<Ezen_memberDTO>list = dtolist.getDtoList();
+		for(int i = 0; i<list.size(); i++) {
+			Ezen_memberDTO dto = list.get(i);
+			loginMapper.updateMember(dto.getAcademyLocation(),dto.getId(),dto.getGrade(),dto.getStatus());
+		}
+		return mav;
+	}
+	@RequestMapping("/view_file.login")
+	public ModelAndView view_file(@RequestParam String id) {
+		ModelAndView mav = new ModelAndView("login/view_file");
+		Ezen_certificationDTO dto = loginMapper.getFile(id);
+		System.out.println(uploadPath);
+		mav.addObject("upPath",uploadPath);
+		mav.addObject("CMDTO",dto);
+		
+		return mav;
+	}
 	class MyAuthentication extends Authenticator {
 	    PasswordAuthentication pa;
 	    public MyAuthentication(String mailId, String mailPass) {

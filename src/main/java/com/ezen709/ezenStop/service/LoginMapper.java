@@ -123,7 +123,14 @@ public class LoginMapper {
 		map.put("start", startrow);
 		map.put("end", endrow);
 		List<Ezen_memberDTO> list = sqlSession.selectList("searchMember",map);
-		System.out.println("리스트 사이즈는"+list.size());
 		return list;
+	}
+	public void updateMember(String academyLocation,String id,int grade, int status) {
+		Map map = new Hashtable();
+		map.put("academyLocation",academyLocation);
+		map.put("id",id);
+		map.put("grade",grade);
+		map.put("status",status);
+		sqlSession.update("updateMember",map);
 	}
 }

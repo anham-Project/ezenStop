@@ -103,4 +103,10 @@
 		 	) 
 		where rn between #{start} and #{end}
  	</select>
+ 	<select id="getTableHasLocation" resultType="String">
+ 		select TABLE_NAME from user_tab_columns where column_name = 'DETAILLOCATION'
+ 	</select>
+ 	<select id="getLocation" parameterType="java.util.Map" resultType="String">
+ 		select detaillocation from ${tableName} where article_num = to_number(#{article_num})
+ 	</select>
 </mapper>
