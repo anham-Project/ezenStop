@@ -9,7 +9,9 @@
  <insert id= "insert_certification" parameterType="ezen_certificationDTO">
  		insert into ezen_certification values(#{id},#{name},#{image},#{filesize},sysdate)
  </insert>
-
+<select id="id_check" parameterType="String" resultType="Integer">
+		 select count(*) from ezen_member where id=#{id}
+ </select>
  <select id="emailCheck" parameterType="String" resultType="Integer">
 		 select count(*) from ezen_member where email=#{email}
  </select>

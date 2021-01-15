@@ -28,7 +28,7 @@
 	}
 </script>
 	<h5><font size="3">이젠'sTop게시판 > </font><b>신고 게시판</b></h5>
-<form name="f" action="review_find.board" method="post" onsubmit="return check()">
+<form name="f" action="report_find.board" method="post" onsubmit="return check()">
 	<div class="row" style="padding-bottom:5px">
 		<div class="col-md-6">
 		</div>    
