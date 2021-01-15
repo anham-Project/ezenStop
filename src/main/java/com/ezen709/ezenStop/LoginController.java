@@ -252,16 +252,14 @@ public class LoginController {
 	}
 	@RequestMapping(value="/certification.login", method=RequestMethod.POST) //회원 인증
 	public ModelAndView certification_ok(@RequestParam String id, HttpServletRequest req) {
-		
 		ModelAndView mav = new ModelAndView("message2");
 		List<Ezen_memberDTO> al = loginMapper.getMemberDTO(id);
 		Ezen_memberDTO dto = al.get(0);
 		MultipartHttpServletRequest mr = (MultipartHttpServletRequest)req;
 		MultipartFile file = mr.getFile("image");
-		String file_name= dto.getId()+"-"+file.getOriginalFilename();
+		String file_name= dto.getId()+"-"+"certification"+"-"+file.getOriginalFilename();
 		File target = new File(uploadPath, file_name);
 		int filesize = 0;
-		String image;
 		String msg = null, url="certification.login";
 		Ezen_certificationDTO certDTO = new Ezen_certificationDTO();
 		if(file.getSize() > 0 ) {
@@ -269,10 +267,9 @@ public class LoginController {
 				try {
 					file.transferTo(target);
 					filesize = (int)file.getSize();
-					image = file_name;
 					certDTO.setId(dto.getId());
 					certDTO.setName(dto.getName());
-					certDTO.setImage(image);
+					certDTO.setImage(file_name);
 					certDTO.setFilesize(filesize);
 					loginMapper.insert_certification(certDTO);//회원 인증 신청 db에 insert
 					loginMapper.member_upStatus(id);
@@ -293,8 +290,7 @@ public class LoginController {
 				}
 				file.transferTo(target);
 				filesize = (int)file.getSize();
-				image = file_name;
-				loginMapper.update_certification(id,image,filesize);//회원 인증 신청 db에 update
+				loginMapper.update_certification(id,file_name,filesize);//회원 인증 신청 db에 update
 				msg = "인증 수정완료";
 				}catch (IllegalStateException e) {
 					System.out.println("status>0일때 오류");
@@ -303,7 +299,6 @@ public class LoginController {
 					System.out.println("status>0일때 오류");
 					e.printStackTrace();
 				}
-				
 			}
 		}
 		mav.addObject("msg",msg);
@@ -355,12 +350,14 @@ public class LoginController {
 		int count = loginMapper.waittingMemberGetCount();
 		if (endRow>count) endRow = count;
 		List<Ezen_memberDTO> list = loginMapper.getWaittingMemberList(startRow, endRow);
+		String[] locationList = {"노원","종로","신촌","상봉","당산","송파","강남","안양","의정부","구리","일산","안산","성남 분당","성남 모란","김포","전주","이젠IT"};
 		int startNum = count - ((currentPage-1) * pageSize);
 		int pageBlock = 3;
 		int pageCount = count/pageSize + (count%pageSize == 0 ? 0 : 1);
 		int startPage = (currentPage - 1)/pageBlock * pageBlock + 1;
 		int endPage = startPage + pageBlock - 1;
 		if (endPage>pageCount) endPage = pageCount;
+		mav.addObject("locationList",locationList);
 		mav.addObject("memberList",list);
 		return mav;
 	}

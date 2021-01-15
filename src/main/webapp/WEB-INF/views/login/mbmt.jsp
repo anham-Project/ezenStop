@@ -3,6 +3,13 @@
 <!-- mbmt.jsp (MemBer_ManagemenT) -->
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ include file="../header.jsp"%>
+<style>
+.table .mytable {
+  width: 100%;
+  margin-bottom: 1rem;
+  color: #212529;
+}
+</style>
 <script>
 	function check(){
 		if(f.searchString.value==""){
@@ -18,7 +25,7 @@
 </script>
 <div class="container" style="margin-top:30px; margin-bottom:10px">
 	<h5><font size="3">관리자 페이지 > </font><b>멤버관리</b></h5>
-	<table class="table table-hover text-center">
+	<table class="table table-hover mytable text-center">
 	<thead>
 		<tr>
 			<th width="10%">이름</th>
@@ -73,8 +80,9 @@
 			<option value="2" <c:if test="${dto.grade==2}">selected</c:if>>관리자</option>
 			</select>
 			</td>
-			<td align="center"><a href="javascript:view_file('${dto.id}')">파일보기</a></td>
 			<td align="center">
+			<c:if test="${dto.status!=0}"><a href="javascript:view_file('${dto.id}')">파일보기</a>	</c:if>
+			<c:if test="${dto.status==0}"><h6>파일없음</h6></c:if>
 			</td>
 		</tr>
 			<input type="hidden" name="dtoList[${status.index}].name" value="${dto.name}"/>
