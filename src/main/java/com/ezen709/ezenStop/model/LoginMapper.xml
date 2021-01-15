@@ -67,12 +67,21 @@
   <select id="searchMemberGetCount" parameterType="java.util.Map" resultType="Integer">
  		select count(*)	from ezen_member where ${searchtype} = #{searchstring} 
  </select>
- <select id="getTableHasLocation" resultType="String">
+ <select id="myBoardLocation" resultType="String">
  		select TABLE_NAME from user_tab_columns where column_name = 'DETAILLOCATION'
  </select>
- <select id="getLocation" parameterType="java.util.Map" resultType="String">
- 		select detaillocation from ${tableName} where article_num = #{article_num}
- </select>
+ <select id="myBoard" parameterType="java.util.Map" resultMap="selectMapList"> 
+ 	select detaillocation, subject, regdate, readcount, article_num  FROM ${tableName} where id = #{id}
+ </select> 
+ <resultMap id="selectMapList" type="java.util.HashMap" > 
+ 	<result column="article_num" property="article_num"/> 
+ 	<result column="detaillocation" property="detaillocation"/> 
+ 	<result column="subject" property="subject"/> 
+ 	<result column="regdate" property="regdate"/>
+ 	<result column="readcount" property="readcount"/> 
+ </resultMap>
+
+ 
  
  <update id="change_passwd" parameterType="java.util.Map">
  		update ezen_member set passwd=#{passwd} where id=#{id}
@@ -86,6 +95,8 @@
  <update id="updateMember" parameterType="java.util.Map">
  		update ezen_member set academylocation=#{academyLocation}, grade=#{grade}, status=#{status} where id=#{id}
  </update>
+ 
+ 
  
  <delete id="dropId" parameterType="String">
  		delete from ezen_member where id=#{id}

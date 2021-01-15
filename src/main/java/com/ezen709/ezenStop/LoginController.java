@@ -425,12 +425,14 @@ public class LoginController {
 		mav.addObject("CMDTO",dto);
 		return mav;
 	}
-	@RequestMapping(value="/myBoard.login", method=RequestMethod.GET)
-	public void getDetail(HttpServletRequest req, HttpServletResponse resp) throws IOException{
-		String article_num = req.getParameter("article_num");
-		List<String> hasDetaillocationTable = loginMapper.getTableHasLocation();
-		String location = loginMapper.getLocation(hasDetaillocationTable,article_num);
-		resp.getWriter().write(location);
+	@RequestMapping("/myBoard.login")
+	public ModelAndView getmyBoard(HttpServletRequest req, HttpServletResponse resp) throws IOException{
+		ModelAndView mav = new ModelAndView("login/myBoard");
+		String id = req.getParameter("id");
+		List<String> hasDetaillocationTable = loginMapper.myBoardLocation();
+		List<Map> list = loginMapper.getLocation(hasDetaillocationTable,id);
+		mav.addObject("myBoardList",list);
+		return mav;
 	}
 	class MyAuthentication extends Authenticator {
 	    PasswordAuthentication pa;
