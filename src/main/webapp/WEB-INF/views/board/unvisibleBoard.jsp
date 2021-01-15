@@ -12,13 +12,27 @@
 		}
 		return true
 	}
+	function findDetailPage(article_num){
+		$.ajax({
+			type: "POST",
+			url: "getDetail.board",
+			contentType: 'application/x-www-form-urlencoded; charset=euc-kr',
+			data: {
+				article_num: article_num
+			},
+			success: function(result){
+				location.href=result+'?article_num='+article_num;
+			}
+		})
+		
+	}
 </script>
-	<h5><font size="3">이젠'sTop게시판 > </font><b>지역별 강의 후기게시판</b></h5>
-<form name="f" action="review_find.board" method="post" onsubmit="return check()">
+	<h5><font size="3">이젠'sTop게시판 > </font><b>비활성화된 게시판</b></h5>
+<form name="f" action="unvisible_find.board" method="post" onsubmit="return check()">
 	<div class="row" style="padding-bottom:5px">
 		<div class="col-md-6">
 		</div>    
-        <div class="col-md-6">
+         <div class="col-md-6">
 		    <div class="input-group">
                 <select class="form-control" name="searchType" style="width:20%;">
 	 				<option value="id">작성자</option>
@@ -36,38 +50,29 @@
 	<table class="table table-hover text-center">
 	<thead>
 		<tr>
-			<th width="8%"></th>
-			<th width="58%">제 목</th>
-			<th width="12%">작성자</th>
-			<th width="12%">작성일</th>
-			<th width="10%">조회</th>
+			<th width="8%">신고된<br>글 번호</th>
+			<th width="58%">신고내용</th>
+			<th width="12%">신고자</th>
+			<th width="12%">신고일</th>
 		</tr>
 	</thead>
 	<tbody>
-<c:if test="${empty reviewList}">		
+<c:if test="${empty unvisibleList}">		
 		<tr>
-			<td colspan="5">등록된 게시글이 없습니다.</td>
+			<td colspan="4">비활성화된 게시글이 없습니다.</td>
 		</tr>
 </c:if>		
-<c:forEach var="dto" items="${reviewList}">
+<c:forEach var="dto" items="${unvisibleList}">
 		<tr>
 			<td align="center"><c:out value="${startNum}"/></td>
 			<c:set var="startNum" value="${startNum-1}"/>
 			<td align="left">			
-	<c:if test="${sessionScope.userId != null}">
 				<a href="review_detail.board?article_num=${dto.article_num}">
 				${dto.category} ${dto.subject}
-		<c:if test="${dto.replyCount != 0}">
-			<font color="orange" size="2">[${dto.replyCount}]</font>
-		</c:if>
-				</a>
+	<c:if test="${dto.replyCount != 0}">
+		<font color="orange" size="2">[${dto.replyCount}]</font>
 	</c:if>
-	<c:if test="${sessionScope.userId == null}">
-		${dto.category} ${dto.subject}
-		<c:if test="${dto.replyCount != 0}">
-			<font color="orange" size="2">[${dto.replyCount}]</font>
-		</c:if>
-	</c:if>
+				</a>	
 			</td>
 			<td align="center">${dto.id}</td>
 			<td align="center">${dto.regdate}</td>
@@ -94,18 +99,14 @@
 	</ul>
 	</div>
 	<div class="col-md-2 text-center">
-	<c:if test="${sessionScope.userId != null}">
 	<a class="btn btn-secondary pull-right" href="review_write.board">글쓰기</a>
-	</c:if>
 	</div>
 </c:if>
 <c:if test="${count == 0}">
 	<div class="col-md-10 text-center">
 	</div>
 	<div class="col-md-2 text-center">
-	<c:if test="${sessionScope.userId != null}">
-		<a class="btn btn-secondary pull-right" href="review_write.board">글쓰기</a>
-	</c:if>
+	<a class="btn btn-secondary pull-right" href="review_write.board">글쓰기</a>
 	</div>
 </c:if>
 	</div>
