@@ -96,9 +96,9 @@
 		<div class="row">
 			<div class="col-md-12" align="center">
 				<button class="btn btn-info btn-sm" type="button"
-					onclick="javascript:somethingDo('up')" id="boardUp"><h5 id="upcount">${reviewDetail.upCount }</h5>추천</button>
+					onclick="javascript:somethingDo('up')" id="boardUp"><h5 id="upcount">${reviewDetail.upCount}</h5>추천</button>
 				<button class="btn btn-secondary btn-sm" type="button"
-					onclick="javascript:somethingDo('down')" id="boardDown"><h5 id="downcount">${reviewDetail.downCount }</h5>비추천</button>
+					onclick="javascript:somethingDo('down')" id="boardDown"><h5 id="downcount">${reviewDetail.downCount}</h5>비추천</button>
 				<a class="btn btn-warning btn-sm" data-target="#reportModal" data-toggle="modal">신고하기</a>
 			</div>
 		</div>

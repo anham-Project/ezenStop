@@ -44,7 +44,7 @@ public class BoardController {
 		if (pageNum == null) {
 			pageNum = "1";
 		}
-		int pageSize = 2;
+		int pageSize = 10;
 		int currentPage = Integer.parseInt(pageNum);
 		int startRow = pageSize * currentPage - (pageSize - 1);
 		int endRow = pageSize * currentPage;
@@ -131,7 +131,8 @@ public class BoardController {
 	}
 	@RequestMapping(value="/review_edit.board", method=RequestMethod.POST)
 	public String reviewEditPro(HttpServletRequest req, @ModelAttribute ReviewBoardDTO dto, 
-			BindingResult result, @RequestParam String reviewAddr) {
+			BindingResult result, @RequestParam String reviewAddr, 
+			@RequestParam String image0, @RequestParam int filesize0) {
 		if(result.hasErrors()) {}
 		MultipartHttpServletRequest mr = (MultipartHttpServletRequest)req;
 		MultipartFile file = mr.getFile("image");
@@ -143,6 +144,11 @@ public class BoardController {
 				file.transferTo(target);
 				filesize = (int)file.getSize();
 				image = file.getOriginalFilename();
+				int res = boardMapper.reviewfileDelete(Integer.parseInt(mr.getParameter("article_num")));
+				if(res>0) {
+					File target0 = new File(uploadPath, image0);
+					target0.delete();
+				}
 			} catch (IllegalStateException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -150,12 +156,15 @@ public class BoardController {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+		}else if(filesize0 > 0){
+			image = image0;
+			filesize = filesize0;
 		}
 		String subject = reviewAddr + dto.getSubject();
 		dto.setSubject(subject);
 		dto.setImage(image);
 		dto.setFilesize(filesize);
-		int res = boardMapper.reviewInsert(dto);
+		int res = boardMapper.reviewEdit(dto);
 		return "redirect:review_list.board";
 	}
 	@RequestMapping("/review_delete.board")
@@ -180,7 +189,7 @@ public class BoardController {
 	public String replyWritePro(@RequestParam int article_num, HttpServletRequest req,
 			@RequestParam String id, @RequestParam String content) {
 		ReplyDTO dto = new ReplyDTO();
-		int reply_num =0;
+		int reply_num = 0;
 		if(StringUtils.isEmpty(req.getParameter("reply_num"))) {
 			dto.setRe_step(0);
 			dto.setRe_level(0);

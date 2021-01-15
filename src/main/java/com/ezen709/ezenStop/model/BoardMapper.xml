@@ -45,11 +45,16 @@
  		from ezen_review_board
  		where article_num = #{article_num}
  	</delete>
- 	<delete id="reviewfileDelete" parameterType="Integer">
- 		delete image
- 		from ezen_review_board
+ 	<update id="reviewfileDelete" parameterType="Integer">
+ 		update ezen_review_Board
+ 		set image = '파일없음', filesize = 0
  		where article_num = #{article_num}
- 	</delete>
+ 	</update>
+ 	<update id="reviewEdit" parameterType="ReviewBoardDTO">
+ 		update ezen_review_Board
+ 		set category = #{category}, subject = #{subject}, content = #{content}, image = #{image}, filesize = #{filesize}
+ 		where article_num = #{article_num}
+ 	</update>
  	<select id="checkUserUpDown" parameterType="BoardUpDownDTO" resultType="Integer">
  		select count(*) from board_updown where ((article_num = #{article_num}) and (userId = #{userId}))
  	</select>
