@@ -1,6 +1,6 @@
 package com.ezen709.ezenStop.model;
 
-public class ReviewBoardDTO {
+public class ReviewBoardDTO implements Comparable<ReviewBoardDTO> {
 	private int article_num;		/*글번호*/
 	private String category;		/*소분류*/
 	private String subject;			/*제목*/
@@ -107,5 +107,7 @@ public class ReviewBoardDTO {
 	public void setFilesize(int filesize) {
 		this.filesize = filesize;
 	}
-	
+	public int compareTo(ReviewBoardDTO dto) {
+		return String.valueOf(this.article_num).compareTo(String.valueOf(dto.getArticle_num()));
+	}
 }
