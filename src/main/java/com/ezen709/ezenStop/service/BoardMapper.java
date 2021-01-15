@@ -51,6 +51,22 @@ public class BoardMapper {
 		map.put("replyCount", replyCount);
 		sqlSession.update("updateReplyCount", map);
 	}
+	public int searchReviewGetCount(String searchType, String searchString) {
+		Map<String,String> map = new Hashtable<>();
+		map.put("searchtype", searchType);
+		map.put("searchstring", searchString);
+		int count = sqlSession.selectOne("searchReviewGetCount",map);
+		return count;
+	}
+	public List<ReviewBoardDTO> searchMember(String searchType, String searchString,int startrow, int endrow){
+		Map map = new Hashtable();
+		map.put("searchtype", searchType);
+		map.put("searchstring", searchString);
+		map.put("start", startrow);
+		map.put("end", endrow);
+		List<ReviewBoardDTO> list = sqlSession.selectList("searchReview",map);
+		return list;
+	}
 	public int checkUserUpDown(int article_num, String userId) {
 		BoardUpDownDTO dto = new BoardUpDownDTO();
 		dto.setArticle_num(article_num);

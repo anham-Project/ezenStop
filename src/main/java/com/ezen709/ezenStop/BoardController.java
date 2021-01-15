@@ -107,6 +107,7 @@ public class BoardController {
 		ReviewBoardDTO reviewDetail = boardMapper.reviewDetail(article_num);
 		List<ReplyDTO> replyList = replyMapper.replyList(article_num);
 		ModelAndView mav = new ModelAndView("board/reviewDetail");
+		mav.addObject("uploadPath", uploadPath);
 		mav.addObject("reviewDetail", reviewDetail);
 		mav.addObject("replyList", replyList);
 		return mav;
@@ -184,6 +185,38 @@ public class BoardController {
 			}
 		}
 		return "redirect:review_list.board";
+	}
+	@RequestMapping("/review_find.board")
+	public ModelAndView searchMember(HttpServletRequest req) throws IOException {
+		
+		String searchType = req.getParameter("searchType");
+		String searchString = "%"+req.getParameter("searchString")+"%";
+		String pageNum = req.getParameter("pageNum");
+		if (pageNum == null) {
+			pageNum = "1";
+		}
+		int pageSize = 10;
+		int currentPage = Integer.parseInt(pageNum);
+		int startRow = pageSize * currentPage - (pageSize - 1);
+		int endRow = pageSize * currentPage;
+		int count = boardMapper.searchReviewGetCount(searchType,searchString);
+		if (endRow>count) endRow = count;
+		List<ReviewBoardDTO> reviewList = boardMapper.searchMember(searchType, searchString, startRow, endRow);
+		int startNum = count - ((currentPage-1) * pageSize);
+		int pageBlock = 3;
+		int pageCount = count/pageSize + (count%pageSize == 0 ? 0 : 1);
+		int startPage = (currentPage - 1)/pageBlock * pageBlock + 1;
+		int endPage = startPage + pageBlock - 1;
+		if (endPage>pageCount) endPage = pageCount;
+		ModelAndView mav = new ModelAndView("board/reviewList");
+		mav.addObject("count", count);
+		mav.addObject("startNum", startNum);
+		mav.addObject("pageCount", pageCount);
+		mav.addObject("startPage", startPage);
+		mav.addObject("endPage", endPage);
+		mav.addObject("pageBlock", pageBlock);
+		mav.addObject("reviewList", reviewList);
+		return mav;
 	}
 	@RequestMapping("/review_reply_write.board")
 	public String replyWritePro(@RequestParam int article_num, HttpServletRequest req,
