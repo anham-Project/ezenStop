@@ -129,6 +129,14 @@ public class BoardMapper {
 		map.put("end", end);
 		return sqlSession.selectList("getReportList", map);
 	}
+	public List<BoardReportDTO> SearchReportList(String searchType,String searchString,int start, int end){
+		Map map = new Hashtable<>();
+		map.put("searchType", searchType);
+		map.put("searchString", searchString);
+		map.put("start", start);
+		map.put("end", end);
+		return sqlSession.selectList("SearchReportList", map);
+	}
 	public int reportGetCount() {
 		return sqlSession.selectOne("reportGetCount");
 	}

@@ -128,4 +128,15 @@
  		set visible = (visible * -1)
  		where article_num = #{article_num}
  	</update>
+ 	<select id="SearchReportList" parameterType="java.util.Map" resultType="BoardReportDTO">
+ 		select * 
+		from (
+			select rownum rn, A.* 
+		 	from (
+		 		select * 
+		 		from board_report where ${searchType} like #{searchString}
+		 		order by article_num desc)A
+		 	) 
+		where rn between #{start} and #{end}
+ 	</select>
 </mapper>
