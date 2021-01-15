@@ -423,8 +423,14 @@ public class LoginController {
 		System.out.println(uploadPath);
 		mav.addObject("upPath",uploadPath);
 		mav.addObject("CMDTO",dto);
-		
 		return mav;
+	}
+	@RequestMapping(value="/myBoard.login", method=RequestMethod.GET)
+	public void getDetail(HttpServletRequest req, HttpServletResponse resp) throws IOException{
+		String article_num = req.getParameter("article_num");
+		List<String> hasDetaillocationTable = loginMapper.getTableHasLocation();
+		String location = loginMapper.getLocation(hasDetaillocationTable,article_num);
+		resp.getWriter().write(location);
 	}
 	class MyAuthentication extends Authenticator {
 	    PasswordAuthentication pa;

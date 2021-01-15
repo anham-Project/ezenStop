@@ -240,7 +240,7 @@
 							aria-haspopup="true" aria-expanded="false"> 관리자용 게시판 </a>
 							<div class="dropdown-menu" aria-labelledby="navbarDropdown">
 								<a class="dropdown-item" href="reportBoard.board">신고 게시판</a> <a
-									class="dropdown-item" href="#">삭제 대기 게시판</a> <a
+									class="dropdown-item" href="unvisible_list.board">비활성화 된 게시판</a> <a
 									class="dropdown-item" href="member_management.login">회원 관리 게시판</a>
 							</div></li>
 					</c:if>
@@ -254,7 +254,7 @@
 							data-toggle="dropdown" role="button" aria-haspopup="true"
 							aria-expanded="false"> ${sessionScope.userId }로그인된세션아이디 </a>
 							<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-							<a class="dropdown-item" href="#">회원정보</a>
+							<a class="dropdown-item" href="myBoard.login">내 게시글</a>
 							<a class="dropdown-item" href="javascript:myPage()">마이페이지</a>
 							<a class="dropdown-item" href="logout.login">로그아웃</a>
 							</div></li>

@@ -139,4 +139,7 @@
 		 	) 
 		where rn between #{start} and #{end}
  	</select>
+ 	<select id="selectUnvisibleBoard" parameterType="java.util.Map" resultType="ReviewBoardDTO">
+ 		select * from ${tableName} where visible = '-1' 
+ 	</select>
 </mapper>
