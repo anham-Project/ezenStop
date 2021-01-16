@@ -1,12 +1,12 @@
 package com.ezen709.ezenStop.model;
 
 public class ChatDTO {
-	private int chatId;
-	private String fromId;
-	private String toId;
-	private String chatContent;
-	private String chatTime;
-	private int chatRead;
+	private int chatId;				//채팅 내용을 담고있는 chat객체의 고유primary key;
+	private String fromId;			//보내는사람의 id
+	private String toId;			//받는사람의 id
+	private String chatContent;		//채팅 내용
+	private String chatTime;		//메세지를 보낸 시간
+	private int chatRead;			//메세지 읽음 여부
 	public int getChatRead() {
 		return chatRead;
 	}

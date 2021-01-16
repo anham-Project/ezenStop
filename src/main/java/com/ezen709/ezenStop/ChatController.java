@@ -1,7 +1,6 @@
 package com.ezen709.ezenStop;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.List;
 
@@ -11,10 +10,8 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.ezen709.ezenStop.model.ChatDTO;
 import com.ezen709.ezenStop.service.ChatMapper;
@@ -23,14 +20,15 @@ import com.ezen709.ezenStop.service.ChatMapper;
 public class ChatController {
 	@Autowired
 	private ChatMapper chatMapper;
-
+	
+	
+	//채팅보내기 처리
 	@RequestMapping(value = "/chatSubmit.chat", method = { RequestMethod.GET, RequestMethod.POST })
 	public void chatSubmit(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 		HttpSession session = req.getSession();
 		String userId = (String) session.getAttribute("userId");
 		String toId = (String) session.getAttribute("toId");
 		String chatContent = req.getParameter("chatContent");
-		System.out.println(chatContent);
 		ChatDTO dto = new ChatDTO();
 		dto.setFromId(userId);
 		dto.setToId(toId);
@@ -45,7 +43,7 @@ public class ChatController {
 			resp.getWriter().write(res);
 		}
 	}
-
+	//채팅내역 불러오기
 	@RequestMapping(value = "/chatList.chat", method = { RequestMethod.GET, RequestMethod.POST })
 	public void chatList(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 		req.setCharacterEncoding("EUC-KR");
