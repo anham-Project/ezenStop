@@ -47,6 +47,14 @@ public class LoginMapper {
 		int count = sqlSession.selectOne("find_passwd",map);
 		return count;
 	}
+	public String getIdGrade(String reply_id) {
+		String grade = sqlSession.selectOne("getIdGrade", reply_id) +"";
+		return grade;
+	}
+	public String getIdLocation(String reply_id) {
+		String grade = (String)sqlSession.selectOne("getIdLocation", reply_id);
+		return grade;
+	}
 	public String change_passwd(String id) {
 		Map<String,String> map = new Hashtable<>();
 		String passwd = String.valueOf((int)(Math.random()*900000+100000));

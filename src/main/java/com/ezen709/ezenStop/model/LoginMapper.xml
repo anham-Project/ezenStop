@@ -9,7 +9,7 @@
  <insert id= "insert_certification" parameterType="ezen_certificationDTO">
  		insert into ezen_certification values(#{id},#{name},#{image},#{filesize},sysdate)
  </insert>
-<select id="id_check" parameterType="String" resultType="Integer">
+ <select id="id_check" parameterType="String" resultType="Integer">
 		 select count(*) from ezen_member where id=#{id}
  </select>
  <select id="emailCheck" parameterType="String" resultType="Integer">
@@ -44,6 +44,12 @@
  </select>
  <select id="memberGetCount" resultType="Integer">
  		select count(*)	from ezen_member
+ </select>
+ <select id="getIdGrade" parameterType="String" resultType="Integer">
+ 		select grade from ezen_member where id= #{reply_id}
+ </select>
+ <select id="getIdLocation" parameterType="String" resultType="Integer">
+ 		select academyLocation from ezen_member where id= #{reply_id}
  </select>
  <select id="getWaittingMemberList" parameterType="java.util.Map" resultType="ezen_memberDTO">
  		select * from (
