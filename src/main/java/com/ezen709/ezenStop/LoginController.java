@@ -379,7 +379,7 @@ public class LoginController {
 	public ModelAndView searchMember(HttpServletRequest req) throws IOException {
 		
 		String searchType = req.getParameter("searchType");
-		String searchString = req.getParameter("searchString");
+		String searchString = "%"+req.getParameter("searchString")+"%";
 		String pageNum = req.getParameter("pageNum");
 		if (pageNum == null) {
 			pageNum = "1";
@@ -430,8 +430,40 @@ public class LoginController {
 		ModelAndView mav = new ModelAndView("login/myBoard");
 		String id = req.getParameter("id");
 		List<String> hasDetaillocationTable = loginMapper.myBoardLocation();
-		List<Map> list = loginMapper.getLocation(hasDetaillocationTable,id);
+		List<ReviewBoardDTO> list = loginMapper.getLocation(hasDetaillocationTable,id);
 		mav.addObject("myBoardList",list);
+		return mav;
+	}
+	@RequestMapping("/myBoard_find.board")
+	public ModelAndView search_myBoard(HttpServletRequest req, HttpServletResponse resp) {
+		String pageNum = req.getParameter("pageNum");
+		String searchType = req.getParameter("searchType");
+		String searchString = "%"+req.getParameter("searchString")+"%";
+		String id = req.getParameter("id");
+		if (pageNum == null) {
+			pageNum = "1";
+		}
+		int pageSize = 2;
+		int currentPage = Integer.parseInt(pageNum);
+		int startRow = pageSize * currentPage - (pageSize - 1);
+		int endRow = pageSize * currentPage;
+		int count = loginMapper.search_myBoardGetCount(id,searchType,searchString);
+		if (endRow>count) endRow = count;
+		List<ReviewBoardDTO> list = loginMapper.search_myBoard(id,searchType,searchString,startRow, endRow);
+		int startNum = count - ((currentPage-1) * pageSize);
+		int pageBlock = 3;
+		int pageCount = count/pageSize + (count%pageSize == 0 ? 0 : 1);
+		int startPage = (currentPage - 1)/pageBlock * pageBlock + 1;
+		int endPage = startPage + pageBlock - 1;
+		if (endPage>pageCount) endPage = pageCount;
+		ModelAndView mav = new ModelAndView("board/unvisibleBoard");
+		mav.addObject("count", count);
+		mav.addObject("startNum", startNum);
+		mav.addObject("pageCount", pageCount);
+		mav.addObject("startPage", startPage);
+		mav.addObject("endPage", endPage);
+		mav.addObject("pageBlock", pageBlock);
+		mav.addObject("myBoardList", list);
 		return mav;
 	}
 	class MyAuthentication extends Authenticator {

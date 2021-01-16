@@ -223,7 +223,6 @@
 			alert("신고내용을 입력하지않아 취소됩니다.");
 			return;
 		}
-		alert(reportContent);
 		$.ajax({
 			type: "POST",
 			url: "reportPro.board",

@@ -373,6 +373,37 @@ public class BoardController {
 		mav.addObject("reportList", reportList);
 		return mav;
 	}
+	@RequestMapping("unvisible_find.board")
+	public ModelAndView unvisible_find(HttpServletRequest req){
+		String pageNum = req.getParameter("pageNum");
+		String searchType = req.getParameter("searchType");
+		String searchString = "%"+req.getParameter("searchString")+"%";
+		if (pageNum == null) {
+			pageNum = "1";
+		}
+		int pageSize = 2;
+		int currentPage = Integer.parseInt(pageNum);
+		int startRow = pageSize * currentPage - (pageSize - 1);
+		int endRow = pageSize * currentPage;
+		int count = boardMapper.searchUnvisibleGetCount(searchType,searchString);
+		if (endRow>count) endRow = count;
+		List<ReviewBoardDTO> unvisibleList = boardMapper.SearchUnvisibleList(searchType,searchString,startRow, endRow);
+		int startNum = count - ((currentPage-1) * pageSize);
+		int pageBlock = 3;
+		int pageCount = count/pageSize + (count%pageSize == 0 ? 0 : 1);
+		int startPage = (currentPage - 1)/pageBlock * pageBlock + 1;
+		int endPage = startPage + pageBlock - 1;
+		if (endPage>pageCount) endPage = pageCount;
+		ModelAndView mav = new ModelAndView("board/unvisibleBoard");
+		mav.addObject("count", count);
+		mav.addObject("startNum", startNum);
+		mav.addObject("pageCount", pageCount);
+		mav.addObject("startPage", startPage);
+		mav.addObject("endPage", endPage);
+		mav.addObject("pageBlock", pageBlock);
+		mav.addObject("unvisibleList", unvisibleList);
+		return mav;
+	}
 	@RequestMapping("/getDetail.board")
 	public void getDetail(HttpServletRequest req, HttpServletResponse resp) throws IOException{
 		String article_num = req.getParameter("article_num");
