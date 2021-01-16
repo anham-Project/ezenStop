@@ -28,7 +28,7 @@
 	}
 </script>
 	<h5><font size="3">내 게시판 </font></h5>
-<form name="f" action="report_find.board" method="post" onsubmit="return check()">
+<form name="f" action="myBoard_find.board" method="post" onsubmit="return check()">
 	<div class="row" style="padding-bottom:5px">
 		<div class="col-md-6">
 		</div>    
@@ -63,15 +63,15 @@
 	</c:if>		
 	<c:forEach var="dto" items="${myBoardList}">
 		<tr>
-			<td align="center"><c:out value="${startNum}" /></td>
-			<c:set var="startNum" value="${startNum-1}"/>
+			<td align="center"><c:out value="${dto.article_num}" /></td>
+			<c:set var="startNum" value="${startNum+1}"/>
 			<td align="left">			
 				<form name="f" onclick="javascript:findDetailPage('${dto.article_num}')">
 				<a href="#">${dto.subject}</a>
 				</form>
 			</td>
 			<td align="center">${dto.regdate}</td>
-			<td align="center">${dto.readcount}</td>
+			<td align="center">${dto.readCount}</td>
 		</tr>
 	</c:forEach>
 	</tbody>

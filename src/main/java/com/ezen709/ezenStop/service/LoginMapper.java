@@ -6,7 +6,6 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.ezen709.ezenStop.model.ChatDTO;
 import com.ezen709.ezenStop.model.*;
 
 @Service
@@ -145,16 +144,53 @@ public class LoginMapper {
 	public List<String> myBoardLocation(){
 		return sqlSession.selectList("myBoardLocation");
 	}
-	public List<Map> getLocation(List<String> list, String id) {
+	public int search_myBoardGetCount(String id, String searchType, String searchString) {
+		List<String> list = myBoardLocation();
+		List<ReviewBoardDTO> unvisibleList = new ArrayList<>();
+		for(String tableName : list) {
+			Map<String,String> map = new Hashtable<String,String>();
+			map.put("tableName", tableName);
+			map.put("id",id);
+			map.put("searchType", searchType);
+			map.put("searchString", searchString);
+			List<ReviewBoardDTO> result = sqlSession.selectList("search_myBoard",map);
+			for(ReviewBoardDTO dto : result) {
+				unvisibleList.add(dto);
+			}
+		}
+		return unvisibleList.size();
+	}
+	public List<ReviewBoardDTO> getLocation(List<String> list, String id) {
 		for(String tableName : list) {
 			Map map = new Hashtable<>();
 			map.put("tableName", tableName);
 			map.put("id", id);
-			List<Map> result = sqlSession.selectList("myBoard", map);
+			List<ReviewBoardDTO> result = sqlSession.selectList("myBoard", map);
 			if(result != null) {
 				return result;
 			}
 		}
 		return null;
+	}
+	public List<ReviewBoardDTO> search_myBoard(String id, String searchType, String searchString, int start, int end){
+		List<String> list = myBoardLocation();
+		List<ReviewBoardDTO> unvisibleList = new ArrayList<>();
+		for(String tableName : list) {
+			Map map = new Hashtable<>();
+			map.put("tableName", tableName);
+			map.put("id", id);
+			map.put("searchType",searchType);
+			map.put("searchString",searchString);
+			List<ReviewBoardDTO> result = sqlSession.selectList("search_myBoard", map);
+			if(result != null) {
+				return result;
+			}
+		}
+		Collections.sort(unvisibleList);
+		List<ReviewBoardDTO> sortedList = new ArrayList<>();
+		for(int i = start -1 ; i <= end -1 ; i++) {
+			sortedList.add(unvisibleList.get(i));
+		}
+		return sortedList;
 	}
 }
