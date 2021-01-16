@@ -5,6 +5,9 @@
 <!-- email_ok.jsp -->
 <html>
 <script type="text/javascript">
+function winclose(){
+	self.close()
+}
 function check(){
 	if(document.f.hardNumber.value!=${hardNumber}){
 		alert("인증번호가 올바르지 않습니다!")		
@@ -24,14 +27,17 @@ function check(){
        	<h4><b>이 메 일 인 증</b></h4>
         <hr/>
         </div>
-        <div class="row">
+        <div class="row" style="padding-left:40px">
       		<form action="sign_up.login" method="post" name="f" onsubmit="return check()">
-	        	<div class="input-group" style="padding-left:40px;">
-					<input class="form-control" type="text" name="hardNumber" class="box" size="20" placeholder="인증번호를 입력해주세요"> 			
-					<input class="btn btn-outline-secondary btn-sm" type="reset" value="취소">
+	        	<div class="input-group" style="padding-left:30px;">
+					<input class="form-control" type="text" name="hardNumber" class="box" size="30" placeholder="인증번호를 입력해주세요"> 			
 					<input class="btn btn-outline-secondary btn-sm" type="submit" value="확인">	
 			</div>
 			</form>
+		</div>
+		<br>
+		<div align="center">
+		<input class="btn btn-outline-secondary btn-sm" type="button" onclick="javascript:winclose()" value="닫기">
 		</div>
 	</div>
 </body>

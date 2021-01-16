@@ -5,6 +5,9 @@
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
 <!-- email.jsp -->
 <script>
+function winclose(){
+	self.close()
+}
 function check(re, what, message) {
     if(re.test(what.value)) {
         return true;
@@ -14,7 +17,6 @@ function check(re, what, message) {
     what.focus();
     //return false;
 }
-
 function validate() {
 	//var re2 =  /^[A-Za-z0-9_]+[A-Za-z0-9]*[@]{1}[A-Za-z0-9]+[A-Za-z0-9]*[.]{1}[A-Za-z]{1,3}$/;
     var email = document.getElementById("email");
@@ -70,17 +72,20 @@ function email_check(){
             <font color="gray" size="2px">중복되지 않은 이메일을 입력해주세요.</font>
         <hr/>
         </div>
-        <div class="row">
+        <div class="row" style="padding-left:50px;">
       		<form class="form" action="email_confirm.login" method="post" name="f">
         	<div class="col-12">
 	        	<div class="input-group" style="padding-left:10px;">
 					<input class="form-control" type="email" id="email" name="email" placeholder="이메일을 입력해주세요"> 			
-					<input class="btn btn-outline-secondary btn-sm" type="reset" value="취소">
-					<input class="btn btn-outline-secondary btn-sm" type="button" value="인증번호 전송" onclick="javascript:email_check()">	
+					<input class="btn btn-outline-secondary btn-sm" type="button" value="인증번호 전송" onclick="javascript:email_check()">
+				</div>
+				<br>
+				<div align="center">
+				<input class="btn btn-outline-secondary btn-sm" type="button" onclick="javascript:winclose()" value="닫기">
 				</div>
 			</div>
 			</form>
 		</div>
-	</div>
+		</div>
 </body>
 </html>
