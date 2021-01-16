@@ -69,21 +69,6 @@
 			}
 		})
 	}
-	function getWriterGrade(){
-		var reply_id = '${dto.id}';
-		$.ajax({
-			type: "POST",
-			url: "getWriterGrade.board",
-			contentType: 'application/x-www-form-urlencoded; charset=euc-kr',
-			data: {
-				reply_id: reply_id
-			},
-			datatype: 'text',
-			success: function(result){
-				$('#gradeIcon').html(<img src = '../../../resources/img/'+result+'.png'>);
-			}
-		})
-	}
 </script>
 <jsp:include page="../header.jsp" />
 <div class="container" style="margin-top: 30px; margin-bottom: 10px;">
@@ -112,10 +97,12 @@
 		style="padding: 0px 10px 20px 20px; min-height: 300px;">
 		<div class="col-md-12">${reviewDetail.content}</div>
 	</div>
+	<c:if test="${reviewDetail.filesize != 0}">
 	<div class="row">
-		<div class="col-md-12">첨부된 파일 : <img src="${uploadPath}/${reviewDetail.image}" border="0" alt="파일이 손상되었습니다."
+		<div class="col-md-12">첨부된 파일 : <img src="${uploadPath}/${reviewDetail.image}" border="0"
 			style="max-width:300px; max-height:300px;"></div>
 	</div>
+	</c:if>
 	<c:if test="${sessionScope.userId == reviewDetail.id}">
 		<div class="row">
 			<div class="col-md-12" align="center">
@@ -159,7 +146,7 @@
 			<c:forEach var="dto" items="${replyList}">
 				<div class="row"
 					style="padding: 5px 5px 5px 5px; background-color: #F7F7F7;">
-					<div class="col-md-12" align="left"><h5 id="gradeIcon"></h5>${dto.id}
+					<div class="col-md-12" align="left"><span id="${dto.reply_num }"></span><b>${dto.id}</b>
 						<font color="gray">${dto.regdate} ${dto.regdate_time} | </font>
 						<c:if test="${sessionScope.userId == dto.id || sessionScope.userGrade == 2}">
 							<a
@@ -172,6 +159,21 @@
 							onclick="addInput('${dto.reply_num}','${dto.id}');" />
 					</div>
 				</div>
+<script>
+var reply_id = '${dto.id}';
+$.ajax({
+	type: "POST",
+	url: "getWriterGrade.board",
+	contentType: 'application/x-www-form-urlencoded; charset=euc-kr',
+	data: {
+		reply_id: reply_id
+	},
+	datatype: 'text',
+	success: function(result){
+		$('#${dto.reply_num}').append("<img src = 'resources/img/"+result+".png'>");
+	}
+})
+</script>
 			</c:forEach>
 		</c:if>
 		<script>

@@ -254,15 +254,15 @@ public class BoardController {
 		return "redirect:review_detail.board?article_num="+article_num;
 	}
 	@RequestMapping("/getWriterGrade.board")
-	public String getWriterGrade(HttpServletRequest req, HttpServletResponse resp) throws IOException{
+	public void getWriterGrade(HttpServletRequest req, HttpServletResponse resp) throws IOException{
 		String reply_id = req.getParameter("reply_id");
-		String grade = "";
+		String grade = loginMapper.getIdGrade(reply_id);
 		if(grade.equals("2") || grade.equals("0")){
-			grade = (String)loginMapper.getGrade("reply_id");
+			
 		}else if(grade.equals("1")) {
-			grade = (String)loginMapper.getAcademyLocation("reply_id");
+			grade = loginMapper.getIdLocation(reply_id);
 		}
-		return grade;
+		resp.getWriter().write(grade);
 	}
 	@RequestMapping("/updownPro.board")
 	public void updownPro(HttpServletRequest req, HttpServletResponse resp) throws IOException {
