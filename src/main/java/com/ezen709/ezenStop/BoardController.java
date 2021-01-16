@@ -24,6 +24,7 @@ import com.ezen709.ezenStop.model.BoardReportDTO;
 import com.ezen709.ezenStop.model.ReplyDTO;
 import com.ezen709.ezenStop.model.ReviewBoardDTO;
 import com.ezen709.ezenStop.service.BoardMapper;
+import com.ezen709.ezenStop.service.LoginMapper;
 import com.ezen709.ezenStop.service.ReplyMapper;
 
 @Controller
@@ -34,6 +35,9 @@ public class BoardController {
 	
 	@Autowired
 	private ReplyMapper replyMapper;
+	
+	@Autowired
+	private LoginMapper loginMapper;
 	
 	@Resource(name="uploadPath")
 	private String uploadPath;
@@ -242,12 +246,23 @@ public class BoardController {
 		boardMapper.updateReplyCount(dto.getArticle_num(), replyCount);
 		return "redirect:review_detail.board?article_num="+article_num;
 	}
-	@RequestMapping("review_reply_delete.board")
+	@RequestMapping("/review_reply_delete.board")
 	public String replyDeletePro(@RequestParam int reply_num, @RequestParam int article_num) {
 		replyMapper.replyDelete(reply_num);
 		int replyCount = replyMapper.replyCount(article_num);
 		boardMapper.updateReplyCount(article_num, replyCount);
 		return "redirect:review_detail.board?article_num="+article_num;
+	}
+	@RequestMapping("/getWriterGrade.board")
+	public String getWriterGrade(HttpServletRequest req, HttpServletResponse resp) throws IOException{
+		String reply_id = req.getParameter("reply_id");
+		String grade = "";
+		if(grade.equals("2") || grade.equals("0")){
+			grade = (String)loginMapper.getGrade("reply_id");
+		}else if(grade.equals("1")) {
+			grade = (String)loginMapper.getAcademyLocation("reply_id");
+		}
+		return grade;
 	}
 	@RequestMapping("/updownPro.board")
 	public void updownPro(HttpServletRequest req, HttpServletResponse resp) throws IOException {

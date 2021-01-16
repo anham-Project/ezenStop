@@ -69,6 +69,21 @@
 			}
 		})
 	}
+	function getWriterGrade(){
+		var reply_id = '${dto.id}';
+		$.ajax({
+			type: "POST",
+			url: "getWriterGrade.board",
+			contentType: 'application/x-www-form-urlencoded; charset=euc-kr',
+			data: {
+				reply_id: reply_id
+			},
+			datatype: 'text',
+			success: function(result){
+				$('#gradeIcon').html(<img src = '../../../resources/img/'+result+'.png'>);
+			}
+		})
+	}
 </script>
 <jsp:include page="../header.jsp" />
 <div class="container" style="margin-top: 30px; margin-bottom: 10px;">
@@ -135,17 +150,16 @@
 		</div>
 	</c:if>
 
-	<hr />
+	<hr/>
 	<form class="form-horizontal" name="f" method="post"
 		action="review_reply_write.board" onsubmit="return check()">
 		<input type="hidden" name="id" value="${sessionScope.userId}">
-		<input type="hidden" name="article_num"
-			value="${reviewDetail.article_num}">
+		<input type="hidden" name="article_num" value="${reviewDetail.article_num}">
 		<c:if test="${reviewDetail.replyCount != 0}">
 			<c:forEach var="dto" items="${replyList}">
 				<div class="row"
 					style="padding: 5px 5px 5px 5px; background-color: #F7F7F7;">
-					<div class="col-md-12" align="left">${dto.id}
+					<div class="col-md-12" align="left"><h5 id="gradeIcon"></h5>${dto.id}
 						<font color="gray">${dto.regdate} ${dto.regdate_time} | </font>
 						<c:if test="${sessionScope.userId == dto.id || sessionScope.userGrade == 2}">
 							<a
