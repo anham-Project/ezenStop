@@ -5,7 +5,11 @@
 <mapper namespace="com.ezen709.ezenStop.model">
  	<select id="replyList" parameterType="java.util.Map" resultType="ReplyDTO">
 		select * 
-		from (select rownum rn, A.* from (select * from ezen_reply order by re_step asc)A) 
+		from (select rownum rn, A.*
+		from (select ezen_reply.*, ezen_member.grade
+			 from ezen_reply, ezen_member
+			 where ezen_reply.id = ezen_member.id
+			  order by re_step asc)A) 
 		where article_num = #{article_num}
  	</select>
  	<update id="plusStep" parameterType="java.util.Map">

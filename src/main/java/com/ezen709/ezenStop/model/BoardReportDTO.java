@@ -5,6 +5,13 @@ public class BoardReportDTO {
 	private String userId;
 	private String reportContent;
 	private String reportDate;
+	private int visible;			// 활성화상태역시 join으로가져오기위해 db엔없지만 생성.
+	public int getVisible() {
+		return visible;
+	}
+	public void setVisible(int visible) {
+		this.visible = visible;
+	}
 	public int getArticle_num() {
 		return article_num;
 	}

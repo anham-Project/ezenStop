@@ -16,6 +16,13 @@ public class ReviewBoardDTO implements Comparable<ReviewBoardDTO> {
 	private int visible;			/*활성화-1/비활성화-0*/
 	private String image;			/*이미지 파일이름*/
 	private int filesize;			/*파일크기*/
+	private int grade;				// 유저등급 **** DB 에는 들어가지않지만 JOIN할때 불러오는것의 편의를 위해 만들어줌.
+	public int getGrade() {
+		return grade;
+	}
+	public void setGrade(int grade) {
+		this.grade = grade;
+	}
 	public int getArticle_num() {
 		return article_num;
 	}

@@ -12,6 +12,9 @@
 		}
 		return true
 	}
+	function loginPlz(){
+		alert("게시물을 확인하려면 로그인해야합니다!!")
+	}
 </script>
 	<h5><font size="3">이젠'sTop게시판 > </font><b>지역별 강의 후기게시판</b></h5>
 <form name="f" action="review_find.board" method="post" onsubmit="return check()">
@@ -44,15 +47,14 @@
 		</tr>
 	</thead>
 	<tbody>
-<c:if test="${empty reviewList}">		
+<c:if test="${empty list}">		
 		<tr>
 			<td colspan="5">등록된 게시글이 없습니다.</td>
 		</tr>
 </c:if>		
-<c:forEach var="dto" items="${reviewList}">
+<c:forEach var="dto" items="${list}">
 		<tr>
-			<td align="center"><c:out value="${startNum}"/></td>
-			<c:set var="startNum" value="${startNum-1}"/>
+			<td align="center"><c:out value="${dto.article_num}"/></td>
 			<td align="left">			
 	<c:if test="${sessionScope.userId != null}">
 				<a href="review_detail.board?article_num=${dto.article_num}">
@@ -63,13 +65,14 @@
 				</a>
 	</c:if>
 	<c:if test="${sessionScope.userId == null}">
-		${dto.category} ${dto.subject}
+		<a href="#" onclick="javascript:loginPlz()">${dto.category} ${dto.subject}
 		<c:if test="${dto.replyCount != 0}">
 			<font color="orange" size="2">[${dto.replyCount}]</font>
 		</c:if>
+		</a>
 	</c:if>
 			</td>
-			<td align="center">${dto.id}</td>
+			<td align="center"><img class="media-object img-circle" style = "width: 30px; height: 30px;" src = "resources/img/${dto.grade }.jpg">${dto.id}</td>
 			<td align="center">${dto.regdate}</td>
 			<td align="center">${dto.readCount}</td>
 		</tr>

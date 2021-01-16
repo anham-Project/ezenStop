@@ -10,7 +10,13 @@ public class ReplyDTO {
 	private String content;		/*댓글내용*/
 	private String regdate;		/*댓글작성일*/
 	private String regdate_time;/*댓글작성시간*/
-	
+	private int grade;  		//ReviewBoardDTO와 마찬가지로 join을위해..
+	public int getGrade() {
+		return grade;
+	}
+	public void setGrade(int grade) {
+		this.grade = grade;
+	}
 	public int getArticle_num() {
 		return article_num;
 	}

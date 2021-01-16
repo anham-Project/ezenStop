@@ -4,7 +4,7 @@
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ezen709.ezenStop.model">
  	<select id="reviewList" parameterType="java.util.Map" resultType="ReviewBoardDTO">
-		select * 
+		<!-- select * 
 		from (
 			select rownum rn, A.* 
 		 	from (
@@ -13,19 +13,36 @@
 				where visible = 1
 		 		order by article_num desc)A
 		 	) 
+		where rn between #{start} and #{end}-->
+		select *
+		from(
+				select rownum rn, A.*
+				from(
+						select ezen_review_board.* , ezen_member.grade
+						from ezen_review_board, ezen_member
+						where ((ezen_review_board.id = ezen_member.id) and (ezen_review_board.visible = 1))
+						order by ezen_review_board.article_num desc)A
+					)
 		where rn between #{start} and #{end}
  	</select>
+ 	<resultMap type="ReviewBoardDTO" id="ReviewBoardDTO">
+ 		<result column="EZEN_REVIEW_BOARD.*" property="*"/>
+ 		<collection property="grade" resultMap="Ezen_memberDTO"></collection>
+ 	</resultMap>
 	<select id="reviewGetCount" resultType="Integer">
 		select count(*)
 		from ezen_review_board
 		where visible = 1
 	</select>
 	<select id="searchReview" parameterType="java.util.Map" resultType="ReviewBoardDTO">
-  		select * from (
-			select rownum rn, A.* from (
-		 		select * 
-		 		from ezen_review_board where ${searchtype} like #{searchstring} and visible = 1
-		 		order by article_num desc)A
+  		select * 
+  		from (
+			select rownum rn, A.* 
+			from (
+		 		select ezen_review_board.* , ezen_member.grade
+		 		from ezen_review_board, ezen_member 
+		 		where ((ezen_review_board.id = ezen_member.id) and (ezen_review_board.${searchtype} like #{searchstring}) and (visible = 1))
+		 		order by ezen_review_board.article_num desc)A
 		 	)
 		 where rn between #{start} and #{end}
 	</select>
@@ -50,9 +67,9 @@
  		to_char(sysdate,'yyyy-mm-dd'), to_char(sysdate,'hh24:mi'), 0, 0, 0, 0, 'review_detail.board', 1, #{image}, #{filesize})
  	</insert>
  	<select id="reviewDetail" parameterType="Integer" resultType="ReviewBoardDTO">
- 		select * 
- 		from ezen_review_board
- 		where article_num = #{article_num}
+ 		select ezen_review_board.*, ezen_member.grade 
+ 		from ezen_review_board , ezen_member
+ 		where ((ezen_review_board.id = ezen_member.id) and (article_num = #{article_num}))
  	</select>
  	<delete id="reviewDelete" parameterType="Integer">
  		delete
@@ -111,9 +128,10 @@
 		from (
 			select rownum rn, A.* 
 		 	from (
-		 		select * 
-		 		from board_report
-		 		order by article_num desc)A
+		 		select board_report.*, ezen_review_board.visible 
+		 		from board_report, ezen_review_board
+		 		where board_report.article_num = ezen_review_board.article_num
+		 		order by board_report.article_num desc)A
 		 	) 
 		where rn between #{start} and #{end}
  	</select>
@@ -133,9 +151,10 @@
 		from (
 			select rownum rn, A.* 
 		 	from (
-		 		select * 
-		 		from board_report where ${searchType} like #{searchString}
-		 		order by article_num desc)A
+		 		select board_report.*, ezen_review_board.visible 
+		 		from board_report, ezen_review_board
+		 		where ((board_report.article_num = ezen_review_board.article_num) and (board_report.${searchType} like #{searchString}))
+		 		order by board_report.article_num desc)A
 		 	) 
 		where rn between #{start} and #{end}
  	</select>

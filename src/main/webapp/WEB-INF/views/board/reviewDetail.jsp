@@ -79,7 +79,10 @@
 	</h5>
 	<div class="row"
 		style="padding-left: 10px; padding-top: 10px; padding-bottom: 10px; background-color: #EFF7EA;">
-		<div class="col-md-3">${reviewDetail.id}</div>
+		<div class="col-md-3">
+		<img class="media-object img-circle" style = "width: 30px; height: 30px;" src = "resources/img/${reviewDetail.grade }.jpg">
+		${reviewDetail.id}
+		</div>
 		<div class="col-md-6 text-center">
 			<b>${reviewDetail.subject}</b>
 		</div>
@@ -146,7 +149,9 @@
 			<c:forEach var="dto" items="${replyList}">
 				<div class="row"
 					style="padding: 5px 5px 5px 5px; background-color: #F7F7F7;">
-					<div class="col-md-12" align="left"><span id="${dto.reply_num }"></span><b>${dto.id}</b>
+					<div class="col-md-12" align="left">
+					<img class="media-object img-circle" style = "width: 30px; height: 30px;" src = "resources/img/${dto.grade }.jpg">
+					<b>${dto.id}</b>
 						<font color="gray">${dto.regdate} ${dto.regdate_time} | </font>
 						<c:if test="${sessionScope.userId == dto.id || sessionScope.userGrade == 2}">
 							<a
@@ -159,21 +164,6 @@
 							onclick="addInput('${dto.reply_num}','${dto.id}');" />
 					</div>
 				</div>
-<script>
-var reply_id = '${dto.id}';
-$.ajax({
-	type: "POST",
-	url: "getWriterGrade.board",
-	contentType: 'application/x-www-form-urlencoded; charset=euc-kr',
-	data: {
-		reply_id: reply_id
-	},
-	datatype: 'text',
-	success: function(result){
-		$('#${dto.reply_num}').append("<img src = 'resources/img/"+result+".png'>");
-	}
-})
-</script>
 			</c:forEach>
 		</c:if>
 		<script>

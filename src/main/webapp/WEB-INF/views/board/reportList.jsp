@@ -50,21 +50,29 @@
 	<thead>
 		<tr>
 			<th width="8%">신고된<br>글 번호</th>
+			<th width="10%">게시글의 상태</th>
 			<th width="58%">신고내용</th>
 			<th width="12%">신고자</th>
 			<th width="12%">신고일</th>
 		</tr>
 	</thead>
 	<tbody>
-<c:if test="${empty reportList}">		
+<c:if test="${empty list}">		
 		<tr>
 			<td colspan="4">신고된 게시글이 없습니다.</td>
 		</tr>
 </c:if>		
-<c:forEach var="dto" items="${reportList}">
+<c:forEach var="dto" items="${list}">
 		<tr>
 			<td align="center"><c:out value="${dto.article_num}"/></td>
-			<c:set var="startNum" value="${startNum-1}"/>
+			<td align="center">
+				<c:if test="${dto.visible == 1 }">
+					활성화
+				</c:if>
+				<c:if test="${dto.visible == -1}">
+					비활성화
+				</c:if>
+			</td>
 			<td align="left">			
 				<form name="f" onclick="javascript:findDetailPage('${dto.article_num}')">
 				<a href="#">${dto.reportContent}</a>
