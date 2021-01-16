@@ -34,10 +34,13 @@
 					alert('이미 사용중인 아이디입니다.')
 					$('#idCheck').val('false')
 					$('#str').html('<font size="2" color="gray">다른 아이디로 중복체크를 해주세요.</font>')
-				}else {
+				}else if(result =='0') {
 					alert('사용 가능한 아이디입니다.')
 					$('#idCheck').val('true')
 					$('#str').html('<font size="2" color="gray">아이디 중복체크 완료!!</font>')
+				}else {
+					alert('올바르지 않은 아이디 형식입니다.')
+					$('#idCheck').val('false')
 				}
 			}
 		})
@@ -79,7 +82,7 @@
        	<h4><b>회 원 가 입</b></h4>
         <hr/>
         </div>
-        <div class="row">
+        <div class="row" style="padding-left:50px">
       		<form name="f" method="post" action="sign_up_ok.login" onsubmit="return validate()">
 	        	<div class="input-group" style="padding-left:5%; padding-right:5%; padding-bottom:3px; max-width:80%">
 					<input class="form-control" type="text" id="name" name="name" placeholder="이름">	
@@ -88,9 +91,9 @@
 					<input class="form-control" type="text" id="id" name="id" placeholder="아이디">
 					<input class="btn btn-outline-secondary btn-sm" type="button" onclick="javascript:id_check()" value="중복체크">
 				</div>
-				<div class="input-group" style="padding-left:5%; padding-bottom:3px; max-width:90%">
+				<div class="input-group" style="padding-left:5%; padding-right:5%;padding-bottom:3px; max-width:80%">
 					<font size="2" color="gray">※ 아이디는 4~12자의 영문 대소문자와 숫자로만 입력하세요.<br></font>
-					<div id="str"><font size="2" color="gray">아이디 중복체크를 해주세요.</font></div>
+					<div id="str"></div>
 				</div>
 				<input type="hidden" id="idCheck" name="idCheck" value="false">
 				<input type="hidden" name="email" value="${sessionScope.email}">

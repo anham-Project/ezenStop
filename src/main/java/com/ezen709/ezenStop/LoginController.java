@@ -98,6 +98,11 @@ public class LoginController {
 	@RequestMapping("/id_check.login")
 	public void id_check(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 		String id = req.getParameter("id");
+		System.out.println(id);
+		if(id.equals("")) {
+			resp.getWriter().write("ฐ๘น้");
+			return;
+		}
 		String res = String.valueOf(loginMapper.id_check(id));
 		resp.getWriter().write(res);
 	}
