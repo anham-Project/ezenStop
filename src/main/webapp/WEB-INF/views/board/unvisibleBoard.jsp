@@ -93,15 +93,15 @@
 					<ul class="pagination">
 						<c:if test="${startPage > pageBlock}">
 							<li class="page-item"><a class="page-link"
-								href="review_list.board?pageNum=${startPage-pageBlock}">이전</a></li>
+								href="unvisible_list.board?pageNum=${startPage-pageBlock}">이전</a></li>
 						</c:if>
 						<c:forEach var="i" begin="${startPage}" end="${endPage}">
 							<li class="page-item"><a class="page-link"
-								href="review_list.board?pageNum=${i}">${i}</a></li>
+								href="unvisible_list.board?pageNum=${i}">${i}</a></li>
 						</c:forEach>
 						<c:if test="${endPage < pageCount}">
 							<li class="page-item"><a class="page-link"
-								href="review_list.board?pageNum=${endPage+pageBlock}">다음</a></li>
+								href="unvisible_list.board?pageNum=${endPage+pageBlock}">다음</a></li>
 						</c:if>
 					</ul>
 				</div>
