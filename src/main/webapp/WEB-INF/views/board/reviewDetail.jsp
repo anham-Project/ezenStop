@@ -148,8 +148,11 @@
 		<c:if test="${reviewDetail.replyCount != 0}">
 			<c:forEach var="dto" items="${replyList}">
 				<div class="row"
-					style="padding: 5px 5px 5px 5px; background-color: #F7F7F7;">
+					style="padding: 5px 5px 5px ${5+dto.re_level*13}px; background-color: #F7F7F7;">
 					<div class="col-md-12" align="left">
+					<c:if test="${dto.re_level>0}">
+					&nbsp;&nbsp;&nbsp;&nbsp;
+					</c:if>
 					<img class="media-object img-circle" style = "width: 30px; height: 30px;" src = "resources/img/${dto.grade }.jpg">
 					<b>${dto.id}</b>
 						<font color="gray">${dto.regdate} ${dto.regdate_time} | </font>
@@ -158,7 +161,11 @@
 								href="javascript:deleteReply('${dto.reply_num}','${reviewDetail.article_num}');">[삭제]</a>
 						</c:if>
 					</div>
-					<div class="col-md-12" align="left">${dto.content}</div>
+					<div class="col-md-12" align="left">
+					<c:if test="${dto.re_level>0}">
+					<img class="media-object img-circle" style = "width: 20px; height: 20px;" src = "resources/img/reply.png">
+					</c:if>
+					${dto.content}</div>
 					<div class="col-md-12" align="right" id="buttontype">
 						<input type="button" class="btn btn-info btn-sm" value="답글쓰기"
 							onclick="addInput('${dto.reply_num}','${dto.id}');" />

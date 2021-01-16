@@ -58,13 +58,12 @@
 	<tbody>
 	<c:if test="${empty myBoardList}">		
 		<tr>
-			<td colspan="4">신고된 게시글이 없습니다.</td>
+			<td colspan="4">내가 쓴 게시글이 없습니다.</td>
 		</tr>
 	</c:if>		
 	<c:forEach var="dto" items="${myBoardList}">
 		<tr>
 			<td align="center"><c:out value="${dto.article_num}" /></td>
-			<c:set var="startNum" value="${startNum+1}"/>
 			<td align="left">			
 				<form name="f" onclick="javascript:findDetailPage('${dto.article_num}')">
 				<a href="#">${dto.subject}</a>
@@ -78,22 +77,22 @@
 	</table>
 	<div class="row">
 	<c:if test="${count>0}">
-	<div class="col-md-4">
-	</div>
-	<div class="col-md-6">
-	<ul class = "pagination">
-	<c:if test="${startPage > pageBlock}">	
-		<li class="page-item"><a class="page-link" href="reportBoard.board?pageNum=${startPage-pageBlock}">이전</a></li>
+		<div class="col-md-4">
+		</div>
+		<div class="col-md-6">
+			<ul class = "pagination">
+				<c:if test="${startPage > pageBlock}">	
+					<li class="page-item"><a class="page-link" href="reportBoard.board?pageNum=${startPage-pageBlock}">이전</a></li>
+				</c:if>
+				<c:forEach var="i" begin="${startPage}" end="${endPage}">
+					<li class="page-item"><a class="page-link" href="reportBoard.board?pageNum=${i}">${i}</a></li>
+				</c:forEach>
+				<c:if test="${endPage < pageCount}">
+					<li class="page-item"><a class="page-link" href="reportBoard.board?pageNum=${endPage+pageBlock}">다음</a></li>
+				</c:if>
+			</ul>
+		</div>
 	</c:if>
-	<c:forEach var="i" begin="${startPage}" end="${endPage}">
-			<li class="page-item"><a class="page-link" href="reportBoard.board?pageNum=${i}">${i}</a></li>
-	</c:forEach>
-	<c:if test="${endPage < pageCount}">
-		<li class="page-item"><a class="page-link" href="reportBoard.board?pageNum=${endPage+pageBlock}">다음</a></li>
-	</c:if>
-	</ul>
-	</div>
-</c:if>
 	</div>
 </div>
 <jsp:include page="../footer.jsp" />
