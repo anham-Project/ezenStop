@@ -172,8 +172,8 @@ public class BoardController {
 		String[] reviewAddrList = {"[노원]","[종로]"};
 		String addrAndSuject = reviewDetail.getSubject();
 		String reviewAddr = addrAndSuject.substring(addrAndSuject.lastIndexOf("]")+1);
-		int addrLength = reviewAddr.length();
 		int allLength = addrAndSuject.length();
+		int addrLength = allLength - reviewAddr.length();
 		String subject = addrAndSuject.substring(addrLength,allLength);
 		reviewDetail.setSubject(subject);
 		mav.addObject("reviewDetail", reviewDetail);
