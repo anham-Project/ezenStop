@@ -33,7 +33,7 @@ function check(){
       		<form action="sign_up.login" method="post" name="f" onsubmit="return check()">
 	        <div class="col-12">	
 	        	<div class="input-group">
-					<input class="form-control" type="text" name="hardNumber" class="box" size="30" placeholder="인증번호를 입력해주세요"> 			
+					<input class="form-control" type="text" name="hardNumber" placeholder="인증번호를 입력해주세요"> 			
 					<input class="btn btn-outline-secondary btn-sm" type="submit" value="확인">	
 				</div>
 			</div>

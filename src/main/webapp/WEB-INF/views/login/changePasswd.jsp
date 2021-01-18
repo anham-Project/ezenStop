@@ -16,11 +16,19 @@
 		return true
 	}
 </script>
-<form name="f" action="changePasswd.login" method="post" onsubmit="return check()">
-<input type="hidden" name="id" value="${sessionScope.userId}">
-<input type="password" name="passwd" placeholder="비밀번호">
-<input type="password" name="passwdConfirm" placeholder="비밀번호 확인">
-<input type="submit" value="비밀번호 변경">
-<input type="reset" value="취소">
+<div class="row" style="padding-left:50px;">
+	<form name="f" action="changePasswd.login" method="post" onsubmit="return check()">
+	<input type="hidden" name="id" value="${sessionScope.userId}">
+	<div class="input-group A" style="padding-bottom:5px;">
+		<input class="form-control" type="password" name="passwd" placeholder="비밀번호">
+	</div>
+	<div class="input-group A" style="padding-bottom:10px;">
+		<input class="form-control" type="password" name="passwdConfirm" placeholder="비밀번호 확인">
+	</div>
+	<div align="center" style="padding-bottom:5px;">
+		<input class="btn btn-outline-secondary btn-sm" type="submit" value="비밀번호변경">&nbsp;
+		<input class="btn btn-outline-secondary btn-sm" type="button" value="취소">
+	</div>
 </form>
+</div>
 <%@include file="myPage_bot.jsp"%>

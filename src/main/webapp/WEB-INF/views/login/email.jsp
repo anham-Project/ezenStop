@@ -81,12 +81,12 @@ function email_check(){
 					<input class="btn btn-outline-secondary btn-sm" type="button" value="인증번호 전송" onclick="javascript:email_check()">
 				</div>
 				<br>
-				<div align="center">
+			</div>
+			<div align="center">
 				<input class="btn btn-outline-secondary btn-sm" type="button" onclick="javascript:winclose()" value="닫기">
-				</div>
 			</div>
 			</form>
 		</div>
-		</div>
+	</div>
 </body>
 </html>

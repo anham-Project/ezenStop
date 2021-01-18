@@ -177,10 +177,11 @@ height:40px;
 /*로그인 회원 관련 새 팝업창*/
 .containerline{
     width: 100%;
-    max-width: 400px;
-    min-height: 350px;
-    margin: 20px auto 20px auto;
+    min-width: 400px;
+    min-height: 400px;
+    margin: 10px auto 10px auto;
     padding: 20px 20px;
+    border-radius: 2px;
     border: 1px solid #e2e5e8;
     background-color: #fff;
 }
@@ -199,4 +200,47 @@ height:40px;
     text-align: center;
     overflow: hidden;
     margin: auto 10px auto 10px;
+}
+.containerline h6{
+    text-align: left;
+    font-size: 12px;
+    color: gray;
+}
+.containerline .input-group {
+	position: relative;
+	display: -ms-flexbox;
+	display: flex;
+	-ms-flex-wrap:nowrap;
+	flex-wrap: nowrap;
+}
+.containerline .input-group .A{
+	margin-left: 10%;
+	width: 90%;
+}
+.containerline .input-group .B {
+	width: 100%;
+}
+.lineBox{
+	border: 1px solid #d9dde1;
+	margin: 20px;
+	padding: 10px;
+}
+h4{
+    font-weight: bold;
+}
+.info h6{
+    text-align: left;
+    margin: -25px 80px 25px 120px;
+    padding: 3px;
+    font-size: 15px;
+    color: #343a41;
+    border-bottom: 1px solid #999;
+}
+.info h5{
+    text-align: left;
+    margin: 0px 20px;
+    font-weight: bold;
+    font-size: 18px;
+    color: #34699e;
+
 }

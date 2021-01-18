@@ -29,11 +29,11 @@
 				if(result == '1'){
 					alert('이미 사용중인 아이디입니다.')
 					$('#idCheck').val('false')
-					$('#str').html('<font size="2" color="gray">다른 아이디로 중복체크를 해주세요.</font>')
+					$('#addstr').html('<h5>다른 아이디로 중복체크를 해주세요.</h5>')
 				}else if(result =='0') {
 					alert('사용 가능한 아이디입니다.')
 					$('#idCheck').val('true')
-					$('#str').html('<font size="2" color="gray">아이디 중복체크 완료!!</font>')
+					$('#addstr').html('<h5>아이디 중복체크 완료!!</h5>')
 				}else {
 					alert('올바르지 않은 아이디 형식입니다.')
 					$('#idCheck').val('false')
@@ -78,38 +78,40 @@
        		<h4>회 원 가 입</h4>
         <hr/>
         </div>
-        <div class ="body">
         <div class="row">
       		<form name="f" method="post" action="sign_up_ok.login" onsubmit="return validate()">
-	        	<div class="input-group" style="width=90%;">
+	        <div class="col-12">	
+	        	<div class="input-group A">
 					<input class="form-control" type="text" id="name" name="name" placeholder="이름">	
 				</div>
-				<div class="input-group">
+				<div class="input-group A">
 					<input class="form-control" type="text" id="id" name="id" placeholder="아이디">
 					<input class="btn btn-outline-secondary btn-sm" type="button" onclick="javascript:id_check()" value="중복체크">
 				</div>
-				<div class="input-group">
-					<font size="2" color="gray">※ 아이디는 4~12자의 영문 대소문자와 숫자로만 입력하세요.<br></font>
-					<div id="str"></div>
+				<div class="input-group B">
+					<h6>※ 아이디는 4~12자의 영문 대소문자와 숫자로만 입력하세요.</h6>
+				</div>
+				<div class="input-group B">
+					<div id="addstr">&nbsp;</div>
 				</div>
 				<input type="hidden" id="idCheck" name="idCheck" value="false">
 				<input type="hidden" name="email" value="${sessionScope.email}">
-				<div class="input-group">
+				<div class="input-group A">
 					<input class="form-control" type="password" id="passwd" name="passwd" placeholder="비밀번호">
 				</div>
-				<div class="input-group">
+				<div class="input-group A">
 					<input class="form-control" type="password" name="checkpasswd" placeholder="비밀번호 확인">
 				</div>
-				<div class="input-group">
-					<font size="2" color="gray">※ 비밀번호를 한번 더 입력하세요.</font>
+				<div class="input-group B">
+					<h6>※ 비밀번호를 한번 더 입력해 주세요.</h6>
 				</div>
-				<div class="input-group">
+			</div>
+			<div align="center">
 					<input class="btn btn-outline-secondary btn-sm" type="submit" value="확인">&nbsp;
 					<input class="btn btn-outline-secondary btn-sm" type="button" value="취소">
-				</div>
+			</div>
 			</form>
 		</div>
 		</div>
-	</div>
 </body>
 </html>
