@@ -6,6 +6,9 @@
 	src="https://code.jquery.com/jquery-3.2.0.min.js"></script>
 <!-- sign_up.jsp -->
 <script>
+	function winclose(){
+		self.close()
+	}
 	function check(re, what, message) {
 	    if(re.test(what.value)) {
 	        return true;
@@ -73,12 +76,13 @@
 <title>회 원 가 입</title>
 </head>
 <body>
-	<div class ="containerline">
+	<div class ="lineBox">
 		<div class = "header">
        		<h4>회 원 가 입</h4>
         <hr/>
         </div>
         <div class="row">
+        	<div class="i-am-centered">
       		<form name="f" method="post" action="sign_up_ok.login" onsubmit="return validate()">
 	        <div class="col-12">	
 	        	<div class="input-group A">
@@ -92,7 +96,7 @@
 					<h6>※ 아이디는 4~12자의 영문 대소문자와 숫자로만 입력하세요.</h6>
 				</div>
 				<div class="input-group B">
-					<div id="addstr">&nbsp;</div>
+					<div id="addstr"></div>
 				</div>
 				<input type="hidden" id="idCheck" name="idCheck" value="false">
 				<input type="hidden" name="email" value="${sessionScope.email}">
@@ -108,9 +112,10 @@
 			</div>
 			<div align="center">
 					<input class="btn btn-outline-secondary btn-sm" type="submit" value="확인">&nbsp;
-					<input class="btn btn-outline-secondary btn-sm" type="button" value="취소">
+					<input class="btn btn-outline-secondary btn-sm" type="button" onclick="javascript:winclose()" value="닫기">
 			</div>
 			</form>
+			</div>
 		</div>
 		</div>
 </body>

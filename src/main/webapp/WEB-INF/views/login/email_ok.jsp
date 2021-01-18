@@ -23,25 +23,26 @@ function check(){
 <title>이메일 인증</title>
 </head>
 <body>
-	<div class ="containerline">
+	<div class ="lineBox">
 		<div class = "header">
        	<h4>이 메 일 인 증</h4>
             <h5>메일로 받은 인증번호를 입력해주세요.</h5>
         <hr/>
         </div>
         <div class="row">
+        	<div class="i-am-centered">
       		<form action="sign_up.login" method="post" name="f" onsubmit="return check()">
 	        <div class="col-12">	
 	        	<div class="input-group">
-					<input class="form-control" type="text" name="hardNumber" placeholder="인증번호를 입력해주세요"> 			
+					<input class="form-control" type="text" name="hardNumber" size="30" placeholder="인증번호를 입력해주세요"> 			
 					<input class="btn btn-outline-secondary btn-sm" type="submit" value="확인">	
 				</div>
 			</div>
 			</form>
-		</div>
-		<br>
 		<div align="center">
 		<input class="btn btn-outline-secondary btn-sm" type="button" onclick="javascript:winclose()" value="닫기">
+		</div>
+		</div>
 		</div>
 	</div>
 </body>

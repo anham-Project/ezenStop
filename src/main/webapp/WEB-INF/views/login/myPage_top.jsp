@@ -11,8 +11,9 @@
 </head>
 <div class ="lineBox">
 <body>
+<div align="center">
 <h4>마이페이지</h4>
-<ul class="nav nav-tabs">
+<ul class="nav nav-tabs justify-content-center">
   <li class="nav-item">
     <div id="myIn"><a class="nav-link" data-toggle="tab" href="myInfo.login?id=${sessionScope.userId}">내 정보</a></div>
   </li>
@@ -26,4 +27,6 @@
     <div id="mydrop"><a class="nav-link" data-toggle="tab" href="dropId.login">회원탈퇴</a></div>
   </li>
 </ul>
+</div>
 <br>
+

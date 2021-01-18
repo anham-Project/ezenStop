@@ -175,49 +175,39 @@ height:40px;
 }
 
 /*로그인 회원 관련 새 팝업창*/
-.containerline{
-    width: 100%;
-    min-width: 400px;
-    min-height: 400px;
-    margin: 10px auto 10px auto;
-    padding: 20px 20px;
-    border-radius: 2px;
-    border: 1px solid #e2e5e8;
-    background-color: #fff;
-}
-.containerline .header{
+.lineBox .header{
     text-align: center;
     overflow: hidden;
 }
-.containerline .header h4{
+.lineBox .header h4{
     font-weight: bold;
 }
-.containerline h5{
+.lineBox h5{
     font-size: 12px;
     color: gray;
 }
-.containerline .body{
+.lineBox .body{
     text-align: center;
     overflow: hidden;
     margin: auto 10px auto 10px;
 }
-.containerline h6{
+.lineBox h6{
     text-align: left;
     font-size: 12px;
     color: gray;
 }
-.containerline .input-group {
+.lineBox .input-group {
 	position: relative;
 	display: -ms-flexbox;
 	display: flex;
 	-ms-flex-wrap:nowrap;
 	flex-wrap: nowrap;
 }
-.containerline .input-group .A{
+.lineBox .input-group .A{
 	margin-left: 10%;
 	width: 90%;
 }
-.containerline .input-group .B {
+.lineBox .input-group .B {
 	width: 100%;
 }
 .lineBox{
@@ -244,3 +234,15 @@ h4{
     color: #34699e;
 
 }
+.info h5 .red{
+    text-align: center;
+    margin: 0px 20px;
+    font-weight: bold;
+    font-size: 18px;
+    color: red;
+
+}
+.i-am-centered { 
+	margin: auto; 
+	max-width: 700px;
+	}

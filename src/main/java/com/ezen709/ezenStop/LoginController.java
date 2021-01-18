@@ -201,7 +201,7 @@ public class LoginController {
 
 	@RequestMapping("/email_confirm.login") //인증번호 발송 
 	public ModelAndView email_confirm(HttpServletRequest request, ModelMap mo) throws Exception{
-			ModelAndView mav = new ModelAndView("message2");
+			ModelAndView mav = new ModelAndView("login/email_ok");
 			String toEmail = request.getParameter("email"); // 받는사람메일
 		try {
 			HttpSession session = request.getSession();

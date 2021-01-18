@@ -174,7 +174,7 @@
 		}, 3000);
 	}
 	function myPage(){
-		window.open('myInfo.login?id=${sessionScope.userId}', "이메일 인증", "width=750, height=500")
+		window.open('myInfo.login?id=${sessionScope.userId}', "이메일 인증", "width=704, height=450")
 	}
 </script>
 </head>
