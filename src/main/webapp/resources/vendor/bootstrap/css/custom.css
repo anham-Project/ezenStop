@@ -179,7 +179,7 @@ height:40px;
     width: 100%;
     max-width: 400px;
     min-height: 350px;
-    margin: 10px auto 10px auto;
+    margin: 20px auto 20px auto;
     padding: 20px 20px;
     border: 1px solid #e2e5e8;
     background-color: #fff;
@@ -187,4 +187,16 @@ height:40px;
 .containerline .header{
     text-align: center;
     overflow: hidden;
-}     
+}
+.containerline .header h4{
+    font-weight: bold;
+}
+.containerline h5{
+    font-size: 12px;
+    color: gray;
+}
+.containerline .body{
+    text-align: center;
+    overflow: hidden;
+    margin: auto 10px auto 10px;
+}

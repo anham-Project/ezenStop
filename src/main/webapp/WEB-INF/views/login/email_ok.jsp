@@ -2,6 +2,7 @@
     pageEncoding="EUC-KR"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+<link href="resources/vendor/bootstrap/css/custom.css" rel="stylesheet">
 <!-- email_ok.jsp -->
 <html>
 <script type="text/javascript">
@@ -22,16 +23,19 @@ function check(){
 <title>이메일 인증</title>
 </head>
 <body>
-	<div class = "container" style="margin-top:10px; margin-bottom:10px">
-		<div align="center">
-       	<h4><b>이 메 일 인 증</b></h4>
+	<div class ="containerline">
+		<div class = "header">
+       	<h4>이 메 일 인 증</h4>
+            <h5>메일로 받은 인증번호를 입력해주세요.</h5>
         <hr/>
         </div>
-        <div class="row" style="padding-left:40px">
+        <div class="row">
       		<form action="sign_up.login" method="post" name="f" onsubmit="return check()">
-	        	<div class="input-group" style="padding-left:30px;">
+	        <div class="col-12">	
+	        	<div class="input-group">
 					<input class="form-control" type="text" name="hardNumber" class="box" size="30" placeholder="인증번호를 입력해주세요"> 			
 					<input class="btn btn-outline-secondary btn-sm" type="submit" value="확인">	
+				</div>
 			</div>
 			</form>
 		</div>

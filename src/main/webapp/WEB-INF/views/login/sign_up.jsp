@@ -1,14 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
-    <script type="text/javascript"
+<link href="resources/vendor/bootstrap/css/custom.css" rel="stylesheet">
+<script type="text/javascript"
 	src="https://code.jquery.com/jquery-3.2.0.min.js"></script>
 <!-- sign_up.jsp -->
-<style>
-	.container .grayline{
-	border: 1px solid #E7E7E7
-	}
-</style>
 <script>
 	function check(re, what, message) {
 	    if(re.test(what.value)) {
@@ -77,40 +73,42 @@
 <title>회 원 가 입</title>
 </head>
 <body>
-	<div class = "container" style="margin-top:10px; margin-bottom:10px;">
-		<div align="center">
-       	<h4><b>회 원 가 입</b></h4>
+	<div class ="containerline">
+		<div class = "header">
+       		<h4>회 원 가 입</h4>
         <hr/>
         </div>
-        <div class="row" style="padding-left:50px">
+        <div class ="body">
+        <div class="row">
       		<form name="f" method="post" action="sign_up_ok.login" onsubmit="return validate()">
-	        	<div class="input-group" style="padding-left:5%; padding-right:5%; padding-bottom:3px; max-width:80%">
+	        	<div class="input-group" style="width=90%;">
 					<input class="form-control" type="text" id="name" name="name" placeholder="이름">	
 				</div>
-				<div class="input-group" style="padding-left:5%; padding-right:5%; max-width:80%;">
+				<div class="input-group">
 					<input class="form-control" type="text" id="id" name="id" placeholder="아이디">
 					<input class="btn btn-outline-secondary btn-sm" type="button" onclick="javascript:id_check()" value="중복체크">
 				</div>
-				<div class="input-group" style="padding-left:5%; padding-right:5%;padding-bottom:3px; max-width:80%">
+				<div class="input-group">
 					<font size="2" color="gray">※ 아이디는 4~12자의 영문 대소문자와 숫자로만 입력하세요.<br></font>
 					<div id="str"></div>
 				</div>
 				<input type="hidden" id="idCheck" name="idCheck" value="false">
 				<input type="hidden" name="email" value="${sessionScope.email}">
-				<div class="input-group" style="padding-left:5%; padding-right:5%; padding-bottom:3px; max-width:80%">
+				<div class="input-group">
 					<input class="form-control" type="password" id="passwd" name="passwd" placeholder="비밀번호">
 				</div>
-				<div class="input-group" style="padding-left:5%; padding-right:5%; padding-bottom:3px; max-width:80%">
+				<div class="input-group">
 					<input class="form-control" type="password" name="checkpasswd" placeholder="비밀번호 확인">
 				</div>
-				<div class="input-group" style="padding-left:5%; padding-right:5%; padding-bottom:3px; max-width:80%">
+				<div class="input-group">
 					<font size="2" color="gray">※ 비밀번호를 한번 더 입력하세요.</font>
 				</div>
-				<div class="input-group" style="padding-left:43%;">
+				<div class="input-group">
 					<input class="btn btn-outline-secondary btn-sm" type="submit" value="확인">&nbsp;
 					<input class="btn btn-outline-secondary btn-sm" type="button" value="취소">
 				</div>
 			</form>
+		</div>
 		</div>
 	</div>
 </body>
