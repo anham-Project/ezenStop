@@ -102,6 +102,8 @@
     	</c:if>
     	</div>
     	<c:if test="${reviewDetail.filesize == 0}"><b>&nbsp;첨부파일이 없습니다.&nbsp;&nbsp;</b>
+    		<input type="hidden" name="image0" value="파일없음">
+    		<input type="hidden" name="filesize0" value="0">
     	</c:if>
 	</div>
 	<div class="input-group" style="padding-bottom:5px">

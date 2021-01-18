@@ -69,14 +69,14 @@ function email_check(){
 <body>
 	<div class ="containerline">
 		<div class = "header">
-       	<h4><b>이 메 일 인 증</b></h4>
-            <font color="gray" size="2px">중복되지 않은 이메일을 입력해주세요.</font>
+       	<h4>이 메 일 인 증</h4>
+            <h5>중복되지 않은 이메일을 입력해주세요.</h5>
         <hr/>
         </div>
-        <div class="row" style="padding-left:50px;">
+        <div class="row">
       		<form class="form" action="email_confirm.login" method="post" name="f">
         	<div class="col-12">
-	        	<div class="input-group" style="padding-left:10px;">
+	        	<div class="input-group">
 					<input class="form-control" type="email" id="email" name="email" placeholder="이메일을 입력해주세요"> 			
 					<input class="btn btn-outline-secondary btn-sm" type="button" value="인증번호 전송" onclick="javascript:email_check()">
 				</div>
