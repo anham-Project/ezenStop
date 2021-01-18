@@ -115,6 +115,6 @@ public class ReviewBoardDTO implements Comparable<ReviewBoardDTO> {
 		this.filesize = filesize;
 	}
 	public int compareTo(ReviewBoardDTO dto) {
-		return String.valueOf(this.article_num).compareTo(String.valueOf(dto.getArticle_num()));
+		return Integer.compare(dto.getArticle_num(), this.article_num);
 	}
 }
