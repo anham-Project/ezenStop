@@ -33,6 +33,45 @@ public class LoginController {
 	@Autowired
 	private LoginMapper	loginMapper;
 	
+	public Map<String,Integer> setStartRowAndEndRow(HttpServletRequest req){
+		String pageNum = req.getParameter("pageNum");
+		if (pageNum == null) {
+			pageNum = "1";
+		}
+		int pageSize = 10;
+		int currentPage = Integer.parseInt(pageNum);
+		int startRow = pageSize * currentPage - (pageSize - 1);
+		int endRow = pageSize * currentPage;
+		Map<String,Integer> map = new Hashtable<>();
+		map.put("currentPage", currentPage);
+		map.put("startRow", startRow);
+		map.put("endRow", endRow);
+		map.put("pageSize", pageSize);
+		return map;
+	}
+	public void setEndRowWhenCountIsLessThanEndRow(Map<String,Integer> map, int count) {
+		if(map.get("endRow")>count) map.put("endRow", count);
+		return;
+	}
+	public ModelAndView finishMakeModelAndView(Map<String,Integer> map, List list, int count) { //list의자료형은 안정했습니다.(mav에 바로 add해주기때문에)
+		int startNum = count - ((map.get("currentPage")-1) * map.get("pageSize"));
+		int pageBlock = 3;
+		int pageCount = count/map.get("pageSize") + (count%map.get("pageSize") == 0 ? 0 : 1);
+		int startPage = (map.get("currentPage") - 1)/pageBlock * pageBlock + 1;
+		int endPage = startPage + pageBlock - 1;
+		if(endPage>pageCount) endPage = pageCount;
+		
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("count", count);
+		mav.addObject("startNum", startNum);
+		mav.addObject("pageCount", pageCount);
+		mav.addObject("startPage", startPage);
+		mav.addObject("endPage", endPage);
+		mav.addObject("pageBlock", pageBlock);
+		mav.addObject("list", list); // 리스트 이름 list로했습니다. jsp파일 꼭확인하세요!!
+		return mav;			//객체들만 담아주고 경로는 안담아줌 .. 경로설정꼭 하세요!!
+	}
+	
 	@RequestMapping(value="/index.do", method=RequestMethod.GET)//로그인버튼 눌렀을 떄
 	public String index() {
 		return "index";
@@ -326,86 +365,40 @@ public class LoginController {
 	}
 	@RequestMapping("/member_management.login")
 	public ModelAndView memberList(HttpServletRequest req) {
-		String pageNum = req.getParameter("pageNum");
-		if (pageNum == null) {
-			pageNum = "1";
-		}
-		int pageSize = 10;
-		int currentPage = Integer.parseInt(pageNum);
-		int startRow = pageSize * currentPage - (pageSize - 1);
-		int endRow = pageSize * currentPage;
+		Map<String,Integer> map = setStartRowAndEndRow(req);
 		int count = loginMapper.memberGetCount();
-		if (endRow>count) endRow = count;
-		List<Ezen_memberDTO> list = loginMapper.getMemberList(startRow, endRow);
-		int startNum = count - ((currentPage-1) * pageSize);
-		int pageBlock = 3;
-		int pageCount = count/pageSize + (count%pageSize == 0 ? 0 : 1);
-		int startPage = (currentPage - 1)/pageBlock * pageBlock + 1;
-		int endPage = startPage + pageBlock - 1;
-		if (endPage>pageCount) endPage = pageCount;
-		ModelAndView mav = new ModelAndView("login/mbmt");
+		setEndRowWhenCountIsLessThanEndRow(map, count);
+		List<Ezen_memberDTO> list = loginMapper.getMemberList(map.get("startRow"),map.get("endRow"));
+		ModelAndView mav = finishMakeModelAndView(map, list, count);
 		String[] locationList = {"노원","종로","신촌","상봉","당산","송파","강남","안양","의정부","구리","일산","안산","성남 분당","성남 모란","김포","전주","이젠IT"};
+		mav.setViewName("login/mbmt");
 		mav.addObject("locationList",locationList);
-		mav.addObject("memberList",list);
-		mav.addObject("count", count);
-		mav.addObject("startNum", startNum);
-		mav.addObject("pageCount", pageCount);
-		mav.addObject("startPage", startPage);
-		mav.addObject("endPage", endPage);
-		mav.addObject("pageBlock", pageBlock);
 		return mav;
 	}
 	@RequestMapping("/view_waitting.login")
 	public ModelAndView view_all(HttpServletRequest req) {
-		ModelAndView mav = new ModelAndView("login/mbmt");
-		String pageNum = req.getParameter("pageNum");
-		if (pageNum == null) {
-			pageNum = "1";
-		}
-		int pageSize = 10;
-		int currentPage = Integer.parseInt(pageNum);
-		int startRow = pageSize * currentPage - (pageSize - 1);
-		int endRow = pageSize * currentPage;
+		Map<String,Integer> map = setStartRowAndEndRow(req);
 		int count = loginMapper.waittingMemberGetCount();
-		if (endRow>count) endRow = count;
-		List<Ezen_memberDTO> list = loginMapper.getWaittingMemberList(startRow, endRow);
+		setEndRowWhenCountIsLessThanEndRow(map, count);
+		List<Ezen_memberDTO> list = loginMapper.getWaittingMemberList(map.get("startRow"),map.get("endRow"));
+		ModelAndView mav = finishMakeModelAndView(map, list, count);
 		String[] locationList = {"노원","종로","신촌","상봉","당산","송파","강남","안양","의정부","구리","일산","안산","성남 분당","성남 모란","김포","전주","이젠IT"};
-		int startNum = count - ((currentPage-1) * pageSize);
-		int pageBlock = 3;
-		int pageCount = count/pageSize + (count%pageSize == 0 ? 0 : 1);
-		int startPage = (currentPage - 1)/pageBlock * pageBlock + 1;
-		int endPage = startPage + pageBlock - 1;
-		if (endPage>pageCount) endPage = pageCount;
+		mav.setViewName("login/mbmt");
 		mav.addObject("locationList",locationList);
-		mav.addObject("memberList",list);
 		return mav;
 	}
 	@RequestMapping("/search_member.login")
 	public ModelAndView searchMember(HttpServletRequest req) throws IOException {
-		
 		String searchType = req.getParameter("searchType");
 		String searchString = "%"+req.getParameter("searchString")+"%";
-		String pageNum = req.getParameter("pageNum");
-		if (pageNum == null) {
-			pageNum = "1";
-		}
-		int pageSize = 10;
-		int currentPage = Integer.parseInt(pageNum);
-		int startRow = pageSize * currentPage - (pageSize - 1);
-		int endRow = pageSize * currentPage;
+		Map<String,Integer> map = setStartRowAndEndRow(req);
 		int count = loginMapper.searchMemberGetCount(searchType,searchString);
-		if (endRow>count) endRow = count;
-		List<Ezen_memberDTO> list = loginMapper.searchMember(searchType,searchString, startRow, endRow);
-		int startNum = count - ((currentPage-1) * pageSize);
-		int pageBlock = 3;
-		int pageCount = count/pageSize + (count%pageSize == 0 ? 0 : 1);
-		int startPage = (currentPage - 1)/pageBlock * pageBlock + 1;
-		int endPage = startPage + pageBlock - 1;
-		if (endPage>pageCount) endPage = pageCount;
+		setEndRowWhenCountIsLessThanEndRow(map, count);
+		List<Ezen_memberDTO> list = loginMapper.searchMember(searchType,searchString,map.get("startRow"),map.get("endRow"));
+		ModelAndView mav = finishMakeModelAndView(map, list, count);
 		String[] locationList = {"노원","종로","신촌","상봉","당산","송파","강남","안양","의정부","구리","일산","안산","성남 분당","성남 모란","김포","전주","이젠IT"};
-		ModelAndView mav = new ModelAndView("login/mbmt");
-		mav.addObject("loactionList",locationList);
-		mav.addObject("memberList",list);
+		mav.setViewName("login/mbmt");
+		mav.addObject("locationList",locationList);
 		return mav;
 	}
 	@RequestMapping("/edit_ok.login")
@@ -432,43 +425,26 @@ public class LoginController {
 	}
 	@RequestMapping("/myBoard.login")
 	public ModelAndView getmyBoard(HttpServletRequest req, HttpServletResponse resp) throws IOException{
-		ModelAndView mav = new ModelAndView("login/myBoard");
 		String id = req.getParameter("id");
-		List<String> hasDetaillocationTable = loginMapper.myBoardLocation();
-		List<ReviewBoardDTO> list = loginMapper.getLocation(hasDetaillocationTable,id);
-		mav.addObject("myBoardList",list);
+		Map<String,Integer> map = setStartRowAndEndRow(req);
+		int count = loginMapper.myBoardGetCount(id);
+		setEndRowWhenCountIsLessThanEndRow(map, count);
+		List<ReviewBoardDTO> list = loginMapper.myBoardList(id,map.get("startRow"),map.get("endRow"));
+		ModelAndView mav = finishMakeModelAndView(map, list, count);
+		mav.setViewName("login/myBoard");
 		return mav;
 	}
 	@RequestMapping("/myBoard_find.board")
 	public ModelAndView search_myBoard(HttpServletRequest req, HttpServletResponse resp) {
-		String pageNum = req.getParameter("pageNum");
 		String searchType = req.getParameter("searchType");
 		String searchString = "%"+req.getParameter("searchString")+"%";
 		String id = req.getParameter("id");
-		if (pageNum == null) {
-			pageNum = "1";
-		}
-		int pageSize = 2;
-		int currentPage = Integer.parseInt(pageNum);
-		int startRow = pageSize * currentPage - (pageSize - 1);
-		int endRow = pageSize * currentPage;
+		Map<String,Integer> map = setStartRowAndEndRow(req);
 		int count = loginMapper.search_myBoardGetCount(id,searchType,searchString);
-		if (endRow>count) endRow = count;
-		List<ReviewBoardDTO> list = loginMapper.search_myBoard(id,searchType,searchString,startRow, endRow);
-		int startNum = count - ((currentPage-1) * pageSize);
-		int pageBlock = 3;
-		int pageCount = count/pageSize + (count%pageSize == 0 ? 0 : 1);
-		int startPage = (currentPage - 1)/pageBlock * pageBlock + 1;
-		int endPage = startPage + pageBlock - 1;
-		if (endPage>pageCount) endPage = pageCount;
-		ModelAndView mav = new ModelAndView("board/unvisibleBoard");
-		mav.addObject("count", count);
-		mav.addObject("startNum", startNum);
-		mav.addObject("pageCount", pageCount);
-		mav.addObject("startPage", startPage);
-		mav.addObject("endPage", endPage);
-		mav.addObject("pageBlock", pageBlock);
-		mav.addObject("myBoardList", list);
+		setEndRowWhenCountIsLessThanEndRow(map, count);
+		List<ReviewBoardDTO> list = loginMapper.search_myBoard(id,searchType,searchString,map.get("startRow"),map.get("endRow"));
+		ModelAndView mav = finishMakeModelAndView(map, list, count);
+		mav.setViewName("login/myBoard");
 		return mav;
 	}
 	class MyAuthentication extends Authenticator {

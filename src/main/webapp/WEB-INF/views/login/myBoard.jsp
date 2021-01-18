@@ -56,12 +56,12 @@
 		</tr>
 	</thead>
 	<tbody>
-	<c:if test="${empty myBoardList}">		
+	<c:if test="${empty listist}">		
 		<tr>
 			<td colspan="4">내가 쓴 게시글이 없습니다.</td>
 		</tr>
 	</c:if>		
-	<c:forEach var="dto" items="${myBoardList}">
+	<c:forEach var="dto" items="${list}">
 		<tr>
 			<td align="center"><c:out value="${dto.article_num}" /></td>
 			<td align="left">			
