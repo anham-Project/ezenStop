@@ -80,6 +80,7 @@
 	<div class="row"
 		style="padding-left: 10px; padding-top: 10px; padding-bottom: 10px; background-color: #EFF7EA;">
 		<div class="col-md-3">
+<<<<<<< HEAD
 			<c:if test="${reviewDetail.grade == 1 }">
 				<img class="media-object img-circle"
 					style="width: 30px; height: 30px;"
@@ -91,6 +92,13 @@
 					src="resources/img/${reviewDetail.grade }.jpg">
 			</c:if>
 			${reviewDetail.id}
+=======
+		<img class="media-object img-circle" style = "width: 30px; height: 30px;" src = "resources/img/${reviewDetail.grade }.jpg">
+		<c:choose>
+			<c:when test="${reviewDetail.grade==2}"><font style="color:#FF0000;  font-weight:bold;">${reviewDetail.id}</font></c:when>
+			<c:otherwise>${reviewDetail.id}</c:otherwise>
+		</c:choose>
+>>>>>>> 2746738ea7490278755ebaaa06d9f1a40ce198dd
 		</div>
 		<div class="col-md-6 text-center">
 			<b>${reviewDetail.subject}</b>
@@ -183,7 +191,11 @@
 								style="width: 30px; height: 30px;"
 								src="resources/img/${dto.grade }.jpg">
 						</c:if>
-						<b>${dto.id}</b> <font color="gray">${dto.regdate}
+						<c:choose>
+						<c:when test="${dto.grade==2}"><font style="color:#FF0000;  font-weight:bold;">${dto.id}</font></c:when>
+						<c:otherwise>${dto.id}</c:otherwise>
+					</c:choose>
+					 <font color="gray">${dto.regdate}
 							${dto.regdate_time} | </font>
 						<c:if
 							test="${sessionScope.userId == dto.id || sessionScope.userGrade == 2}">

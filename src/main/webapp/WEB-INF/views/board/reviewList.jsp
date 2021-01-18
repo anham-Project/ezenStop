@@ -27,6 +27,7 @@
 	 				<option value="id">작성자</option>
 	 				<option value="subject">제목</option>
 					<option value="content">내용</option>
+					<option value="category">수강기간</option>
 				</select>
                 <input type="text" class="form-control" name="searchString" placeholder="검색어를 입력하세요." style="width:65%;">
                 <span class="input-group-btn">
@@ -79,7 +80,10 @@
 			<c:if test="${dto.grade != 1 }">
 			<img class="media-object img-circle" style = "width: 30px; height: 30px;" src = "resources/img/${dto.grade }.jpg">
 			</c:if>
-			${dto.id}</td>
+			<c:choose>
+					<c:when test="${dto.grade==2}"><font style="color:#FF0000;  font-weight:bold;">${dto.id}</font></c:when>
+					<c:otherwise>${dto.id}</c:otherwise>
+				</c:choose></td>
 			<td align="center">${dto.regdate}</td>
 			<td align="center">${dto.readCount}</td>
 		</tr>
