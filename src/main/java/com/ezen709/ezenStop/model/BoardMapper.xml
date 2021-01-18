@@ -18,7 +18,7 @@
 		from(
 				select rownum rn, A.*
 				from(
-						select ezen_review_board.* , ezen_member.grade
+						select ezen_review_board.* , ezen_member.grade, ezen_member.academylocation
 						from ezen_review_board, ezen_member
 						where ((ezen_review_board.id = ezen_member.id) and (ezen_review_board.visible = 1))
 						order by ezen_review_board.article_num desc)A
@@ -39,7 +39,7 @@
   		from (
 			select rownum rn, A.* 
 			from (
-		 		select ezen_review_board.* , ezen_member.grade
+		 		select ezen_review_board.* , ezen_member.grade, ezen_member.academylocation
 		 		from ezen_review_board, ezen_member 
 		 		where ((ezen_review_board.id = ezen_member.id) and (ezen_review_board.${searchtype} like #{searchstring}) and (visible = 1))
 		 		order by ezen_review_board.article_num desc)A
@@ -67,7 +67,7 @@
  		to_char(sysdate,'yyyy-mm-dd'), to_char(sysdate,'hh24:mi'), 0, 0, 0, 0, 'review_detail.board', 1, #{image}, #{filesize})
  	</insert>
  	<select id="reviewDetail" parameterType="Integer" resultType="ReviewBoardDTO">
- 		select ezen_review_board.*, ezen_member.grade 
+ 		select ezen_review_board.*, ezen_member.grade , ezen_member.academylocation
  		from ezen_review_board , ezen_member
  		where ((ezen_review_board.id = ezen_member.id) and (article_num = #{article_num}))
  	</select>
@@ -128,9 +128,9 @@
 		from (
 			select rownum rn, A.* 
 		 	from (
-		 		select board_report.*, ezen_review_board.visible 
-		 		from board_report, ezen_review_board
-		 		where board_report.article_num = ezen_review_board.article_num
+		 		select board_report.*, ezen_review_board.visible , ezen_member.academylocation, ezen_member.grade
+		 		from board_report, ezen_review_board, ezen_member
+		 		where board_report.article_num = ezen_review_board.article_num and board_report.userid = ezen_member.id
 		 		order by board_report.article_num desc)A
 		 	) 
 		where rn between #{start} and #{end}
@@ -151,9 +151,9 @@
 		from (
 			select rownum rn, A.* 
 		 	from (
-		 		select board_report.*, ezen_review_board.visible 
-		 		from board_report, ezen_review_board
-		 		where ((board_report.article_num = ezen_review_board.article_num) and (board_report.${searchType} like #{searchString}))
+		 		select board_report.*, ezen_review_board.visible , ezen_member.academylocation, ezen_member.grade
+		 		from board_report, ezen_review_board, ezen_member
+		 		where ((board_report.article_num = ezen_review_board.article_num) and (board_report.${searchType} like #{searchString})) and board_report.userid = ezen_member.id
 		 		order by board_report.article_num desc)A
 		 	) 
 		where rn between #{start} and #{end}

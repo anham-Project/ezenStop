@@ -4,9 +4,9 @@
 <jsp:include page="../header.jsp" />
 <script type="text/javascript">
 	function check(){
-		if (f.reviewAddr.value==""){
+		if (f.noticeAddr.value==""){
 			alert("수강 지역을 선택해 주세요!!")
-			f.reviewAddr.focus()
+			f.noticeAddr.focus()
 			return false
 		}
 		if (f.category.value==""){
@@ -30,7 +30,7 @@
 		pathpoint = obj.value.lastIndexOf('.');
 		filepoint = obj.value.substring(pathpoint+1,obj.length);
 		filetype=filepoint.toLowerCase();
-		if(filetype=='jpg'||filetype=='gif'||filetype=='jpeg'||filetype=='png'){
+		if(filetype=='jpg'||filetype=='gif'||filetype=='jpeg'){
 			return true
 		}else{
 			alert('이미지 파일만 선택할 수 있습니다.');
@@ -42,15 +42,15 @@
 </script>
 <div class="container" style="margin-top:30px; margin-bottom:10px;">
 	
-	<h5><font size="3">이젠'sTop게시판 > <a href="review_list.board">지역별 강의 후기게시판</a> > </font><b>후기작성</b></h5>
+	<h5><font size="3">이젠'sTop게시판 > <a href="notice_list.board">지역별 강의 후기게시판</a> > </font><b>후기작성</b></h5>
 	<div class="container" style="margin-top:30px; margin-bottom:10px;">
-	<form class="form-horizontal" name ="f" action="review_write.board" method="post" 
+	<form class="form-horizontal" name ="f" action="notice_write.board" method="post" 
 		onsubmit="return check()" enctype="multipart/form-data">
 		<input type="hidden" name="id" value="${sessionScope.userId}">
 	<div class="input-group" style="padding-bottom:5px">
 		<label class="col-md-2 control-label">수강지역<font size="3" color="red">*</font></label>
 		<div class="col-md-3">
-			<select class="form-control" name="reviewAddr"> 
+			<select class="form-control" name="noticeAddr"> 
 					<option value="">[수강지역선택]</option>
 					<option>[노원]</option> 
 					<option>[종로]</option> 
@@ -83,7 +83,7 @@
 	</div>
 	<div class="input-group pull-right" style="padding-bottom:5px">
 		<input class="btn btn-secondary btn-sm" type="submit" value="작성완료">&nbsp;
-		<input class="btn btn-secondary btn-sm" type="button" value="목록으로" onclick="window.location='review_list.board'">&nbsp;
+		<input class="btn btn-secondary btn-sm" type="button" value="목록으로" onclick="window.location='notice_list.board'">&nbsp;
 		<input class="btn btn-secondary btn-sm" type="reset" value="다시쓰기">
 	</div>
 	</form>
