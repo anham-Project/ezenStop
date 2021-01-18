@@ -73,6 +73,7 @@
   <select id="searchMemberGetCount" parameterType="java.util.Map" resultType="Integer">
  		select count(*)	from ezen_member where ${searchtype} = #{searchstring} 
  </select>
+ 
  <select id="myBoardLocation" resultType="String">
  		select TABLE_NAME from user_tab_columns where column_name = 'DETAILLOCATION'
  </select>

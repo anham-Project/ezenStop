@@ -62,12 +62,12 @@
 				</tr>
 			</thead>
 			<tbody>
-				<c:if test="${empty unvisibleList}">
+				<c:if test="${empty list}">
 					<tr>
 						<td colspan="5">비활성화된 게시글이 없습니다.</td>
 					</tr>
 				</c:if>
-				<c:forEach var="dto" items="${unvisibleList}">
+				<c:forEach var="dto" items="${list}">
 					<tr>
 						<td align="center"><c:out value="${startNum}" /></td>
 						<c:set var="startNum" value="${startNum-1}" />

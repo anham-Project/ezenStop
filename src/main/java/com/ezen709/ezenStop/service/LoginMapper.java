@@ -149,12 +149,24 @@ public class LoginMapper {
 		map.put("status",status);
 		sqlSession.update("updateMember",map);
 	}
-	public List<String> myBoardLocation(){
+	public List<String> getLocation(){
 		return sqlSession.selectList("myBoardLocation");
 	}
+	public int myBoardGetCount(String id) {
+		List<String> list = getLocation();
+		int count = 0;
+		for(String tableName : list) {
+			Map<String,String> map = new Hashtable<String,String>();
+			map.put("tableName", tableName);
+			map.put("id",id);
+			List<ReviewBoardDTO> result = sqlSession.selectList("myBoard",map);
+			count += result.size();
+		}
+		return count;
+	}
 	public int search_myBoardGetCount(String id, String searchType, String searchString) {
-		List<String> list = myBoardLocation();
-		List<ReviewBoardDTO> unvisibleList = new ArrayList<>();
+		List<String> list = getLocation();
+		int count = 0;
 		for(String tableName : list) {
 			Map<String,String> map = new Hashtable<String,String>();
 			map.put("tableName", tableName);
@@ -162,27 +174,32 @@ public class LoginMapper {
 			map.put("searchType", searchType);
 			map.put("searchString", searchString);
 			List<ReviewBoardDTO> result = sqlSession.selectList("search_myBoard",map);
-			for(ReviewBoardDTO dto : result) {
-				unvisibleList.add(dto);
-			}
+			count += result.size();
 		}
-		return unvisibleList.size();
+		return count;
 	}
-	public List<ReviewBoardDTO> getLocation(List<String> list, String id) {
+	public List<ReviewBoardDTO> myBoardList(String id, int start, int end) {
+		List<String> list = getLocation();
+		List<ReviewBoardDTO> boardList = new ArrayList<>();
 		for(String tableName : list) {
 			Map map = new Hashtable<>();
 			map.put("tableName", tableName);
 			map.put("id", id);
 			List<ReviewBoardDTO> result = sqlSession.selectList("myBoard", map);
-			if(result != null) {
-				return result;
+			for(ReviewBoardDTO dto : result) {
+				boardList.add(dto);
 			}
 		}
-		return null;
+		Collections.sort(boardList);
+		List<ReviewBoardDTO> sortedList = new ArrayList<>();
+		for(int i = start -1 ; i <= end -1 ; i++) {
+			sortedList.add(boardList.get(i));
+		}
+		return sortedList;
 	}
 	public List<ReviewBoardDTO> search_myBoard(String id, String searchType, String searchString, int start, int end){
-		List<String> list = myBoardLocation();
-		List<ReviewBoardDTO> unvisibleList = new ArrayList<>();
+		List<String> list = getLocation();
+		List<ReviewBoardDTO> boardList = new ArrayList<>();
 		for(String tableName : list) {
 			Map map = new Hashtable<>();
 			map.put("tableName", tableName);
@@ -190,14 +207,14 @@ public class LoginMapper {
 			map.put("searchType",searchType);
 			map.put("searchString",searchString);
 			List<ReviewBoardDTO> result = sqlSession.selectList("search_myBoard", map);
-			if(result != null) {
-				return result;
+			for(ReviewBoardDTO dto : result) {
+				boardList.add(dto);
 			}
 		}
-		Collections.sort(unvisibleList);
+		Collections.sort(boardList);
 		List<ReviewBoardDTO> sortedList = new ArrayList<>();
 		for(int i = start -1 ; i <= end -1 ; i++) {
-			sortedList.add(unvisibleList.get(i));
+			sortedList.add(boardList.get(i));
 		}
 		return sortedList;
 	}
