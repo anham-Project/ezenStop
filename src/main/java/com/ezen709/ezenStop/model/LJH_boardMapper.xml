@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ezen709.ezenStop.model">
+	<select id="noticeList" parameterType="java.util.Map" resultType="ReviewBoardDTO">
+		select *
+		from(
+				select rownum rn, A.*
+				from(
+						select ezen_notice_board.* , ezen_member.grade
+						from ezen_notice_board, ezen_member
+						where ((ezen_notice_board.id = ezen_member.id) and (ezen_notice_board.visible = 1))
+						order by ezen_notice_board.article_num desc)A
+					)
+		where rn between #{start} and #{end}
+	</select>
+ 	<select id="noticeGetCount" resultType="Integer">
+ 		select count(*) from ezen_notice_board
+ 	</select>
+</mapper>
