@@ -11,6 +11,13 @@ public class ReplyDTO {
 	private String regdate;		/*댓글작성일*/
 	private String regdate_time;/*댓글작성시간*/
 	private int grade;  		//ReviewBoardDTO와 마찬가지로 join을위해..
+	private String academyLocation;
+	public String getAcademyLocation() {
+		return academyLocation;
+	}
+	public void setAcademyLocation(String academyLocation) {
+		this.academyLocation = academyLocation;
+	}
 	public int getGrade() {
 		return grade;
 	}
