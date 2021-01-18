@@ -3,7 +3,8 @@
 <script type="text/javascript"
 	src="https://code.jquery.com/jquery-3.2.0.min.js"></script>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
-<!-- email.jsp -->
+<link href="resources/vendor/bootstrap/css/custom.css" rel="stylesheet">
+<!-- email.jsp -->  
 <script>
 function winclose(){
 	self.close()
@@ -66,8 +67,8 @@ function email_check(){
 <title>이메일 인증</title>
 </head>
 <body>
-	<div class = "container" style="margin-top:10px; margin-bottom:10px">
-		<div align="center">
+	<div class ="containerline">
+		<div class = "header">
        	<h4><b>이 메 일 인 증</b></h4>
             <font color="gray" size="2px">중복되지 않은 이메일을 입력해주세요.</font>
         <hr/>

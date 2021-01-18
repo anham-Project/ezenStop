@@ -115,20 +115,24 @@
         </div>
 	</div>
 	</form>
+<div class="row">
 <c:if test="${count>0}">
-<div align="center">
+	<div class="col-md-4">
+	</div>
+	<div class="col-md-6">
 	<ul class = "pagination">
 	<c:if test="${startPage > pageBlock}">	
-		<li>[<a href="review_list.board?pageNum=${startPage-pageBlock}">이전</a>]</li>
+		<li class="page-item"><a class="page-link" href="review_list.board?pageNum=${startPage-pageBlock}">이전</a></li>
 	</c:if>
 	<c:forEach var="i" begin="${startPage}" end="${endPage}">
-			<li>[<a href="review_list.board?pageNum=${i}">${i}</a>]</li>
+			<li class="page-item"><a class="page-link" href="review_list.board?pageNum=${i}">${i}</a></li>
 	</c:forEach>
 	<c:if test="${endPage < pageCount}">
-		<li>[<a href="review_list.board?pageNum=${endPage+pageBlock}">다음</a>]</li>
+		<li class="page-item"><a class="page-link" href="review_list.board?pageNum=${endPage+pageBlock}">다음</a></li>
 	</c:if>
 	</ul>
-</div>
+	</div>
 </c:if>
+</div>
 </div>
 <%@ include file="../footer.jsp"%>
