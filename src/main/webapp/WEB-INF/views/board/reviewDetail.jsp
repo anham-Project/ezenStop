@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
 	pageEncoding="EUC-KR"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib uri="http://www.springframework.org/tags" prefix="spring"%> 
 <script type="text/javascript"
 	src="https://code.jquery.com/jquery-3.2.0.min.js"></script>
 <script type="text/javascript">
@@ -115,7 +116,7 @@
 	<c:if test="${reviewDetail.filesize != 0}">
 		<div class="row">
 			<div class="col-md-12">
-				梅何等 颇老 : <img src="${uploadPath}/${reviewDetail.image}" border="0"
+				梅何等 颇老 : <img src="<spring:url value='/image/${reviewDetail.image}'/>" border="0"
 					style="max-width: 300px; max-height: 300px;">
 			</div>
 		</div>

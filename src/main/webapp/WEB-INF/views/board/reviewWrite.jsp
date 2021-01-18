@@ -30,7 +30,7 @@
 		pathpoint = obj.value.lastIndexOf('.');
 		filepoint = obj.value.substring(pathpoint+1,obj.length);
 		filetype=filepoint.toLowerCase();
-		if(filetype=='jpg'||filetype=='gif'||filetype=='jpeg'){
+		if(filetype=='jpg'||filetype=='gif'||filetype=='jpeg'||filetype=='png'){
 			return true
 		}else{
 			alert('이미지 파일만 선택할 수 있습니다.');
