@@ -6,6 +6,20 @@ public class BoardReportDTO {
 	private String reportContent;
 	private String reportDate;
 	private int visible;			// 활성화상태역시 join으로가져오기위해 db엔없지만 생성.
+	private int grade;
+	private String academyLocation;
+	public int getGrade() {
+		return grade;
+	}
+	public void setGrade(int grade) {
+		this.grade = grade;
+	}
+	public String getAcademyLocation() {
+		return academyLocation;
+	}
+	public void setAcademyLocation(String academyLocation) {
+		this.academyLocation = academyLocation;
+	}
 	public int getVisible() {
 		return visible;
 	}

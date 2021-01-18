@@ -72,7 +72,14 @@
 		</a>
 	</c:if>
 			</td>
-			<td align="center"><img class="media-object img-circle" style = "width: 30px; height: 30px;" src = "resources/img/${dto.grade }.jpg">${dto.id}</td>
+			<td align="center">
+			<c:if test="${dto.grade == 1 }">
+			<img class="media-object img-circle" style = "width: 30px; height: 30px;" src = "resources/img/${dto.academyLocation }.jpg">
+			</c:if>
+			<c:if test="${dto.grade != 1 }">
+			<img class="media-object img-circle" style = "width: 30px; height: 30px;" src = "resources/img/${dto.grade }.jpg">
+			</c:if>
+			${dto.id}</td>
 			<td align="center">${dto.regdate}</td>
 			<td align="center">${dto.readCount}</td>
 		</tr>

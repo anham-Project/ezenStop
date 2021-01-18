@@ -80,8 +80,17 @@
 	<div class="row"
 		style="padding-left: 10px; padding-top: 10px; padding-bottom: 10px; background-color: #EFF7EA;">
 		<div class="col-md-3">
-		<img class="media-object img-circle" style = "width: 30px; height: 30px;" src = "resources/img/${reviewDetail.grade }.jpg">
-		${reviewDetail.id}
+			<c:if test="${reviewDetail.grade == 1 }">
+				<img class="media-object img-circle"
+					style="width: 30px; height: 30px;"
+					src="resources/img/${reviewDetail.academyLocation }.jpg">
+			</c:if>
+			<c:if test="${reviewDetail.grade != 1 }">
+				<img class="media-object img-circle"
+					style="width: 30px; height: 30px;"
+					src="resources/img/${reviewDetail.grade }.jpg">
+			</c:if>
+			${reviewDetail.id}
 		</div>
 		<div class="col-md-6 text-center">
 			<b>${reviewDetail.subject}</b>
@@ -101,10 +110,12 @@
 		<div class="col-md-12">${reviewDetail.content}</div>
 	</div>
 	<c:if test="${reviewDetail.filesize != 0}">
-	<div class="row">
-		<div class="col-md-12">첨부된 파일 : <img src="${uploadPath}/${reviewDetail.image}" border="0"
-			style="max-width:300px; max-height:300px;"></div>
-	</div>
+		<div class="row">
+			<div class="col-md-12">
+				첨부된 파일 : <img src="${uploadPath}/${reviewDetail.image}" border="0"
+					style="max-width: 300px; max-height: 300px;">
+			</div>
+		</div>
 	</c:if>
 	<c:if test="${sessionScope.userId == reviewDetail.id}">
 		<div class="row">
@@ -117,7 +128,7 @@
 		</div>
 	</c:if>
 	<c:if test="${sessionScope.userGrade ==2 }">
-	<br>
+		<br>
 		<div align="center">
 			<button class="btn btn-danger btn-sm" type="button"
 				onclick="javascript:changeVisibleStatus()" id="visibleStatus">
@@ -132,40 +143,61 @@
 		<div class="row">
 			<div class="col-md-12" align="center">
 				<button class="btn btn-info btn-sm" type="button"
-					onclick="javascript:somethingDo('up')" id="boardUp"><h5 id="upcount">${reviewDetail.upCount}</h5>추천</button>
+					onclick="javascript:somethingDo('up')" id="boardUp">
+					<h5 id="upcount">${reviewDetail.upCount}</h5>
+					추천
+				</button>
 				<button class="btn btn-secondary btn-sm" type="button"
-					onclick="javascript:somethingDo('down')" id="boardDown"><h5 id="downcount">${reviewDetail.downCount}</h5>비추천</button>
-				<a class="btn btn-warning btn-sm" data-target="#reportModal" data-toggle="modal">신고하기</a>
+					onclick="javascript:somethingDo('down')" id="boardDown">
+					<h5 id="downcount">${reviewDetail.downCount}</h5>
+					비추천
+				</button>
+				<a class="btn btn-warning btn-sm" data-target="#reportModal"
+					data-toggle="modal">신고하기</a>
 			</div>
 		</div>
 	</c:if>
 
-	<hr/>
+	<hr />
 	<form class="form-horizontal" name="f" method="post"
 		action="review_reply_write.board" onsubmit="return check()">
 		<input type="hidden" name="id" value="${sessionScope.userId}">
-		<input type="hidden" name="article_num" value="${reviewDetail.article_num}">
+		<input type="hidden" name="article_num"
+			value="${reviewDetail.article_num}">
 		<c:if test="${reviewDetail.replyCount != 0}">
 			<c:forEach var="dto" items="${replyList}">
 				<div class="row"
 					style="padding: 5px 5px 5px ${5+dto.re_level*13}px; background-color: #F7F7F7;">
 					<div class="col-md-12" align="left">
-					<c:if test="${dto.re_level>0}">
+						<c:if test="${dto.re_level>0}">
 					&nbsp;&nbsp;&nbsp;&nbsp;
 					</c:if>
-					<img class="media-object img-circle" style = "width: 30px; height: 30px;" src = "resources/img/${dto.grade }.jpg">
-					<b>${dto.id}</b>
-						<font color="gray">${dto.regdate} ${dto.regdate_time} | </font>
-						<c:if test="${sessionScope.userId == dto.id || sessionScope.userGrade == 2}">
+						<c:if test="${dto.grade == 1 }">
+							<img class="media-object img-circle"
+								style="width: 30px; height: 30px;"
+								src="resources/img/${dto.academyLocation }.jpg">
+								${dto.academyLocation}
+						</c:if>
+						<c:if test="${dto.grade != 1 }">
+							<img class="media-object img-circle"
+								style="width: 30px; height: 30px;"
+								src="resources/img/${dto.grade }.jpg">
+						</c:if>
+						<b>${dto.id}</b> <font color="gray">${dto.regdate}
+							${dto.regdate_time} | </font>
+						<c:if
+							test="${sessionScope.userId == dto.id || sessionScope.userGrade == 2}">
 							<a
 								href="javascript:deleteReply('${dto.reply_num}','${reviewDetail.article_num}');">[삭제]</a>
 						</c:if>
 					</div>
 					<div class="col-md-12" align="left">
-					<c:if test="${dto.re_level>0}">
-					<img class="media-object img-circle" style = "width: 20px; height: 20px;" src = "resources/img/reply.png">
-					</c:if>
-					${dto.content}</div>
+						<c:if test="${dto.re_level>0}">
+							<img class="media-object img-circle"
+								style="width: 20px; height: 20px;" src="resources/img/reply.png">
+						</c:if>
+						${dto.content}
+					</div>
 					<div class="col-md-12" align="right" id="buttontype">
 						<input type="button" class="btn btn-info btn-sm" value="답글쓰기"
 							onclick="addInput('${dto.reply_num}','${dto.id}');" />

@@ -27,6 +27,7 @@ import com.ezen709.ezenStop.service.LoginMapper;
 
 @Controller
 public class LoginController {
+	CampusModel campusModel = new CampusModel();
 	
 	@Resource(name="uploadPath")
 	private String uploadPath;
@@ -370,7 +371,7 @@ public class LoginController {
 		setEndRowWhenCountIsLessThanEndRow(map, count);
 		List<Ezen_memberDTO> list = loginMapper.getMemberList(map.get("startRow"),map.get("endRow"));
 		ModelAndView mav = finishMakeModelAndView(map, list, count);
-		String[] locationList = {"노원","종로","신촌","상봉","당산","송파","강남","안양","의정부","구리","일산","안산","성남 분당","성남 모란","김포","전주","이젠IT"};
+		String[] locationList = campusModel.getLocationList();
 		mav.setViewName("login/mbmt");
 		mav.addObject("locationList",locationList);
 		return mav;
@@ -382,7 +383,7 @@ public class LoginController {
 		setEndRowWhenCountIsLessThanEndRow(map, count);
 		List<Ezen_memberDTO> list = loginMapper.getWaittingMemberList(map.get("startRow"),map.get("endRow"));
 		ModelAndView mav = finishMakeModelAndView(map, list, count);
-		String[] locationList = {"노원","종로","신촌","상봉","당산","송파","강남","안양","의정부","구리","일산","안산","성남 분당","성남 모란","김포","전주","이젠IT"};
+		String[] locationList = campusModel.getLocationList();
 		mav.setViewName("login/mbmt");
 		mav.addObject("locationList",locationList);
 		return mav;
@@ -396,7 +397,7 @@ public class LoginController {
 		setEndRowWhenCountIsLessThanEndRow(map, count);
 		List<Ezen_memberDTO> list = loginMapper.searchMember(searchType,searchString,map.get("startRow"),map.get("endRow"));
 		ModelAndView mav = finishMakeModelAndView(map, list, count);
-		String[] locationList = {"노원","종로","신촌","상봉","당산","송파","강남","안양","의정부","구리","일산","안산","성남 분당","성남 모란","김포","전주","이젠IT"};
+		String[] locationList = campusModel.getLocationList();
 		mav.setViewName("login/mbmt");
 		mav.addObject("locationList",locationList);
 		return mav;
