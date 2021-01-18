@@ -60,7 +60,7 @@ public class LJH_boardController {
 		Map<String,Integer> map = setStartRowAndEndRow(req);
 		int count = boardMapper.noticeGetCount();
 		setEndRowWhenCountIsLessThanEndRow(map, count);
-		List<NoticeBoardDTO> reviewList = boardMapper.noticeList(map.get("startRow"), map.get("endRow"));
+		List<ReviewBoardDTO> reviewList = boardMapper.noticeList(map.get("startRow"), map.get("endRow"));
 		ModelAndView mav = finishMakeModelAndView(map, reviewList, count);
 		mav.setViewName("board/noticeList");
 		return mav;

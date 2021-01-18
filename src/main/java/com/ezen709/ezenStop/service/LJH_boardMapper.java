@@ -12,11 +12,11 @@ public class LJH_boardMapper {
 	@Autowired
 	private SqlSession sqlSession;
 	
-	public List<NoticeBoardDTO> noticeList(int start, int end){
+	public List<ReviewBoardDTO> noticeList(int start, int end){
 		Map<String,Integer> map = new Hashtable();
 		map.put("start",start);
 		map.put("end",end);
-		List<NoticeBoardDTO> list = sqlSession.selectList("noticeList",map);
+		List<ReviewBoardDTO> list = sqlSession.selectList("noticeList",map);
 		return list;
 	}
 	public int noticeGetCount() {

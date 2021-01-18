@@ -78,10 +78,10 @@
  		select TABLE_NAME from user_tab_columns where column_name = 'DETAILLOCATION'
  </select>
  <select id="myBoard" parameterType="java.util.Map" resultType="reviewBoardDTO"> 
- 	select detaillocation, subject, regdate, readcount, article_num  FROM ${tableName} where id = #{id}
+ 	select *  FROM ${tableName} where id = #{id}
  </select> 
  <select id="search_myBoard" parameterType="java.util.Map" resultType="reviewBoardDTO"> 
- 	select detaillocation, subject, regdate, readcount, article_num  FROM ${tableName} where id = #{id} and ${searchType} like #{searchString}
+ 	select *  FROM ${tableName} where id = #{id} and ${searchType} like #{searchString}
  </select> 
  
  

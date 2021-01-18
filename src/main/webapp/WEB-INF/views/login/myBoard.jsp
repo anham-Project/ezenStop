@@ -67,6 +67,9 @@
 			<td align="left">			
 				<form name="f" onclick="javascript:findDetailPage('${dto.article_num}')">
 				<a href="#">${dto.subject}</a>
+				<c:if test="${dto.image != '파일없음' }">
+				<img class="media-object img-circle" style = "width: 14px; height: 12px;" src = "resources/img/picture.png">
+				</c:if>
 				</form>
 			</td>
 			<td align="center">${dto.regdate}</td>

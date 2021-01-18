@@ -52,7 +52,7 @@
 		<tr>
 			<td colspan="5">등록된 게시글이 없습니다.</td>
 		</tr>
-</c:if>		
+</c:if>	
 <c:forEach var="dto" items="${list}">
 		<tr>
 			<td align="center"><c:out value="${dto.article_num}"/></td>
