@@ -24,7 +24,6 @@
 				location.href=result+'?article_num='+article_num;
 			}
 		})
-		
 	}
 </script>
 	<h5><font size="3">내 게시판 </font></h5>
@@ -83,13 +82,13 @@
 		<div class="col-md-6">
 			<ul class = "pagination">
 				<c:if test="${startPage > pageBlock}">	
-					<li class="page-item"><a class="page-link" href="myBoard.board?pageNum=${startPage-pageBlock}">이전</a></li>
+					<li class="page-item"><a class="page-link" href="myBoard.login?pageNum=${startPage-pageBlock}">이전</a></li>
 				</c:if>
 				<c:forEach var="i" begin="${startPage}" end="${endPage}">
-					<li class="page-item"><a class="page-link" href="myBoard.board?pageNum=${i}">${i}</a></li>
+					<li class="page-item"><a class="page-link" href="myBoard.login?pageNum=${i}">${i}</a></li>
 				</c:forEach>
 				<c:if test="${endPage < pageCount}">
-					<li class="page-item"><a class="page-link" href="myBoard.board?pageNum=${endPage+pageBlock}">다음</a></li>
+					<li class="page-item"><a class="page-link" href="myBoard.login?pageNum=${endPage+pageBlock}">다음</a></li>
 				</c:if>
 			</ul>
 		</div>

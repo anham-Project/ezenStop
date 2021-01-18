@@ -81,7 +81,10 @@
 		style="padding-left: 10px; padding-top: 10px; padding-bottom: 10px; background-color: #EFF7EA;">
 		<div class="col-md-3">
 		<img class="media-object img-circle" style = "width: 30px; height: 30px;" src = "resources/img/${reviewDetail.grade }.jpg">
-		${reviewDetail.id}
+		<c:choose>
+			<c:when test="${reviewDetail.grade==2}"><font style="color:#FF0000;  font-weight:bold;">${reviewDetail.id}</font></c:when>
+			<c:otherwise>${reviewDetail.id}</c:otherwise>
+		</c:choose>
 		</div>
 		<div class="col-md-6 text-center">
 			<b>${reviewDetail.subject}</b>
@@ -154,7 +157,10 @@
 					&nbsp;&nbsp;&nbsp;&nbsp;
 					</c:if>
 					<img class="media-object img-circle" style = "width: 30px; height: 30px;" src = "resources/img/${dto.grade }.jpg">
-					<b>${dto.id}</b>
+					<c:choose>
+						<c:when test="${dto.grade==2}"><font style="color:#FF0000;  font-weight:bold;">${dto.id}</font></c:when>
+						<c:otherwise>${dto.id}</c:otherwise>
+					</c:choose>
 						<font color="gray">${dto.regdate} ${dto.regdate_time} | </font>
 						<c:if test="${sessionScope.userId == dto.id || sessionScope.userGrade == 2}">
 							<a

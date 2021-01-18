@@ -39,9 +39,9 @@
 		</tr>
 	</thead>
 	<tbody>
-<c:if test="${empty memberList}">		
+<c:if test="${empty list}">		
 		<tr>
-			<td colspan="7">등록된 회원이 없습니다.</td>
+			<td colspan="8">등록된 회원이 없습니다.</td>
 		</tr>
 </c:if>
 <form name="f" action="edit_ok.login" method="post">
@@ -52,7 +52,7 @@
 	<button class="btn btn-info" type="submit">모든 변경사항 저장</button>
 	</div>
 </div>
-<c:forEach var="dto" items="${memberList}" begin="0" end="${fn:length(memberList)}" varStatus="status">
+<c:forEach var="dto" items="${list}" begin="0" end="${fn:length(list)}" varStatus="status">
 		<tr>
 			<td align="left" >${dto.name}</td>
 			<td align="center">${dto.email}</td>
@@ -122,13 +122,13 @@
 	<div class="col-md-6">
 	<ul class = "pagination">
 	<c:if test="${startPage > pageBlock}">	
-		<li class="page-item"><a class="page-link" href="review_list.board?pageNum=${startPage-pageBlock}">이전</a></li>
+		<li class="page-item"><a class="page-link" href="member_management.login?pageNum=${startPage-pageBlock}">이전</a></li>
 	</c:if>
 	<c:forEach var="i" begin="${startPage}" end="${endPage}">
-			<li class="page-item"><a class="page-link" href="review_list.board?pageNum=${i}">${i}</a></li>
+			<li class="page-item"><a class="page-link" href="member_management.login?pageNum=${i}">${i}</a></li>
 	</c:forEach>
 	<c:if test="${endPage < pageCount}">
-		<li class="page-item"><a class="page-link" href="review_list.board?pageNum=${endPage+pageBlock}">다음</a></li>
+		<li class="page-item"><a class="page-link" href="member_management.login?pageNum=${endPage+pageBlock}">다음</a></li>
 	</c:if>
 	</ul>
 	</div>
