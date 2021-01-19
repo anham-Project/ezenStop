@@ -189,7 +189,7 @@
 	<!-- Navigation -->
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
 		<div class="container">
-			<a class="navbar-brand" href="#"><h4>EzenStop</h4></a>
+			<a class="navbar-brand" href="index.do"><h4>EzenStop</h4></a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse"
 				data-target="#navbarSupportedContent"
 				aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -205,7 +205,6 @@
 						aria-haspopup="true" aria-expanded="false"> 이젠'sTop게시판 </a>
 						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
 							 <a class="dropdown-item" href="notice_list.board">공지사항</a> <a
-							 	class="dropdown-item" href="#">인기글 게시판</a> <a
 								class="dropdown-item" href="#">자유게시판</a> <a
 								class="dropdown-item" href="#">중고책 거래 게시판</a> <a
 								class="dropdown-item" href="review_list.board">지역별 강의 후기 게시판</a> <a
