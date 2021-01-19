@@ -23,6 +23,7 @@ import org.springframework.web.multipart.MultipartRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ezen709.ezenStop.model.*;
+import com.ezen709.ezenStop.service.BoardMapper;
 import com.ezen709.ezenStop.service.LoginMapper;
 
 @Controller
@@ -33,7 +34,8 @@ public class LoginController {
 	private String uploadPath;
 	@Autowired
 	private LoginMapper	loginMapper;
-	
+	@Autowired
+	private BoardMapper boardMapper;
 	public Map<String,Integer> setStartRowAndEndRow(HttpServletRequest req){
 		String pageNum = req.getParameter("pageNum");
 		if (pageNum == null) {
@@ -74,8 +76,15 @@ public class LoginController {
 	}
 	
 	@RequestMapping(value="/index.do", method=RequestMethod.GET)//로그인버튼 눌렀을 떄
-	public String index() {
-		return "index";
+	public ModelAndView index() {
+		List<ReviewBoardDTO> hot = boardMapper.getHotBoard();
+		
+		List<ReviewBoardDTO> review = boardMapper.getReviewBoard();
+		
+		ModelAndView mav = new ModelAndView("index");
+		mav.addObject("hotList", hot);
+		mav.addObject("reviewList",review);
+		return mav;
 	}
 	@RequestMapping(value="/login.login", method=RequestMethod.GET)//로그인버튼 눌렀을 떄
 	public String login() {
@@ -95,7 +104,7 @@ public class LoginController {
 			return mav;
 		}else {
 		Ezen_memberDTO dto =list.get(0);
-		mav = new ModelAndView("index");
+		mav = new ModelAndView("redirect:index.do");
 		session.setAttribute("userId", dto.getId());
 		session.setAttribute("userGrade", dto.getGrade());
 		return mav;

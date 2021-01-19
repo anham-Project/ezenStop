@@ -222,4 +222,21 @@ public class BoardMapper {
 		}
 		return sortedList;
 	}
+	public List<ReviewBoardDTO> getHotBoard(){
+		List<String> tableList = getTableHasLocation();
+		List<ReviewBoardDTO> hotList = new ArrayList<>();
+		for(String tableName : tableList) {
+			Map<String,String> map = new Hashtable<String,String>();
+			map.put("tableName", tableName);
+			List<ReviewBoardDTO> result = sqlSession.selectList("getHotBoard",map);
+			for(ReviewBoardDTO dto : result) {
+				hotList.add(dto);
+			}
+		}
+		return hotList;
+	}
+	public List<ReviewBoardDTO> getReviewBoard(){
+		List<ReviewBoardDTO> list = sqlSession.selectList("getReviewIndex");
+		return list;
+	}
 	}
