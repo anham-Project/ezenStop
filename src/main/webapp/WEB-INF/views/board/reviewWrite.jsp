@@ -55,13 +55,13 @@
 	<div class="input-group" style="padding-bottom:5px">
 		<label class="col-md-2 control-label">수강지역<font size="3" color="red">*</font></label>
 		<div class="col-md-3">
-			<select class="form-control" name="reviewAddr"> 
-					<option value="">[수강지역선택]</option>
-					<option>[노원]</option> 
-					<option>[종로]</option> 
+			<select class="form-control" name="reviewAddr">
+					<option selected value="">[수강지역선택]</option>
+					<c:forEach var="list" items="${reviewAddr}">
+					<option>[${list}]</option>
+					</c:forEach>
 			</select>
 		</div>
-		
 		<label class="col-md-2 control-label">수강기간<font size="3" color="red">*</font></label>
 		<div class="col-md-3">
 			<select class="form-control" name="category"> 

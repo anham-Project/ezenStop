@@ -51,8 +51,13 @@
 			return true
 		}else{
 			alert('이미지 파일만 선택할 수 있습니다.');
-			parentObj = obj.parentNode
-			node = parentObj.replaceChild(obj.cloneNode(true),obj);
+			if (/(MSIE|Trident)/.test(navigator.userAgent)) {//브라우저 구분
+				// ie 일때 input[type=file] init.
+				$("#fileInput").replaceWith( $("#board_fname1").clone(true) );
+			} else {
+				 // other browser 일때 input[type=file] init.
+				$("#fileInput").val("");
+			}
 			return false
 		}
 	}
@@ -70,7 +75,7 @@
 		<div class="col-md-3">
 			<select class="form-control" name="reviewAddr"> 
 			<c:forEach var="list" items="${reviewAddrList}">
-			<option <c:if test="${reviewAddr == list}">selected</c:if>>${list}</option>
+			<option <c:if test="${reviewAddr == list}">selected</c:if>>[${list}]</option>
 			</c:forEach> 
 			</select>
 		</div>
@@ -107,10 +112,10 @@
     	</c:if>
 	</div>
 	<div class="input-group" style="padding-bottom:5px">
-		<input class="form-control" type="file" onchange="fileCheck(this)"name="image" accept="image/gif,image/jpeg,image/png">
+		<input class="form-control" type="file" id="fileInput" onchange="fileCheck(this)"name="image" accept="image/gif,image/jpeg,image/png">
 	</div>
 	<div class="input-group" style="padding-bottom:5px">
-	<font color="gray">이미지 파일만 첨부 가능합니다. jpeg, png, gif</font>
+	<font color="gray">이미지 파일만 첨부 가능합니다. jpeg, png, gif, jpg</font>
 	</div>
 	<div class="input-group pull-right" style="padding-bottom:5px">
 		<input class="btn btn-secondary btn-sm" type="submit" value="수정하기">&nbsp;

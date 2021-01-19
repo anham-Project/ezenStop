@@ -23,6 +23,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ezen709.ezenStop.model.BoardReportDTO;
+import com.ezen709.ezenStop.model.CampusModel;
 import com.ezen709.ezenStop.model.ReplyDTO;
 import com.ezen709.ezenStop.model.ReviewBoardDTO;
 import com.ezen709.ezenStop.service.BoardMapper;
@@ -31,6 +32,8 @@ import com.ezen709.ezenStop.service.ReplyMapper;
 
 @Controller
 public class BoardController {
+	
+	CampusModel campusModel = new CampusModel();
 	
 	@Autowired
 	private BoardMapper boardMapper;
@@ -121,8 +124,24 @@ public class BoardController {
 		
 	}
 	@RequestMapping(value="/review_write.board", method=RequestMethod.GET)
-	public String reviewWriteForm() {
-		return "board/reviewWrite";
+	public ModelAndView reviewWriteForm(HttpServletRequest req) {
+		ModelAndView mav = new ModelAndView("board/reviewWrite");;
+		String reply_id = req.getParameter("id");
+		String location = loginMapper.getIdGrade(reply_id);
+		String[] reviewAddr;
+		if(location.equals("2")){
+			reviewAddr = campusModel.getLocationList();
+			for(int i = 0; i < reviewAddr.length; i++) {
+				System.out.println(reviewAddr[i]+", ");
+			}
+			mav.addObject("reviewAddr", reviewAddr);
+		}else if(location.equals("1")) {
+			location = loginMapper.getIdLocation(reply_id);
+			reviewAddr = new String[0];
+			reviewAddr[0] = location;
+			mav.addObject("reviewAddr", reviewAddr);
+		}
+		return mav;
 	}
 	@RequestMapping(value="/review_write.board", method=RequestMethod.POST)
 	public String reviewWritePro(HttpServletRequest req, @ModelAttribute ReviewBoardDTO dto, 
@@ -169,7 +188,17 @@ public class BoardController {
 		ReviewBoardDTO reviewDetail = boardMapper.reviewDetail(article_num);
 		ModelAndView mav = new ModelAndView("board/reviewEdit");
 		String[] categoryList = {"[6개월 과정]","[3개월 과정]","[단기과정]","[기타]"};
-		String[] reviewAddrList = {"[노원]","[종로]"};
+		String location = loginMapper.getIdGrade(reviewDetail.getId());
+		String[] reviewAddrList;
+		if(location.equals("2")){
+			reviewAddrList = campusModel.getLocationList();
+			mav.addObject("reviewAddrList",reviewAddrList);
+		}else if(location.equals("1")) {
+			location = loginMapper.getIdLocation(reviewDetail.getId());
+			reviewAddrList = new String[0];
+			reviewAddrList[0] = location;
+			mav.addObject("reviewAddrList",reviewAddrList);
+		}
 		String addrAndSuject = reviewDetail.getSubject();
 		String reviewAddr = addrAndSuject.substring(addrAndSuject.lastIndexOf("]")+1);
 		int allLength = addrAndSuject.length();
@@ -177,7 +206,6 @@ public class BoardController {
 		String subject = addrAndSuject.substring(addrLength,allLength);
 		reviewDetail.setSubject(subject);
 		mav.addObject("reviewDetail", reviewDetail);
-		mav.addObject("reviewAddrList",reviewAddrList);
 		mav.addObject("categoryList", categoryList);
 		mav.addObject("reviewAddr", reviewAddr);
 		return mav;
