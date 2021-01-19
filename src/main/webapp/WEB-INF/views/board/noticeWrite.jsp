@@ -4,14 +4,8 @@
 <jsp:include page="../header.jsp" />
 <script type="text/javascript">
 	function check(){
-		var image=document.getElementById("image").value;
-		if (f.noticeAddr.value==""){
-			alert("수강 지역을 선택해 주세요!!")
-			f.noticeAddr.focus()
-			return false
-		}
 		if (f.category.value==""){
-			alert("수강 기간을 선택해 주세요!!")
+			alert("카테고리를 선택해 주세요!!")
 			f.category.focus()
 			return false
 		}
@@ -34,8 +28,13 @@
 			return true
 		}else{
 			alert('이미지 파일만 선택할 수 있습니다.');
-			parentObj = obj.parentNode
-			node = parentObj.replaceChild(obj.cloneNode(true),obj);
+			if (/(MSIE|Trident)/.test(navigator.userAgent)) {//브라우저 구분
+				// ie 일때 input[type=file] init.
+				$("#fileInput").replaceWith( $("#board_fname1").clone(true) );
+			} else {
+				 // other browser 일때 input[type=file] init.
+				$("#fileInput").val("");
+			}
 			return false
 		}
 	}
@@ -77,7 +76,7 @@
 		<textarea class="form-control" rows="13" name="content" placeholder="공지사항 내용을 적어주세요."></textarea>
 	</div>
 	<div class="input-group" style="padding-bottom:5px">
-		<input class="form-control" type="file" onchange="fileCheck(this)"name="image" accept="image/gif,image/jpeg,image/png">
+		<input class="form-control" type="file" id="fileInput" onchange="fileCheck(this)"name="image" accept="image/gif,image/jpeg,image/png">
 	</div>
 	<div class="input-group" style="padding-bottom:5px">
 	<font color="gray">이미지 파일만 첨부 가능합니다. jpeg, png, gif</font>

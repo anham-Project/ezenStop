@@ -8,15 +8,15 @@
 		from(
 				select rownum rn, A.*
 				from(
-						select ezen_notice_board.* , ezen_member.grade
-						from ezen_notice_board, ezen_member
-						where ((ezen_notice_board.id = ezen_member.id) and (ezen_notice_board.visible = 1))
-						order by ezen_notice_board.article_num desc)A
+						select B.* , ezen_member.grade
+						from ${tableName} B, ezen_member
+						where ((B.id = ezen_member.id) and (B.visible = 1))
+						order by B.article_num desc)A
 					)
 		where rn between #{start} and #{end}
 	</select>
- 	<select id="noticeGetCount" resultType="Integer">
- 		select count(*) from ezen_notice_board
+ 	<select id="A_GetCount" parameterType="java.util.Map" resultType="Integer">
+ 		select count(*) from ${tableName}
  	</select>
  	
  	 <insert id="noticeInsert" parameterType="java.util.Map">
@@ -24,4 +24,50 @@
  		values (ezen_board_seq.nextval, #{category}, #{subject}, #{id}, #{content}, 
  		to_char(sysdate,'yyyy-mm-dd'), to_char(sysdate,'hh24:mi'), 0, 0, 0, 0, 'notice_detail.board', 1, #{image}, #{filesize})
  	</insert>
+ 	
+ 	 <update id="A_plusReadCount" parameterType="java.util.Map">
+ 		update ${tableName}
+ 		set readcount = readcount + 1 
+ 		where article_num = #{article_num}
+ 	</update>
+ 	
+ 	<select id="A_Detail" parameterType="Integer" resultType="ReviewBoardDTO">
+ 		select A.*, ezen_member.grade , ezen_member.academylocation
+ 		from ${tableName} A , ezen_member
+ 		where ((A.id = ezen_member.id) and (article_num = #{article_num}))
+ 	</select>
+ 	<delete id="A_Delete" parameterType="java.util.Map">
+ 		delete
+ 		from ${tableName}
+ 		where article_num = #{article_num}
+ 	</delete>
+ 	<update id="A_fileDelete" parameterType="java.util.Map">
+ 		update ${tableName}
+ 		set image = '파일없음', filesize = 0
+ 		where article_num = #{article_num}
+ 	</update>
+ 	<update id="noticeEdit" parameterType="ReviewBoardDTO">
+ 		update ezen_notice_Board
+ 		set category = #{category}, subject = #{subject}, content = #{content}, image = #{image}, filesize = #{filesize}
+ 		where article_num = #{article_num}
+ 	</update>
+ 		<select id="A_searchList" parameterType="java.util.Map" resultType="ReviewBoardDTO">
+  		select * 
+  		from (
+			select rownum rn, A.* 
+			from (
+		 		select B.* , ezen_member.grade, ezen_member.academylocation
+		 		from ${tableName} B, ezen_member 
+		 		where ((B.id = ezen_member.id) and (B.${searchtype} like #{searchstring}) and (visible = 1))
+		 		order by B.article_num desc)A
+		 	)
+		 where rn between #{start} and #{end}
+	</select>
+	<select id="A_searchGetCount" parameterType="java.util.Map" resultType="Integer">
+	 	select count(*)	
+	 	from ${tableName} 
+	 	where ${searchtype} like #{searchstring} and visible = 1
+	</select>
+ 	
+ 	
 </mapper>
