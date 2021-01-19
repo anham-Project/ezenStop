@@ -9,6 +9,7 @@ import java.util.*;
 
 @Service
 public class LJH_boardMapper {
+	
 	@Autowired
 	private SqlSession sqlSession;
 	
@@ -21,5 +22,8 @@ public class LJH_boardMapper {
 	}
 	public int noticeGetCount() {
 		return sqlSession.selectOne("noticeGetCount");
+	}
+	public int noticeInsert(ReviewBoardDTO dto) {
+		return sqlSession.insert("reviewInsert", dto);
 	}
 }

@@ -2,13 +2,23 @@ package com.ezen709.ezenStop;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ezen709.ezenStop.model.*;
 import com.ezen709.ezenStop.service.*;
+
+import java.io.File;
+import java.io.IOException;
 import java.util.*;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 @Controller
@@ -64,5 +74,39 @@ public class LJH_boardController {
 		ModelAndView mav = finishMakeModelAndView(map, reviewList, count);
 		mav.setViewName("board/noticeList");
 		return mav;
+	}
+	@RequestMapping(value="/notice_write.board", method=RequestMethod.GET)
+	public String noticeWriteForm() {
+		return "board/noticeWrite";
+	}
+	@RequestMapping(value="/notice_write.board", method=RequestMethod.POST)
+	public String noticewWritePro(HttpServletRequest req, @ModelAttribute ReviewBoardDTO dto, 
+			BindingResult result, @RequestParam String reviewAddr) {
+		if(result.hasErrors()) {}
+		MultipartHttpServletRequest mr = (MultipartHttpServletRequest)req;
+		MultipartFile file = mr.getFile("image");
+/*		File target = new File(uploadPath, file.getOriginalFilename());
+		int filesize = 0;
+		String image = "파일없음";
+		if(file.getSize() > 0 ) {
+			try {
+				file.transferTo(target);
+				filesize = (int)file.getSize();
+				image = file.getOriginalFilename();
+			} catch (IllegalStateException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		*/
+		String subject = reviewAddr + dto.getSubject();
+		dto.setSubject(subject);
+//		dto.setImage(image);
+//		dto.setFilesize(filesize);
+		int res = boardMapper.noticeInsert(dto);
+		return "redirect:notice_list.board";
 	}
 }

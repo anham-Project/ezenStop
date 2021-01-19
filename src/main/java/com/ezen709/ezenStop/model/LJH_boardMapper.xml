@@ -18,4 +18,10 @@
  	<select id="noticeGetCount" resultType="Integer">
  		select count(*) from ezen_notice_board
  	</select>
+ 	
+ 	 <insert id="noticeInsert" parameterType="java.util.Map">
+ 		insert into ezen_notice_board 
+ 		values (ezen_board_seq.nextval, #{category}, #{subject}, #{id}, #{content}, 
+ 		to_char(sysdate,'yyyy-mm-dd'), to_char(sysdate,'hh24:mi'), 0, 0, 0, 0, 'notice_detail.board', 1, #{image}, #{filesize})
+ 	</insert>
 </mapper>
