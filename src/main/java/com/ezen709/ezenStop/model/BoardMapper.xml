@@ -170,8 +170,8 @@
  		(regdate between to_char(sysdate-7,'yyyy-mm-dd') and to_char(sysdate,'yyyy-mm-dd'))
  		order by upcount desc
  	</select>
- 	<select id="getReviewIndex" resultType="ReviewBoardDTO">
- 		select * from ezen_review_board
+ 	<select id="getReviewIndex" resultType="ReviewBoardDTO" parameterType="java.util.Map">
+ 		select * from ${tableName}
  		where visible = 1 and <![CDATA[rownum <= 6]]>
  		order by article_num desc
  	</select>

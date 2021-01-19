@@ -143,10 +143,10 @@ function findDetailPage(article_num) {
 				</div>
 				<div class="card-body">
 					<p class="card-text">
-						<c:if test="${empty reviewList }">
+						<c:if test="${empty indexListMap['EZEN_REVIEW_BOARD']}">
 							최근 일주일간 게시물이 없습니다. ㅠㅠ
 						</c:if>
-						<c:forEach var="dto" items="${reviewList }">
+						<c:forEach var="dto" items="${indexListMap['EZEN_REVIEW_BOARD'] }">
 						<form name="f1" onclick="javascript:findDetailPage('${dto.article_num}')">
 							<c:set var="tmp" value="${tmp+1 }"/>
 							<c:if test="${sessionScope.userId != null}">

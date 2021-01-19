@@ -235,8 +235,15 @@ public class BoardMapper {
 		}
 		return hotList;
 	}
-	public List<ReviewBoardDTO> getReviewBoard(){
-		List<ReviewBoardDTO> list = sqlSession.selectList("getReviewIndex");
-		return list;
+	public Map<String, List<ReviewBoardDTO>> getIndexBoard(){
+		List<String> tableList = getTableHasLocation();
+		Map<String, List<ReviewBoardDTO>> listMap = new Hashtable<>();
+		for(String tableName : tableList) {
+			Map<String,String> map = new Hashtable<>();
+			map.put("tableName", tableName);
+			List<ReviewBoardDTO> list = sqlSession.selectList("getReviewIndex",map);
+			listMap.put(tableName, list);
+		}
+		return listMap;
 	}
 	}

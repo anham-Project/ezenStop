@@ -79,11 +79,11 @@ public class LoginController {
 	public ModelAndView index() {
 		List<ReviewBoardDTO> hot = boardMapper.getHotBoard();
 		
-		List<ReviewBoardDTO> review = boardMapper.getReviewBoard();
+		Map<String,List<ReviewBoardDTO>> index = boardMapper.getIndexBoard();
 		
 		ModelAndView mav = new ModelAndView("index");
 		mav.addObject("hotList", hot);
-		mav.addObject("reviewList",review);
+		mav.addObject("indexListMap",index);
 		return mav;
 	}
 	@RequestMapping(value="/login.login", method=RequestMethod.GET)//로그인버튼 눌렀을 떄
