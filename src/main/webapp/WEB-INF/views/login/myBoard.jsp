@@ -26,7 +26,7 @@
 		})
 	}
 </script>
-	<h5><font size="3">내 게시판 </font></h5>
+	<h5><b>내 게시판 </b></h5>
 <form name="f" action="myBoard_find.board" method="post" onsubmit="return check()">
 	<div class="row" style="padding-bottom:5px">
 		<div class="col-md-6">
@@ -80,10 +80,8 @@
 	</table>
 	<div class="row">
 	<c:if test="${count>0}">
-		<div class="col-md-4">
-		</div>
-		<div class="col-md-6">
-			<ul class = "pagination">
+	<div class="col-md-10">
+	<ul class = "pagination justify-content-center">
 				<c:if test="${startPage > pageBlock}">	
 					<li class="page-item"><a class="page-link" href="myBoard.login?pageNum=${startPage-pageBlock}">이전</a></li>
 				</c:if>

@@ -98,15 +98,20 @@
 	</table>
 	<div class="row">
 <c:if test="${count>0}">
-	<div class="col-md-4">
-	</div>
-	<div class="col-md-6">
-	<ul class = "pagination">
+	<div class="col-md-10">
+	<ul class = "pagination justify-content-center">
 	<c:if test="${startPage > pageBlock}">	
 		<li class="page-item"><a class="page-link" href="review_list.board?pageNum=${startPage-pageBlock}">이전</a></li>
 	</c:if>
 	<c:forEach var="i" begin="${startPage}" end="${endPage}">
+			<c:choose>
+			<c:when test="${i == currentPage || currentPage == null}">
+			<li class="page-item active"><a class="page-link" href="review_list.board?pageNum=${i}">${i}</a></li>
+			</c:when>
+			<c:otherwise>
 			<li class="page-item"><a class="page-link" href="review_list.board?pageNum=${i}">${i}</a></li>
+			</c:otherwise>
+			</c:choose>
 	</c:forEach>
 	<c:if test="${endPage < pageCount}">
 		<li class="page-item"><a class="page-link" href="review_list.board?pageNum=${endPage+pageBlock}">다음</a></li>
