@@ -82,6 +82,7 @@ public class BoardController {
 		mav.addObject("startPage", startPage);
 		mav.addObject("endPage", endPage);
 		mav.addObject("pageBlock", pageBlock);
+		mav.addObject("currentPage", map.get("currentPage"));
 		mav.addObject("list", list); // 리스트 이름 list로했습니다. jsp파일 꼭확인하세요!!
 		return mav;			//객체들만 담아주고 경로는 안담아줌 .. 경로설정꼭 하세요!!
 	}
@@ -111,6 +112,7 @@ public class BoardController {
 		
 		//ModelAndView mav = new ModelAndView("board/reviewList");
 		ModelAndView mav = finishMakeModelAndView(map, reviewList, count);
+		
 		mav.setViewName("board/reviewList");
 		return mav;
 		/*mav.addObject("count", count);
