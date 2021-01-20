@@ -69,5 +69,9 @@
 	 	where ${searchtype} like #{searchstring} and visible = 1
 	</select>
  	
- 	
+ 	<update id="A_changeVisibleStatus" parameterType="java.util.Map">
+ 		update ${tableName}
+ 		set visible = (visible * -1)
+ 		where article_num = #{article_num}
+ 	</update>
 </mapper>

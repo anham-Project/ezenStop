@@ -73,5 +73,10 @@ public class LJH_boardMapper {
 		List<ReviewBoardDTO> list = sqlSession.selectList("A_searchList",map);
 		return list;
 	}
+	public int changeVisibleStatus(int article_num, String table) {
+		Map<String,Object> map = putMap(article_num, table);
+		return sqlSession.update("A_changeVisibleStatus", map);
+		
+	}
 	
 }

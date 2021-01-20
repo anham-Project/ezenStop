@@ -20,6 +20,7 @@ import java.util.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 @Controller
 public class LJH_boardController {
@@ -126,24 +127,14 @@ public class LJH_boardController {
 		String table = "ezen_notice_board";
 		ReviewBoardDTO noticeDetail = boardMapper.noticeDetail(article_num,table);
 		ModelAndView mav = new ModelAndView("board/noticeEdit");
-		String[] categoryList = {"[6개월 과정]","[3개월 과정]","[단기과정]","[기타]"};
-		String[] noticeAddrList = {"[노원]","[종로]"};
-		String addrAndSuject = noticeDetail.getSubject();
-		String noticeAddr = addrAndSuject.substring(addrAndSuject.lastIndexOf("]")+1);
-		int allLength = addrAndSuject.length();
-		int addrLength = allLength - noticeAddr.length();
-		String subject = addrAndSuject.substring(addrLength,allLength);
+		String subject = noticeDetail.getSubject();
 		noticeDetail.setSubject(subject);
 		mav.addObject("noticeDetail", noticeDetail);
-		mav.addObject("noticeAddrList",noticeAddrList);
-		mav.addObject("categoryList", categoryList);
-		mav.addObject("noticeAddr", noticeAddr);
 		return mav;
 	}
 	@RequestMapping(value="/notice_edit.board", method=RequestMethod.POST)
 	public String noticeEditPro(HttpServletRequest req, @ModelAttribute ReviewBoardDTO dto, 
-			BindingResult result, @RequestParam String noticeAddr, 
-			@RequestParam String image0, @RequestParam int filesize0) {
+			BindingResult result,@RequestParam String image0, @RequestParam int filesize0) {
 		if(result.hasErrors()) {}
 		String table = "ezen_notice_board";
 		MultipartHttpServletRequest mr = (MultipartHttpServletRequest)req;
@@ -172,7 +163,7 @@ public class LJH_boardController {
 			image = image0;
 			filesize = filesize0;
 		}
-		String subject = noticeAddr + dto.getSubject();
+		String subject = dto.getSubject();
 		dto.setSubject(subject);
 		dto.setImage(image);
 		dto.setFilesize(filesize);
@@ -217,6 +208,11 @@ public class LJH_boardController {
 		mav.setViewName("board/noticeList");
 		
 		return mav;
-		
+	}
+	@RequestMapping("/A_changeVisibleStatus.board")
+	public void changeVisibleStatus(HttpServletRequest req, HttpServletResponse resp) throws IOException{
+		int article_num = Integer.parseInt(req.getParameter("article_num"));
+		String table = req.getParameter("table");
+		int res = boardMapper.changeVisibleStatus(article_num, table);
 	}
 }

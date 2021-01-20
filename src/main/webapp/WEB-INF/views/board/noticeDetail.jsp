@@ -13,12 +13,14 @@
 	}
 	function changeVisibleStatus(){
 		var article_num = '${noticeDetail.article_num}';
+		var table = "ezen_notice_board";
 		$.ajax({
 			type: "POST",
-			url: "changeVisibleStatus.board",
+			url: "A_changeVisibleStatus.board",
 			contentType: 'application/x-www-form-urlencoded; charset=euc-kr',
 			data: {
-				article_num: article_num
+				article_num: article_num ,
+				table : table
 			},
 			datatype: 'text',
 			success: function(result){

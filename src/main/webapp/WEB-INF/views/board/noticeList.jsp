@@ -58,17 +58,11 @@
 			<td align="left">			
 	<c:if test="${sessionScope.userId != null}">
 				<a href="notice_detail.board?article_num=${dto.article_num}">
-				${dto.category} ${dto.subject}
-		<c:if test="${dto.replyCount != 0}">
-			<font color="orange" size="2">[${dto.replyCount}]</font>
-		</c:if>
+				${dto.subject}
 				</a>
 	</c:if>
 	<c:if test="${sessionScope.userId == null}">
-		<a href="#" onclick="javascript:loginPlz()">${dto.category} ${dto.subject}
-		<c:if test="${dto.replyCount != 0}">
-			<font color="orange" size="2">[${dto.replyCount}]</font>
-		</c:if>
+		<a href="#" onclick="javascript:loginPlz()">${dto.subject}
 		</a>
 	</c:if>
 			</td>
