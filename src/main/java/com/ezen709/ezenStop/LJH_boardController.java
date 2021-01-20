@@ -64,6 +64,7 @@ public class LJH_boardController {
 		mav.addObject("startPage", startPage);
 		mav.addObject("endPage", endPage);
 		mav.addObject("pageBlock", pageBlock);
+		mav.addObject("currentPage", map.get("currentPage"));
 		mav.addObject("list", list); // 리스트 이름 list로했습니다. jsp파일 꼭확인하세요!!
 		return mav;			//객체들만 담아주고 경로는 안담아줌 .. 경로설정꼭 하세요!!
 	}
@@ -72,9 +73,9 @@ public class LJH_boardController {
 	public ModelAndView notice_list(HttpServletRequest req) {
 		Map<String,Integer> map = setStartRowAndEndRow(req);
 		String table = "ezen_notice_board";
-		int count = boardMapper.A_GetCount(table);
+		int count = boardMapper.A_getCount(table);
 		setEndRowWhenCountIsLessThanEndRow(map, count);
-		List<ReviewBoardDTO> noticeList = boardMapper.A_List(table, map.get("startRow"), map.get("endRow"));
+		List<ReviewBoardDTO> noticeList = boardMapper.A_list(table, map.get("startRow"), map.get("endRow"));
 		ModelAndView mav = finishMakeModelAndView(map, noticeList, count);
 		mav.setViewName("board/noticeList");
 		return mav;
@@ -108,17 +109,19 @@ public class LJH_boardController {
 			}
 		}
 		String subject = dto.getSubject();
+		String table="ezen_notice_board";
+		dto.setDetaillocation("notice_detail.board");
 		dto.setSubject(subject);
 		dto.setImage(image);
 		dto.setFilesize(filesize);
-		int res = boardMapper.noticeInsert(dto);
+		int res = boardMapper.A_insert(dto,table);
 		return "redirect:notice_list.board";
 	}
 	@RequestMapping("/notice_detail.board")
 	public ModelAndView noticeDetail(@RequestParam int article_num) {
 		String table = "ezen_notice_board";
 		boardMapper.A_plusReadCount(article_num,table);
-		ReviewBoardDTO noticeDetail = boardMapper.A_Detail(article_num,table);
+		ReviewBoardDTO noticeDetail = boardMapper.A_detail(article_num,table);
 		ModelAndView mav = new ModelAndView("board/noticeDetail");
 		mav.addObject("uploadPath", uploadPath);
 		mav.addObject("noticeDetail", noticeDetail);
@@ -127,7 +130,7 @@ public class LJH_boardController {
 	@RequestMapping(value="/notice_edit.board", method=RequestMethod.GET)
 	public ModelAndView noticeEdit(@RequestParam int article_num) {
 		String table = "ezen_notice_board";
-		ReviewBoardDTO noticeDetail = boardMapper.A_Detail(article_num,table);
+		ReviewBoardDTO noticeDetail = boardMapper.A_detail(article_num,table);
 		ModelAndView mav = new ModelAndView("board/noticeEdit");
 		String subject = noticeDetail.getSubject();
 		noticeDetail.setSubject(subject);
@@ -171,20 +174,20 @@ public class LJH_boardController {
 		dto.setSubject(subject);
 		dto.setImage(image);
 		dto.setFilesize(filesize);
-		int res = boardMapper.noticeEdit(dto);
+		int res = boardMapper.A_edit(dto,table);
 		return "redirect:notice_list.board";
 	}
 	@RequestMapping("/notice_delete.board")
 	public String noticeDelete(@RequestParam int article_num) {
 		String table = "ezen_notice_board";
-		ReviewBoardDTO noticeDetail = boardMapper.A_Detail(article_num,table);
+		ReviewBoardDTO noticeDetail = boardMapper.A_detail(article_num,table);
 		System.out.println(noticeDetail.getArticle_num()+"<글번호 파일크기>"+noticeDetail.getFilesize());
 		if(noticeDetail.getFilesize() == 0) {
-			boardMapper.A_Delete(article_num,table);
+			boardMapper.A_delete(article_num,table);
 		}
 		else{
 			String image = noticeDetail.getImage();
-			int res = boardMapper.A_Delete(article_num,table);
+			int res = boardMapper.A_delete(article_num,table);
 			if(res>0) {
 				File target = new File(uploadPath, image);
 				noticeDetail.setFilesize(0);
@@ -201,11 +204,11 @@ public class LJH_boardController {
 		
 		Map<String,Integer> map = setStartRowAndEndRow(req);
 		
-		int count = boardMapper.searchNoticeGetCount(table,searchType,searchString);
+		int count = boardMapper.searchListGetCount(table,searchType,searchString);
 		
 		setEndRowWhenCountIsLessThanEndRow(map, count);
 		
-		List<ReviewBoardDTO> noticeList = boardMapper.search_A(table,searchType, searchString, map.get("startRow"), map.get("endRow"));
+		List<ReviewBoardDTO> noticeList = boardMapper.A_searchList(table,searchType, searchString, map.get("startRow"), map.get("endRow"));
 		
 		ModelAndView mav = finishMakeModelAndView(map, noticeList, count);
 		
@@ -227,9 +230,9 @@ public class LJH_boardController {
 	public ModelAndView trade_list(HttpServletRequest req) {
 		Map<String,Integer> map = setStartRowAndEndRow(req);
 		String table = "ezen_trade_board";
-		int count = boardMapper.A_GetCount(table);
+		int count = boardMapper.A_getCount(table);
 		setEndRowWhenCountIsLessThanEndRow(map, count);
-		List<ReviewBoardDTO> noticeList = boardMapper.A_List(table, map.get("startRow"), map.get("endRow"));
+		List<ReviewBoardDTO> noticeList = boardMapper.A_list(table, map.get("startRow"), map.get("endRow"));
 		ModelAndView mav = finishMakeModelAndView(map, noticeList, count);
 		mav.setViewName("board/tradeList");
 		return mav;
@@ -266,14 +269,16 @@ public class LJH_boardController {
 		dto.setSubject(subject);
 		dto.setImage(image);
 		dto.setFilesize(filesize);
-		int res = boardMapper.tradeInsert(dto);
+		dto.setDetaillocation("trade_detail.board");
+		String table="ezen_trade_board";
+		int res = boardMapper.A_insert(dto,table);
 		return "redirect:trade_list.board";
 	}
 	@RequestMapping("/trade_detail.board")
 	public ModelAndView tradeDetail(@RequestParam int article_num) {
 		String table = "ezen_trade_board";
 		boardMapper.A_plusReadCount(article_num,table);
-		ReviewBoardDTO noticeDetail = boardMapper.A_Detail(article_num,table);
+		ReviewBoardDTO noticeDetail = boardMapper.A_detail(article_num,table);
 		ModelAndView mav = new ModelAndView("board/tradeDetail");
 		mav.addObject("uploadPath", uploadPath);
 		mav.addObject("tradeDetail", noticeDetail);
@@ -282,7 +287,7 @@ public class LJH_boardController {
 	@RequestMapping(value="/trade_edit.board", method=RequestMethod.GET)
 	public ModelAndView tradeEdit(@RequestParam int article_num) {
 		String table = "ezen_trade_board";
-		ReviewBoardDTO tradeDetail = boardMapper.A_Detail(article_num,table);
+		ReviewBoardDTO tradeDetail = boardMapper.A_detail(article_num,table);
 		ModelAndView mav = new ModelAndView("board/noticeEdit");
 		String subject = tradeDetail.getSubject();
 		tradeDetail.setSubject(subject);
@@ -326,20 +331,20 @@ public class LJH_boardController {
 		dto.setSubject(subject);
 		dto.setImage(image);
 		dto.setFilesize(filesize);
-		int res = boardMapper.noticeEdit(dto);
+		int res = boardMapper.A_edit(dto,table);
 		return "redirect:trade_list.board";
 	}
 	@RequestMapping("/trade_delete.board")
 	public String tradeDelete(@RequestParam int article_num) {
 		String table = "ezen_trade_board";
-		ReviewBoardDTO noticeDetail = boardMapper.A_Detail(article_num,table);
+		ReviewBoardDTO noticeDetail = boardMapper.A_detail(article_num,table);
 		System.out.println(noticeDetail.getArticle_num()+"<글번호 파일크기>"+noticeDetail.getFilesize());
 		if(noticeDetail.getFilesize() == 0) {
-			boardMapper.A_Delete(article_num,table);
+			boardMapper.A_delete(article_num,table);
 		}
 		else{
 			String image = noticeDetail.getImage();
-			int res = boardMapper.A_Delete(article_num,table);
+			int res = boardMapper.A_delete(article_num,table);
 			if(res>0) {
 				File target = new File(uploadPath, image);
 				noticeDetail.setFilesize(0);
@@ -356,11 +361,11 @@ public class LJH_boardController {
 		
 		Map<String,Integer> map = setStartRowAndEndRow(req);
 		
-		int count = boardMapper.searchNoticeGetCount(table,searchType,searchString);
+		int count = boardMapper.searchListGetCount(table,searchType,searchString);
 		
 		setEndRowWhenCountIsLessThanEndRow(map, count);
 		
-		List<ReviewBoardDTO> noticeList = boardMapper.search_A(table,searchType, searchString, map.get("startRow"), map.get("endRow"));
+		List<ReviewBoardDTO> noticeList = boardMapper.A_searchList(table,searchType, searchString, map.get("startRow"), map.get("endRow"));
 		
 		ModelAndView mav = finishMakeModelAndView(map, noticeList, count);
 		

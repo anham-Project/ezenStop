@@ -19,7 +19,7 @@
 		alert("후기를 작성하려면 학원인증을 해야합니다!!")
 	}
 </script>
-	<h5><font size="3">이젠'sTop게시판 > </font><b>지역별 강의 후기게시판</b></h5>
+	<h5><font size="3">이젠'sTop게시판 > </font><b><a href="trade_list.board">중고책 거래 게시판</a></b></h5>
 <form name="f" action="trade_find.board" method="post" onsubmit="return check()">
 	<div class="row" style="padding-bottom:5px">
 		<div class="col-md-6">
@@ -30,7 +30,7 @@
 	 				<option value="id">작성자</option>
 	 				<option value="subject">제목</option>
 					<option value="content">내용</option>
-					<option value="category">수강기간</option>
+					<option value="category">카테고리</option>
 				</select>
                 <input type="text" class="form-control" name="searchString" placeholder="검색어를 입력하세요." style="width:65%;">
                 <span class="input-group-btn">

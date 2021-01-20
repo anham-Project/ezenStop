@@ -3,7 +3,7 @@
  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ezen709.ezenStop.model">
-	<select id="noticeList" parameterType="java.util.Map" resultType="ReviewBoardDTO">
+	<select id="A_list" parameterType="java.util.Map" resultType="ReviewBoardDTO">
 		select *
 		from(
 				select rownum rn, A.*
@@ -15,19 +15,19 @@
 					)
 		where rn between #{start} and #{end}
 	</select>
- 	<select id="A_GetCount" parameterType="java.util.Map" resultType="Integer">
+ 	<select id="A_getCount" parameterType="java.util.Map" resultType="Integer">
  		select count(*) from ${tableName}
  	</select>
  	
- 	 <insert id="noticeInsert" parameterType="reviewBoardDTO">
- 		insert into ezen_notice_board 
+ 	 <insert id="A_insert" parameterType="java.util.Map">
+ 		insert into ${tableName} 
  		values (ezen_board_seq.nextval, #{category}, #{subject}, #{id}, #{content}, 
- 		to_char(sysdate,'yyyy-mm-dd'), to_char(sysdate,'hh24:mi'), 0, 0, 0, 0, 'notice_detail.board', 1, #{image}, #{filesize})
+ 		to_char(sysdate,'yyyy-mm-dd'), to_char(sysdate,'hh24:mi'), 0, 0, 0, 0, #{detaillocation}, 1, #{image}, #{filesize})
  	</insert>
  	 <insert id="tradeInsert" parameterType="reviewBoardDTO">
- 		insert into ezen_trade_board 
+ 		insert into ${table}
  		values (ezen_board_seq.nextval, #{category}, #{subject}, #{id}, #{content}, 
- 		to_char(sysdate,'yyyy-mm-dd'), to_char(sysdate,'hh24:mi'), 0, 0, 0, 0, 'notice_detail.board', 1, #{image}, #{filesize})
+ 		to_char(sysdate,'yyyy-mm-dd'), to_char(sysdate,'hh24:mi'), 0, 0, 0, 0, 'trade_detail.board', 1, #{image}, #{filesize})
  	</insert>
  	
  	 <update id="A_plusReadCount" parameterType="java.util.Map">
@@ -36,12 +36,12 @@
  		where article_num = #{article_num}
  	</update>
  	
- 	<select id="A_Detail" parameterType="Integer" resultType="ReviewBoardDTO">
+ 	<select id="A_detail" parameterType="Integer" resultType="ReviewBoardDTO">
  		select A.*, ezen_member.grade , ezen_member.academylocation
  		from ${tableName} A , ezen_member
  		where ((A.id = ezen_member.id) and (article_num = #{article_num}))
  	</select>
- 	<delete id="A_Delete" parameterType="java.util.Map">
+ 	<delete id="A_delete" parameterType="java.util.Map">
  		delete
  		from ${tableName}
  		where article_num = #{article_num}
@@ -51,7 +51,7 @@
  		set image = '파일없음', filesize = 0
  		where article_num = #{article_num}
  	</update>
- 	<update id="noticeEdit" parameterType="ReviewBoardDTO">
+ 	<update id="A_edit" parameterType="java.util.Map">
  		update ezen_notice_Board
  		set category = #{category}, subject = #{subject}, content = #{content}, image = #{image}, filesize = #{filesize}
  		where article_num = #{article_num}
@@ -73,7 +73,7 @@
 		 	)
 		 where rn between #{start} and #{end}
 	</select>
-	<select id="A_searchGetCount" parameterType="java.util.Map" resultType="Integer">
+	<select id="searchListGetCount" parameterType="java.util.Map" resultType="Integer">
 	 	select count(*)	
 	 	from ${tableName} 
 	 	where ${searchtype} like #{searchstring} and visible = 1
