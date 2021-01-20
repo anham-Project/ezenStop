@@ -41,9 +41,9 @@
 </script>
 <div class="container" style="margin-top:30px; margin-bottom:10px;">
 	
-	<h5><font size="3">이젠'sTop게시판 > <a href="notice_list.board">중고책 거래 게시판</a> > </font><b>중고책 거래 작성</b></h5>
+	<h5><font size="3">이젠'sTop게시판 > <a href="trade_list.board">중고책 거래 게시판</a> > </font><b>중고책 거래 작성</b></h5>
 	<div class="container" style="margin-top:30px; margin-bottom:10px;">
-	<form class="form-horizontal" name ="f" action="notice_write.board" method="post" 
+	<form class="form-horizontal" name ="f" action="trade_write.board" method="post" 
 		onsubmit="return check()" enctype="multipart/form-data">
 		<input type="hidden" name="id" value="${sessionScope.userId}">
 	<div class="input-group" style="padding-bottom:5px">
@@ -71,7 +71,7 @@
 	</div>
 	<div class="input-group pull-right" style="padding-bottom:5px">
 		<input class="btn btn-secondary btn-sm" type="submit" value="작성완료">&nbsp;
-		<input class="btn btn-secondary btn-sm" type="button" value="목록으로" onclick="window.location='notice_list.board'">&nbsp;
+		<input class="btn btn-secondary btn-sm" type="button" value="목록으로" onclick="window.location='trade_list.board'">&nbsp;
 		<input class="btn btn-secondary btn-sm" type="reset" value="다시쓰기">
 	</div>
 	</form>

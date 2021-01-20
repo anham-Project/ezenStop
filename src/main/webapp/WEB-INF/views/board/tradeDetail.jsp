@@ -11,6 +11,37 @@
 	function trade_delete(a_num){
 		location.href = "trade_delete.board?article_num=" + a_num;
 	}
+	function somethingDo(somethingDo){
+		var article_num = '${reviewDetail.article_num}';
+		var userId = '${sessionScope.userId}';
+		$.ajax({
+			type : "POST",
+			url : "updownPro.board",
+			contentType: 'application/x-www-form-urlencoded; charset=euc-kr',
+			data : {
+				article_num : article_num,
+				userId : userId,
+				somethingDo : somethingDo
+			},
+			datatype : 'text',
+			success : function(result){
+				if(result === '-2'){
+					alert('이미 추천/비추천/신고 행동을 하였습니다.')
+				}else if(result === '1'){
+					if(somethingDo === 'up'){
+						alert('추천되었습니다.')
+						$('#upcount').html(${reviewDetail.upCount}+1);
+					}else{
+						alert('비추천되었습니다.')
+						$('#downcount').html(${reviewDetail.downCount}+1);
+					}
+				}else{
+					alert('추천/비추천 중 오류가 발생했습니다. 관리자에게 문의하세요.')
+				}
+				
+			}
+		})
+	}
 	function changeVisibleStatus(){
 		var article_num = '${tradeDetail.article_num}';
 		var table = "ezen_trade_board";

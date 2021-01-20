@@ -68,6 +68,16 @@ public class LJH_boardController {
 		mav.addObject("list", list); // 리스트 이름 list로했습니다. jsp파일 꼭확인하세요!!
 		return mav;			//객체들만 담아주고 경로는 안담아줌 .. 경로설정꼭 하세요!!
 	}
+	@RequestMapping("/A_changeVisibleStatus.board")
+	public void changeVisibleStatus(HttpServletRequest req, HttpServletResponse resp) throws IOException{
+		int article_num = Integer.parseInt(req.getParameter("article_num"));
+		String table = req.getParameter("table");
+		int res = boardMapper.changeVisibleStatus(article_num, table);
+	}
+	
+	
+	
+	//공지사항
 	
 	@RequestMapping("/notice_list.board")
 	public ModelAndView notice_list(HttpServletRequest req) {
@@ -216,16 +226,11 @@ public class LJH_boardController {
 		
 		return mav;
 	}
-	@RequestMapping("/A_changeVisibleStatus.board")
-	public void changeVisibleStatus(HttpServletRequest req, HttpServletResponse resp) throws IOException{
-		int article_num = Integer.parseInt(req.getParameter("article_num"));
-		String table = req.getParameter("table");
-		int res = boardMapper.changeVisibleStatus(article_num, table);
-	}
-	
-	
 	
 	// 중고책 거래 게시판
+	
+	
+	
 	@RequestMapping("/trade_list.board")
 	public ModelAndView trade_list(HttpServletRequest req) {
 		Map<String,Integer> map = setStartRowAndEndRow(req);
@@ -272,6 +277,7 @@ public class LJH_boardController {
 		dto.setDetaillocation("trade_detail.board");
 		String table="ezen_trade_board";
 		int res = boardMapper.A_insert(dto,table);
+		System.out.println(res);
 		return "redirect:trade_list.board";
 	}
 	@RequestMapping("/trade_detail.board")
