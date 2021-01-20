@@ -89,14 +89,16 @@ public class LJH_boardController {
 		if(result.hasErrors()) {}
 		MultipartHttpServletRequest mr = (MultipartHttpServletRequest)req;
 		MultipartFile file = mr.getFile("image");
-		File target = new File(uploadPath, file.getOriginalFilename());
+		UUID uuid = UUID.randomUUID();
+		String fileName = uuid.toString()+"_"+file.getOriginalFilename();
+		File target = new File(uploadPath, fileName);
 		int filesize = 0;
 		String image = "파일없음";
 		if(file.getSize() > 0 ) {
 			try {
 				file.transferTo(target);
 				filesize = (int)file.getSize();
-				image = file.getOriginalFilename();
+				image = fileName;
 			} catch (IllegalStateException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -139,14 +141,16 @@ public class LJH_boardController {
 		String table = "ezen_notice_board";
 		MultipartHttpServletRequest mr = (MultipartHttpServletRequest)req;
 		MultipartFile file = mr.getFile("image");
-		File target = new File(uploadPath, file.getOriginalFilename());
+		UUID uuid = UUID.randomUUID();
+		String fileName = uuid.toString()+"_"+file.getOriginalFilename();
+		File target = new File(uploadPath, fileName);
 		int filesize = 0;
 		String image = "파일없음";
 		if(file.getSize() > 0 ) {
 			try {
 				file.transferTo(target);
 				filesize = (int)file.getSize();
-				image = file.getOriginalFilename();
+				image = fileName;
 				int res = boardMapper.noticefileDelete(Integer.parseInt(mr.getParameter("article_num")),table);
 				if(res>0) {
 					File target0 = new File(uploadPath, image0);

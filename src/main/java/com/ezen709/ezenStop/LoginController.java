@@ -351,11 +351,7 @@ public class LoginController {
 				try {
 				certDTO = loginMapper.getFile(id);
 				File original = new File(uploadPath,certDTO.getImage());
-				if(original.delete()) {	//실험용 나중에 삭제
-					System.out.println("파일삭제성공");
-				}else {
-					System.out.println("파일삭제실패");
-				}
+				original.delete();
 				file.transferTo(target);
 				filesize = (int)file.getSize();
 				loginMapper.update_certification(id,file_name,filesize);//회원 인증 신청 db에 update
