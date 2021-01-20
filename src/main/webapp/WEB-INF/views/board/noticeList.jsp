@@ -88,7 +88,22 @@
 		<li class="page-item"><a class="page-link" href="notice_list.board?pageNum=${startPage-pageBlock}">이전</a></li>
 	</c:if>
 	<c:forEach var="i" begin="${startPage}" end="${endPage}">
+			<c:choose>
+			<c:when test="${i == currentPage}">
+			<li class="page-item active"><a class="page-link" href="notice_list.board?pageNum=${i}">${i}</a></li>
+			</c:when>
+			<c:when test="${currentPage == null}">
+				<c:if test="${i == 1}">
+				<li class="page-item active"><a class="page-link" href="notice_list.board?pageNum=${i}">${i}</a></li>
+				</c:if>
+				<c:if test="${i != 1}">
+				<li class="page-item"><a class="page-link" href="notice_list.board?pageNum=${i}">${i}</a></li>
+				</c:if>
+			</c:when>
+			<c:otherwise>
 			<li class="page-item"><a class="page-link" href="notice_list.board?pageNum=${i}">${i}</a></li>
+			</c:otherwise>
+			</c:choose>
 	</c:forEach>
 	<c:if test="${endPage < pageCount}">
 		<li class="page-item"><a class="page-link" href="notice_list.board?pageNum=${endPage+pageBlock}">다음</a></li>
