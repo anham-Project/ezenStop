@@ -28,7 +28,7 @@ public class LJH_boardMapper {
 		List<ReviewBoardDTO> list = sqlSession.selectList("noticeList",map);
 		return list;
 	}
-	public int noticeGetCount(String table) {
+	public int A_GetCount(String table) {
 		Map<String,Object> map = new Hashtable();
 		map.put("tableName",table);
 		return sqlSession.selectOne("A_GetCount",map);
@@ -36,19 +36,19 @@ public class LJH_boardMapper {
 	public int noticeInsert(ReviewBoardDTO dto) {
 		return sqlSession.insert("noticeInsert", dto);
 	}
-	public void notice_plusReadCount(int article_num,String table) {
+	public void A_plusReadCount(int article_num,String table) {
 		Map<String,Object> map = putMap(article_num, table);
 		sqlSession.update("A_plusReadCount", map);
 	}
-	public ReviewBoardDTO noticeDetail(int article_num,String table) {
+	public ReviewBoardDTO A_Detail(int article_num,String table) {
 		Map<String,Object> map = putMap(article_num, table);
 		return sqlSession.selectOne("A_Detail", map);
 	}
-	public int noticeDelete(int article_num,String table) {
+	public int A_Delete(int article_num,String table) {
 		Map<String,Object> map = putMap(article_num, table);
 		return sqlSession.delete("A_Delete", map);
 	}
-	public int noticefileDelete(int article_num,String table) {
+	public int A_fileDelete(int article_num,String table) {
 		Map<String,Object> map = putMap(article_num, table);
 		return sqlSession.delete("A_fileDelete", map);
 	}
@@ -63,7 +63,7 @@ public class LJH_boardMapper {
 		int count = sqlSession.selectOne("A_searchGetCount",map);
 		return count;
 	}
-	public List<ReviewBoardDTO> searchNotice(String table,String searchType, String searchString,int startrow, int endrow){
+	public List<ReviewBoardDTO> search_A(String table,String searchType, String searchString,int startrow, int endrow){
 		Map map = new Hashtable();
 		map.put("tableName",table);
 		map.put("searchtype", searchType);
@@ -76,7 +76,10 @@ public class LJH_boardMapper {
 	public int changeVisibleStatus(int article_num, String table) {
 		Map<String,Object> map = putMap(article_num, table);
 		return sqlSession.update("A_changeVisibleStatus", map);
-		
 	}
+	public int tradeInsert(ReviewBoardDTO dto) {
+		return sqlSession.insert("tradeInsert", dto);
+	}
+	
 	
 }

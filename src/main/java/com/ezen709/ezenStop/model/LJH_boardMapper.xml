@@ -19,8 +19,13 @@
  		select count(*) from ${tableName}
  	</select>
  	
- 	 <insert id="noticeInsert" parameterType="java.util.Map">
+ 	 <insert id="noticeInsert" parameterType="reviewBoardDTO">
  		insert into ezen_notice_board 
+ 		values (ezen_board_seq.nextval, #{category}, #{subject}, #{id}, #{content}, 
+ 		to_char(sysdate,'yyyy-mm-dd'), to_char(sysdate,'hh24:mi'), 0, 0, 0, 0, 'notice_detail.board', 1, #{image}, #{filesize})
+ 	</insert>
+ 	 <insert id="tradeInsert" parameterType="reviewBoardDTO">
+ 		insert into ezen_trade_board 
  		values (ezen_board_seq.nextval, #{category}, #{subject}, #{id}, #{content}, 
  		to_char(sysdate,'yyyy-mm-dd'), to_char(sysdate,'hh24:mi'), 0, 0, 0, 0, 'notice_detail.board', 1, #{image}, #{filesize})
  	</insert>
@@ -47,6 +52,11 @@
  		where article_num = #{article_num}
  	</update>
  	<update id="noticeEdit" parameterType="ReviewBoardDTO">
+ 		update ezen_notice_Board
+ 		set category = #{category}, subject = #{subject}, content = #{content}, image = #{image}, filesize = #{filesize}
+ 		where article_num = #{article_num}
+ 	</update>
+ 	 <update id="tradeEdit" parameterType="ReviewBoardDTO">
  		update ezen_notice_Board
  		set category = #{category}, subject = #{subject}, content = #{content}, image = #{image}, filesize = #{filesize}
  		where article_num = #{article_num}

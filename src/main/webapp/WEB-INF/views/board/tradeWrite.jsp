@@ -47,24 +47,12 @@
 		onsubmit="return check()" enctype="multipart/form-data">
 		<input type="hidden" name="id" value="${sessionScope.userId}">
 	<div class="input-group" style="padding-bottom:5px">
-		<!-- 
-		<label class="col-md-2 control-label">수강지역<font size="3" color="red">*</font></label>
-		<div class="col-md-3">
-			<select class="form-control" name="noticeAddr"> 
-					<option value="">[수강지역선택]</option>
-					<option>[노원]</option> 
-					<option>[종로]</option> 
-			</select>
-		</div>
-		 -->
 		<label class="col-md-2 control-label">카테고리<font size="3" color="red">*</font></label>
 		<div class="col-md-3">
 			<select class="form-control" name="category"> 
 					<option value="">[게시판 종류]</option>
-					<option value="ALL">[공통]</option> 
-					<option value="REVIEW">[리뷰 게시판]</option> 
-					<option value="FREE">[자유 게시판]</option> 
-					<option value="ETC">[기타]</option>
+					<option value="BUY">[사고]</option> 
+					<option value="SELL">[팔고]</option> 
 			</select>
 		</div>
 		<label class="col-md control-label"><font size="2" color="red">*필수선택 사항</font></label>

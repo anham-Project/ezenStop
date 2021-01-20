@@ -5,15 +5,15 @@
 <script type="text/javascript"
 	src="https://code.jquery.com/jquery-3.2.0.min.js"></script>
 <script type="text/javascript">
-	function notice_edit(a_num){
-		location.href = "notice_edit.board?article_num=" + a_num;
+	function trade_edit(a_num){
+		location.href = "trade_edit.board?article_num=" + a_num;
 	}
-	function notice_delete(a_num){
-		location.href = "notice_delete.board?article_num=" + a_num;
+	function trade_delete(a_num){
+		location.href = "trade_delete.board?article_num=" + a_num;
 	}
 	function changeVisibleStatus(){
-		var article_num = '${noticeDetail.article_num}';
-		var table = "ezen_notice_board";
+		var article_num = '${tradeDetail.article_num}';
+		var table = "ezen_trade_board";
 		$.ajax({
 			type: "POST",
 			url: "A_changeVisibleStatus.board",
@@ -33,59 +33,59 @@
 <jsp:include page="../header.jsp" />
 <div class="container" style="margin-top: 30px; margin-bottom: 10px;">
 	<h5>
-		<font size="3">이젠'sTop게시판 > <a href="notice_list.board">공지사항</a> >
+		<font size="3">이젠'sTop게시판 > <a href="trade_list.board">중고책 거래 게시판</a> >
 		</font><b>게시글보기</b>
 	</h5>
 	<div class="row"
 		style="padding-left: 10px; padding-top: 10px; padding-bottom: 10px; background-color: #EFF7EA;">
 		<div class="col-md-3">
-			<c:if test="${noticeDetail.grade == 1 }">
+			<c:if test="${tradeDetail.grade == 1 }">
 				<img class="media-object img-circle"
 					style="width: 30px; height: 30px;"
-					src="resources/img/${noticeDetail.academyLocation }.jpg">
+					src="resources/img/${tradeDetail.academyLocation }.jpg">
 			</c:if>
-			<c:if test="${noticeDetail.grade != 1 }">
+			<c:if test="${tradeDetail.grade != 1 }">
 				<img class="media-object img-circle"
 					style="width: 30px; height: 30px;"
-					src="resources/img/${noticeDetail.grade }.jpg">
+					src="resources/img/${tradeDetail.grade }.jpg">
 			</c:if>
 			<c:choose>
-			<c:when test="${noticeDetail.grade==2}"><font style="color:#FF0000;  font-weight:bold;">${noticeDetail.id}</font></c:when>
-			<c:otherwise>${noticeDetail.id}</c:otherwise>
+			<c:when test="${tradeDetail.grade==2}"><font style="color:#FF0000;  font-weight:bold;">${tradeDetail.id}</font></c:when>
+			<c:otherwise>${tradeDetail.id}</c:otherwise>
 		</c:choose>
 		</div>
 		<div class="col-md-6 text-center">
-			<b>${noticeDetail.subject}</b>
+			<b>${tradeDetail.subject}</b>
 		</div>
-		<div class="col-md-3" align="right">조회 ${noticeDetail.readCount}
-			| 추천수 ${noticeDetail.upCount}</div>
+		<div class="col-md-3" align="right">조회 ${tradeDetail.readCount}
+			| 추천수 ${tradeDetail.upCount}</div>
 	</div>
 	<div class="row" style="padding-top: 10px;">
 		<div class="col-md-12" align="right">
-			<font color="gray">${noticeDetail.regdate}
-				${noticeDetail.regdate_time}</font>
+			<font color="gray">${tradeDetail.regdate}
+				${tradeDetail.regdate_time}</font>
 		</div>
 	</div>
 	<hr />
 	<div class="row"
 		style="padding: 0px 10px 20px 20px; min-height: 300px;">
-		<div class="col-md-12">${noticeDetail.content}</div>
+		<div class="col-md-12">${tradeDetail.content}</div>
 	</div>
-	<c:if test="${noticeDetail.filesize != 0}">
+	<c:if test="${tradeDetail.filesize != 0}">
 		<div class="row">
 			<div class="col-md-12">
-				첨부된 파일 : <img src="<spring:url value='/image/${noticeDetail.image}'/>" border="0"
+				첨부된 파일 : <img src="<spring:url value='/image/${tradeDetail.image}'/>" border="0"
 					style="max-width: 300px; max-height: 300px;">
 			</div>
 		</div>
 	</c:if>
-	<c:if test="${sessionScope.userId == noticeDetail.id}">
+	<c:if test="${sessionScope.userId == tradeDetail.id}">
 		<div class="row">
 			<div class="col-md-12" align="center">
 				<button class="btn btn-info btn-sm" type="button"
-					onclick="notice_edit('${noticeDetail.article_num}')">글수정</button>
+					onclick="trade_edit('${tradeDetail.article_num}')">글수정</button>
 				<button class="btn btn-warning btn-sm" type="button"
-					onclick="notice_delete('${noticeDetail.article_num}')">글삭제</button>
+					onclick="trade_delete('${tradeDetail.article_num}')">글삭제</button>
 			</div>
 		</div>
 	</c:if>
@@ -94,24 +94,23 @@
 		<div align="center">
 			<button class="btn btn-danger btn-sm" type="button"
 				onclick="javascript:changeVisibleStatus()" id="visibleStatus">
-				<c:if test="${noticeDetail.visible == 1 }">비활성화</c:if>
-				<c:if test="${noticeDetail.visible == -1 }">활성화</c:if>
+				<c:if test="${tradeDetail.visible == 1 }">비활성화</c:if>
+				<c:if test="${tradeDetail.visible == -1 }">활성화</c:if>
 			</button>
 		</div>
 	</c:if>
-<!--
 	<c:if
-		test="${!empty sessionScope.userId && sessionScope.userId != noticeDetail.id}">
+		test="${!empty sessionScope.userId && sessionScope.userId != tradeDetail.id}">
 		<div class="row">
 			<div class="col-md-12" align="center">
 				<button class="btn btn-info btn-sm" type="button"
 					onclick="javascript:somethingDo('up')" id="boardUp">
-					<h5 id="upcount">${noticeDetail.upCount}</h5>
+					<h5 id="upcount">${tradeDetail.upCount}</h5>
 					추천
 				</button>
 				<button class="btn btn-secondary btn-sm" type="button"
 					onclick="javascript:somethingDo('down')" id="boardDown">
-					<h5 id="downcount">${noticeDetail.downCount}</h5>
+					<h5 id="downcount">${tradeDetail.downCount}</h5>
 					비추천
 				</button>
 				<a class="btn btn-warning btn-sm" data-target="#reportModal"
@@ -122,11 +121,11 @@
 
 	<hr />
 	<form class="form-horizontal" name="f" method="post"
-		action="notice_reply_write.board" onsubmit="return check()">
+		action="trade_reply_write.board" onsubmit="return check()">
 		<input type="hidden" name="id" value="${sessionScope.userId}">
 		<input type="hidden" name="article_num"
-			value="${noticeDetail.article_num}">
-		<c:if test="${noticeDetail.replyCount != 0}">
+			value="${tradeDetail.article_num}">
+		<c:if test="${tradeDetail.replyCount != 0}">
 			<c:forEach var="dto" items="${replyList}">
 				<div class="row"
 					style="padding: 5px 5px 5px ${5+dto.re_level*13}px; background-color: #F7F7F7;">
@@ -154,7 +153,7 @@
 						<c:if
 							test="${sessionScope.userId == dto.id || sessionScope.userGrade == 2}">
 							<a
-								href="javascript:deleteReply('${dto.reply_num}','${noticeDetail.article_num}');">[삭제]</a>
+								href="javascript:deleteReply('${dto.reply_num}','${tradeDetail.article_num}');">[삭제]</a>
 						</c:if>
 					</div>
 					<div class="col-md-12" align="left">
@@ -228,7 +227,7 @@
 			data : {
 				reportContent: reportContent,
 				userId : '${sessionScope.userId}',
-				article_num : '${noticeDetail.article_num}'
+				article_num : '${tradeDetail.article_num}'
 			},
 			datatype : 'text',
 			success: function(result){
@@ -261,7 +260,6 @@
 		</div>
 	</div>
 </div>
- -->
  <hr/>
  </div>
 <jsp:include page="../footer.jsp" />

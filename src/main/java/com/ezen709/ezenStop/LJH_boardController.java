@@ -72,7 +72,7 @@ public class LJH_boardController {
 	public ModelAndView notice_list(HttpServletRequest req) {
 		Map<String,Integer> map = setStartRowAndEndRow(req);
 		String table = "ezen_notice_board";
-		int count = boardMapper.noticeGetCount(table);
+		int count = boardMapper.A_GetCount(table);
 		setEndRowWhenCountIsLessThanEndRow(map, count);
 		List<ReviewBoardDTO> noticeList = boardMapper.noticeList(table, map.get("startRow"), map.get("endRow"));
 		ModelAndView mav = finishMakeModelAndView(map, noticeList, count);
@@ -117,8 +117,8 @@ public class LJH_boardController {
 	@RequestMapping("/notice_detail.board")
 	public ModelAndView noticeDetail(@RequestParam int article_num) {
 		String table = "ezen_notice_board";
-		boardMapper.notice_plusReadCount(article_num,table);
-		ReviewBoardDTO noticeDetail = boardMapper.noticeDetail(article_num,table);
+		boardMapper.A_plusReadCount(article_num,table);
+		ReviewBoardDTO noticeDetail = boardMapper.A_Detail(article_num,table);
 		ModelAndView mav = new ModelAndView("board/noticeDetail");
 		mav.addObject("uploadPath", uploadPath);
 		mav.addObject("noticeDetail", noticeDetail);
@@ -127,7 +127,7 @@ public class LJH_boardController {
 	@RequestMapping(value="/notice_edit.board", method=RequestMethod.GET)
 	public ModelAndView noticeEdit(@RequestParam int article_num) {
 		String table = "ezen_notice_board";
-		ReviewBoardDTO noticeDetail = boardMapper.noticeDetail(article_num,table);
+		ReviewBoardDTO noticeDetail = boardMapper.A_Detail(article_num,table);
 		ModelAndView mav = new ModelAndView("board/noticeEdit");
 		String subject = noticeDetail.getSubject();
 		noticeDetail.setSubject(subject);
@@ -151,7 +151,7 @@ public class LJH_boardController {
 				file.transferTo(target);
 				filesize = (int)file.getSize();
 				image = fileName;
-				int res = boardMapper.noticefileDelete(Integer.parseInt(mr.getParameter("article_num")),table);
+				int res = boardMapper.A_fileDelete(Integer.parseInt(mr.getParameter("article_num")),table);
 				if(res>0) {
 					File target0 = new File(uploadPath, image0);
 					target0.delete();
@@ -177,14 +177,14 @@ public class LJH_boardController {
 	@RequestMapping("/notice_delete.board")
 	public String noticeDelete(@RequestParam int article_num) {
 		String table = "ezen_notice_board";
-		ReviewBoardDTO noticeDetail = boardMapper.noticeDetail(article_num,table);
+		ReviewBoardDTO noticeDetail = boardMapper.A_Detail(article_num,table);
 		System.out.println(noticeDetail.getArticle_num()+"<글번호 파일크기>"+noticeDetail.getFilesize());
 		if(noticeDetail.getFilesize() == 0) {
-			boardMapper.noticeDelete(article_num,table);
+			boardMapper.A_Delete(article_num,table);
 		}
 		else{
 			String image = noticeDetail.getImage();
-			int res = boardMapper.noticeDelete(article_num,table);
+			int res = boardMapper.A_Delete(article_num,table);
 			if(res>0) {
 				File target = new File(uploadPath, image);
 				noticeDetail.setFilesize(0);
@@ -205,7 +205,7 @@ public class LJH_boardController {
 		
 		setEndRowWhenCountIsLessThanEndRow(map, count);
 		
-		List<ReviewBoardDTO> noticeList = boardMapper.searchNotice(table,searchType, searchString, map.get("startRow"), map.get("endRow"));
+		List<ReviewBoardDTO> noticeList = boardMapper.search_A(table,searchType, searchString, map.get("startRow"), map.get("endRow"));
 		
 		ModelAndView mav = finishMakeModelAndView(map, noticeList, count);
 		
@@ -218,5 +218,139 @@ public class LJH_boardController {
 		int article_num = Integer.parseInt(req.getParameter("article_num"));
 		String table = req.getParameter("table");
 		int res = boardMapper.changeVisibleStatus(article_num, table);
+	}
+	@RequestMapping(value="/trade_write.board", method=RequestMethod.GET)
+	public String tradeWriteForm() {
+		return "board/tradeWrite";
+	}
+	@RequestMapping(value="/trade_write.board", method=RequestMethod.POST)
+	public String tradewWritePro(HttpServletRequest req, @ModelAttribute ReviewBoardDTO dto, 
+			BindingResult result) {
+		if(result.hasErrors()) {}
+		MultipartHttpServletRequest mr = (MultipartHttpServletRequest)req;
+		MultipartFile file = mr.getFile("image");
+		UUID uuid = UUID.randomUUID();
+		String fileName = uuid.toString()+"_"+file.getOriginalFilename();
+		File target = new File(uploadPath, fileName);
+		int filesize = 0;
+		String image = "파일없음";
+		if(file.getSize() > 0 ) {
+			try {
+				file.transferTo(target);
+				filesize = (int)file.getSize();
+				image = fileName;
+			} catch (IllegalStateException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		String subject = dto.getSubject();
+		dto.setSubject(subject);
+		dto.setImage(image);
+		dto.setFilesize(filesize);
+		int res = boardMapper.tradeInsert(dto);
+		return "redirect:trade_list.board";
+	}
+	@RequestMapping("/notice_detail.board")
+	public ModelAndView tradeDetail(@RequestParam int article_num) {
+		String table = "ezen_trade_board";
+		boardMapper.A_plusReadCount(article_num,table);
+		ReviewBoardDTO noticeDetail = boardMapper.A_Detail(article_num,table);
+		ModelAndView mav = new ModelAndView("board/tradeDetail");
+		mav.addObject("uploadPath", uploadPath);
+		mav.addObject("tradeDetail", noticeDetail);
+		return mav;
+	}
+	@RequestMapping(value="/trade_edit.board", method=RequestMethod.GET)
+	public ModelAndView tradeEdit(@RequestParam int article_num) {
+		String table = "ezen_trade_board";
+		ReviewBoardDTO noticeDetail = boardMapper.A_Detail(article_num,table);
+		ModelAndView mav = new ModelAndView("board/noticeEdit");
+		String subject = noticeDetail.getSubject();
+		noticeDetail.setSubject(subject);
+		mav.addObject("tradeDetail", noticeDetail);
+		return mav;
+	}
+	@RequestMapping(value="/trade_edit.board", method=RequestMethod.POST)
+	public String tradeEditPro(HttpServletRequest req, @ModelAttribute ReviewBoardDTO dto, 
+			BindingResult result,@RequestParam String image0, @RequestParam int filesize0) {
+		if(result.hasErrors()) {}
+		String table = "ezen_trade_board";
+		MultipartHttpServletRequest mr = (MultipartHttpServletRequest)req;
+		MultipartFile file = mr.getFile("image");
+		UUID uuid = UUID.randomUUID();
+		String fileName = uuid.toString()+"_"+file.getOriginalFilename();
+		File target = new File(uploadPath, fileName);
+		int filesize = 0;
+		String image = "파일없음";
+		if(file.getSize() > 0 ) {
+			try {
+				file.transferTo(target);
+				filesize = (int)file.getSize();
+				image = fileName;
+				int res = boardMapper.A_fileDelete(Integer.parseInt(mr.getParameter("article_num")),table);
+				if(res>0) {
+					File target0 = new File(uploadPath, image0);
+					target0.delete();
+				}
+			} catch (IllegalStateException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}else if(filesize0 > 0){
+			image = image0;
+			filesize = filesize0;
+		}
+		String subject = dto.getSubject();
+		dto.setSubject(subject);
+		dto.setImage(image);
+		dto.setFilesize(filesize);
+		int res = boardMapper.noticeEdit(dto);
+		return "redirect:trade_list.board";
+	}
+	@RequestMapping("/trade_delete.board")
+	public String tradeDelete(@RequestParam int article_num) {
+		String table = "ezen_trade_board";
+		ReviewBoardDTO noticeDetail = boardMapper.A_Detail(article_num,table);
+		System.out.println(noticeDetail.getArticle_num()+"<글번호 파일크기>"+noticeDetail.getFilesize());
+		if(noticeDetail.getFilesize() == 0) {
+			boardMapper.A_Delete(article_num,table);
+		}
+		else{
+			String image = noticeDetail.getImage();
+			int res = boardMapper.A_Delete(article_num,table);
+			if(res>0) {
+				File target = new File(uploadPath, image);
+				noticeDetail.setFilesize(0);
+				target.delete();
+			}
+		}
+		return "redirect:trade_list.board";
+	}
+	@RequestMapping("/notice_find.board")
+	public ModelAndView searchTrade(HttpServletRequest req) throws IOException {
+		String searchType = req.getParameter("searchType");
+		String searchString = "%"+req.getParameter("searchString")+"%";
+		String table = "ezen_trade_board";
+		
+		Map<String,Integer> map = setStartRowAndEndRow(req);
+		
+		int count = boardMapper.searchNoticeGetCount(table,searchType,searchString);
+		
+		setEndRowWhenCountIsLessThanEndRow(map, count);
+		
+		List<ReviewBoardDTO> noticeList = boardMapper.search_A(table,searchType, searchString, map.get("startRow"), map.get("endRow"));
+		
+		ModelAndView mav = finishMakeModelAndView(map, noticeList, count);
+		
+		mav.setViewName("board/tradeList");
+		
+		return mav;
 	}
 }
