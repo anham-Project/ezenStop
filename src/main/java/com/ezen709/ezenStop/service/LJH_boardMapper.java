@@ -62,13 +62,14 @@ public class LJH_boardMapper {
 		return sqlSession.delete("A_fileDelete", map);
 	}
 	public int A_edit(ReviewBoardDTO dto, String table) {
+		System.out.println(table+"\n"+dto.getArticle_num());
 		Map<String,Object> map = putMap(dto.getArticle_num(),table);
 		map.put("category",dto.getCategory());
 		map.put("subject",dto.getSubject());
 		map.put("content",dto.getContent());
 		map.put("image",dto.getImage());
 		map.put("filesize",dto.getFilesize());
-		return sqlSession.update("A_edit", dto);
+		return sqlSession.update("A_edit", map);
 	}
 	public int searchListGetCount(String table,String searchType, String searchString) {
 		Map<String,String> map = new Hashtable<>();

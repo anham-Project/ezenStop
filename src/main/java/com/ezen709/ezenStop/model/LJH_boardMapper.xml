@@ -24,12 +24,6 @@
  		values (ezen_board_seq.nextval, #{category}, #{subject}, #{id}, #{content}, 
  		to_char(sysdate,'yyyy-mm-dd'), to_char(sysdate,'hh24:mi'), 0, 0, 0, 0, #{detaillocation}, 1, #{image}, #{filesize})
  	</insert>
- 	 <insert id="tradeInsert" parameterType="reviewBoardDTO">
- 		insert into ${table}
- 		values (ezen_board_seq.nextval, #{category}, #{subject}, #{id}, #{content}, 
- 		to_char(sysdate,'yyyy-mm-dd'), to_char(sysdate,'hh24:mi'), 0, 0, 0, 0, 'trade_detail.board', 1, #{image}, #{filesize})
- 	</insert>
- 	
  	 <update id="A_plusReadCount" parameterType="java.util.Map">
  		update ${tableName}
  		set readcount = readcount + 1 
@@ -52,12 +46,7 @@
  		where article_num = #{article_num}
  	</update>
  	<update id="A_edit" parameterType="java.util.Map">
- 		update ezen_notice_Board
- 		set category = #{category}, subject = #{subject}, content = #{content}, image = #{image}, filesize = #{filesize}
- 		where article_num = #{article_num}
- 	</update>
- 	 <update id="tradeEdit" parameterType="ReviewBoardDTO">
- 		update ezen_notice_Board
+ 		update ${tableName}
  		set category = #{category}, subject = #{subject}, content = #{content}, image = #{image}, filesize = #{filesize}
  		where article_num = #{article_num}
  	</update>

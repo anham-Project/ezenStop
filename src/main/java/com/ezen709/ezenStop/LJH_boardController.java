@@ -277,7 +277,6 @@ public class LJH_boardController {
 		dto.setDetaillocation("trade_detail.board");
 		String table="ezen_trade_board";
 		int res = boardMapper.A_insert(dto,table);
-		System.out.println(res);
 		return "redirect:trade_list.board";
 	}
 	@RequestMapping("/trade_detail.board")
