@@ -74,7 +74,7 @@ public class LJH_boardController {
 		String table = "ezen_notice_board";
 		int count = boardMapper.A_GetCount(table);
 		setEndRowWhenCountIsLessThanEndRow(map, count);
-		List<ReviewBoardDTO> noticeList = boardMapper.noticeList(table, map.get("startRow"), map.get("endRow"));
+		List<ReviewBoardDTO> noticeList = boardMapper.A_List(table, map.get("startRow"), map.get("endRow"));
 		ModelAndView mav = finishMakeModelAndView(map, noticeList, count);
 		mav.setViewName("board/noticeList");
 		return mav;
@@ -219,6 +219,21 @@ public class LJH_boardController {
 		String table = req.getParameter("table");
 		int res = boardMapper.changeVisibleStatus(article_num, table);
 	}
+	
+	
+	
+	// 중고책 거래 게시판
+	@RequestMapping("/trade_list.board")
+	public ModelAndView trade_list(HttpServletRequest req) {
+		Map<String,Integer> map = setStartRowAndEndRow(req);
+		String table = "ezen_trade_board";
+		int count = boardMapper.A_GetCount(table);
+		setEndRowWhenCountIsLessThanEndRow(map, count);
+		List<ReviewBoardDTO> noticeList = boardMapper.A_List(table, map.get("startRow"), map.get("endRow"));
+		ModelAndView mav = finishMakeModelAndView(map, noticeList, count);
+		mav.setViewName("board/tradeList");
+		return mav;
+	}
 	@RequestMapping(value="/trade_write.board", method=RequestMethod.GET)
 	public String tradeWriteForm() {
 		return "board/tradeWrite";
@@ -254,7 +269,7 @@ public class LJH_boardController {
 		int res = boardMapper.tradeInsert(dto);
 		return "redirect:trade_list.board";
 	}
-	@RequestMapping("/notice_detail.board")
+	@RequestMapping("/trade_detail.board")
 	public ModelAndView tradeDetail(@RequestParam int article_num) {
 		String table = "ezen_trade_board";
 		boardMapper.A_plusReadCount(article_num,table);
@@ -267,11 +282,11 @@ public class LJH_boardController {
 	@RequestMapping(value="/trade_edit.board", method=RequestMethod.GET)
 	public ModelAndView tradeEdit(@RequestParam int article_num) {
 		String table = "ezen_trade_board";
-		ReviewBoardDTO noticeDetail = boardMapper.A_Detail(article_num,table);
+		ReviewBoardDTO tradeDetail = boardMapper.A_Detail(article_num,table);
 		ModelAndView mav = new ModelAndView("board/noticeEdit");
-		String subject = noticeDetail.getSubject();
-		noticeDetail.setSubject(subject);
-		mav.addObject("tradeDetail", noticeDetail);
+		String subject = tradeDetail.getSubject();
+		tradeDetail.setSubject(subject);
+		mav.addObject("tradeDetail", tradeDetail);
 		return mav;
 	}
 	@RequestMapping(value="/trade_edit.board", method=RequestMethod.POST)
@@ -333,7 +348,7 @@ public class LJH_boardController {
 		}
 		return "redirect:trade_list.board";
 	}
-	@RequestMapping("/notice_find.board")
+	@RequestMapping("/trade_find.board")
 	public ModelAndView searchTrade(HttpServletRequest req) throws IOException {
 		String searchType = req.getParameter("searchType");
 		String searchString = "%"+req.getParameter("searchString")+"%";

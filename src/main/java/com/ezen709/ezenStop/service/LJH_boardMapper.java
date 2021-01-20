@@ -20,7 +20,7 @@ public class LJH_boardMapper {
 		return map;
 	}
 	
-	public List<ReviewBoardDTO> noticeList(String table,int start, int end){
+	public List<ReviewBoardDTO> A_List(String table,int start, int end){
 		Map<String,Object> map = new Hashtable();
 		map.put("tableName",table);
 		map.put("start",start);
