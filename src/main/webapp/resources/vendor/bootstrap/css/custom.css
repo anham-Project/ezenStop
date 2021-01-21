@@ -214,6 +214,7 @@ height:40px;
 	border: 1px solid #d9dde1;
 	margin: 20px;
 	padding: 10px;
+	border-radius: 10px;
 }
 h4{
     font-weight: bold;
@@ -246,14 +247,18 @@ h4{
 	margin: auto; 
 	max-width: 700px;
 }
+.i-am-vcentered {
+	margin: auto;
+	max-height: 700px;
+}
 /* a태그 색상	*/
 .grayA{
-  color: #383d41;
+  color: #495156;
   text-decoration: none;
   background-color: transparent;
 }
 .grayA:hover {
-  color: #202326;
+  color: #373d42;
   text-decoration: underline;
 }
 .grayA:not([href]):not([class]) {

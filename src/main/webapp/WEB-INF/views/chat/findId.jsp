@@ -27,29 +27,29 @@
 			'</thead>' +
 			'<tbody>' +
 			'<tr>' +
-			'<td style="text-align: center;"><h3>'+ findId + '</h3><a href="moveChat.chat?toId=' + encodeURIComponent(findId) +'" class="btn btn-primary pull-right">' + '메세지 보내기</a></td>' +
+			'<td style="width: 110px; padding-bottom:20px;"><h5><b>'+ findId + '</b></h5><a href="moveChat.chat?toId=' + encodeURIComponent(findId) +'" class="btn btn-primary pull-right btn-sm">' + '메세지 보내기</a></td>' +
 			'</tr>' +
 			'</tbody>'
 		);
 	}
 	function failFriend(){
-		$('#friendResult').html('친구를 찾을수 없습니다.');
+		$('#friendResult').html('<h5 style="margin:10px; color:red;">해당하는 아이디를 찾을 수 없습니다.</h5>');
 	}
 	function cantFindMyId(){
-		$('#friendResult').html('나 자신은 검색할 수 없습니다.');
+		$('#friendResult').html('<h5 style="margin:10px; color:red;">나 자신은 검색할 수 없습니다.</h5>');
 	}
 </script>
 <jsp:include page="../header.jsp" />
-<div class="container">
-	<table class="table table-bordered table-hover"
-		style="text-align: center; border: 1px solid #dddddd">
+<div class="container align-items-center mt-5" style="width: 40%;">
+	<table class="table table-bordered table-hover text-center shadowBox"
+		style="text-align: center; border: 1px solid #dddddd;">
 		<thead>
 			<tr>
 				<th colspan="2"><h4>검색으로 친구찾기</h4></th>
 			</tr>
 		<tbody>
 			<tr>
-				<td style="width: 110px;"><h5>친구 아이디</h5></td>
+				<td style="width: 110px; padding-top:20px;"><h6>친구 아이디</h6></td>
 				<td><input class="form-control" type="text" id="findId"
 					maxlength="20" placeholder="찾을 아이디를 입력하세요."></td>
 			</tr>
@@ -60,8 +60,8 @@
 		</tbody>
 	</table>
 </div>
-<div class="container">
-	<table id="friendResult" class="table table-bordered table-hover" style="text-align: center; border: 1px solid #dddddd;">
+<div class= "container align-items-center mt-5" style="width: 40%;">
+	<table id="friendResult" class="table table-bordered table-hover text-center" style="text-align: center; border: 1px solid #dddddd;">
 		
 	</table>
 </div>
