@@ -51,4 +51,9 @@ public class ReplyMapper {
 	public ReplyDTO replyDetail(int reply_num) {
 		return sqlSession.selectOne("replyDetail", reply_num);
 	}
+	public List<ReplyDTO> replyListForAnonymous(int article_num){
+		Map<String, Integer> map = new Hashtable<>();
+		map.put("article_num", article_num);
+		return sqlSession.selectList("replyListForAnonymous", map);
+	}
 }

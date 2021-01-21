@@ -35,4 +35,12 @@
 		from ezen_reply
 		where reply_num = #{reply_num}
 	</select>
+		<select id="replyListForAnonymous" parameterType="java.util.Map" resultType="ReplyDTO">
+		select * 
+		from (select rownum rn, A.*
+		from (select ezen_reply.*
+			 from ezen_reply
+			  order by re_step asc)A) 
+		where article_num = #{article_num}
+ 	</select>
 </mapper>

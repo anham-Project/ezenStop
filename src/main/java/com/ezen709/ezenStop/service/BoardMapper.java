@@ -76,29 +76,35 @@ public class BoardMapper {
 		dto.setUserId(userId);
 		return sqlSession.selectOne("checkUserUpDown", dto);
 	}
-	public int upBoard(int article_num, String userId) {
+	public int upBoard(int article_num, String userId, String table) {
 		BoardUpDownDTO dto = new BoardUpDownDTO();
 		dto.setArticle_num(article_num);
 		dto.setUserId(userId);
 		dto.setBehavior(1);
-		int res = upCountBoard(article_num);
+		int res = upCountBoard(article_num, table);
 		if(res<=0) return -1;
 		return sqlSession.insert("upBoard", dto);
 	}
-	public int downBoard(int article_num, String userId) {
+	public int downBoard(int article_num, String userId, String table) {
 		BoardUpDownDTO dto = new BoardUpDownDTO();
 		dto.setArticle_num(article_num);
 		dto.setUserId(userId);
 		dto.setBehavior(-1);
-		int res = downCountBoard(article_num);
+		int res = downCountBoard(article_num, table);
 		if(res<=0) return -1;
 		return sqlSession.insert("downBoard", dto);
 	}
-	public int upCountBoard(int article_num) {
-		return sqlSession.update("upCountBoard", article_num);
+	public int upCountBoard(int article_num, String table) {
+		Map map = new Hashtable();
+		map.put("article_num", article_num);
+		map.put("table", table);
+		return sqlSession.update("upCountBoard", map);
 	}
-	public int downCountBoard(int article_num) {
-		return sqlSession.update("downCountBoard", article_num);
+	public int downCountBoard(int article_num, String table) {
+		Map map = new Hashtable();
+		map.put("article_num", article_num);
+		map.put("table", table);
+		return sqlSession.update("downCountBoard", map);
 	}
 	public int reportBoard(int article_num, String userId) {
 		BoardUpDownDTO dto = new BoardUpDownDTO();
@@ -269,6 +275,15 @@ public class BoardMapper {
 	public String getCertifiedCampus(String id) {
 		Map<String,String> map = new Hashtable<>();
 		map.put("id", id);
-		Ezen_memberDTO dto = sqlSession.selectOne("getCertifiedCampus",id);
+		Ezen_memberDTO dto = sqlSession.selectOne("getCertifiedCampus",map);
+		return dto.getAcademyLocation();
 	}
+	public void campusInsert(ReviewBoardDTO dto) {
+		sqlSession.insert("campusInsert", dto);
+		List<ReviewBoardDTO> list = sqlSession.selectList("getArticle_num", dto);
+		int article_num = list.get(0).getArticle_num();
+		dto.setArticle_num(article_num);
+		sqlSession.insert("campusInsertRandomId",dto);
+	}
+	
 	}

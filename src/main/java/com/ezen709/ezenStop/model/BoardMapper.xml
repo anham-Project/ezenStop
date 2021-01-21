@@ -92,13 +92,13 @@
  	<insert id="upBoard" parameterType="BoardUpDownDTO">
  		insert into board_updown values (#{article_num}, #{userId}, #{behavior})
  	</insert>
- 	<update id="upCountBoard" parameterType="Integer">
- 		update ezen_review_Board
+ 	<update id="upCountBoard" parameterType="java.util.Map">
+ 		update ${table}
  		set upcount = upcount + 1
  		where article_num = #{article_num}
  	</update>
- 	<update id="downCountBoard" parameterType="Integer">
- 		update ezen_review_Board
+ 	<update id="downCountBoard" parameterType="java.util.Map">
+ 		update ${table}
  		set downcount = downcount + 1
  		where article_num = #{article_num}
  	</update>
@@ -192,4 +192,19 @@
 		 	) 
 		where rn between #{start} and #{end}
  	</select>
+ 	<select id="getCertifiedCampus" resultType="ezen_memberDTO">
+		 select * from ezen_member where id=#{id}
+ 	</select>
+ 	<insert id="campusInsert">
+ 		insert into ezen_campus_board 
+ 		values (ezen_board_seq.nextval, #{category}, #{subject}, #{id}, #{content}, 
+ 		to_char(sysdate,'yyyy-mm-dd'), to_char(sysdate,'hh24:mi'), 0, 0, 0, 0, 'campus_detail.board', 1, #{image}, #{filesize})
+ 	</insert>
+ 	<select id="getArticle_num" resultType="ReviewBoardDTO">
+ 		select article_num from ezen_campus_board where id = #{id} order by article_num desc
+ 	</select>
+ 	<insert id="campusInsertRandomId">
+ 		insert into anonymous_board
+ 		values (#{article_num}, #{id}, #{randomId})
+ 	</insert>
 </mapper>
