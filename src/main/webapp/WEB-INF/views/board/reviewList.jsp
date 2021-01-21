@@ -72,7 +72,7 @@
 				</a>
 	</c:if>
 	<c:if test="${sessionScope.userId == null}">
-		<a href="#" onclick="javascript:loginPlz()">${dto.category} ${dto.subject}
+		<a href="login.login" onclick="javascript:loginPlz()">${dto.category} ${dto.subject}
 		<c:if test="${dto.image != '파일없음' }">
 				<img class="media-object img-circle" style = "width: 14px; height: 12px;" src = "resources/img/picture.png">
 		</c:if>

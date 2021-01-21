@@ -26,6 +26,7 @@
 	function somethingDo(somethingDo){
 		var article_num = '${freeDetail.article_num}';
 		var userId = '${sessionScope.userId}';
+		var table = "ezen_free_board";
 		$.ajax({
 			type : "POST",
 			url : "updownPro.board",
@@ -33,6 +34,7 @@
 			data : {
 				article_num : article_num,
 				userId : userId,
+				table : table,
 				somethingDo : somethingDo
 			},
 			datatype : 'text',
@@ -260,6 +262,7 @@
 		<script type="text/javascript">
 	function reportBoard(){
 		var reportContent = $('#reportContent').val();
+		var table = "ezen_free_board";
 		if(reportContent == null || reportContent ===""){
 			alert("신고내용을 입력하지않아 취소됩니다.");
 			return;
@@ -271,7 +274,8 @@
 			data : {
 				reportContent: reportContent,
 				userId : '${sessionScope.userId}',
-				article_num : '${freeDetail.article_num}'
+				article_num : '${freeDetail.article_num}',
+				table : table
 			},
 			datatype : 'text',
 			success: function(result){

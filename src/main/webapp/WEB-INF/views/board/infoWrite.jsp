@@ -2,11 +2,6 @@
     pageEncoding="EUC-KR"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="../header.jsp" />
-<style>
-.file-input:lang(ko) ~ .file-label::after {
-	  content: "파일수정";
-	}
-</style>
 <script type="text/javascript">
 	function check(){
 		if (f.category.value==""){
@@ -24,19 +19,6 @@
 			f.content.focus()
 			return false
 		}
-		if (f.image.value!=""){
-			if (confirm("기존 파일이 첨부한 파일로 변경되어 저장됩니다.") == true){
-			}else{
-			   return false;
-			}
-		}
-		return true
-	}
-	function deleteImage(){
-		document.getElementById('delbefore').innerHTML = 
-			"<input type='hidden' name='image0' value='0'>"+
-			"<input type='hidden' name='filesize0' value='0'>"+
-			"<b>&nbsp;첨부파일이 없습니다.&nbsp;&nbsp;</b>"
 	}
 	function fileCheck(obj){
 		pathpoint = obj.value.lastIndexOf('.');
@@ -57,55 +39,41 @@
 		}
 	}
 </script>
-
 <div class="container" style="margin-top:30px; margin-bottom:10px;">
 	
-	<h5><font size="3">이젠'sTop게시판 > <a href="trade_list.board">지역별 강의 후기게시판</a> > </font><b>게시글 수정</b></h5>
+	<h5><font size="3">이젠'sTop게시판 > <a href="info_list.board">정보공유 게시판</a> > </font><b>게시글 작성</b></h5>
 	<div class="container" style="margin-top:30px; margin-bottom:10px;">
-	<form class="form-horizontal" name ="f" action="trade_edit.board" method="post" 
+	<form class="form-horizontal" name ="f" action="info_write.board" method="post" 
 		onsubmit="return check()" enctype="multipart/form-data">
-		<input type="hidden" name="article_num" value="${tradeDetail.article_num}">
+		<input type="hidden" name="id" value="${sessionScope.userId}">
 	<div class="input-group" style="padding-bottom:5px">
 		<label class="col-md-2 control-label">카테고리<font size="3" color="red">*</font></label>
 		<div class="col-md-3">
 			<select class="form-control" name="category"> 
 					<option value="">[게시판 종류]</option>
-					<option value="BUY" <c:if test="${tradeDetail.category == '사고'}">selected</c:if>>[사고]</option> 
-					<option value="SELL" <c:if test="${tradeDetail.category == '팔고'}">selected</c:if>>[팔고]</option> 
+					<option value="취업">[취업]</option> 
+					<option value="자격증">[자격증]</option>
+					<option value="기타">[기타]</option>
 			</select>
 		</div>
 		<label class="col-md control-label"><font size="2" color="red">*필수선택 사항</font></label>
 	</div>
 	<div class="input-group" style="padding-bottom:5px">
-		<input class="form-control" type="text" name="subject" value="${tradeDetail.subject}">
+		<input class="form-control" type="text" name="subject" placeholder="작성할 글의 제목을 적어주세요.">
 	</div>
 	<div class="input-group" style="padding-bottom:5px">
-		<textarea class="form-control" rows="13" name="content">${tradeDetail.content}</textarea>
-	</div>
-    <div class="input-group" style="padding-bottom:5px">
-    	<font color="gray">첨부된 파일 :</font>
-    	<div id="delbefore">
-    	<c:if test="${tradeDetail.filesize != 0}"><b>&nbsp;${tradeDetail.image}&nbsp;&nbsp;</b>
-    		<input type="hidden" name="image0" value="${tradeDetail.image}">
-    		<input type="hidden" name="filesize0" value="${tradeDetail.filesize}">
-    		<button class="btn btn-outline-secondary btn-sm" type="button" onclick="javascript:deleteImage()">파일삭제</button>
-    	</c:if>
-    	</div>
-    	<c:if test="${tradeDetail.filesize == 0}"><b>&nbsp;첨부파일이 없습니다.&nbsp;&nbsp;</b>
-    		<input type="hidden" name="image0" value="파일없음">
-    		<input type="hidden" name="filesize0" value="0">
-    	</c:if>
+		<textarea class="form-control" rows="13" name="content" placeholder="공지사항 내용을 적어주세요."></textarea>
 	</div>
 	<div class="input-group" style="padding-bottom:5px">
 		<input class="form-control" type="file" id="fileInput" onchange="fileCheck(this)"name="image" accept="image/gif,image/jpeg,image/png">
 	</div>
 	<div class="input-group" style="padding-bottom:5px">
-	<font color="gray">이미지 파일만 첨부 가능합니다. jpeg, png, gif, jpg</font>
+	<font color="gray">이미지 파일만 첨부 가능합니다. jpeg, png, gif</font>
 	</div>
 	<div class="input-group pull-right" style="padding-bottom:5px">
-		<input class="btn btn-secondary btn-sm" type="submit" value="수정하기">&nbsp;
-		<input class="btn btn-secondary btn-sm" type="button" value="목록으로" onclick="window.location='trade_list.board'">&nbsp;
-		<input class="btn btn-secondary btn-sm" type="reset" value="원래대로">
+		<input class="btn btn-secondary btn-sm" type="submit" value="작성완료">&nbsp;
+		<input class="btn btn-secondary btn-sm" type="button" value="목록으로" onclick="window.location='info_list.board'">&nbsp;
+		<input class="btn btn-secondary btn-sm" type="reset" value="다시쓰기">
 	</div>
 	</form>
 	</div>
