@@ -73,6 +73,8 @@
 					<option value="ALL" <c:if test="${noticeDetail.category == 'ALL'}">selected</c:if>>[공통]</option> 
 					<option value="REVIEW" <c:if test="${noticeDetail.category == 'REVIEW'}">selected</c:if>>[리뷰 게시판]</option> 
 					<option value="FREE" <c:if test="${noticeDetail.category == 'FREE'}">selected</c:if>>[자유 게시판]</option> 
+					<option value="TRADE" <c:if test="${noticeDetail.category == 'TRADE'}">selected</c:if>>[사고팔고 게시판]</option> 
+					<option value="INFO" <c:if test="${noticeDetail.category == 'INFO'}">selected</c:if>>[정보공유 게시판]</option> 
 					<option value="ETC" <c:if test="${noticeDetail.category == 'ETC'}">selected</c:if>>[기타]</option>
 			</select>
 		</div>

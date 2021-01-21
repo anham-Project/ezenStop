@@ -63,7 +63,9 @@
 					<option value="">[게시판 종류]</option>
 					<option value="ALL">[공통]</option> 
 					<option value="REVIEW">[리뷰 게시판]</option> 
-					<option value="FREE">[자유 게시판]</option> 
+					<option value="FREE">[자유 게시판]</option>
+					<option value="TRADE">[사고팔고 게시판]</option>
+					<option value="INFO">[정보공유 게시판]</option>
 					<option value="ETC">[기타]</option>
 			</select>
 		</div>
