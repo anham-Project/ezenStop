@@ -76,7 +76,7 @@
 <title>회 원 가 입</title>
 </head>
 <body>
-	<div class ="lineBox">
+	<div class ="lineBox shadow">
 		<div class = "header">
        		<h4>회 원 가 입</h4>
         <hr/>

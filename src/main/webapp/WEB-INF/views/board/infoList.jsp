@@ -19,8 +19,8 @@
 		alert("후기를 작성하려면 학원인증을 해야합니다!!")
 	}
 </script>
-	<h5><font size="3">이젠'sTop게시판 > </font><b><a href="trade_list.board">사고팔고 게시판</a></b></h5>
-<form name="f" action="trade_find.board" method="post" onsubmit="return check()">
+	<h5><font size="3">이젠'sTop게시판 > </font><b><a href="info_list.board">정보공유 게시판</a></b></h5>
+<form name="f" action="info_find.board" method="post" onsubmit="return check()">
 	<div class="row" style="padding-bottom:5px">
 		<div class="col-md-6">
 		</div>    
@@ -61,7 +61,7 @@
 			<td align="center"><c:out value="${dto.article_num}"/></td>
 			<td align="left">			
 	<c:if test="${sessionScope.userId != null}">
-				<a href="trade_detail.board?article_num=${dto.article_num}">
+				<a href="info_detail.board?article_num=${dto.article_num}">
 				[${dto.category}] ${dto.subject}
 				<c:if test="${dto.image != '파일없음' }">
 				<img class="media-object img-circle" style = "width: 14px; height: 12px;" src = "resources/img/picture.png">
@@ -72,7 +72,7 @@
 				</a>
 	</c:if>
 	<c:if test="${sessionScope.userId == null}">
-		<a href="trade_detail.board?article_num=${dto.article_num}">[${dto.category}] ${dto.subject}
+		<a href="login.login" onclick="javascript:loginPlz()">${dto.category} ${dto.subject}
 		<c:if test="${dto.image != '파일없음' }">
 				<img class="media-object img-circle" style = "width: 14px; height: 12px;" src = "resources/img/picture.png">
 		</c:if>
@@ -104,20 +104,20 @@
 	<div class="col-md-10">
 	<ul class = "pagination justify-content-center">
 	<c:if test="${startPage > pageBlock}">	
-		<li class="page-item"><a class="page-link" href="trade_list.board?pageNum=${startPage-pageBlock}">이전</a></li>
+		<li class="page-item"><a class="page-link" href="info_list.board?pageNum=${startPage-pageBlock}">이전</a></li>
 	</c:if>
 	<c:forEach var="i" begin="${startPage}" end="${endPage}">
 			<c:choose>
 			<c:when test="${i == currentPage || currentPage == null}">
-			<li class="page-item active"><a class="page-link" href="trade_list.board?pageNum=${i}">${i}</a></li>
+			<li class="page-item active"><a class="page-link" href="info_list.board?pageNum=${i}">${i}</a></li>
 			</c:when>
 			<c:otherwise>
-			<li class="page-item"><a class="page-link" href="trade_list.board?pageNum=${i}">${i}</a></li>
+			<li class="page-item"><a class="page-link" href="info_list.board?pageNum=${i}">${i}</a></li>
 			</c:otherwise>
 			</c:choose>
 	</c:forEach>
 	<c:if test="${endPage < pageCount}">
-		<li class="page-item"><a class="page-link" href="trade_list.board?pageNum=${endPage+pageBlock}">다음</a></li>
+		<li class="page-item"><a class="page-link" href="info_list.board?pageNum=${endPage+pageBlock}">다음</a></li>
 	</c:if>
 	</ul>
 	</div>
@@ -126,7 +126,7 @@
 	<c:when test="${sessionScope.userId == null}">
 	</c:when>
 	<c:when test="${sessionScope.userGrade != -1}">
-	<a class="btn btn-secondary pull-right" href="trade_write.board?id=${sessionScope.userId}">글쓰기</a>
+	<a class="btn btn-secondary pull-right" href="info_write.board?id=${sessionScope.userId}">글쓰기</a>
 	</c:when>
 	<c:otherwise><a href="#" class="btn btn-secondary pull-right" onclick="javascript:certificationPlz()">글쓰기</a>
 	</c:otherwise>
@@ -141,7 +141,7 @@
 	<c:when test="${sessionScope.userId == null}">
 	</c:when>
 	<c:when test="${sessionScope.userGrade != -1}">
-	<a class="btn btn-secondary pull-right" href="trade_write.board?id=${sessionScope.userId}">글쓰기</a>
+	<a class="btn btn-secondary pull-right" href="info_write.board?id=${sessionScope.userId}">글쓰기</a>
 	</c:when>
 	<c:otherwise><a href="#" class="btn btn-secondary pull-right" onclick="javascript:certificationPlz()">글쓰기</a>
 	</c:otherwise>

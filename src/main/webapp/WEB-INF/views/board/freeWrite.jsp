@@ -73,7 +73,7 @@
 	</div>
 	<div class="input-group pull-right" style="padding-bottom:5px">
 		<input class="btn btn-secondary btn-sm" type="submit" value="작성완료">&nbsp;
-		<input class="btn btn-secondary btn-sm" type="button" value="목록으로" onclick="window.location='review_list.board'">&nbsp;
+		<input class="btn btn-secondary btn-sm" type="button" value="목록으로" onclick="window.location='free_list.board'">&nbsp;
 		<input class="btn btn-secondary btn-sm" type="reset" value="다시쓰기">
 	</div>
 	</form>

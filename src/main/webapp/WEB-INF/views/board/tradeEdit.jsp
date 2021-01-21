@@ -70,8 +70,8 @@
 		<div class="col-md-3">
 			<select class="form-control" name="category"> 
 					<option value="">[게시판 종류]</option>
-					<option value="BUY" <c:if test="${noticeDetail.category == '사고'}">selected</c:if>>[사고]</option> 
-					<option value="SELL" <c:if test="${noticeDetail.category == '팔고'}">selected</c:if>>[팔고]</option> 
+					<option value="BUY" <c:if test="${tradeDetail.category == '사고'}">selected</c:if>>[사고]</option> 
+					<option value="SELL" <c:if test="${tradeDetail.category == '팔고'}">selected</c:if>>[팔고]</option> 
 			</select>
 		</div>
 		<label class="col-md control-label"><font size="2" color="red">*필수선택 사항</font></label>

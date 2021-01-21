@@ -8,7 +8,7 @@
 <title>아이디/비밀번호 찾기</title>
 </head>
 <body>
-	<div class = "lineBox" style="margin-top:10px; margin-bottom:0px">
+	<div class = "lineBox shadow" style="margin-top:10px; margin-bottom:0px">
 		<div align="center">
        	<h4><b>아이디 찾기</b></h4>
         <hr/>
@@ -28,8 +28,6 @@
 			</form>
 			</div>
 		</div>
-	</div>
-	<div class = "lineBox" style="margin-top:10px; margin-bottom:10px">
 		<div align="center">
        	<h4><b>비밀번호 찾기</b></h4>
         <hr/>
