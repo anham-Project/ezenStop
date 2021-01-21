@@ -57,9 +57,10 @@
 	
 	<h5><font size="3">이젠'sTop게시판 >${reviewAddr }캠퍼스 게시판 > </font><b>게시글 수정</b></h5>
 	<div class="container" style="margin-top:30px; margin-bottom:10px;">
-	<form class="form-horizontal" name ="f" action="campus_editPro.board?where=${reviewAddrCode }" method="post" 
+	<form class="form-horizontal" name ="f" action="campus_editPro.board" method="post" 
 		onsubmit="return check()" enctype="multipart/form-data">
 		<input type="hidden" name="article_num" value="${reviewDetail.article_num}">
+		<input type="hidden" name="where" value="${whereCode }">
 		<input type="hidden" name="id" value="${sessionScope.userId}">
 		<input type="hidden" name="randomId" value="${sessionScope.randomId }">
 	<div class="input-group" style="padding-bottom:5px">

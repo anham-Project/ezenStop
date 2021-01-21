@@ -667,7 +667,7 @@ public class BoardController {
 	public ModelAndView campusEdit(@RequestParam int article_num, @RequestParam int where) {
 		String table="ezen_campus_board";
 		ReviewBoardDTO reviewDetail = commonMapper.A_detail(article_num, table);
-		ModelAndView mav = new ModelAndView("board/campusBoardEdit");
+		ModelAndView mav = new ModelAndView();
 		String location = loginMapper.getIdGrade(reviewDetail.getId());
 		String[] reviewAddrList;
 		if(location.equals("2")){
@@ -688,11 +688,12 @@ public class BoardController {
 		mav.addObject("reviewDetail", reviewDetail);
 		mav.addObject("reviewAddr", reviewAddr);
 		mav.addObject("whereCode", where);
+		mav.setViewName("board/campusBoardEdit");
 		return mav;
 	}
 	@RequestMapping("/campus_editPro.board")
 	public String campusEditPro(HttpServletRequest req, @ModelAttribute ReviewBoardDTO dto, 
-			BindingResult result, @RequestParam String reviewAddr, @RequestParam int where,
+			BindingResult result, @RequestParam String reviewAddr, 
 			@RequestParam String image0, @RequestParam int filesize0) {
 		String table = "ezen_campus_board";
 		if(result.hasErrors()) {}
@@ -726,7 +727,8 @@ public class BoardController {
 		dto.setSubject(subject);
 		dto.setImage(image);
 		dto.setFilesize(filesize);
-		System.out.println(subject);
+		String where = req.getParameter("where");
+		dto.setCategory(campusModel.getLocationList()[Integer.parseInt(where)-11]);
 		int res = commonMapper.A_edit(dto, table);
 		return "redirect:campusBoardList.board?where="+where;
 	}
