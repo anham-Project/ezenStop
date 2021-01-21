@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import com.ezen709.ezenStop.model.BoardReportDTO;
 import com.ezen709.ezenStop.model.BoardUpDownDTO;
+import com.ezen709.ezenStop.model.Ezen_memberDTO;
 import com.ezen709.ezenStop.model.ReviewBoardDTO;
 
 @Service
@@ -157,7 +158,7 @@ public class BoardMapper {
 		}
 		return null;
 	}
-	public List<ReviewBoardDTO> getBoard(List<String> list) {
+	public List<ReviewBoardDTO> getUnvisibleBoard(List<String> list) {
 		List<ReviewBoardDTO> unvisibleList = new ArrayList<>();
 		for(String tableName : list) {
 			Map<String,String> map = new Hashtable<String,String>();
@@ -174,7 +175,7 @@ public class BoardMapper {
 	}
 	public List<ReviewBoardDTO> unvisibleList(int start, int end){
 		List<String> list = getTableHasLocation();
-		List<ReviewBoardDTO> unvisibleList = getBoard(list);
+		List<ReviewBoardDTO> unvisibleList = getUnvisibleBoard(list);
 		Collections.sort(unvisibleList);
 		List<ReviewBoardDTO> sortedList = new ArrayList<>();
 		for(int i = start -1 ; i <= end -1 ; i++) {
@@ -183,7 +184,7 @@ public class BoardMapper {
 		return sortedList;
 	}
 	public int unvisibleGetCount() {
-		return getBoard(getTableHasLocation()).size();
+		return getUnvisibleBoard(getTableHasLocation()).size();
 	}
 	public int searchUnvisibleGetCount(String searchType,String searchString) {
 		List<String> list = getTableHasLocation();
@@ -245,5 +246,26 @@ public class BoardMapper {
 			listMap.put(tableName, list);
 		}
 		return listMap;
+	}
+	public List<ReviewBoardDTO> getCampusBoard(int start, int end, String where){
+		Map<String,Object> map = new Hashtable<>();
+		map.put("start", start);
+		map.put("end", end);
+		map.put("where", where);
+
+		List<ReviewBoardDTO> list = sqlSession.selectList("getCampusBoard", map);
+		
+		return list;
+		
+		
+	}
+	public int campusBoardCount(String where) {
+		int res = sqlSession.selectOne("campusBoardCount",where);
+		return res;
+	}
+	public String getCertifiedCampus(String id) {
+		Map<String,String> map = new Hashtable<>();
+		map.put("id", id);
+		Ezen_memberDTO dto = sqlSession.selectOne("getCertifiedCampus",id);
 	}
 	}
