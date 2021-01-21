@@ -175,4 +175,21 @@
  		where visible = 1 and <![CDATA[rownum <= 6]]>
  		order by article_num desc
  	</select>
+ 	<select id="campusBoardCount" resultType="Integer">
+ 		select count(*)
+ 		from ezen_campus_board
+ 		where visible = 1 and category = #{where}
+ 	</select>
+ 	<select id="getCampusBoard" resultType="ReviewBoardDTO">
+ 	select * 
+		from (
+			select rownum rn, A.* 
+		 	from (
+		 		select ezen_campus_board.*, anonymous_board.randomid
+		 		from  ezen_campus_board, anonymous_board
+		 		where ezen_campus_board.article_num = anonymous_board.article_num and ezen_campus_board.category = #{where}
+		 		order by ezen_campus_board.article_num desc)A
+		 	) 
+		where rn between #{start} and #{end}
+ 	</select>
 </mapper>

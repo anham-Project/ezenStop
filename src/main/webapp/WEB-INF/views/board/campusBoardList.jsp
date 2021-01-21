@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<link href="resources/vendor/bootstrap/css/custom.css" rel="stylesheet">
 <jsp:include page="../header.jsp" />
 <div class="container" style="margin-top:30px; margin-bottom:10px">
 <script type="text/javascript">
@@ -20,18 +19,16 @@
 		alert("후기를 작성하려면 학원인증을 해야합니다!!")
 	}
 </script>
-	<h5><font size="3">이젠'sTop게시판 > </font><b>자유게시판</b></h5>
-<form name="f" action="free_find.board" method="post" onsubmit="return check()">
+	<h5><font size="3">이젠'sTop게시판 > </font>캠퍼스별 게시판><b>${where }캠퍼스 게시판</b></h5>
+<form name="f" action="review_find.board" method="post" onsubmit="return check()">
 	<div class="row" style="padding-bottom:5px">
 		<div class="col-md-6">
 		</div>    
         <div class="col-md-6">
 		    <div class="input-group">
                 <select class="form-control" name="searchType" style="width:20%;">
-	 				<option value="id">작성자</option>
 	 				<option value="subject">제목</option>
 					<option value="content">내용</option>
-					<option value="category">카테고리</option>
 				</select>
                 <input type="text" class="form-control" name="searchString" placeholder="검색어를 입력하세요." style="width:65%;">
                 <span class="input-group-btn">
@@ -62,7 +59,7 @@
 			<td align="center"><c:out value="${dto.article_num}"/></td>
 			<td align="left">			
 	<c:if test="${sessionScope.userId != null}">
-				<a class="grayA" href="free_detail.board?article_num=${dto.article_num}">
+				<a href="review_detail.board?article_num=${dto.article_num}">
 				${dto.category} ${dto.subject}
 				<c:if test="${dto.image != '파일없음' }">
 				<img class="media-object img-circle" style = "width: 14px; height: 12px;" src = "resources/img/picture.png">
@@ -73,7 +70,7 @@
 				</a>
 	</c:if>
 	<c:if test="${sessionScope.userId == null}">
-		<a class="grayA" href="#" onclick="javascript:loginPlz()">${dto.category} ${dto.subject}
+		<a href="#" onclick="javascript:loginPlz()">${dto.category} ${dto.subject}
 		<c:if test="${dto.image != '파일없음' }">
 				<img class="media-object img-circle" style = "width: 14px; height: 12px;" src = "resources/img/picture.png">
 		</c:if>
@@ -105,28 +102,20 @@
 	<div class="col-md-10">
 	<ul class = "pagination justify-content-center">
 	<c:if test="${startPage > pageBlock}">	
-		<li class="page-item"><a class="page-link" href="free_list.board?pageNum=${startPage-pageBlock}">이전</a></li>
+		<li class="page-item"><a class="page-link" href="review_list.board?pageNum=${startPage-pageBlock}">이전</a></li>
 	</c:if>
 	<c:forEach var="i" begin="${startPage}" end="${endPage}">
 			<c:choose>
-			<c:when test="${i == currentPage}">
-			<li class="page-item active"><a class="page-link" href="free_list.board?pageNum=${i}">${i}</a></li>
-			</c:when>
-			<c:when test="${currentPage == null}">
-				<c:if test="${i == 1}">
-				<li class="page-item active"><a class="page-link" href="free_list.board?pageNum=${i}">${i}</a></li>
-				</c:if>
-				<c:if test="${i != 1}">
-				<li class="page-item"><a class="page-link" href="free_list.board?pageNum=${i}">${i}</a></li>
-				</c:if>
+			<c:when test="${i == currentPage || currentPage == null}">
+			<li class="page-item active"><a class="page-link" href="review_list.board?pageNum=${i}">${i}</a></li>
 			</c:when>
 			<c:otherwise>
-			<li class="page-item"><a class="page-link" href="free_list.board?pageNum=${i}">${i}</a></li>
+			<li class="page-item"><a class="page-link" href="review_list.board?pageNum=${i}">${i}</a></li>
 			</c:otherwise>
 			</c:choose>
 	</c:forEach>
 	<c:if test="${endPage < pageCount}">
-		<li class="page-item"><a class="page-link" href="free_list.board?pageNum=${startPage+pageBlock}">다음</a></li>
+		<li class="page-item"><a class="page-link" href="review_list.board?pageNum=${endPage+pageBlock}">다음</a></li>
 	</c:if>
 	</ul>
 	</div>
@@ -135,9 +124,9 @@
 	<c:when test="${sessionScope.userId == null}">
 	</c:when>
 	<c:when test="${sessionScope.userGrade == 1 || sessionScope.userGrade == 2}">
-	<a class="btn btn-secondary pull-right" href="free_write.board?id=${sessionScope.userId}">글쓰기</a>
+	<a class="btn btn-secondary pull-right" href="review_write.board?id=${sessionScope.userId}">글쓰기</a>
 	</c:when>
-	<c:otherwise><a class="grayA" href="#" class="btn btn-secondary pull-right" onclick="javascript:certificationPlz()">글쓰기</a>
+	<c:otherwise><a href="#" class="btn btn-secondary pull-right" onclick="javascript:certificationPlz()">글쓰기</a>
 	</c:otherwise>
 	</c:choose>
 	</div>
@@ -150,9 +139,9 @@
 	<c:when test="${sessionScope.userId == null}">
 	</c:when>
 	<c:when test="${sessionScope.userGrade == 1 || sessionScope.userGrade == 2}">
-	<a class="btn btn-secondary pull-right" href="free_write.board?id=${sessionScope.userId}">글쓰기</a>
+	<a class="btn btn-secondary pull-right" href="review_write.board?id=${sessionScope.userId}">글쓰기</a>
 	</c:when>
-	<c:otherwise><a class="grayA" href="#" class="btn btn-secondary pull-right" onclick="javascript:certificationPlz()">글쓰기</a>
+	<c:otherwise><a href="#" class="btn btn-secondary pull-right" onclick="javascript:certificationPlz()">글쓰기</a>
 	</c:otherwise>
 	</c:choose>
 	</div>

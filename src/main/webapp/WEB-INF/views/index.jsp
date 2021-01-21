@@ -114,11 +114,29 @@ function findDetailPage(article_num) {
 		<div class="col-lg-6 col-md-6 mb-4">
 			<div class="card h-100">
 				<div class="card-header">
-					<a href="#" class="text-primary"><h5>공지사항</h5></a>
+					<a href="#" class="text-primary">공지사항</h5></a>
 				</div>
 				<div class="card-body">
-					<p class="card-text">Lorem ipsum dolor sit amet, consectetur
-						adipisicing elit. Sapiente esse necessitatibus neque.</p>
+					<p class="card-text">
+						<c:if test="${empty indexListMap['EZEN_NOTICE_BOARD']}">
+							공지사항이 없습니다.
+						</c:if>
+						<c:forEach var="dto" items="${indexListMap['EZEN_NOTICE_BOARD'] }">
+						<form name="f1" onclick="javascript:findDetailPage('${dto.article_num}')">
+							<c:set var="tmp" value="${tmp+1 }"/>
+								<a href="review_detail.board?article_num=${dto.article_num}">
+									<font color="rec">${dto.category} ${dto.subject}</font> <c:if
+										test="${dto.image != '파일없음' }">
+										<img class="media-object img-circle"
+											style="width: 14px; height: 12px;"
+											src="resources/img/picture.png">
+									</c:if> <c:if test="${dto.replyCount != 0}">
+										<font color="orange" size="2">[${dto.replyCount}]</font>
+									</c:if>
+								</a>
+							</form>
+						</c:forEach>
+					</p>
 				</div>
 
 			</div>
@@ -144,7 +162,7 @@ function findDetailPage(article_num) {
 				<div class="card-body">
 					<p class="card-text">
 						<c:if test="${empty indexListMap['EZEN_REVIEW_BOARD']}">
-							최근 일주일간 게시물이 없습니다. ㅠㅠ
+							게시물이 없습니다. ㅠㅠ
 						</c:if>
 						<c:forEach var="dto" items="${indexListMap['EZEN_REVIEW_BOARD'] }">
 						<form name="f1" onclick="javascript:findDetailPage('${dto.article_num}')">

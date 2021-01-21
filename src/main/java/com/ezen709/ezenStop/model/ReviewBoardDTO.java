@@ -18,6 +18,13 @@ public class ReviewBoardDTO implements Comparable<ReviewBoardDTO> {
 	private int filesize;			/*파일크기*/
 	private int grade;				// 유저등급 **** DB 에는 들어가지않지만 JOIN할때 불러오는것의 편의를 위해 만들어줌.
 	private String academyLocation;	// 유저 캠퍼스위치
+	private String randomId;		// 익명게시판의 랜덤아이디
+	public String getRandomId() {
+		return randomId;
+	}
+	public void setRandomId(String randomId) {
+		this.randomId = randomId;
+	}
 	public String getAcademyLocation() {
 		return academyLocation;
 	}

@@ -2,13 +2,17 @@ package com.ezen709.ezenStop;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -464,6 +468,53 @@ public class BoardController {
 		mav.setViewName("board/unvisibleBoard");
 		
 		return mav;
+		
+	}
+	@RequestMapping("/campusBoardList.board")
+	public ModelAndView campusBoardList(HttpServletRequest req) {
+		String[] location = new CampusModel().getLocationList();
+		String where = req.getParameter("where");
+		if(where ==null|| where.equals(""))return new ModelAndView("redirect:index.do");
+		int locationIndex = Integer.parseInt(where) - 11;
+		ArrayList<String> locationList = new ArrayList<>();
+		for(String A : location) {
+			locationList.add(A);
+		}
+		where = locationList.get(locationIndex);
+		
+		HttpSession session = req.getSession();
+		String id = (String)session.getAttribute("userId");
+		String certifiedCampus = boardMapper.getCertifiedCampus(id);
+		if(id ==null || id.equals(""))return new ModelAndView("redirect:index.do");
+		String checkRandomId = (String)session.getAttribute("randomId");
+		if(checkRandomId == null) {
+		Random random = new Random();
+		StringBuffer buf = new StringBuffer();
+		for(int i = 0 ; i < 8 ; i++) {
+			if(random.nextBoolean()) {
+				buf.append((char)((int)(random.nextInt(26))+97));
+			}else {
+				buf.append((random.nextInt(10)));
+			}
+		}
+		String randomId = buf.toString();
+		session.setAttribute("randomId", randomId);
+		}
+		Map<String,Integer> map = setStartRowAndEndRow(req);
+		
+		int count = boardMapper.campusBoardCount(where);
+		
+		setEndRowWhenCountIsLessThanEndRow(map, count);
+		
+		List<ReviewBoardDTO> list = boardMapper.getCampusBoard(map.get("startRow"),map.get("endRow"),where);
+		
+		ModelAndView mav = finishMakeModelAndView(map, list, count);
+		
+		mav.setViewName("board/campusBoardList");
+		mav.addObject("where", where);
+		mav.addObject("whereCode",locationIndex);
+		return mav;
+		
 		
 	}
 }
