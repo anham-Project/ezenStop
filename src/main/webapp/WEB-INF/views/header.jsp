@@ -189,7 +189,7 @@
 	<!-- Navigation -->
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
 		<div class="container">
-			<a class="navbar-brand" href="index.do"><h4>EzenStop</h4></a>
+			<a class="navbar-brand" href="index.do"><h4>Ezen's Top</h4></a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse"
 				data-target="#navbarSupportedContent"
 				aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -202,13 +202,13 @@
 					<li class="nav-item dropdown"><a
 						class="nav-link dropdown-toggle" href="index.do"
 						id="navbarDropdownMenuLink" data-toggle="dropdown"
-						aria-haspopup="true" aria-expanded="false"> 이젠'sTop게시판 </a>
+						aria-haspopup="true" aria-expanded="false"> 이젠's Top게시판 </a>
 						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
 							 <a class="dropdown-item" href="notice_list.board">공지사항</a> <a
-								class="dropdown-item" href="free_list.board">자유게시판</a> <a
-								class="dropdown-item" href="trade_list.board">중고책 거래 게시판</a> <a
-								class="dropdown-item" href="review_list.board">지역별 강의 후기 게시판</a> <a
-								class="dropdown-item" href="#">정보 공유 게시판</a>
+								class="dropdown-item" href="#">정보 공유 게시판</a> <a
+								class="dropdown-item" href="review_list.board">지역별 수강후기 게시판</a> <a
+								class="dropdown-item" href="trade_list.board">사고팔고 게시판</a> <a
+								class="dropdown-item" href="free_list.board">자유게시판</a>
 						</div></li>
 					<li class="nav-item dropdown"><a
 						class="nav-link dropdown-toggle" href=""
@@ -247,10 +247,10 @@
 				</ul>
 				<c:if test="${!empty sessionScope.userId }">
 					<ul class="navbar-nav navbar-right">
-						<li class="mr-3"><a href="findChatId.chat">친구찾기</a></li>
-						<li class="mr-3"><a href="moveChatBox.chat">메세지함</a><span id="unread"
+						<li class="mr-3"><a href="findChatId.chat" class="whiteA">친구찾기</a></li>
+						<li class="mr-3"><a href="moveChatBox.chat" class="whiteA">메세지함</a><span id="unread"
 							class="badge badge-info"></span></li>
-						<li class="dropdown"><a href="#" class="dropdown-toggle"
+						<li class="dropdown"><a href="#" class="dropdown-toggle whiteA"
 							data-toggle="dropdown" role="button" aria-haspopup="true"
 							aria-expanded="false"> ${sessionScope.userId}</a>
 							<div class="dropdown-menu" aria-labelledby="navbarDropdown">
