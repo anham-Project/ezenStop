@@ -213,25 +213,25 @@
 					<li class="nav-item dropdown"><a
 						class="nav-link dropdown-toggle" href=""
 						id="navbarDropdownMenuLink" data-toggle="dropdown"
-						aria-haspopup="true" aria-expanded="false"> 캠퍼스별 게시판 </a>
+						aria-haspopup="true" aria-expanded="false"> 캠퍼스별 익명 게시판 </a>
 						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-							<a class="dropdown-item" href="#">노원 캠퍼스</a> <a
-								class="dropdown-item" href="#">종로 캠퍼스</a> <a
-								class="dropdown-item" href="#">신촌 캠퍼스</a> <a
-								class="dropdown-item" href="#">상봉 캠퍼스</a> <a
-								class="dropdown-item" href="#">당산 캠퍼스</a> <a
-								class="dropdown-item" href="#">송파 캠퍼스</a> <a
-								class="dropdown-item" href="#">강남 캠퍼스</a> <a
-								class="dropdown-item" href="#">안양 캠퍼스</a> <a
-								class="dropdown-item" href="#">의정부 캠퍼스</a> <a
-								class="dropdown-item" href="#">구리 캠퍼스</a> <a
-								class="dropdown-item" href="#">일산 캠퍼스</a> <a
-								class="dropdown-item" href="#">안산 캠퍼스</a> <a
-								class="dropdown-item" href="#">성남 분당 캠퍼스</a> <a
-								class="dropdown-item" href="#">성남 모란 캠퍼스</a> <a
-								class="dropdown-item" href="#">김포 캠퍼스</a> <a
-								class="dropdown-item" href="#">전주 캠퍼스</a> <a
-								class="dropdown-item" href="#">이젠IT 캠퍼스</a>
+							<a class="dropdown-item" href="campusBoardList.board?where=11">노원 캠퍼스</a> <a
+								class="dropdown-item" href="campusBoardList.board?where=12">종로 캠퍼스</a> <a
+								class="dropdown-item" href="campusBoardList.board?where=13">신촌 캠퍼스</a> <a
+								class="dropdown-item" href="campusBoardList.board?where=14">상봉 캠퍼스</a> <a
+								class="dropdown-item" href="campusBoardList.board?where=15">당산 캠퍼스</a> <a
+								class="dropdown-item" href="campusBoardList.board?where=16">송파 캠퍼스</a> <a
+								class="dropdown-item" href="campusBoardList.board?where=17">강남 캠퍼스</a> <a
+								class="dropdown-item" href="campusBoardList.board?where=18">안양 캠퍼스</a> <a
+								class="dropdown-item" href="campusBoardList.board?where=19">의정부 캠퍼스</a> <a
+								class="dropdown-item" href="campusBoardList.board?where=20">구리 캠퍼스</a> <a
+								class="dropdown-item" href="campusBoardList.board?where=21">일산 캠퍼스</a> <a
+								class="dropdown-item" href="campusBoardList.board?where=22">안산 캠퍼스</a> <a
+								class="dropdown-item" href="campusBoardList.board?where=23">성남 분당 캠퍼스</a> <a
+								class="dropdown-item" href="campusBoardList.board?where=24">성남 모란 캠퍼스</a> <a
+								class="dropdown-item" href="campusBoardList.board?where=25">김포 캠퍼스</a> <a
+								class="dropdown-item" href="campusBoardList.board?where=26">전주 캠퍼스</a> <a
+								class="dropdown-item" href="campusBoardList.board?where=27">이젠IT 캠퍼스</a>
 						</div></li>
 					<c:if test="${sessionScope.userGrade == 2 }">
 						<li class="nav-item dropdown"><a
