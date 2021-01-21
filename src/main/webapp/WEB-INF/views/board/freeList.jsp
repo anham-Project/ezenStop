@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<link href="resources/vendor/bootstrap/css/custom.css" rel="stylesheet">
 <jsp:include page="../header.jsp" />
 <div class="container" style="margin-top:30px; margin-bottom:10px">
 <script type="text/javascript">
@@ -61,7 +62,7 @@
 			<td align="center"><c:out value="${dto.article_num}"/></td>
 			<td align="left">			
 	<c:if test="${sessionScope.userId != null}">
-				<a href="free_detail.board?article_num=${dto.article_num}">
+				<a class="grayA" href="free_detail.board?article_num=${dto.article_num}">
 				${dto.category} ${dto.subject}
 				<c:if test="${dto.image != '파일없음' }">
 				<img class="media-object img-circle" style = "width: 14px; height: 12px;" src = "resources/img/picture.png">
@@ -72,7 +73,7 @@
 				</a>
 	</c:if>
 	<c:if test="${sessionScope.userId == null}">
-		<a href="#" onclick="javascript:loginPlz()">${dto.category} ${dto.subject}
+		<a class="grayA" href="#" onclick="javascript:loginPlz()">${dto.category} ${dto.subject}
 		<c:if test="${dto.image != '파일없음' }">
 				<img class="media-object img-circle" style = "width: 14px; height: 12px;" src = "resources/img/picture.png">
 		</c:if>
@@ -136,7 +137,7 @@
 	<c:when test="${sessionScope.userGrade == 1 || sessionScope.userGrade == 2}">
 	<a class="btn btn-secondary pull-right" href="free_write.board?id=${sessionScope.userId}">글쓰기</a>
 	</c:when>
-	<c:otherwise><a href="#" class="btn btn-secondary pull-right" onclick="javascript:certificationPlz()">글쓰기</a>
+	<c:otherwise><a class="grayA" href="#" class="btn btn-secondary pull-right" onclick="javascript:certificationPlz()">글쓰기</a>
 	</c:otherwise>
 	</c:choose>
 	</div>
@@ -151,7 +152,7 @@
 	<c:when test="${sessionScope.userGrade == 1 || sessionScope.userGrade == 2}">
 	<a class="btn btn-secondary pull-right" href="free_write.board?id=${sessionScope.userId}">글쓰기</a>
 	</c:when>
-	<c:otherwise><a href="#" class="btn btn-secondary pull-right" onclick="javascript:certificationPlz()">글쓰기</a>
+	<c:otherwise><a class="grayA" href="#" class="btn btn-secondary pull-right" onclick="javascript:certificationPlz()">글쓰기</a>
 	</c:otherwise>
 	</c:choose>
 	</div>

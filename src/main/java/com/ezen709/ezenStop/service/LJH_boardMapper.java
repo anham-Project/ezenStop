@@ -93,4 +93,41 @@ public class LJH_boardMapper {
 		Map<String,Object> map = putMap(article_num, table);
 		return sqlSession.update("A_changeVisibleStatus", map);
 	}
+	public void A_updateReplyCount(int article_num, int replyCount, String table) {
+		Map<String,Object> map = putMap(article_num,table);
+		map.put("replyCount", replyCount);
+		sqlSession.update("A_updateReplyCount",map);
+	}
+	public int A_upBoard(int article_num, String userId, String table) {
+		BoardUpDownDTO dto = new BoardUpDownDTO();
+		dto.setArticle_num(article_num);
+		dto.setUserId(userId);
+		dto.setBehavior(1);
+		int res = A_upCountBoard(article_num,table);
+		if(res<=0) return -1;
+		return sqlSession.insert("upBoard", dto);
+	}
+	public int A_downBoard(int article_num, String userId, String table) {
+		BoardUpDownDTO dto = new BoardUpDownDTO();
+		dto.setArticle_num(article_num);
+		dto.setUserId(userId);
+		dto.setBehavior(-1);
+		int res = A_downCountBoard(article_num, table);
+		if(res<=0) return -1;
+		return sqlSession.insert("downBoard", dto);
+	}
+	public int A_upCountBoard(int article_num,String table) {
+		Map<String,Object> map = putMap(article_num,table);
+		return sqlSession.update("A_upCountBoard", map);
+	}
+	public int A_downCountBoard(int article_num, String table) {
+		Map<String,Object> map = putMap(article_num,table);
+		return sqlSession.update("A_downCountBoard", map);
+	}
+	public int checkUserUpDown(int article_num, String userId) {
+		BoardUpDownDTO dto = new BoardUpDownDTO();
+		dto.setArticle_num(article_num);
+		dto.setUserId(userId);
+		return sqlSession.selectOne("A_checkUserUpDown", dto);
+	}
 }
