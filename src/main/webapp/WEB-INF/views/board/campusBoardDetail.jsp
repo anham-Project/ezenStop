@@ -18,7 +18,7 @@
 				+ "&article_num=" + a_num;
 	}
 	function review_edit(a_num){
-		location.href = "campus_edit.board?article_num=" + a_num;
+		location.href = "campus_edit.board?article_num=" + a_num +"&where=${whereCode}";
 	}
 	function review_delete(a_num){
 		location.href = "campus_delete.board?article_num=" + a_num+"&where=${whereCode}";
@@ -153,8 +153,8 @@
 
 	<hr />
 	<form class="form-horizontal" name="f" method="post"
-		action="review_reply_write.board" onsubmit="return check()">
-		<input type="hidden" name="id" value="${sessionScope.userId}">
+		action="campus_reply_write.board?where=${whereCode }" onsubmit="return check()">
+		<input type="hidden" name="id" value="${sessionScope.randomId}">
 		<input type="hidden" name="article_num"
 			value="${reviewDetail.article_num}">
 		<c:if test="${reviewDetail.replyCount != 0}">

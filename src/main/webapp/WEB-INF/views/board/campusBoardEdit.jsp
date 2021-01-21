@@ -9,16 +9,6 @@
 </style>
 <script type="text/javascript">
 	function check(){
-		if (f.reviewAddr.value==""){
-			alert("수강 지역을 선택해 주세요!!")
-			f.reviewAddr.focus()
-			return false
-		}
-		if (f.category.value==""){
-			alert("수강 기간을 선택해 주세요!!")
-			f.category.focus()
-			return false
-		}
 		if (f.subject.value==""){
 			alert("제목를 입력해 주세요!!")
 			f.subject.focus()
@@ -65,11 +55,13 @@
 
 <div class="container" style="margin-top:30px; margin-bottom:10px;">
 	
-	<h5><font size="3">이젠'sTop게시판 > <a href="review_list.board">지역별 강의 후기게시판</a> > </font><b>게시글 수정</b></h5>
+	<h5><font size="3">이젠'sTop게시판 >${reviewAddr }캠퍼스 게시판 > </font><b>게시글 수정</b></h5>
 	<div class="container" style="margin-top:30px; margin-bottom:10px;">
-	<form class="form-horizontal" name ="f" action="review_edit.board" method="post" 
+	<form class="form-horizontal" name ="f" action="campus_editPro.board?where=${reviewAddrCode }" method="post" 
 		onsubmit="return check()" enctype="multipart/form-data">
 		<input type="hidden" name="article_num" value="${reviewDetail.article_num}">
+		<input type="hidden" name="id" value="${sessionScope.userId}">
+		<input type="hidden" name="randomId" value="${sessionScope.randomId }">
 	<div class="input-group" style="padding-bottom:5px">
 		<label class="col-md-2 control-label">수강지역<font size="3" color="red">*</font></label>
 		<div class="col-md-3">
@@ -78,16 +70,6 @@
 			<option <c:if test="${reviewAddr == list}">selected</c:if>>[${list}]</option>
 			</c:forEach> 
 			</select>
-		</div>
-		
-		<label class="col-md-2 control-label">수강기간<font size="3" color="red">*</font></label>
-		<div class="col-md-3">
-			<select class="form-control" name="category">
-			<c:forEach var="list" items="${categoryList}">
-			<option <c:if test="${reviewDetail.category == list}">selected</c:if>>${list}</option>
-			</c:forEach>
-			</select>
-			
 		</div>
 		<label class="col-md control-label"><font size="2" color="red">*필수선택 사항</font></label>
 	</div>
@@ -119,7 +101,7 @@
 	</div>
 	<div class="input-group pull-right" style="padding-bottom:5px">
 		<input class="btn btn-secondary btn-sm" type="submit" value="수정하기">&nbsp;
-		<input class="btn btn-secondary btn-sm" type="button" value="목록으로" onclick="window.location='review_list.board'">&nbsp;
+		<input class="btn btn-secondary btn-sm" type="button" value="목록으로" onclick="window.location='campusBoardList.board?where=${whereCode}'">&nbsp;
 		<input class="btn btn-secondary btn-sm" type="reset" value="원래대로">
 	</div>
 	</form>

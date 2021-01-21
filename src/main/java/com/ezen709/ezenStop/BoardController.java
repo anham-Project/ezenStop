@@ -374,7 +374,7 @@ public class BoardController {
 			if(!res.equals(res1)) res="-3";
 		}
 		if(res.equals("1") && boardMapper.checkReportCount(article_num) == 5) {
-			boardMapper.setUnvisible(article_num,table);
+			commonMapper.changeVisibleStatus(article_num,table);
 			ReplyDTO dto = new ReplyDTO();
 			dto.setRe_step(0);
 			dto.setRe_level(0);
@@ -588,7 +588,7 @@ public class BoardController {
 		String table = "ezen_campus_board";
 		commonMapper.A_plusReadCount(article_num, table);
 		ReviewBoardDTO reviewDetail = commonMapper.A_detail(article_num, table);
-		List<ReplyDTO> replyList = replyMapper.replyList(article_num);
+		List<ReplyDTO> replyList = replyMapper.replyListForAnonymous(article_num);
 		ModelAndView mav = new ModelAndView("board/campusBoardDetail");
 		mav.addObject("uploadPath", uploadPath);
 		mav.addObject("reviewDetail", reviewDetail);
@@ -619,6 +619,7 @@ public class BoardController {
 				res = boardMapper.downBoard(article_num, userId, table)+"";
 			}
 		}
+		System.out.println(res);
 		resp.getWriter().write(res);
 	}
 	@RequestMapping("/campus_delete.board")
@@ -637,7 +638,8 @@ public class BoardController {
 	}
 	@RequestMapping("/campus_reply_write.board")
 	public String campusReplyWritePro(@RequestParam int article_num, HttpServletRequest req,
-			@RequestParam String id, @RequestParam String content) {
+			@RequestParam String id, @RequestParam String content, @RequestParam int where) {
+		String table ="ezen_campus_board";
 		ReplyDTO dto = new ReplyDTO();
 		int reply_num = 0;
 		if(StringUtils.isEmpty(req.getParameter("reply_num"))) {
@@ -657,7 +659,75 @@ public class BoardController {
 		dto.setAticle_num(article_num);
 		int res = replyMapper.insertReply(dto);
 		int replyCount = replyMapper.replyCount(dto.getArticle_num());
-		boardMapper.updateReplyCount(dto.getArticle_num(), replyCount);
-		return "redirect:review_detail.board?article_num="+article_num;
+		
+		commonMapper.A_updateReplyCount(article_num, replyCount, table);
+		return "redirect:campus_detail.board?article_num="+article_num+"&where="+where;
+	}
+	@RequestMapping("/campus_edit.board")
+	public ModelAndView campusEdit(@RequestParam int article_num, @RequestParam int where) {
+		String table="ezen_campus_board";
+		ReviewBoardDTO reviewDetail = commonMapper.A_detail(article_num, table);
+		ModelAndView mav = new ModelAndView("board/campusBoardEdit");
+		String location = loginMapper.getIdGrade(reviewDetail.getId());
+		String[] reviewAddrList;
+		if(location.equals("2")){
+			reviewAddrList = campusModel.getLocationList();
+			mav.addObject("reviewAddrList",reviewAddrList);
+		}else if(location.equals("1")) {
+			String[] locationList = campusModel.getLocationList();
+			location = locationList[where-11];
+			reviewAddrList = new String[] {location};
+			mav.addObject("reviewAddrList",reviewAddrList);
+		}
+		String addrAndSuject = reviewDetail.getSubject();
+		String reviewAddr = addrAndSuject.substring(addrAndSuject.lastIndexOf("]")+1);
+		int allLength = addrAndSuject.length();
+		int addrLength = allLength - reviewAddr.length();
+		String subject = addrAndSuject.substring(addrLength,allLength);
+		reviewDetail.setSubject(subject);
+		mav.addObject("reviewDetail", reviewDetail);
+		mav.addObject("reviewAddr", reviewAddr);
+		mav.addObject("whereCode", where);
+		return mav;
+	}
+	@RequestMapping("/campus_editPro.board")
+	public String campusEditPro(HttpServletRequest req, @ModelAttribute ReviewBoardDTO dto, 
+			BindingResult result, @RequestParam String reviewAddr, @RequestParam int where,
+			@RequestParam String image0, @RequestParam int filesize0) {
+		String table = "ezen_campus_board";
+		if(result.hasErrors()) {}
+		MultipartHttpServletRequest mr = (MultipartHttpServletRequest)req;
+		MultipartFile file = mr.getFile("image");
+		File target = new File(uploadPath, file.getOriginalFilename());
+		int filesize = 0;
+		String image = "파일없음";
+		if(file.getSize() > 0 ) {
+			try {
+				file.transferTo(target);
+				filesize = (int)file.getSize();
+				image = file.getOriginalFilename();
+				int res = commonMapper.A_fileDelete(Integer.parseInt(mr.getParameter("article_num")),table);
+				if(res>0) {
+					File target0 = new File(uploadPath, image0);
+					target0.delete();
+				}
+			} catch (IllegalStateException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}else if(filesize0 > 0){
+			image = image0;
+			filesize = filesize0;
+		}
+		String subject = reviewAddr + dto.getSubject();
+		dto.setSubject(subject);
+		dto.setImage(image);
+		dto.setFilesize(filesize);
+		System.out.println(subject);
+		int res = commonMapper.A_edit(dto, table);
+		return "redirect:campusBoardList.board?where="+where;
 	}
 }

@@ -79,9 +79,6 @@
 				<c:if test="${dto.image != '파일없음' }">
 				<img class="media-object img-circle" style = "width: 14px; height: 12px;" src = "resources/img/picture.png">
 				</c:if>
-		<c:if test="${dto.replyCount != 0}">
-			<font color="orange" size="2">[${dto.replyCount}]</font>
-		</c:if>
 	
 			</td>
 			<td align="center">
