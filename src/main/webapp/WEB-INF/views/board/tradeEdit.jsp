@@ -10,7 +10,7 @@
 <script type="text/javascript">
 	function check(){
 		if (f.category.value==""){
-			alert("수강 기간을 선택해 주세요!!")
+			alert("카테고리를 선택해 주세요!!")
 			f.category.focus()
 			return false
 		}
@@ -70,8 +70,8 @@
 		<div class="col-md-3">
 			<select class="form-control" name="category"> 
 					<option value="">[게시판 종류]</option>
-					<option value="BUY" <c:if test="${noticeDetail.category == 'BUY'}">selected</c:if>>[사고]</option> 
-					<option value="SELL" <c:if test="${noticeDetail.category == 'SELL'}">selected</c:if>>[팔고]</option> 
+					<option value="BUY" <c:if test="${noticeDetail.category == '사고'}">selected</c:if>>[사고]</option> 
+					<option value="SELL" <c:if test="${noticeDetail.category == '팔고'}">selected</c:if>>[팔고]</option> 
 			</select>
 		</div>
 		<label class="col-md control-label"><font size="2" color="red">*필수선택 사항</font></label>

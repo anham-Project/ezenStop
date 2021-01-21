@@ -73,4 +73,23 @@
  		set visible = (visible * -1)
  		where article_num = #{article_num}
  	</update>
+ 	
+ 	<update id="A_updateReplyCount" parameterType="java.util.Map">
+ 		update ${tableName}
+ 		set replycount = #{replyCount} 
+ 		where article_num = #{article_num}
+ 	</update>
+ 	<update id="A_upCountBoard" parameterType="java.util.Map">
+ 		update ${tableName}
+ 		set upcount = upcount + 1
+ 		where article_num = #{article_num}
+ 	</update>
+ 	<update id="A_downCountBoard" parameterType="java.util.Map">
+ 		update ${tableName}
+ 		set downcount = downcount + 1
+ 		where article_num = #{article_num}
+ 	</update>
+ 	<select id="A_checkUserUpDown" parameterType="BoardUpDownDTO" resultType="Integer">
+ 		select count(*) from board_updown where ((article_num = #{article_num}) and (userId = #{userId}))
+ 	</select>
 </mapper>

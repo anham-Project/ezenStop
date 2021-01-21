@@ -353,6 +353,7 @@ public class BoardController {
 	public void reportPro(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 		String userId = req.getParameter("userId");
 		String reportContent = req.getParameter("reportContent");
+		String table = req.getParameter("table");
 		int article_num = Integer.parseInt(req.getParameter("article_num"));
 		int check = boardMapper.checkUserReport(article_num, userId);
 		String res;
@@ -364,7 +365,7 @@ public class BoardController {
 			if(!res.equals(res1)) res="-3";
 		}
 		if(res.equals("1") && boardMapper.checkReportCount(article_num) == 5) {
-			boardMapper.setUnvisible(article_num);
+			boardMapper.setUnvisible(article_num,table);
 			ReplyDTO dto = new ReplyDTO();
 			dto.setRe_step(0);
 			dto.setRe_level(0);

@@ -114,8 +114,8 @@
  	<select id="checkReportCount" parameterType = "Integer" resultType="Integer">
  		select count(*) from board_updown where ((article_num = #{article_num}) and (behavior = 2))
  	</select>
- 	<update id="setUnvisible" parameterType="Integer">
- 		update ezen_review_Board
+ 	<update id="setUnvisible" parameterType="java.util.Map">
+ 		update ${table}
  		set visible = -1
  		where article_num = #{article_num}
  	</update>
