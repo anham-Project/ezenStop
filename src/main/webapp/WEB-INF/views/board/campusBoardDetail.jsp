@@ -18,17 +18,17 @@
 				+ "&article_num=" + a_num;
 	}
 	function review_edit(a_num){
-		location.href = "review_edit.board?article_num=" + a_num;
+		location.href = "campus_edit.board?article_num=" + a_num;
 	}
 	function review_delete(a_num){
-		location.href = "review_delete.board?article_num=" + a_num;
+		location.href = "campus_delete.board?article_num=" + a_num+"&where=${whereCode}";
 	}
 	function somethingDo(somethingDo){
 		var article_num = '${reviewDetail.article_num}';
 		var userId = '${sessionScope.userId}';
 		$.ajax({
 			type : "POST",
-			url : "updownPro.board",
+			url : "campusupdownPro.board",
 			contentType: 'application/x-www-form-urlencoded; charset=euc-kr',
 			data : {
 				article_num : article_num,
@@ -58,7 +58,7 @@
 		var article_num = '${reviewDetail.article_num}';
 		$.ajax({
 			type: "POST",
-			url: "changeVisibleStatus.board",
+			url: "commonChangeVisibleStatus.board",
 			contentType: 'application/x-www-form-urlencoded; charset=euc-kr',
 			data: {
 				article_num: article_num
@@ -74,26 +74,15 @@
 <jsp:include page="../header.jsp" />
 <div class="container" style="margin-top: 30px; margin-bottom: 10px;">
 	<h5>
-		<font size="3">이젠'sTop게시판 > <a href="review_list.board">지역별
-				강의 후기게시판</a> >
+		<font size="3">이젠'sTop게시판 > <a href="campusBoardList.board?where=${whereCode }">${where }캠퍼스 게시판</a> >
 		</font><b>게시글보기</b>
 	</h5>
 	<div class="row"
 		style="padding-left: 10px; padding-top: 10px; padding-bottom: 10px; background-color: #EFF7EA;">
 		<div class="col-md-3">
-			<c:if test="${reviewDetail.grade == 1 }">
-				<img class="media-object img-circle"
-					style="width: 30px; height: 30px;"
-					src="resources/img/${reviewDetail.academyLocation }.jpg">
-			</c:if>
-			<c:if test="${reviewDetail.grade != 1 }">
-				<img class="media-object img-circle"
-					style="width: 30px; height: 30px;"
-					src="resources/img/${reviewDetail.grade }.jpg">
-			</c:if>
 			<c:choose>
 			<c:when test="${reviewDetail.grade==2}"><font style="color:#FF0000;  font-weight:bold;">${reviewDetail.id}</font></c:when>
-			<c:otherwise>${reviewDetail.id}</c:otherwise>
+			<c:otherwise>${reviewDetail.randomId}</c:otherwise>
 		</c:choose>
 		</div>
 		<div class="col-md-6 text-center">
@@ -176,17 +165,6 @@
 						<c:if test="${dto.re_level>0}">
 					&nbsp;&nbsp;&nbsp;&nbsp;
 					</c:if>
-						<c:if test="${dto.grade == 1 }">
-							<img class="media-object img-circle"
-								style="width: 30px; height: 30px;"
-								src="resources/img/${dto.academyLocation }.jpg">
-								${dto.academyLocation}
-						</c:if>
-						<c:if test="${dto.grade != 1 }">
-							<img class="media-object img-circle"
-								style="width: 30px; height: 30px;"
-								src="resources/img/${dto.grade }.jpg">
-						</c:if>
 						<c:choose>
 						<c:when test="${dto.grade==2}"><font style="color:#FF0000;  font-weight:bold;">${dto.id}</font></c:when>
 						<c:otherwise>${dto.id}</c:otherwise>
