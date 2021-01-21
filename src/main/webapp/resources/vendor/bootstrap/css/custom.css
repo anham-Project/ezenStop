@@ -245,4 +245,56 @@ h4{
 .i-am-centered { 
 	margin: auto; 
 	max-width: 700px;
-	}
+}
+/* a태그 색상	*/
+.grayA{
+  color: #383d41;
+  text-decoration: none;
+  background-color: transparent;
+}
+.grayA:hover {
+  color: #202326;
+  text-decoration: underline;
+}
+.grayA:not([href]):not([class]) {
+  color: inherit;
+  text-decoration: none;
+}
+.grayA:not([href]):not([class]):hover {
+  color: inherit;
+  text-decoration: none;
+}
+.whiteA{
+  color: #ecedee;
+  text-decoration: none;
+  background-color: transparent;
+}
+.whiteA:hover {
+  color: #d0d2d5;
+  text-decoration: underline;
+}
+.whiteA:not([href]):not([class]) {
+  color: inherit;
+  text-decoration: none;
+}
+.whiteA:not([href]):not([class]):hover {
+  color: inherit;
+  text-decoration: none;
+}
+.blackA{
+  color: #000000;
+  text-decoration: none;
+  background-color: transparent;
+}
+.blackA:hover {
+  color: #34363a;
+  text-decoration: underline;
+}
+.blackA:not([href]):not([class]) {
+  color: inherit;
+  text-decoration: none;
+}
+.blackA:not([href]):not([class]):hover {
+  color: inherit;
+  text-decoration: none;
+}
