@@ -2,6 +2,7 @@ package com.ezen709.ezenStop;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,8 +27,11 @@ import javax.servlet.http.HttpServletResponse;
 public class LJH_boardController {
 	@Autowired
 	LJH_boardMapper boardMapper;
+	@Autowired
+	ReplyMapper replyMapper;
 	@Resource(name="uploadPath")
 	private String uploadPath;
+	
 	
 	public Map<String,Integer> setStartRowAndEndRow(HttpServletRequest req){
 		String pageNum = req.getParameter("pageNum");
@@ -74,8 +78,6 @@ public class LJH_boardController {
 		String table = req.getParameter("table");
 		int res = boardMapper.changeVisibleStatus(article_num, table);
 	}
-	
-	
 	
 	//공지사항
 	
@@ -283,10 +285,12 @@ public class LJH_boardController {
 	public ModelAndView tradeDetail(@RequestParam int article_num) {
 		String table = "ezen_trade_board";
 		boardMapper.A_plusReadCount(article_num,table);
+		List<ReplyDTO> replyList = replyMapper.replyList(article_num);
 		ReviewBoardDTO noticeDetail = boardMapper.A_detail(article_num,table);
 		ModelAndView mav = new ModelAndView("board/tradeDetail");
 		mav.addObject("uploadPath", uploadPath);
 		mav.addObject("tradeDetail", noticeDetail);
+		mav.addObject("replyList",replyList);
 		return mav;
 	}
 	@RequestMapping(value="/trade_edit.board", method=RequestMethod.GET)
@@ -378,4 +382,58 @@ public class LJH_boardController {
 		
 		return mav;
 	}
+	@RequestMapping("/reply_write.board")
+	public String replyWritePro(@RequestParam int article_num, HttpServletRequest req,
+			@RequestParam String id, @RequestParam String content) {
+		ReplyDTO dto = new ReplyDTO();
+		int reply_num = 0;
+		if(StringUtils.isEmpty(req.getParameter("reply_num"))) {
+			dto.setRe_step(0);
+			dto.setRe_level(0);
+			dto.setParent_num(0);
+		}else {
+			reply_num = Integer.parseInt(req.getParameter("reply_num"));
+			ReplyDTO dto2 = replyMapper.replyDetail(reply_num);
+			dto.setRe_step(dto2.getRe_step());
+			dto.setRe_level(dto2.getRe_level());
+			dto.setParent_num(reply_num);
+		}
+		dto.setId(id);
+		dto.setContent(content);
+		dto.setReply_num(reply_num);
+		dto.setAticle_num(article_num);
+		int res = replyMapper.insertReply(dto);
+		int replyCount = replyMapper.replyCount(dto.getArticle_num());
+		String table = "ezen_trade_board";
+		boardMapper.A_updateReplyCount(dto.getArticle_num(), replyCount, table);
+		return "redirect:trade_detail.board?article_num="+article_num;
+	}
+	@RequestMapping("/trade_reply_delete.board")
+	public String replyDeletePro(@RequestParam int reply_num, @RequestParam int article_num) {
+		replyMapper.replyDelete(reply_num);
+		int replyCount = replyMapper.replyCount(article_num);
+		String table = "ezen_trade_board";
+		boardMapper.A_updateReplyCount(article_num, replyCount, table);
+		return "redirect:trade_detail.board?article_num="+article_num;
+	}
+	@RequestMapping("/trade_updownPro.board")
+	public void updownPro(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+		int article_num = Integer.parseInt(req.getParameter("article_num"));
+		String userId = req.getParameter("userId");
+		String somethingDo = req.getParameter("somethingDo");
+		String res;
+		String table = "ezne_trade_board";
+		int check = boardMapper.checkUserUpDown(article_num, userId);
+		if(check>0) {
+			res = "-2";
+		}else {
+			if(somethingDo.equals("up")) {
+				res = boardMapper.A_upBoard(article_num, userId, table)+"";
+			}else {
+				res = boardMapper.A_downBoard(article_num, userId, table)+"";
+			}
+		}
+		resp.getWriter().write(res);
+	}
+
 }

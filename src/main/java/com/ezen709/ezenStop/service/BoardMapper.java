@@ -123,8 +123,11 @@ public class BoardMapper {
 	public int checkReportCount(int article_num) {
 		return sqlSession.selectOne("checkReportCount", article_num);
 	}
-	public int setUnvisible(int article_num) {
-		return sqlSession.update("setUnvisible", article_num);
+	public int setUnvisible(int article_num,String table) {
+		Map<String,Object> map = new Hashtable<>();
+		map.put("article_num", article_num);
+		map.put("tableName",table);
+		return sqlSession.update("setUnvisible", map);
 	}
 	public List<BoardReportDTO> getReportList(int start, int end){
 		Map<String, Integer> map = new Hashtable<>();

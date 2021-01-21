@@ -41,7 +41,7 @@
 </script>
 <div class="container" style="margin-top:30px; margin-bottom:10px;">
 	
-	<h5><font size="3">이젠'sTop게시판 > <a href="trade_list.board">중고책 거래 게시판</a> > </font><b>중고책 거래 작성</b></h5>
+	<h5><font size="3">이젠'sTop게시판 > <a href="trade_list.board">사고팔고 게시판</a> > </font><b>게시글 작성</b></h5>
 	<div class="container" style="margin-top:30px; margin-bottom:10px;">
 	<form class="form-horizontal" name ="f" action="trade_write.board" method="post" 
 		onsubmit="return check()" enctype="multipart/form-data">
@@ -51,8 +51,8 @@
 		<div class="col-md-3">
 			<select class="form-control" name="category"> 
 					<option value="">[게시판 종류]</option>
-					<option value="BUY">[사고]</option> 
-					<option value="SELL">[팔고]</option> 
+					<option value="사고">[사고]</option> 
+					<option value="팔고">[팔고]</option> 
 			</select>
 		</div>
 		<label class="col-md control-label"><font size="2" color="red">*필수선택 사항</font></label>
