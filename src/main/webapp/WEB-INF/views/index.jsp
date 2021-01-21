@@ -7,6 +7,7 @@
 <script type="text/javascript">
 function loginPlz(){
 	alert("게시물을 확인하려면 로그인해야합니다!!")
+	return false
 }
 function findDetailPage(article_num) {
 	$
@@ -78,7 +79,7 @@ function findDetailPage(article_num) {
 						<c:forEach var="dto" items="${hotList }">
 						<form name="f1" onclick="javascript:findDetailPage('${dto.article_num}')">
 							<c:if test="${sessionScope.userId != null}">
-								<a href="review_detail.board?article_num=${dto.article_num}" class="grayA">
+								<a href="#" class="grayA">
 									<font color="#007bff">${dto.category}</font> ${dto.subject} <c:if
 										test="${dto.image != '파일없음' }">
 										<img class="media-object img-circle"
@@ -89,6 +90,7 @@ function findDetailPage(article_num) {
 									</c:if>
 								</a>
 							</c:if>
+						</form>
 							<c:if test="${sessionScope.userId == null}">
 								<a href="#" onclick="javascript:loginPlz()" class="grayA"><font color="#007bff">${dto.category}</font>
 									${dto.subject} <c:if test="${dto.image != '파일없음' }">
@@ -100,7 +102,6 @@ function findDetailPage(article_num) {
 									</c:if>
 								</a>
 							</c:if>
-							</form>
 						</c:forEach>
 					</p>
 				</div>

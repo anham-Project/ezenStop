@@ -29,6 +29,7 @@ public class LJH_boardController {
 	LJH_boardMapper boardMapper;
 	@Autowired
 	ReplyMapper replyMapper;
+	
 	@Resource(name="uploadPath")
 	private String uploadPath;
 	
@@ -571,6 +572,14 @@ public class LJH_boardController {
 		mav.setViewName("board/infoList");
 		
 		return mav;
+	}
+	@RequestMapping("/info_reply_delete.board")
+	public String info_replyDeletePro(@RequestParam int reply_num, @RequestParam int article_num) {
+		replyMapper.replyDelete(reply_num);
+		int replyCount = replyMapper.replyCount(article_num);
+		String table = "ezen_info_board";
+		boardMapper.A_updateReplyCount(article_num, replyCount, table);
+		return "redirect:info_detail.board?article_num="+article_num;
 	}
 	@RequestMapping("/info_reply_write.board")
 	public String info_replyWritePro(@RequestParam int article_num, HttpServletRequest req,
