@@ -38,15 +38,28 @@ public class ReplyMapper {
 		int res = sqlSession.insert("insertReply", dto);
 		return res;
 	}
+	public int replyMaxRe_step(int parent_num, int article_num) {
+		Map<String, Integer> map = new Hashtable<>();
+		map.put("parent_num", parent_num);
+		map.put("article_num", article_num);
+		if(sqlSession.selectOne("replyMaxRe_step", map) == null) {
+			return 0;
+		}else {
+			return sqlSession.selectOne("replyMaxRe_step", map);
+		}
+	}
 	public int replyCount(int article_num) {
 		Map<String, Integer> map = new Hashtable<>();
 		map.put("article_num", article_num);
 		return sqlSession.selectOne("replyCount", map);
 	}
-	public void replyDelete(int reply_num) {
-		Map<String, Integer> map = new Hashtable<>();
-		map.put("reply_num", reply_num);
-		sqlSession.delete("replyDelete", map);
+	public void replyDelete(int reply_num, ReplyDTO dto) {
+		Map<String, String> map = new Hashtable<>();
+		String sql = "update ezen_reply set re_step = re_step + 1 where re_step <= " + dto.getRe_step() + " and "
+					+ "article_num = " + dto.getAticle_num();
+		map.put("sql", sql);
+		sqlSession.update("plusStep", map);
+		sqlSession.delete("replyDelete", dto);
 	}
 	public ReplyDTO replyDetail(int reply_num) {
 		return sqlSession.selectOne("replyDetail", reply_num);

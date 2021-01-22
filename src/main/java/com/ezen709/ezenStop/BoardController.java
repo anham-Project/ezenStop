@@ -308,7 +308,13 @@ public class BoardController {
 		}else {
 			reply_num = Integer.parseInt(req.getParameter("reply_num"));
 			ReplyDTO dto2 = replyMapper.replyDetail(reply_num);
-			dto.setRe_step(dto2.getRe_step());
+			System.out.println("reply_num = "+reply_num);
+			int re_step = replyMapper.replyMaxRe_step(reply_num, article_num);
+			if(re_step == 0) {
+				dto.setRe_step(dto2.getRe_step());
+			}else {
+				dto.setRe_step(re_step);
+			}
 			dto.setRe_level(dto2.getRe_level());
 			dto.setParent_num(reply_num);
 		}
@@ -323,7 +329,8 @@ public class BoardController {
 	}
 	@RequestMapping("/review_reply_delete.board")
 	public String replyDeletePro(@RequestParam int reply_num, @RequestParam int article_num) {
-		replyMapper.replyDelete(reply_num);
+		ReplyDTO dto = replyMapper.replyDetail(reply_num);
+		replyMapper.replyDelete(reply_num, dto);
 		int replyCount = replyMapper.replyCount(article_num);
 		boardMapper.updateReplyCount(article_num, replyCount);
 		return "redirect:review_detail.board?article_num="+article_num;
@@ -730,7 +737,8 @@ public class BoardController {
 	}
 	@RequestMapping("/campus_reply_delete.board")
 	public String campusDeletePro(@RequestParam int reply_num, @RequestParam int article_num, @RequestParam int where) {
-		replyMapper.replyDelete(reply_num);
+		ReplyDTO dto = replyMapper.replyDetail(reply_num);
+		replyMapper.replyDelete(reply_num, dto);
 		int replyCount = replyMapper.replyCount(article_num);
 		boardMapper.updateReplyCount(article_num, replyCount);
 		return "redirect:campus_detail.board?article_num="+article_num+"&where=" +where;

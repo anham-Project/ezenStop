@@ -25,7 +25,7 @@
 		from ezen_reply
 		where article_num = #{article_num}
 	</select>
-	<delete id="replyDelete" parameterType="java.util.Map">
+	<delete id="replyDelete" parameterType="ReplyDTO">
 		delete
 		from ezen_reply
 		where reply_num = #{reply_num}
@@ -35,7 +35,7 @@
 		from ezen_reply
 		where reply_num = #{reply_num}
 	</select>
-		<select id="replyListForAnonymous" parameterType="java.util.Map" resultType="ReplyDTO">
+	<select id="replyListForAnonymous" parameterType="java.util.Map" resultType="ReplyDTO">
 		select *
 		from (select rownum rn, A.*
 		from (select ezen_reply.*, anonymous_board.randomId
@@ -44,5 +44,10 @@
 			 and ezen_reply.article_num = anonymous_board.article_num
 			  order by re_step asc)A) 
 		where article_num = #{article_num}
+ 	</select>
+ 	<select id="replyMaxRe_step" parameterType="java.util.Map" resultType="Integer">
+ 		select max(re_step) 
+ 		from ezen_reply 
+ 		where parent_num != 0 and parent_num >= #{parent_num} and article_num = #{article_num}
  	</select>
 </mapper>
