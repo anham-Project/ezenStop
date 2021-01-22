@@ -84,12 +84,12 @@
 			<c:if test="${reviewDetail.grade == 1 }">
 				<img class="media-object img-circle"
 					style="width: 30px; height: 30px;"
-					src="resources/img/${reviewDetail.academyLocation }.jpg">
+					src="resources/img/${reviewDetail.academyLocation }.png">
 			</c:if>
 			<c:if test="${reviewDetail.grade != 1 }">
 				<img class="media-object img-circle"
 					style="width: 30px; height: 30px;"
-					src="resources/img/${reviewDetail.grade }.jpg">
+					src="resources/img/${reviewDetail.grade }.png">
 			</c:if>
 			<c:choose>
 			<c:when test="${reviewDetail.grade==2}"><font style="color:#FF0000;  font-weight:bold;">${reviewDetail.id}</font></c:when>
@@ -174,18 +174,19 @@
 					style="padding: 5px 5px 5px ${5+dto.re_level*13}px; background-color: #F7F7F7;">
 					<div class="col-md-12" align="left">
 						<c:if test="${dto.re_level>0}">
-					&nbsp;&nbsp;&nbsp;&nbsp;
-					</c:if>
+							<img class="media-object img-circle"
+								style="width: 20px; height: 20px;" src="resources/img/reply.png">
+						</c:if>
 						<c:if test="${dto.grade == 1 }">
 							<img class="media-object img-circle"
 								style="width: 30px; height: 30px;"
-								src="resources/img/${dto.academyLocation }.jpg">
+								src="resources/img/${dto.academyLocation }.png">
 								${dto.academyLocation}
 						</c:if>
 						<c:if test="${dto.grade != 1 }">
 							<img class="media-object img-circle"
 								style="width: 30px; height: 30px;"
-								src="resources/img/${dto.grade }.jpg">
+								src="resources/img/${dto.grade }.png">
 						</c:if>
 						<c:choose>
 						<c:when test="${dto.grade==2}"><font style="color:#FF0000;  font-weight:bold;">${dto.id}</font></c:when>
@@ -201,10 +202,9 @@
 					</div>
 					<div class="col-md-12" align="left">
 						<c:if test="${dto.re_level>0}">
-							<img class="media-object img-circle"
-								style="width: 20px; height: 20px;" src="resources/img/reply.png">
+						&nbsp;&nbsp;&nbsp;&nbsp;
 						</c:if>
-						${dto.content}
+						<c:if test="${dto.parent_num != 0}"><font color="#007bff">@원글쓴이&nbsp;</font></c:if>${dto.content}
 					</div>
 					<div class="col-md-12" align="right" id="buttontype">
 						<input type="button" class="btn btn-info btn-sm" value="답글쓰기"

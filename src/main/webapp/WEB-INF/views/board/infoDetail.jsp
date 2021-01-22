@@ -75,12 +75,12 @@
 			<c:if test="${infoDetail.grade == 1 }">
 				<img class="media-object img-circle"
 					style="width: 30px; height: 30px;"
-					src="resources/img/${infoDetail.academyLocation }.jpg">
+					src="resources/img/${infoDetail.academyLocation }.png">
 			</c:if>
 			<c:if test="${infoDetail.grade != 1 }">
 				<img class="media-object img-circle"
 					style="width: 30px; height: 30px;"
-					src="resources/img/${infoDetail.grade }.jpg">
+					src="resources/img/${infoDetail.grade }.png">
 			</c:if>
 			<c:choose>
 			<c:when test="${infoDetail.grade==2}"><font style="color:#FF0000;  font-weight:bold;">${infoDetail.id}</font></c:when>
@@ -169,13 +169,13 @@
 						<c:if test="${dto.grade == 1 }">
 							<img class="media-object img-circle"
 								style="width: 30px; height: 30px;"
-								src="resources/img/${dto.academyLocation }.jpg">
+								src="resources/img/${dto.academyLocation }.png">
 								${dto.academyLocation}
 						</c:if>
 						<c:if test="${dto.grade != 1 }">
 							<img class="media-object img-circle"
 								style="width: 30px; height: 30px;"
-								src="resources/img/${dto.grade }.jpg">
+								src="resources/img/${dto.grade }.png">
 						</c:if>
 						<c:choose>
 						<c:when test="${dto.grade==2}"><font style="color:#FF0000;  font-weight:bold;">${dto.id}</font></c:when>
