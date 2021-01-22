@@ -9,7 +9,7 @@
 <meta charset="EUC-KR">
 <title>마이페이지</title>
 </head>
-<div class ="lineBox">
+<div class ="lineBox shadow">
 <body>
 <div align="center">
 <h4>마이페이지</h4>

@@ -222,7 +222,7 @@ h4{
 .info h6{
     text-align: left;
     margin: -25px 80px 25px 120px;
-    padding: 3px;
+    padding: 3px 10px 3px 3px;
     font-size: 15px;
     color: #343a41;
     border-bottom: 1px solid #999;
