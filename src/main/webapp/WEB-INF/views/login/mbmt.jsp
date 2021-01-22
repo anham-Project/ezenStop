@@ -19,7 +19,11 @@
 		return true
 	}
 	function view_file(id){
-		window.open('view_file.login?id='+id, "인증파일 보기", "width=600, height=600")
+		var popupWidth = 600;
+		var popupHeight = 600;
+		var popupX = (window.screen.width / 2) - (popupWidth / 2);
+		var popupY= (window.screen.height / 2) - (popupHeight / 2);
+		window.open('view_file.login?id='+id, "인증파일 보기", 'status=no, height=' + popupHeight  + ', width=' + popupWidth  + ', left='+ popupX + ', top='+ popupY)
 	}
 
 </script>
@@ -62,7 +66,7 @@
 			<select name="dtoList[${status.index}].academyLocation">
 				<option value="none">지점 선택</option>
 				<c:forEach var="list" items="${locationList}">
-				<option <c:if test="${dto.academyLocation==list}">selected</c:if>>${list}</option>
+				<option <c:if test="${dto.academyLocation==list}">selected</c:if>>[${list}]</option>
 				</c:forEach>
 			</select>
 			</td>

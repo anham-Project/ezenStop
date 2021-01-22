@@ -277,14 +277,19 @@ public class LoginController {
 		return mav;
 	}
 	@RequestMapping(value="/changePasswd.login", method=RequestMethod.GET) //비밀번호변경 페이지로 이동
-	public String changePasswd() {
-		return "login/changePasswd";
+	public ModelAndView changePasswd(@RequestParam String id) {
+		ModelAndView mav = new ModelAndView("login/changePasswd");
+		List<Ezen_memberDTO> list = loginMapper.getMemberDTO(id);
+		Ezen_memberDTO dto = list.get(0);
+		mav.addObject("passwdOri",dto.getPasswd());
+		mav.addObject("id",id);
+		return mav;
 	}
 	@RequestMapping(value="/changePasswd.login", method=RequestMethod.POST) //비밀번호변경
 	public ModelAndView changePasswd_ok(@RequestParam String id,@RequestParam String passwd) {
 		ModelAndView mav = new ModelAndView("message2");
 		loginMapper.change_passwd(id, passwd);
-		String msg="비밀번호가 변경되었습니다!", url="changePasswd.login";
+		String msg="비밀번호가 변경되었습니다!", url="changePasswd.login?id="+id;
 		mav.addObject("msg",msg);
 		mav.addObject("url",url);
 		return mav;
@@ -302,6 +307,13 @@ public class LoginController {
 		if(dto.getPasswd().equals(passwd)) {
 			loginMapper.dropId(id);
 			loginMapper.dropChat(id);
+			List<Ezen_certificationDTO> list = loginMapper.getFile(id);
+			if(list.size()>0) {
+				Ezen_certificationDTO certDTO = list.get(0);
+				File original = new File(uploadPath,certDTO.getImage());
+				original.delete();
+			}
+			loginMapper.dropImage(id);
 			msg="회원탈퇴 하였습니다!";
 			url="dropId";
 		}else {
@@ -315,11 +327,14 @@ public class LoginController {
 		return mav;
 	}
 	@RequestMapping(value="/certification.login", method=RequestMethod.GET) //회원인증 페이지로 이동
-	public String certification() {
-		return "login/certification";
+	public ModelAndView certification() {
+		ModelAndView mav = new ModelAndView("login/certification");
+		String[] locationList = campusModel.getLocationList();
+		mav.addObject("locationList",locationList);
+		return mav;
 	}
 	@RequestMapping(value="/certification.login", method=RequestMethod.POST) //회원 인증
-	public ModelAndView certification_ok(@RequestParam String id, HttpServletRequest req) {
+	public ModelAndView certification_ok(@RequestParam String id, @RequestParam String academy, HttpServletRequest req) {
 		ModelAndView mav = new ModelAndView("message2");
 		List<Ezen_memberDTO> al = loginMapper.getMemberDTO(id);
 		Ezen_memberDTO dto = al.get(0);
@@ -340,6 +355,7 @@ public class LoginController {
 					certDTO.setName(dto.getName());
 					certDTO.setImage(file_name);
 					certDTO.setFilesize(filesize);
+					certDTO.setAcademyLocation(academy);
 					loginMapper.insert_certification(certDTO);//회원 인증 신청 db에 insert
 					loginMapper.member_upStatus(id);
 					msg = "인증 신청완료";
@@ -350,12 +366,15 @@ public class LoginController {
 				}
 			}else {
 				try {
-				certDTO = loginMapper.getFile(id);
-				File original = new File(uploadPath,certDTO.getImage());
-				original.delete();
+				List<Ezen_certificationDTO> list = loginMapper.getFile(id);
+				if(list.size()>0) {
+					Ezen_certificationDTO DTO = list.get(0);
+					File original = new File(uploadPath,DTO.getImage());
+					original.delete();
+				}
 				file.transferTo(target);
 				filesize = (int)file.getSize();
-				loginMapper.update_certification(id,file_name,filesize);//회원 인증 신청 db에 update
+				loginMapper.update_certification(id,academy,file_name,filesize);//회원 인증 신청 db에 update
 				msg = "인증 수정완료";
 				}catch (IllegalStateException e) {
 					System.out.println("status>0일때 오류");
@@ -424,8 +443,11 @@ public class LoginController {
 	@RequestMapping("/view_file.login")
 	public ModelAndView view_file(@RequestParam String id) {
 		ModelAndView mav = new ModelAndView("login/view_file");
-		Ezen_certificationDTO dto = loginMapper.getFile(id);
-		System.out.println(uploadPath);
+		Ezen_certificationDTO dto = new Ezen_certificationDTO();
+		List<Ezen_certificationDTO> list = loginMapper.getFile(id);
+		if(list.size()>0) {
+			dto = list.get(0);
+		}
 		mav.addObject("upPath",uploadPath);
 		mav.addObject("CMDTO",dto);
 		return mav;

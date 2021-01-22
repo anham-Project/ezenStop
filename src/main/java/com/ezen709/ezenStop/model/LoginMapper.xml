@@ -7,7 +7,7 @@
  		insert into ezen_member values(#{email},#{id},#{passwd},#{name},sysdate,#{academyLocation},#{grade},#{status})
  </insert>
  <insert id= "insert_certification" parameterType="ezen_certificationDTO">
- 		insert into ezen_certification values(#{id},#{name},#{image},#{filesize},sysdate)
+ 		insert into ezen_certification values(#{id},#{name},#{academyLocation},#{image},#{filesize},sysdate)
  </insert>
  <select id="id_check" parameterType="String" resultType="Integer">
 		 select count(*) from ezen_member where id=#{id}
@@ -89,7 +89,7 @@
  		update ezen_member set passwd=#{passwd} where id=#{id}
  </update>
  <update id="update_certification" parameterType="java.util.Map">
- 		update ezen_certification set image=#{image}, filesize=#{filesize} where id=#{id}
+ 		update ezen_certification set academylocation=#{academylocation}, image=#{image}, filesize=#{filesize} where id=#{id}
  </update>
  <update id="member_upStatus" parameterType="String">
  		update ezen_member set status = 1 where id=#{id} 
@@ -104,6 +104,9 @@
  </delete>
  <delete id="dropChat" parameterType="String">
  		delete from chat where toid=#{id} or fromid=#{id}
+ </delete>
+ <delete id="dropImage" parameterType="String">
+ 		delete from ezen_certification where id = ${id}
  </delete>
  </mapper>
  

@@ -3,11 +3,24 @@
 <!-- login.jsp-->
 <jsp:include page="../header.jsp" />
 <script type="text/javascript">
+
+
+
+window.open('', '', 'status=no, height=300, width=200, left='+ popupX + ', top='+ popupY);
+
 		function checkMember(){
-			window.open('email.login', "이메일 인증", "width=450, height=450")
+			var popupWidth = 450;
+			var popupHeight = 450;
+			var popupX = (window.screen.width / 2) - (popupWidth / 2);
+			var popupY= (window.screen.height / 2) - (popupHeight / 2);
+			window.open('email.login', "이메일 인증", 'status=no, height=' + popupHeight  + ', width=' + popupWidth  + ', left='+ popupX + ', top='+ popupY)
 		}	
 		function findMember(){
-			window.open('find.login', "아이디/비밀번호 찾기", "width=300, height=500")
+			var popupWidth = 600;
+			var popupHeight = 500;
+			var popupX = (window.screen.width / 2) - (popupWidth / 2);
+			var popupY= (window.screen.height / 2) - (popupHeight / 2);
+			window.open('find.login', "아이디/비밀번호 찾기", 'status=no, height=' + popupHeight  + ', width=' + popupWidth  + ', left='+ popupX + ', top='+ popupY)
 		}	
 		function login(){
 			if(document.f.id.value==""){
