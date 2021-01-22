@@ -66,12 +66,12 @@
   		select * from (
 			select rownum rn, A.* from (
 		 		select * 
-		 		from ezen_member where ${searchtype} = #{searchstring} 
+		 		from ezen_member where ${searchtype} like #{searchstring} 
 		 		order by reg_date desc)A
 		 	)where rn between #{start} and #{end}
  </select>
   <select id="searchMemberGetCount" parameterType="java.util.Map" resultType="Integer">
- 		select count(*)	from ezen_member where ${searchtype} = #{searchstring} 
+ 		select count(*)	from ezen_member where ${searchtype} like #{searchstring} 
  </select>
  
  <select id="myBoardLocation" resultType="String">
@@ -101,6 +101,9 @@
  
  <delete id="dropId" parameterType="String">
  		delete from ezen_member where id=#{id}
+ </delete>
+ <delete id="dropChat" parameterType="String">
+ 		delete from chat where toid=#{id} or fromid=#{id}
  </delete>
  </mapper>
  

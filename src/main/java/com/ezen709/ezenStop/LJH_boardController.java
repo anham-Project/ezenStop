@@ -299,7 +299,7 @@ public class LJH_boardController {
 	public ModelAndView tradeEdit(@RequestParam int article_num) {
 		String table = "ezen_trade_board";
 		ReviewBoardDTO tradeDetail = boardMapper.A_detail(article_num,table);
-		ModelAndView mav = new ModelAndView("board/noticeEdit");
+		ModelAndView mav = new ModelAndView("board/tradeEdit");
 		String subject = tradeDetail.getSubject();
 		tradeDetail.setSubject(subject);
 		mav.addObject("tradeDetail", tradeDetail);
@@ -488,7 +488,7 @@ public class LJH_boardController {
 	public ModelAndView infoEdit(@RequestParam int article_num) {
 		String table = "ezen_info_board";
 		ReviewBoardDTO infoDetail = boardMapper.A_detail(article_num,table);
-		ModelAndView mav = new ModelAndView("board/noticeEdit");
+		ModelAndView mav = new ModelAndView("board/infoEdit");
 		String subject = infoDetail.getSubject();
 		infoDetail.setSubject(subject);
 		mav.addObject("infoDetail", infoDetail);

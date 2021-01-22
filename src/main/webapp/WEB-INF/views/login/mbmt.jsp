@@ -60,6 +60,7 @@
 			<td align="center">${dto.passwd}</td>
 			<td align="center">
 			<select name="dtoList[${status.index}].academyLocation">
+				<option value="none">지점 선택</option>
 				<c:forEach var="list" items="${locationList}">
 				<option <c:if test="${dto.academyLocation==list}">selected</c:if>>${list}</option>
 				</c:forEach>
