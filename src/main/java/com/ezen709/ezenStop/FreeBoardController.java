@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,8 +23,10 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.ezen709.ezenStop.model.ReplyDTO;
 import com.ezen709.ezenStop.model.ReviewBoardDTO;
 import com.ezen709.ezenStop.service.LJH_boardMapper;
+import com.ezen709.ezenStop.service.ReplyMapper;
 
 
 @Controller
@@ -31,6 +34,8 @@ public class FreeBoardController {
 	
 	@Autowired
 	LJH_boardMapper boardMapper;
+	@Autowired
+	ReplyMapper replyMapper;
 	
 	@Resource(name="uploadPath")
 	private String uploadPath;
@@ -223,5 +228,39 @@ public class FreeBoardController {
 		mav.setViewName("board/freeList");
 		
 		return mav;
+	}
+	@RequestMapping("/free_reply_delete.board")
+	public String free_replyDeletePro(@RequestParam int reply_num, @RequestParam int article_num) {
+		replyMapper.replyDelete(reply_num);
+		int replyCount = replyMapper.replyCount(article_num);
+		String table = "ezen_free_board";
+		boardMapper.A_updateReplyCount(article_num, replyCount, table);
+		return "redirect:free_detail.board?article_num="+article_num;
+	}
+	@RequestMapping("/free_reply_write.board")
+	public String free_replyWritePro(@RequestParam int article_num, HttpServletRequest req,
+			@RequestParam String id, @RequestParam String content) {
+		ReplyDTO dto = new ReplyDTO();
+		int reply_num = 0;
+		if(StringUtils.isEmpty(req.getParameter("reply_num"))) {
+			dto.setRe_step(0);
+			dto.setRe_level(0);
+			dto.setParent_num(0);
+		}else {
+			reply_num = Integer.parseInt(req.getParameter("reply_num"));
+			ReplyDTO dto2 = replyMapper.replyDetail(reply_num);
+			dto.setRe_step(dto2.getRe_step());
+			dto.setRe_level(dto2.getRe_level());
+			dto.setParent_num(reply_num);
+		}
+		dto.setId(id);
+		dto.setContent(content);
+		dto.setReply_num(reply_num);
+		dto.setAticle_num(article_num);
+		int res = replyMapper.insertReply(dto);
+		int replyCount = replyMapper.replyCount(dto.getArticle_num());
+		String table = "ezen_free_board";
+		boardMapper.A_updateReplyCount(dto.getArticle_num(), replyCount, table);
+		return "redirect:free_detail.board?article_num="+article_num;
 	}
 }

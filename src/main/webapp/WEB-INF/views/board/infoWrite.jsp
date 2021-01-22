@@ -41,7 +41,7 @@
 </script>
 <div class="container" style="margin-top:30px; margin-bottom:10px;">
 	
-	<h5><font size="3">이젠'sTop게시판 > <a href="info_list.board">정보공유 게시판</a> > </font><b>게시글 작성</b></h5>
+	<h5><font size="3">이젠'sTop게시판 > <a href="info_list.board" class="blackA">정보공유 게시판</a> > </font><b>게시글 작성</b></h5>
 	<div class="container" style="margin-top:30px; margin-bottom:10px;">
 	<form class="form-horizontal" name ="f" action="info_write.board" method="post" 
 		onsubmit="return check()" enctype="multipart/form-data">

@@ -7,6 +7,7 @@
 <script type="text/javascript">
 function loginPlz(){
 	alert("게시물을 확인하려면 로그인해야합니다!!")
+	return false
 }
 function findDetailPage(article_num) {
 	$
@@ -78,7 +79,7 @@ function findDetailPage(article_num) {
 						<c:forEach var="dto" items="${hotList }">
 						<form name="f1" onclick="javascript:findDetailPage('${dto.article_num}')">
 							<c:if test="${sessionScope.userId != null}">
-								<a href="review_detail.board?article_num=${dto.article_num}" class="grayA">
+								<a href="#" class="grayA">
 									<font color="#007bff">${dto.category}</font> ${dto.subject} <c:if
 										test="${dto.image != '파일없음' }">
 										<img class="media-object img-circle"
@@ -89,6 +90,7 @@ function findDetailPage(article_num) {
 									</c:if>
 								</a>
 							</c:if>
+						</form>
 							<c:if test="${sessionScope.userId == null}">
 								<a href="#" onclick="javascript:loginPlz()" class="grayA"><font color="#007bff">${dto.category}</font>
 									${dto.subject} <c:if test="${dto.image != '파일없음' }">
@@ -100,7 +102,6 @@ function findDetailPage(article_num) {
 									</c:if>
 								</a>
 							</c:if>
-							</form>
 						</c:forEach>
 					</p>
 				</div>
@@ -140,7 +141,7 @@ function findDetailPage(article_num) {
 		<div class="col-lg-6 col-md-6 mb-4">
 			<div class="card h-100 shadow">
 				<div class="card-header">
-					<a href="#" class="blackA"><h5><b>정보공유 게시판</b></h5></a>
+					<a href="info_list.board" class="blackA"><h5><b>정보공유 게시판</b></h5></a>
 				</div>
 				<div class="card-body">
 					<p class="card-text">

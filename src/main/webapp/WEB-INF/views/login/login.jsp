@@ -20,7 +20,7 @@
 			return true
 		}
 </script>
-<div class="container align-items-center mt-5" style="width: 30%;min-height: 400px;">
+<div class="container align-items-center mt-5" style="width: 30%;min-height: 400px;margin-top:50px;">
 	<form action="login.login" method="post" name="f"
 		onsubmit="return login()">
 		<div class="form-group">

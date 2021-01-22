@@ -60,7 +60,7 @@
 
 <div class="container" style="margin-top:30px; margin-bottom:10px;">
 	
-	<h5><font size="3">이젠'sTop게시판 > <a href="notice_list.board">공지사항</a> > </font><b>공지 수정</b></h5>
+	<h5><font size="3">이젠'sTop게시판 > <a href="notice_list.board" class="blackA">공지사항</a> > </font><b>공지 수정</b></h5>
 	<div class="container" style="margin-top:30px; margin-bottom:10px;">
 	<form class="form-horizontal" name ="f" action="notice_edit.board" method="post" 
 		onsubmit="return check()" enctype="multipart/form-data">

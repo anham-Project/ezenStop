@@ -19,7 +19,7 @@
 		alert("후기를 작성하려면 학원인증을 해야합니다!!")
 	}
 </script>
-	<h5><font size="3">이젠'sTop게시판 > </font><b><a href="trade_list.board">사고팔고 게시판</a></b></h5>
+	<h5><font size="3">이젠'sTop게시판 > </font><b><a href="trade_list.board" class="blackA">사고팔고 게시판</a></b></h5>
 <form name="f" action="trade_find.board" method="post" onsubmit="return check()">
 	<div class="row" style="padding-bottom:5px">
 		<div class="col-md-6">
@@ -61,8 +61,8 @@
 			<td align="center"><c:out value="${dto.article_num}"/></td>
 			<td align="left">			
 	<c:if test="${sessionScope.userId != null}">
-				<a href="trade_detail.board?article_num=${dto.article_num}">
-				[${dto.category}] ${dto.subject}
+				<a href="trade_detail.board?article_num=${dto.article_num}" class="grayA">
+				<font color="#007bff">[${dto.category}]</font> ${dto.subject}
 				<c:if test="${dto.image != '파일없음' }">
 				<img class="media-object img-circle" style = "width: 14px; height: 12px;" src = "resources/img/picture.png">
 				</c:if>
@@ -72,7 +72,7 @@
 				</a>
 	</c:if>
 	<c:if test="${sessionScope.userId == null}">
-		<a href="trade_detail.board?article_num=${dto.article_num}">[${dto.category}] ${dto.subject}
+		<a href="trade_detail.board?article_num=${dto.article_num}" class="grayA"><font color="#007bff">[${dto.category}]</font> ${dto.subject}
 		<c:if test="${dto.image != '파일없음' }">
 				<img class="media-object img-circle" style = "width: 14px; height: 12px;" src = "resources/img/picture.png">
 		</c:if>

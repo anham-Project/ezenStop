@@ -204,7 +204,7 @@
 						aria-haspopup="true" aria-expanded="false"> 이젠's Top게시판 </a>
 						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
 							 <a class="dropdown-item" href="notice_list.board">공지사항</a> <a
-								class="dropdown-item" href="#">정보 공유 게시판</a> <a
+								class="dropdown-item" href="info_list.board">정보 공유 게시판</a> <a
 								class="dropdown-item" href="review_list.board">지역별 수강후기 게시판</a> <a
 								class="dropdown-item" href="trade_list.board">사고팔고 게시판</a> <a
 								class="dropdown-item" href="free_list.board">자유게시판</a>

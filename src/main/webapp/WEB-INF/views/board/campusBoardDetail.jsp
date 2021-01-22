@@ -74,7 +74,7 @@
 <jsp:include page="../header.jsp" />
 <div class="container" style="margin-top: 30px; margin-bottom: 10px;">
 	<h5>
-		<font size="3">이젠'sTop게시판 > <a href="campusBoardList.board?where=${whereCode }">${where }캠퍼스 게시판</a> >
+		<font size="3">이젠'sTop게시판 > <a href="campusBoardList.board?where=${whereCode }" class="blackA">${where }캠퍼스 게시판</a> >
 		</font><b>게시글보기</b>
 	</h5>
 	<div class="row"
