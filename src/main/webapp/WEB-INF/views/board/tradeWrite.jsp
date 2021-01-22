@@ -51,8 +51,8 @@
 		<div class="col-md-3">
 			<select class="form-control" name="category"> 
 					<option value="">[게시판 종류]</option>
-					<option value="사고">[사고]</option> 
-					<option value="팔고">[팔고]</option> 
+					<option >[사고]</option> 
+					<option >[팔고]</option> 
 			</select>
 		</div>
 		<label class="col-md control-label"><font size="2" color="red">*필수선택 사항</font></label>
