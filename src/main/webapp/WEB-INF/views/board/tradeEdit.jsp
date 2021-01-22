@@ -60,7 +60,7 @@
 
 <div class="container" style="margin-top:30px; margin-bottom:10px;">
 	
-	<h5><font size="3">이젠'sTop게시판 > <a href="trade_list.board">지역별 강의 후기게시판</a> > </font><b>게시글 수정</b></h5>
+	<h5><font size="3">이젠'sTop게시판 > <a href="trade_list.board" class="blackA">사고팔고 게시판</a> > </font><b>게시글 수정</b></h5>
 	<div class="container" style="margin-top:30px; margin-bottom:10px;">
 	<form class="form-horizontal" name ="f" action="trade_edit.board" method="post" 
 		onsubmit="return check()" enctype="multipart/form-data">

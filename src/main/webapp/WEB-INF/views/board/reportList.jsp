@@ -75,7 +75,7 @@
 			</td>
 			<td align="left">			
 				<form name="f" onclick="javascript:findDetailPage('${dto.article_num}')">
-				<a href="#">${dto.reportContent}</a>
+				<a href="#" class="grayA">${dto.reportContent}</a>
 				</form>
 			</td>
 			<td align="center">

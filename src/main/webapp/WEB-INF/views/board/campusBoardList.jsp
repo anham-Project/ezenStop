@@ -29,7 +29,8 @@
 
 	}
 </script>
-	<h5><font size="3">이젠'sTop게시판 > </font>캠퍼스별 게시판><b>${where }캠퍼스 게시판</b></h5>
+	<h5><font size="3">이젠'sTop게시판 > </font><b>
+	<a href="campusBoardList.board?where=${whereCode }" class="blackA">${where }캠퍼스 게시판</a></b></h5>
 <form name="f" action="review_find.board" method="post" onsubmit="return check()">
 	<div class="row" style="padding-bottom:5px">
 		<div class="col-md-6">
@@ -69,7 +70,7 @@
 			<td align="center"><c:out value="${dto.article_num}"/></td>
 			<td align="left">	
 			<form name="f1" onclick="javascript:findDetailPage('${dto.article_num}')">
-						<a href="#">
+						<a href="#" class="grayA">
 								${dto.subject} <c:if
 									test="${dto.replyCount != 0}">
 									<font color="orange" size="2">[${dto.replyCount}]</font>
@@ -97,7 +98,7 @@
 	<div class="col-md-10">
 	<ul class = "pagination justify-content-center">
 	<c:if test="${startPage > pageBlock}">	
-		<li class="page-item"><a class="page-link" href="review_list.board?where=${whereCode }&pageNum=${startPage-pageBlock}">이전</a></li>
+		<li class="page-item"><a class="page-link" href="campusBoardList.board?where=${whereCode }&pageNum=${startPage-pageBlock}">이전</a></li>
 	</c:if>
 	<c:forEach var="i" begin="${startPage}" end="${endPage}">
 			<c:choose>

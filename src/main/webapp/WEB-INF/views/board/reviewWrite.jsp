@@ -47,7 +47,7 @@
 </script>
 <div class="container" style="margin-top:30px; margin-bottom:10px;">
 	
-	<h5><font size="3">이젠'sTop게시판 > <a href="review_list.board">지역별 강의 후기게시판</a> > </font><b>후기작성</b></h5>
+	<h5><font size="3">이젠'sTop게시판 > <a href="review_list.board" class="blackA">지역별 수강후기 게시판</a> > </font><b>후기작성</b></h5>
 	<div class="container" style="margin-top:30px; margin-bottom:10px;">
 	<form class="form-horizontal" name ="f" action="review_write.board" method="post" 
 		onsubmit="return check()" enctype="multipart/form-data">

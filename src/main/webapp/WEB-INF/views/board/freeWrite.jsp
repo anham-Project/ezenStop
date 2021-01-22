@@ -42,7 +42,7 @@
 </script>
 <div class="container" style="margin-top:30px; margin-bottom:10px;">
 	
-	<h5><font size="3">이젠'sTop게시판 > <a href="free_list.board">자유게시판</a> > </font><b>게시물작성</b></h5>
+	<h5><font size="3">이젠'sTop게시판 > <a href="free_list.board" class="blackA">자유게시판</a> > </font><b>게시물작성</b></h5>
 	<div class="container" style="margin-top:30px; margin-bottom:10px;">
 	<form class="form-horizontal" name ="f" action="free_write.board" method="post" 
 		onsubmit="return check()" enctype="multipart/form-data">

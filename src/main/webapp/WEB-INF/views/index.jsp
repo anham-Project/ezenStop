@@ -141,7 +141,7 @@ function findDetailPage(article_num) {
 		<div class="col-lg-6 col-md-6 mb-4">
 			<div class="card h-100 shadow">
 				<div class="card-header">
-					<a href="#" class="blackA"><h5><b>정보공유 게시판</b></h5></a>
+					<a href="info_list.board" class="blackA"><h5><b>정보공유 게시판</b></h5></a>
 				</div>
 				<div class="card-body">
 					<p class="card-text">

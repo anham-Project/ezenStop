@@ -16,7 +16,7 @@
 		alert("게시물을 확인하려면 로그인해야합니다!!")
 	}
 </script>
-	<h5><font size="3">이젠'sTop게시판 > </font><b><a href="notice_list.board">공지사항</a></b></h5>
+	<h5><font size="3">이젠'sTop게시판 > </font><b><a href="notice_list.board" class="blackA">공지사항</a></b></h5>
 <form name="f" action="notice_find.board" method="post" onsubmit="return check()">
 	<div class="row" style="padding-bottom:5px">
 		<div class="col-md-6">
@@ -57,12 +57,12 @@
 			<td align="center"><c:out value="${dto.article_num}"/></td>
 			<td align="left">			
 	<c:if test="${sessionScope.userId != null}">
-				<a href="notice_detail.board?article_num=${dto.article_num}">
+				<a href="notice_detail.board?article_num=${dto.article_num}" class="grayA">
 				${dto.subject}
 				</a>
 	</c:if>
 	<c:if test="${sessionScope.userId == null}">
-		<a href="#" onclick="javascript:loginPlz()">${dto.subject}
+		<a href="#" onclick="javascript:loginPlz()" class="grayA">${dto.subject}
 		</a>
 	</c:if>
 			</td>
@@ -80,10 +80,8 @@
 	</table>
 	<div class="row">
 <c:if test="${count>0}">
-	<div class="col-md-4">
-	</div>
-	<div class="col-md-6">
-	<ul class = "pagination">
+	<div class="col-md-10">
+	<ul class = "pagination justify-content-center">
 	<c:if test="${startPage > pageBlock}">	
 		<li class="page-item"><a class="page-link" href="notice_list.board?pageNum=${startPage-pageBlock}">이전</a></li>
 	</c:if>
@@ -106,7 +104,7 @@
 			</c:choose>
 	</c:forEach>
 	<c:if test="${endPage < pageCount}">
-		<li class="page-item"><a class="page-link" href="notice_list.board?pageNum=${endPage+pageBlock}">다음</a></li>
+		<li class="page-item"><a class="page-link" href="notice_list.board?pageNum=${startPage+pageBlock}">다음</a></li>
 	</c:if>
 	</ul>
 	</div>

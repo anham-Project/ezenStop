@@ -73,8 +73,8 @@
 						<c:set var="startNum" value="${startNum-1}" />
 						<td align="left">
 						<form name="f1" onclick="javascript:findDetailPage('${dto.article_num}')">
-						<a href="#">
-								${dto.category} ${dto.subject} <c:if
+						<a href="#" class="">
+								<font color="#007bff">${dto.category}</font> ${dto.subject} <c:if
 									test="${dto.replyCount != 0}">
 									<font color="orange" size="2">[${dto.replyCount}]</font>
 								</c:if>
