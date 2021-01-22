@@ -79,6 +79,9 @@ public class LoginMapper {
 	public void dropChat(String id) {
 		sqlSession.delete("dropChat",id);
 	}
+	public void dropImage(String id) {
+		sqlSession.delete("dropImage", id);
+	}
 	public int insert_certification(Ezen_certificationDTO dto) {
 		int res = sqlSession.insert("insert_certification",dto);
 		return res;
@@ -86,15 +89,16 @@ public class LoginMapper {
 	public void member_upStatus(String id) {
 		sqlSession.update("member_upStatus",id);
 	}
-	public Ezen_certificationDTO getFile(String id) {
-		Ezen_certificationDTO dto = sqlSession.selectOne("getFile",id);
+	public List<Ezen_certificationDTO> getFile(String id) {
+		List<Ezen_certificationDTO> dto = sqlSession.selectList("getFile",id);
 		return dto;
 	}
-	public void update_certification(String id,String image,int filesize) {
+	public void update_certification(String id,String academy,String image,int filesize) {
 		Map map = new Hashtable();
 		map.put("image",image);
 		map.put("filesize",filesize);
 		map.put("id",id);
+		map.put("academylocation",academy);
 		sqlSession.update("update_certification",map);
 	}
 	public List<Ezen_memberDTO> getMemberList(int startrow, int endrow){

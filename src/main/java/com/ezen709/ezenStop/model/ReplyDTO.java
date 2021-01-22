@@ -12,6 +12,13 @@ public class ReplyDTO {
 	private String regdate_time;/*댓글작성시간*/
 	private int grade;  		//ReviewBoardDTO와 마찬가지로 join을위해..
 	private String academyLocation;
+	private String randomId;
+	public String getRandomId() {
+		return randomId;
+	}
+	public void setRandomId(String randomId) {
+		this.randomId = randomId;
+	}
 	public String getAcademyLocation() {
 		return academyLocation;
 	}

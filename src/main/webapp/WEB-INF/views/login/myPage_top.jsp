@@ -18,7 +18,7 @@
     <div id="myIn"><a class="nav-link" data-toggle="tab" href="myInfo.login?id=${sessionScope.userId}">내 정보</a></div>
   </li>
   <li class="nav-item">
-    <div id="myPass"><a class="nav-link" data-toggle="tab" href="changePasswd.login">비밀번호 변경</a></div>
+    <div id="myPass"><a class="nav-link" data-toggle="tab" href="changePasswd.login?id=${sessionScope.userId}">비밀번호 변경</a></div>
   </li>
   <li class="nav-item">
     <div id="mycer"><a class="nav-link" data-toggle="tab" href="certification.login">학생 인증 신청</a></div>

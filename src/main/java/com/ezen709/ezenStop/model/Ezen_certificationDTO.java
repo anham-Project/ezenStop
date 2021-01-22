@@ -6,6 +6,7 @@ public class Ezen_certificationDTO {
 	private String image;			/*이미지 파일이름*/
 	private int filesize;			/*파일크기*/
 	private String reg_date;		/*신청일*/
+	private String academyLocation;	/*학원지점*/
 
 	public String getId() {
 		return id;
@@ -36,5 +37,11 @@ public class Ezen_certificationDTO {
 	}
 	public void setReg_date(String reg_date) {
 		this.reg_date = reg_date;
+	}
+	public String getAcademyLocation() {
+		return academyLocation;
+	}
+	public void setAcademyLocation(String academyLocation) {
+		this.academyLocation = academyLocation;
 	}
 }

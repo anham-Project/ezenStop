@@ -17,10 +17,10 @@
         	<div class="i-am-centered">
       		<form action="find_id.login" method="post" name="f">
 	        	<div class="input-group" >
-					<input class="form-control" type="text" name="name" placeholder="이름"> 			
+					<input class="form-control" type="text" name="name" size="30" placeholder="이름"> 			
 				</div>
 				<div class="input-group" style="margin-bottom:10px">
-					<input class="form-control" type="text" name="email" placeholder="이메일">
+					<input class="form-control" type="text" name="email" size="30"placeholder="이메일">
 				</div>
 				<div align="right" >
 					<input class="btn btn-outline-secondary btn-sm" type="submit" value="찾기">	
@@ -36,13 +36,13 @@
         <div class="i-am-centered">
       		<form action="find_passwd.login" method="post" name="f">
 	        	<div class="input-group">
-					<input class="form-control" type="text" name="name" placeholder="이름">
+					<input class="form-control" type="text" name="name" size="30" placeholder="이름">
 				</div>
 	        	<div class="input-group">
-					<input class="form-control" type="text" name="email" placeholder="이메일">
+					<input class="form-control" type="text" name="email" size="30" placeholder="이메일">
 				</div>
 	        	<div class="input-group" style="margin-bottom:10px">
-					<input class="form-control" type="text" name="id" placeholder="아이디">
+					<input class="form-control" type="text" name="id" size="30" placeholder="아이디">
 				</div>		
 				<div align="right">
 					<input class="btn btn-outline-secondary btn-sm" type="submit" value="찾기">	
