@@ -118,5 +118,6 @@
 			</div>
 		</div>
 		</div>
+		<input type="text" name="email2" value="${sessionScope.email}" readonly>
 </body>
 </html>

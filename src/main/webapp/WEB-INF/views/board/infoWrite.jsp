@@ -51,9 +51,9 @@
 		<div class="col-md-3">
 			<select class="form-control" name="category"> 
 					<option value="">[게시판 종류]</option>
-					<option value="취업">[취업]</option> 
-					<option value="자격증">[자격증]</option>
-					<option value="기타">[기타]</option>
+					<option >[취업]</option> 
+					<option >[자격증]</option>
+					<option >[기타]</option>
 			</select>
 		</div>
 		<label class="col-md control-label"><font size="2" color="red">*필수선택 사항</font></label>

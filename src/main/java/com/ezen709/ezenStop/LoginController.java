@@ -147,7 +147,6 @@ public class LoginController {
 	@RequestMapping("/id_check.login")
 	public void id_check(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 		String id = req.getParameter("id");
-		System.out.println(id);
 		if(id.equals("")) {
 			resp.getWriter().write("공백");
 			return;
@@ -301,7 +300,8 @@ public class LoginController {
 		Ezen_memberDTO dto = al.get(0);
 		String msg=null, url=null;
 		if(dto.getPasswd().equals(passwd)) {
-//			loginMapper.dropId(id);
+			loginMapper.dropId(id);
+			loginMapper.dropChat(id);
 			msg="회원탈퇴 하였습니다!";
 			url="dropId";
 		}else {
@@ -325,7 +325,8 @@ public class LoginController {
 		Ezen_memberDTO dto = al.get(0);
 		MultipartHttpServletRequest mr = (MultipartHttpServletRequest)req;
 		MultipartFile file = mr.getFile("image");
-		String file_name= dto.getId()+"-"+"certification"+"-"+file.getOriginalFilename();
+		UUID uuid = UUID.randomUUID();
+		String file_name = uuid.toString()+"_"+file.getOriginalFilename();
 		File target = new File(uploadPath, file_name);
 		int filesize = 0;
 		String msg = null, url="certification.login";

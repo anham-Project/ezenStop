@@ -76,6 +76,9 @@ public class LoginMapper {
 	public void dropId(String id) {
 		sqlSession.delete("dropId",id);
 	}
+	public void dropChat(String id) {
+		sqlSession.delete("dropChat",id);
+	}
 	public int insert_certification(Ezen_certificationDTO dto) {
 		int res = sqlSession.insert("insert_certification",dto);
 		return res;
@@ -218,5 +221,6 @@ public class LoginMapper {
 		}
 		return sortedList;
 	}
+
 
 }
