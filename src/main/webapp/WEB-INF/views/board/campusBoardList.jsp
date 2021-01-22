@@ -52,7 +52,7 @@
 	<table class="table table-hover text-center">
 	<thead>
 		<tr>
-			<th width="8%"></th>
+			<th width="8%">글번호</th>
 			<th width="58%">제 목</th>
 			<th width="12%">작성자</th>
 			<th width="12%">작성일</th>
@@ -67,7 +67,7 @@
 </c:if>	
 <c:forEach var="dto" items="${list}">
 		<tr>
-			<td align="center"><c:out value="${dto.article_num}"/></td>
+			<td align="center">${dto.article_num }</td>
 			<td align="left">	
 			<form name="f1" onclick="javascript:findDetailPage('${dto.article_num}')">
 						<a href="#" class="grayA">

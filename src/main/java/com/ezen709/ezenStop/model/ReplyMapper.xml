@@ -36,10 +36,12 @@
 		where reply_num = #{reply_num}
 	</select>
 		<select id="replyListForAnonymous" parameterType="java.util.Map" resultType="ReplyDTO">
-		select * 
+		select *
 		from (select rownum rn, A.*
-		from (select ezen_reply.*
-			 from ezen_reply
+		from (select ezen_reply.*, anonymous_board.randomId
+			 from ezen_reply, anonymous_board
+			 where ezen_reply.id = anonymous_board.id
+			 and ezen_reply.article_num = anonymous_board.article_num
 			  order by re_step asc)A) 
 		where article_num = #{article_num}
  	</select>
