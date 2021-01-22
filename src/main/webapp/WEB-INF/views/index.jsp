@@ -121,8 +121,8 @@ function findDetailPage(article_num) {
 						<c:forEach var="dto" items="${indexListMap['EZEN_NOTICE_BOARD'] }">
 						<form name="f1" onclick="javascript:findDetailPage('${dto.article_num}')">
 							<c:set var="tmp" value="${tmp+1 }"/>
-								<a href="review_detail.board?article_num=${dto.article_num}" class="grayA">
-									<font color="rec"><font color="#007bff">${dto.category}</font> ${dto.subject}</font> <c:if
+								<a href="notice_detail.board?article_num=${dto.article_num}" class="grayA">
+									${dto.subject}<c:if
 										test="${dto.image != '파일없음' }">
 										<img class="media-object img-circle"
 											style="width: 14px; height: 12px;"
@@ -152,7 +152,7 @@ function findDetailPage(article_num) {
 						<form name="f1" onclick="javascript:findDetailPage('${dto.article_num}')">
 							<c:set var="tmp" value="${tmp+1 }"/>
 							<c:if test="${sessionScope.userId != null}">
-								<a href="review_detail.board?article_num=${dto.article_num}" class="grayA">
+								<a href="info_detail.board?article_num=${dto.article_num}" class="grayA">
 									<font color="#007bff">${dto.category}</font> ${dto.subject} <c:if
 										test="${dto.image != '파일없음' }">
 										<img class="media-object img-circle"
@@ -236,7 +236,7 @@ function findDetailPage(article_num) {
 						<c:forEach var="dto" items="${indexListMap['EZEN_TRADE_BOARD'] }">
 						<form name="f1" onclick="javascript:findDetailPage('${dto.article_num}')">
 							<c:set var="tmp" value="${tmp+1 }"/>
-								<a href="review_detail.board?article_num=${dto.article_num}" class="grayA">
+								<a href="trade_detail.board?article_num=${dto.article_num}" class="grayA">
 									<font color="#007bff">${dto.category}</font> ${dto.subject} <c:if
 										test="${dto.image != '파일없음' }">
 										<img class="media-object img-circle"
@@ -266,7 +266,7 @@ function findDetailPage(article_num) {
 						<c:forEach var="dto" items="${indexListMap['EZEN_FREE_BOARD'] }">
 						<form name="f1" onclick="javascript:findDetailPage('${dto.article_num}')">
 							<c:set var="tmp" value="${tmp+1 }"/>
-								<a href="review_detail.board?article_num=${dto.article_num}" class="grayA">
+								<a href="free_detail.board?article_num=${dto.article_num}" class="grayA">
 									<font color="#007bff">${dto.category}</font> ${dto.subject} <c:if
 										test="${dto.image != '파일없음' }">
 										<img class="media-object img-circle"
