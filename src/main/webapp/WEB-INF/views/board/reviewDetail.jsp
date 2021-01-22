@@ -171,7 +171,7 @@
 		<c:if test="${reviewDetail.replyCount != 0}">
 			<c:forEach var="dto" items="${replyList}">
 				<div class="row"
-					style="padding: 5px 5px 5px ${5+dto.re_level*13}px; background-color: #F7F7F7;">
+					style="padding: 5px 5px 5px ${5+dto.re_level*15}px; background-color: #F7F7F7;">
 					<div class="col-md-12" align="left">
 						<c:if test="${dto.re_level>0}">
 							<img class="media-object img-circle"
@@ -202,9 +202,9 @@
 					</div>
 					<div class="col-md-12" align="left">
 						<c:if test="${dto.re_level>0}">
-						&nbsp;&nbsp;&nbsp;&nbsp;
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 						</c:if>
-						<c:if test="${dto.parent_num != 0}"><font color="#007bff">@원글쓴이&nbsp;</font></c:if>${dto.content}
+						${dto.content}
 					</div>
 					<div class="col-md-12" align="right" id="buttontype">
 						<input type="button" class="btn btn-info btn-sm" value="답글쓰기"
