@@ -14,8 +14,8 @@
 		return true
 	}
 	function deleteReply(r_num, a_num) {
-		location.href = "review_reply_delete.board?reply_num=" + r_num
-				+ "&article_num=" + a_num;
+		location.href = "campus_reply_delete.board?reply_num=" + r_num
+				+ "&article_num=" + a_num + "&where=${whereCode}";
 	}
 	function review_edit(a_num){
 		location.href = "campus_edit.board?article_num=" + a_num +"&where=${whereCode}";
@@ -154,7 +154,8 @@
 	<hr />
 	<form class="form-horizontal" name="f" method="post"
 		action="campus_reply_write.board?where=${whereCode }" onsubmit="return check()">
-		<input type="hidden" name="id" value="${sessionScope.randomId}">
+		<input type="hidden" name="id" value="${sessionScope.userId}">
+		<input type="hidden" name="randomId" value="${sessionScope.randomId }">
 		<input type="hidden" name="article_num"
 			value="${reviewDetail.article_num}">
 		<c:if test="${reviewDetail.replyCount != 0}">
@@ -167,7 +168,7 @@
 					</c:if>
 						<c:choose>
 						<c:when test="${dto.grade==2}"><font style="color:#FF0000;  font-weight:bold;">${dto.id}</font></c:when>
-						<c:otherwise>${dto.id}</c:otherwise>
+						<c:otherwise>${dto.randomId}</c:otherwise>
 					</c:choose>
 					 <font color="gray">${dto.regdate}
 							${dto.regdate_time} | </font>

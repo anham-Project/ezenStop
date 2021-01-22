@@ -539,7 +539,6 @@ public class BoardController {
 	@RequestMapping("/campus_write.board")
 	public ModelAndView campusBoardWirte(HttpServletRequest req) {
 		String where = req.getParameter("where");
-		System.out.println(where);
 		ModelAndView mav = new ModelAndView("board/campusBoardWrite");
 		String[] locationList = new CampusModel().getLocationList();
 		String reviewAddr = locationList[Integer.parseInt(where)-11];
@@ -569,7 +568,7 @@ public class BoardController {
 				e.printStackTrace();
 			}
 		}
-		String subject = reviewAddr + dto.getSubject();
+		String subject = dto.getSubject();
 		dto.setSubject(subject);
 		dto.setImage(image);
 		dto.setFilesize(filesize);
@@ -638,7 +637,7 @@ public class BoardController {
 	}
 	@RequestMapping("/campus_reply_write.board")
 	public String campusReplyWritePro(@RequestParam int article_num, HttpServletRequest req,
-			@RequestParam String id, @RequestParam String content, @RequestParam int where) {
+			@RequestParam String id,@RequestParam String randomId, @RequestParam String content, @RequestParam int where) {
 		String table ="ezen_campus_board";
 		ReplyDTO dto = new ReplyDTO();
 		int reply_num = 0;
@@ -658,9 +657,14 @@ public class BoardController {
 		dto.setReply_num(reply_num);
 		dto.setAticle_num(article_num);
 		int res = replyMapper.insertReply(dto);
-		int replyCount = replyMapper.replyCount(dto.getArticle_num());
 		
+		System.out.println("++"+res);
+		
+		int replyCount = replyMapper.replyCount(dto.getArticle_num());
 		commonMapper.A_updateReplyCount(article_num, replyCount, table);
+		if(boardMapper.checkAnonymousInsert(article_num, id)) {
+		boardMapper.setAnonymousReply(article_num, id, randomId);
+		}
 		return "redirect:campus_detail.board?article_num="+article_num+"&where="+where;
 	}
 	@RequestMapping("/campus_edit.board")
@@ -670,20 +674,12 @@ public class BoardController {
 		ModelAndView mav = new ModelAndView();
 		String location = loginMapper.getIdGrade(reviewDetail.getId());
 		String[] reviewAddrList;
-		if(location.equals("2")){
-			reviewAddrList = campusModel.getLocationList();
-			mav.addObject("reviewAddrList",reviewAddrList);
-		}else if(location.equals("1")) {
 			String[] locationList = campusModel.getLocationList();
 			location = locationList[where-11];
 			reviewAddrList = new String[] {location};
 			mav.addObject("reviewAddrList",reviewAddrList);
-		}
-		String addrAndSuject = reviewDetail.getSubject();
-		String reviewAddr = addrAndSuject.substring(addrAndSuject.lastIndexOf("]")+1);
-		int allLength = addrAndSuject.length();
-		int addrLength = allLength - reviewAddr.length();
-		String subject = addrAndSuject.substring(addrLength,allLength);
+		String reviewAddr = campusModel.getLocationList()[where -11];
+		String subject = reviewDetail.getSubject();
 		reviewDetail.setSubject(subject);
 		mav.addObject("reviewDetail", reviewDetail);
 		mav.addObject("reviewAddr", reviewAddr);
@@ -731,5 +727,12 @@ public class BoardController {
 		dto.setCategory(campusModel.getLocationList()[Integer.parseInt(where)-11]);
 		int res = commonMapper.A_edit(dto, table);
 		return "redirect:campusBoardList.board?where="+where;
+	}
+	@RequestMapping("/campus_reply_delete.board")
+	public String campusDeletePro(@RequestParam int reply_num, @RequestParam int article_num, @RequestParam int where) {
+		replyMapper.replyDelete(reply_num);
+		int replyCount = replyMapper.replyCount(article_num);
+		boardMapper.updateReplyCount(article_num, replyCount);
+		return "redirect:campus_detail.board?article_num="+article_num+"&where=" +where;
 	}
 }

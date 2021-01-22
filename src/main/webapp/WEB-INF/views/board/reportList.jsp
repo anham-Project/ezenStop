@@ -49,9 +49,9 @@
 	<table class="table table-hover text-center">
 	<thead>
 		<tr>
-			<th width="8%">신고된<br>글 번호</th>
-			<th width="10%">게시글의 상태</th>
-			<th width="58%">신고내용</th>
+			<th width="12%"><small>신고된 글 번호</small></th>
+			<th width="18%">게시글의 상태</th>
+			<th width="46%">신고내용</th>
 			<th width="12%">신고자</th>
 			<th width="12%">신고일</th>
 		</tr>

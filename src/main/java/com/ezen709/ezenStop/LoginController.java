@@ -104,6 +104,11 @@ public class LoginController {
 			return mav;
 		}else {
 		Ezen_memberDTO dto =list.get(0);
+		if(dto.getGrade() == -1) {
+			mav =  new ModelAndView("message2");
+			mav.addObject("msg", "관리자에 의해 정지된 회원입니다. 관리자에게 문의하세요");
+			mav.addObject("url","redirect:index.do");
+		}
 		mav = new ModelAndView("redirect:index.do");
 		session.setAttribute("userId", dto.getId());
 		session.setAttribute("userGrade", dto.getGrade());

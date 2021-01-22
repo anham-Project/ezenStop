@@ -83,7 +83,7 @@ public class BoardMapper {
 		dto.setBehavior(1);
 		int res = upCountBoard(article_num, table);
 		if(res<=0) return -1;
-		return sqlSession.insert("upBoard", dto);
+		return sqlSession.insert("insertBehaviorBoard", dto);
 	}
 	public int downBoard(int article_num, String userId, String table) {
 		BoardUpDownDTO dto = new BoardUpDownDTO();
@@ -92,7 +92,7 @@ public class BoardMapper {
 		dto.setBehavior(-1);
 		int res = downCountBoard(article_num, table);
 		if(res<=0) return -1;
-		return sqlSession.insert("downBoard", dto);
+		return sqlSession.insert("insertBehaviorBoard", dto);
 	}
 	public int upCountBoard(int article_num, String table) {
 		Map map = new Hashtable();
@@ -234,6 +234,8 @@ public class BoardMapper {
 	}
 	public List<ReviewBoardDTO> getHotBoard(){
 		List<String> tableList = getTableHasLocation();
+		tableList.remove("EZEN_NOTICE_BOARD");
+		tableList.remove("EZEN_CAMPUS_BOARD");
 		List<ReviewBoardDTO> hotList = new ArrayList<>();
 		for(String tableName : tableList) {
 			Map<String,String> map = new Hashtable<String,String>();
@@ -285,5 +287,21 @@ public class BoardMapper {
 		dto.setArticle_num(article_num);
 		sqlSession.insert("campusInsertRandomId",dto);
 	}
-	
+	public void setAnonymousReply(int article_num, String id, String randomId) {
+		Map<String,Object> map = new Hashtable<>();
+		map.put("article_num", article_num);
+		map.put("id", id);
+		map.put("randomId", randomId);
+		sqlSession.insert("campusInsertRandomId", map);
+	}
+	public boolean checkAnonymousInsert(int article_num, String id) {
+		Map<String,Object> map = new Hashtable<>();
+		map.put("article_num", article_num);
+		map.put("id", id);
+		int res = sqlSession.selectOne("checkAnonymousInsert", map);
+		if(res > 0) {
+			return false;
+		}
+		return true;
+	}
 	}
