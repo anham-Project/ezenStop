@@ -28,6 +28,22 @@ public class LJH_boardMapper {
 		List<ReviewBoardDTO> list = sqlSession.selectList("A_list",map);
 		return list;
 	}
+	public List<ReviewBoardDTO> A_notice_list(String cate) {
+		Map<String,Object> map = new Hashtable<>();
+		map.put("category",cate);
+		List<ReviewBoardDTO> noticeList = sqlSession.selectList("AllNotice_list");
+		List<ReviewBoardDTO> list = new ArrayList<>();
+		list = sqlSession.selectList("A_notice_list",map);
+		if(list.size()>0) {
+		for(int i = 0; i<list.size();i++) {
+			ReviewBoardDTO dto = new ReviewBoardDTO();
+			dto = list.get(i);
+			noticeList.add(dto);
+		}
+		}
+		return noticeList;
+	}
+	
 	public int A_getCount(String table) {
 		Map<String,Object> map = new Hashtable<>();
 		map.put("tableName",table);
@@ -124,6 +140,7 @@ public class LJH_boardMapper {
 		Map<String,Object> map = putMap(article_num,table);
 		return sqlSession.update("A_downCountBoard", map);
 	}
+
 	public int checkUserUpDown(int article_num, String userId) {
 		BoardUpDownDTO dto = new BoardUpDownDTO();
 		dto.setArticle_num(article_num);

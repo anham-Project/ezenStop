@@ -51,6 +51,30 @@
 		</tr>
 	</thead>
 	<tbody>
+<c:if test="${!empty noticeList}">
+	<c:forEach var="dto" items="${noticeList}">
+	<tr>
+			<td align="center">[공지]</td>
+			<td align="left">			
+				<a href="notice_detail.board?article_num=${dto.article_num}" class="grayA">
+				<font color="#007bff"></font> ${dto.subject}
+				<c:if test="${dto.image != '파일없음' }">
+				<img class="media-object img-circle" style = "width: 14px; height: 12px;" src = "resources/img/picture.png">
+				</c:if>
+		<c:if test="${dto.replyCount != 0}">
+			<font color="orange" size="2">[${dto.replyCount}]</font>
+		</c:if>
+				</a>
+			</td>
+			<td align="center">
+				<img class="media-object img-circle" style = "width: 30px; height: 30px;" src = "resources/img/2.png">
+			<font style="color:#FF0000;  font-weight:bold;">${dto.id}</font>
+			</td>
+			<td align="center">${dto.regdate}</td>
+			<td align="center">${dto.readCount}</td>
+		</tr>
+		</c:forEach>
+</c:if>
 <c:if test="${empty list}">		
 		<tr>
 			<td colspan="5">등록된 게시글이 없습니다.</td>
@@ -62,7 +86,7 @@
 			<td align="left">			
 	<c:if test="${sessionScope.userId != null}">
 				<a href="info_detail.board?article_num=${dto.article_num}" class="grayA">
-				<font color="#007bff">[${dto.category}]</font> ${dto.subject}
+				<font color="#007bff">${dto.category}</font> ${dto.subject}
 				<c:if test="${dto.image != '파일없음' }">
 				<img class="media-object img-circle" style = "width: 14px; height: 12px;" src = "resources/img/picture.png">
 				</c:if>

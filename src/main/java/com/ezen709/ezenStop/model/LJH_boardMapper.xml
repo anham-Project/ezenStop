@@ -15,6 +15,23 @@
 					)
 		where rn between #{start} and #{end}
 	</select>
+	<select id="A_notice_list" parameterType="java.util.Map" resultType="ReviewBoardDTO">
+		select * 
+		from(
+				select rownum rn, A.*
+				from( select * from 
+				ezen_notice_board
+				where category = #{category}
+				order by article_num desc)A 
+			)
+		where rn between 1 and 5
+	</select>
+	<select id="AllNotice_list" resultType="ReviewBoardDTO">
+		select * 
+		from ezen_notice_board
+		where category = 'ALL'
+		order by article_num desc
+	</select>
  	<select id="A_getCount" parameterType="java.util.Map" resultType="Integer">
  		select count(*) from ${tableName}
  	</select>

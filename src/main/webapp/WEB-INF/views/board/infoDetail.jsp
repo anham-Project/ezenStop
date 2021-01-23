@@ -11,6 +11,10 @@
 	function info_delete(a_num){
 		location.href = "info_delete.board?article_num=" + a_num;
 	}
+	function deleteReply(r_num, a_num) {
+		location.href = "info_reply_delete.board?reply_num=" + r_num
+				+ "&article_num=" + a_num;
+	}
 	function somethingDo(somethingDo){
 		var article_num = '${reviewDetail.article_num}';
 		var userId = '${sessionScope.userId}';

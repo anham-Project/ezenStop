@@ -33,34 +33,28 @@ window.open('', '', 'status=no, height=300, width=200, left='+ popupX + ', top='
 			return true
 		}
 </script>
-<div class="container align-items-center mt-5" style="width: 30%;min-height: 400px;margin-top:50px;">
+
+<div class="container align-items-center mt-5" style="width: 50%;min-height: 400px;">
+<div style="margin-top:25%;">
+	<div align="center">
+	<img class="media-object img-circle" style="margin-bottom:20px;"src = "resources/img/ezen_logo.jpg">
+	</div>
 	<form action="login.login" method="post" name="f"
 		onsubmit="return login()">
-		<div class="form-group">
+		<div class="form-group" >
 			<input type="text" name="id" class="form-control"
-				placeholder="아이디를 입력해주세요." /> <input type="password" name="passwd"
-				class="form-control" placeholder="비밀번호를 입력해주세요." />
+				placeholder="아이디를 입력해주세요." style="margin-bottom:10px; height:55px; font-size:20px;"/> 
+			<input type="password" name="passwd"class="form-control" 
+				placeholder="비밀번호를 입력해주세요." style="margin-bottom:10px; height:55px; font-size:20px;"/>
 		</div>
 		<div class="form-group">
-			<input type="submit" value="로그인" class="btn btn-primary btn-block">
+			<input type="submit" value="로그인" class="btn btn-primary btn-block" style="height:55px">
 		</div>
 	</form>
-	<div align="center" style="padding:0px 0px 0px 0px;">
+	<div align="right" style="padding:0px 0px 0px 0px;">
 	<a class="btn btn-outline-secondary btn-sm" href="javascript:checkMember()">회원가입</a> <a
 		class="btn btn-outline-secondary btn-sm" href="javascript:findMember()">아이디|비밀번호 찾기</a>
 	</div>
 </div>
-<!-- 
-	<div align="center">
-	<b>로 그 인</b>
-	<form action="login.login" method="post" name="f" onsubmit="return login()">
-	<input type="text" name="id" class="box" size="20" placeholder="아이디를 입력해주세요."><br>
-	<input type="password" name="passwd" class="box" size="20" placeholder="비밀번호를 입력해주세요."><br>
-	<input type="submit" value="로그인">
-	</form>
-	<a href="javascript:checkMember()">회원가입</a>
-	<a href="javascript:findMember()">아이디|비밀번호 찾기</a>
-	</div>
--->
-
+</div>
 <jsp:include page="../footer.jsp" />

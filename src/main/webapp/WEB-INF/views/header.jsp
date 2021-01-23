@@ -173,7 +173,11 @@
 		}, 3000);
 	}
 	function myPage(){
-		window.open('myInfo.login?id=${sessionScope.userId}', "이메일 인증", "width=704, height=450")
+		var popupWidth = 704;
+		var popupHeight = 450;
+		var popupX = (window.screen.width / 2) - (popupWidth / 2);
+		var popupY= (window.screen.height / 2) - (popupHeight / 2);
+		window.open('myInfo.login?id=${sessionScope.userId}', "이메일 인증", 'status=no, height=' + popupHeight  + ', width=' + popupWidth  + ', left='+ popupX + ', top='+ popupY)
 	}
 </script>
 </head>
