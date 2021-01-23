@@ -62,7 +62,7 @@
 			<td align="left">			
 	<c:if test="${sessionScope.userId != null}">
 				<a href="info_detail.board?article_num=${dto.article_num}" class="grayA">
-				<font color="#007bff">[${dto.category}]</font> ${dto.subject}
+				<font color="#007bff">${dto.category}</font> ${dto.subject}
 				<c:if test="${dto.image != '파일없음' }">
 				<img class="media-object img-circle" style = "width: 14px; height: 12px;" src = "resources/img/picture.png">
 				</c:if>

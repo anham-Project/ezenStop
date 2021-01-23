@@ -386,7 +386,8 @@ public class LJH_boardController {
 	}
 	@RequestMapping("/trade_reply_delete.board")
 	public String replyDeletePro(@RequestParam int reply_num, @RequestParam int article_num) {
-		replyMapper.replyDelete(reply_num);
+		ReplyDTO dto = replyMapper.replyDetail(reply_num);
+		replyMapper.replyDelete(reply_num, dto);
 		int replyCount = replyMapper.replyCount(article_num);
 		String table = "ezen_trade_board";
 		boardMapper.A_updateReplyCount(article_num, replyCount, table);
@@ -404,7 +405,12 @@ public class LJH_boardController {
 		}else {
 			reply_num = Integer.parseInt(req.getParameter("reply_num"));
 			ReplyDTO dto2 = replyMapper.replyDetail(reply_num);
-			dto.setRe_step(dto2.getRe_step());
+			int re_step = replyMapper.replyMaxRe_step(reply_num, article_num);
+			if(re_step == 0) {
+				dto.setRe_step(dto2.getRe_step());
+			}else {
+				dto.setRe_step(re_step);
+			}
 			dto.setRe_level(dto2.getRe_level());
 			dto.setParent_num(reply_num);
 		}
@@ -575,7 +581,8 @@ public class LJH_boardController {
 	}
 	@RequestMapping("/info_reply_delete.board")
 	public String info_replyDeletePro(@RequestParam int reply_num, @RequestParam int article_num) {
-		replyMapper.replyDelete(reply_num);
+		ReplyDTO dto = replyMapper.replyDetail(reply_num);
+		replyMapper.replyDelete(reply_num, dto);
 		int replyCount = replyMapper.replyCount(article_num);
 		String table = "ezen_info_board";
 		boardMapper.A_updateReplyCount(article_num, replyCount, table);
@@ -593,7 +600,12 @@ public class LJH_boardController {
 		}else {
 			reply_num = Integer.parseInt(req.getParameter("reply_num"));
 			ReplyDTO dto2 = replyMapper.replyDetail(reply_num);
-			dto.setRe_step(dto2.getRe_step());
+			int re_step = replyMapper.replyMaxRe_step(reply_num, article_num);
+			if(re_step == 0) {
+				dto.setRe_step(dto2.getRe_step());
+			}else {
+				dto.setRe_step(re_step);
+			}
 			dto.setRe_level(dto2.getRe_level());
 			dto.setParent_num(reply_num);
 		}

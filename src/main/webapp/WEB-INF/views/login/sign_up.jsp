@@ -76,6 +76,7 @@
 <title>회 원 가 입</title>
 </head>
 <body>
+	<div style="margin-top:10%;">
 	<div class ="lineBox shadow">
 		<div class = "header">
        		<h4>회 원 가 입</h4>
@@ -118,6 +119,6 @@
 			</div>
 		</div>
 		</div>
-		<input type="text" name="email2" value="${sessionScope.email}" readonly>
+		</div>
 </body>
 </html>

@@ -68,6 +68,7 @@ function email_check(){
 <title>이메일 인증</title>
 </head>
 <body>
+	<div style="margin-top:25%;">
 	<div class ="lineBox shadow align-middle">
 		<div class = "header">
        	<h4>이 메 일 인 증</h4>
@@ -89,6 +90,7 @@ function email_check(){
 			</div>
 			</form>
 			</div>
+		</div>
 		</div>
 	</div>
 </body>
