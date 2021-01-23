@@ -436,8 +436,11 @@ public class LJH_boardController {
 		String table = "ezen_info_board";
 		int count = boardMapper.A_getCount(table);
 		setEndRowWhenCountIsLessThanEndRow(map, count);
-		List<ReviewBoardDTO> noticeList = boardMapper.A_list(table, map.get("startRow"), map.get("endRow"));
-		ModelAndView mav = finishMakeModelAndView(map, noticeList, count);
+		List<ReviewBoardDTO> infoList = boardMapper.A_list(table, map.get("startRow"), map.get("endRow"));
+		ModelAndView mav = finishMakeModelAndView(map, infoList, count);
+		String cate = "INFO";
+		List<ReviewBoardDTO> noticeList = boardMapper.A_notice_list(cate);
+		mav.addObject("noticeList",noticeList);
 		mav.setViewName("board/infoList");
 		return mav;
 	}
