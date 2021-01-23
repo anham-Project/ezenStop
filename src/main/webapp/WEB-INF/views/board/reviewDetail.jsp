@@ -287,18 +287,24 @@
 	}
 	</script>
 		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					게시물 신고하기
+			<div class="modal-content" style="background-color:#F8D7DA;">
+				<div class="lingBox rounded bg-light shadow" style="margin:15px;">
+				<div class="modal-header" style="margin:5px 15px 5px 15px; padding:5px;">
+					<h4><b>게시물 신고하기</b></h4>
 					<button class="close" data-dismiss="modal">&times;</button>
 				</div>
-				<div class="modal-body" style="text-align: center;">
-					신고 내용<br>
-					<textarea id="reportContent" placeholder="신고내역을 입력해주세요."
+				<div class="modal-body">
+					<div class="form-group" style="margin:5px; padding:5px;">
+					<h5><b>신고 사유</b></h5>
+					<textarea class="form-control" rows="2" placeholder="신고내역을 입력해주세요."
 						style="resize: none;"></textarea>
-					<hr>
-					<button class="close btn-danger" data-dismiss="modal"
+					</div>
+					<hr/>
+					<div align="right">
+					<button class="btn btn-danger" data-dismiss="modal"
 						onclick="javascript:reportBoard()">신고하기</button>
+					</div>
+				</div>
 				</div>
 			</div>
 		</div>

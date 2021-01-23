@@ -6,7 +6,7 @@
 <div class="container bootstrap snippset mt-4">
 	<div class="row">
 		<div class="col-12">
-			<div class="portlet portlet-default">
+			<div class="portlet portlet-default rounded-top">
 				<div class="portlet-heading">
 					<div class="portlet-title">
 						<h4>
@@ -19,14 +19,15 @@
 					<div id="chatList" class="portlet-body chat-widget"
 						style="overflow-y: auto; width: auto; height: 600px;"></div>
 					<div class="portlet-footer">
-						<div class="row" style="height: 90px;">
-							<div class="form-group col-10">
+						<div class="row" style="height: 90px; padding:5px">
+							<div class="form-group col-11">
 								<textarea style="height: 80px;" id="chatContent" name="chatContent"
 									class="form-control" placeholder="메세지를 입력하세요." maxlength="100"></textarea>
 							</div>
-							<div class="form-group col-2">
-								<button type="button" class="btn btn-default pull-right"
-									onclick="submitFunction()">전송</button>
+							<div class="form-group col-1">
+								<button type="button" class="btn btn-warning btn-sm shadow"
+								style="width:55px; height:40px; border:1px solid gray;"
+									onclick="submitFunction()"><b>전송</b></button>
 								<div class="clearfix"></div>
 							</div>
 						</div>

@@ -231,7 +231,8 @@ public class FreeBoardController {
 	}
 	@RequestMapping("/free_reply_delete.board")
 	public String free_replyDeletePro(@RequestParam int reply_num, @RequestParam int article_num) {
-		replyMapper.replyDelete(reply_num);
+		ReplyDTO dto = replyMapper.replyDetail(reply_num);
+		replyMapper.replyDelete(reply_num, dto);
 		int replyCount = replyMapper.replyCount(article_num);
 		String table = "ezen_free_board";
 		boardMapper.A_updateReplyCount(article_num, replyCount, table);
