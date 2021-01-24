@@ -167,6 +167,7 @@ function findDetailPage(article_num) {
 									</c:if>
 								</a>
 							</c:if>
+						</form>
 							<c:if test="${sessionScope.userId == null}">
 								<a href="#" onclick="javascript:loginPlz()" class="grayA gapA"><font color="#007bff">${dto.category}</font>
 									${dto.subject} <c:if test="${dto.image != '파일없음' }">
@@ -178,7 +179,6 @@ function findDetailPage(article_num) {
 									</c:if>
 								</a>
 							</c:if>
-							</form>
 						</c:forEach>
 					</p>
 				</div>
@@ -211,6 +211,7 @@ function findDetailPage(article_num) {
 									</c:if>
 								</a>
 							</c:if>
+						</form>
 							<c:if test="${sessionScope.userId == null}">
 								<a href="#" onclick="javascript:loginPlz()" class="grayA gapA"><font color="#007bff">${dto.category}</font>
 									${dto.subject} <c:if test="${dto.image != '파일없음' }">
@@ -222,7 +223,6 @@ function findDetailPage(article_num) {
 									</c:if>
 								</a>
 							</c:if>
-							</form>
 						</c:forEach>
 					</p>
 				</div>

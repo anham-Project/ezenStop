@@ -23,13 +23,13 @@
  	<select id="replyCount" parameterType="java.util.Map" resultType="Integer">
 		select count(*)
 		from ezen_reply
-		where article_num = #{article_num}
+		where article_num = #{article_num} and content != '%$#@!'
 	</select>
-	<delete id="replyDelete" parameterType="ReplyDTO">
-		delete
-		from ezen_reply
+	<update id="replyDelete" parameterType="ReplyDTO">
+		update ezen_reply
+		set content = #{content}
 		where reply_num = #{reply_num}
-	</delete>
+	</update>
 	<select id="replyDetail" parameterType="Integer" resultType="ReplyDTO">
 		select *
 		from ezen_reply

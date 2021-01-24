@@ -80,10 +80,10 @@
 			</td>
 			<td align="center">
 			<c:if test="${dto.grade == 1 }">
-			<img class="media-object img-circle" style = "width: 30px; height: 30px;" src = "resources/img/${dto.academyLocation }.jpg">
+			<img class="media-object img-circle" style = "width: 30px; height: 30px;" src = "resources/img/${dto.academyLocation }.png">
 			</c:if>
 			<c:if test="${dto.grade != 1 }">
-			<img class="media-object img-circle" style = "width: 30px; height: 30px;" src = "resources/img/${dto.grade }.jpg">
+			<img class="media-object img-circle" style = "width: 30px; height: 30px;" src = "resources/img/${dto.grade }.png">
 			</c:if>
 			${dto.userId}</td>
 			<td align="center">${dto.reportDate}</td>

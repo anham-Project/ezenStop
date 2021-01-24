@@ -198,20 +198,31 @@
 							${dto.regdate_time} | </font>
 						<c:if
 							test="${sessionScope.userId == dto.id || sessionScope.userGrade == 2}">
+							<c:if test="${dto.content != '%$#@!'}">
 							<a
 								href="javascript:deleteReply('${dto.reply_num}','${reviewDetail.article_num}');">[삭제]</a>
+							</c:if>
 						</c:if>
 					</div>
 					<div class="col-md-12" align="left">
 						<c:if test="${dto.re_level>0}">
 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 						</c:if>
+						<c:choose>
+						<c:when test="${dto.content == '%$#@!'}">
+						<font color="red">[요청에 의해 삭제 된 댓글입니다.]<br>&nbsp;</font>
+						</c:when>
+						<c:otherwise>
 						${dto.content}
+						</c:otherwise>
+						</c:choose>
 					</div>
+					<c:if test="${dto.content != '%$#@!'}">
 					<div class="col-md-12" align="right" id="buttontype">
 						<input type="button" class="btn btn-info btn-sm" value="답글쓰기"
 							onclick="addInput('${dto.reply_num}','${dto.id}');" />
 					</div>
+					</c:if>
 				</div>
 			</c:forEach>
 		</c:if>

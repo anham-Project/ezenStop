@@ -331,6 +331,7 @@ public class BoardController {
 	@RequestMapping("/review_reply_delete.board")
 	public String replyDeletePro(@RequestParam int reply_num, @RequestParam int article_num) {
 		ReplyDTO dto = replyMapper.replyDetail(reply_num);
+		dto.setContent("%$#@!");
 		replyMapper.replyDelete(reply_num, dto);
 		int replyCount = replyMapper.replyCount(article_num);
 		boardMapper.updateReplyCount(article_num, replyCount);
