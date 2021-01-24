@@ -46,7 +46,7 @@
         </div>
 	</div>
  </form>
-	<table class="table table-hover text-center">
+	<table class="table table-condensed table-hover text-center">
 	<thead>
 		<tr>
 			<th width="12%"><small>신고된 글 번호</small></th>

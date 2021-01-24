@@ -12,12 +12,6 @@
 		}
 		return true
 	}
-	function loginPlz(){
-		alert("게시물을 확인하려면 로그인해야합니다!!")
-	}
-	function certificationPlz(){
-		alert("후기를 작성하려면 학원인증을 해야합니다!!")
-	}
 </script>
 	<h5><font size="3">이젠'sTop게시판 > </font><b><a href="trade_list.board" class="blackA">사고팔고 게시판</a></b></h5>
 <form name="f" action="trade_find.board" method="post" onsubmit="return check()">
@@ -40,7 +34,7 @@
         </div>
 	</div>
  </form>
-	<table class="table table-hover text-center">
+	<table class="table table-condensed table-hover text-center">
 	<thead>
 		<tr>
 			<th width="8%"></th>
@@ -84,7 +78,6 @@
 		<tr>
 			<td align="center"><c:out value="${dto.article_num}"/></td>
 			<td align="left">			
-	<c:if test="${sessionScope.userId != null}">
 				<a href="trade_detail.board?article_num=${dto.article_num}" class="grayA">
 				<font color="#007bff">${dto.category}</font> ${dto.subject}
 				<c:if test="${dto.image != '파일없음' }">
@@ -94,17 +87,6 @@
 			<font color="orange" size="2">[${dto.replyCount}]</font>
 		</c:if>
 				</a>
-	</c:if>
-	<c:if test="${sessionScope.userId == null}">
-		<a href="trade_detail.board?article_num=${dto.article_num}" class="grayA"><font color="#007bff">[${dto.category}]</font> ${dto.subject}
-		<c:if test="${dto.image != '파일없음' }">
-				<img class="media-object img-circle" style = "width: 14px; height: 12px;" src = "resources/img/picture.png">
-		</c:if>
-		<c:if test="${dto.replyCount != 0}">
-			<font color="orange" size="2">[${dto.replyCount}]</font>
-		</c:if>
-		</a>
-	</c:if>
 			</td>
 			<td align="center">
 			<c:if test="${dto.grade == 1 }">
