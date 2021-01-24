@@ -388,6 +388,7 @@ public class LJH_boardController {
 	@RequestMapping("/trade_reply_delete.board")
 	public String replyDeletePro(@RequestParam int reply_num, @RequestParam int article_num) {
 		ReplyDTO dto = replyMapper.replyDetail(reply_num);
+		dto.setContent("%$#@!");
 		replyMapper.replyDelete(reply_num, dto);
 		int replyCount = replyMapper.replyCount(article_num);
 		String table = "ezen_trade_board";
@@ -586,6 +587,7 @@ public class LJH_boardController {
 	@RequestMapping("/info_reply_delete.board")
 	public String info_replyDeletePro(@RequestParam int reply_num, @RequestParam int article_num) {
 		ReplyDTO dto = replyMapper.replyDetail(reply_num);
+		dto.setContent("%$#@!");
 		replyMapper.replyDelete(reply_num, dto);
 		int replyCount = replyMapper.replyCount(article_num);
 		String table = "ezen_info_board";
