@@ -72,6 +72,7 @@ public class LoginController {
 		mav.addObject("startPage", startPage);
 		mav.addObject("endPage", endPage);
 		mav.addObject("pageBlock", pageBlock);
+		mav.addObject("currentPage", map.get("currentPage"));
 		mav.addObject("list", list); // 리스트 이름 list로했습니다. jsp파일 꼭확인하세요!!
 		return mav;			//객체들만 담아주고 경로는 안담아줌 .. 경로설정꼭 하세요!!
 	}
@@ -113,7 +114,8 @@ public class LoginController {
 		if(dto.getGrade() == -1) {
 			mav =  new ModelAndView("message2");
 			mav.addObject("msg", "관리자에 의해 정지된 회원입니다. 관리자에게 문의하세요");
-			mav.addObject("url","redirect:index.do");
+			mav.addObject("url","index.do");
+			return mav;
 		}
 		mav = new ModelAndView("redirect:index.do");
 		session.setAttribute("userId", dto.getId());
@@ -465,7 +467,8 @@ public class LoginController {
 	}
 	@RequestMapping("/myBoard.login")
 	public ModelAndView getmyBoard(HttpServletRequest req, HttpServletResponse resp) throws IOException{
-		String id = req.getParameter("id");
+		HttpSession session = req.getSession();
+		String id = (String)session.getAttribute("userId");
 		Map<String,Integer> map = setStartRowAndEndRow(req);
 		int count = loginMapper.myBoardGetCount(id);
 		setEndRowWhenCountIsLessThanEndRow(map, count);

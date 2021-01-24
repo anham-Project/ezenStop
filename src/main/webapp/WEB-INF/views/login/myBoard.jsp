@@ -44,6 +44,7 @@
             </div>
         </div>
 	</div>
+	<input type="hidden" name ="id" value="${sessionScope.userId}">
  </form>
 	<table class="table table-hover text-center">
 	<thead>
@@ -79,20 +80,36 @@
 	</tbody>
 	</table>
 	<div class="row">
+	
 	<c:if test="${count>0}">
 	<div class="col-md-10">
 	<ul class = "pagination justify-content-center">
-				<c:if test="${startPage > pageBlock}">	
-					<li class="page-item"><a class="page-link" href="myBoard.login?pageNum=${startPage-pageBlock}">이전</a></li>
+	<c:if test="${startPage > pageBlock}">	
+		<li class="page-item"><a class="page-link" href="myBoard.login?pageNum=${startPage-pageBlock}">이전</a></li>
+	</c:if>
+	<c:forEach var="i" begin="${startPage}" end="${endPage}">
+			<c:choose>
+			<c:when test="${i == currentPage}">
+			<li class="page-item active"><a class="page-link" href="myBoard.login?pageNum=${i}">${i}</a></li>
+			</c:when>
+			<c:when test="${currentPage == null}">
+				<c:if test="${i == 1}">
+				<li class="page-item active"><a class="page-link" href="myBoard.login?pageNum=${i}">${i}</a></li>
 				</c:if>
-				<c:forEach var="i" begin="${startPage}" end="${endPage}">
-					<li class="page-item"><a class="page-link" href="myBoard.login?pageNum=${i}">${i}</a></li>
-				</c:forEach>
-				<c:if test="${endPage < pageCount}">
-					<li class="page-item"><a class="page-link" href="myBoard.login?pageNum=${endPage+pageBlock}">다음</a></li>
+				<c:if test="${i != 1}">
+				<li class="page-item"><a class="page-link" href="myBoard.login?pageNum=${i}">${i}</a></li>
 				</c:if>
-			</ul>
-		</div>
+			</c:when>
+			<c:otherwise>
+			<li class="page-item"><a class="page-link" href="myBoard.login?pageNum=${i}">${i}</a></li>
+			</c:otherwise>
+			</c:choose>
+	</c:forEach>
+	<c:if test="${endPage < pageCount}">
+		<li class="page-item"><a class="page-link" href="myBoard.login?pageNum=${startPage+pageBlock}">다음</a></li>
+	</c:if>
+	</ul>
+	</div>
 	</c:if>
 	</div>
 </div>
