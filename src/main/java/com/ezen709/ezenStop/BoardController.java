@@ -751,6 +751,7 @@ public class BoardController {
 	@RequestMapping("/campus_reply_delete.board")
 	public String campusDeletePro(@RequestParam int reply_num, @RequestParam int article_num, @RequestParam int where) {
 		ReplyDTO dto = replyMapper.replyDetail(reply_num);
+		dto.setContent("%$#@!");
 		replyMapper.replyDelete(reply_num, dto);
 		int replyCount = replyMapper.replyCount(article_num);
 		boardMapper.updateReplyCount(article_num, replyCount);

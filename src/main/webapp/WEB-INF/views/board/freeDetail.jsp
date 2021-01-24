@@ -177,8 +177,9 @@
 					style="padding: 5px 5px 5px ${5+dto.re_level*13}px; background-color: #F7F7F7;">
 					<div class="col-md-12" align="left">
 						<c:if test="${dto.re_level>0}">
-					&nbsp;&nbsp;&nbsp;&nbsp;
-					</c:if>
+							<img class="media-object img-circle"
+								style="width: 20px; height: 20px;" src="resources/img/reply.png">
+						</c:if>
 						<c:if test="${dto.grade == 1 }">
 							<img class="media-object img-circle"
 								style="width: 30px; height: 30px;"
@@ -198,22 +199,31 @@
 							${dto.regdate_time} | </font>
 						<c:if
 							test="${sessionScope.userId == dto.id || sessionScope.userGrade == 2}">
+							<c:if test="${dto.content != '%$#@!'}">
 							<a
 								href="javascript:deleteReply('${dto.reply_num}','${freeDetail.article_num}');">[»èÁ¦]</a>
+							</c:if>
 						</c:if>
 					</div>
 					<div class="col-md-12" align="left">
 						<c:if test="${dto.re_level>0}">
-							<img class="media-object img-circle"
-								style="width: 20px; height: 20px;" src="resources/img/reply.png">
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 						</c:if>
+						<c:choose>
+						<c:when test="${dto.content == '%$#@!'}">
+						<font color="red">[¿äÃ»¿¡ ÀÇÇØ »èÁ¦ µÈ ´ñ±ÛÀÔ´Ï´Ù.]<br>&nbsp;</font>
+						</c:when>
+						<c:otherwise>
 						${dto.content}
+						</c:otherwise>
+						</c:choose>
 					</div>
+					<c:if test="${dto.content != '%$#@!'}">
 					<div class="col-md-12" align="right" id="buttontype">
 						<input type="button" class="btn btn-info btn-sm" value="´ä±Û¾²±â"
 							onclick="addInput('${dto.reply_num}','${dto.id}');" />
-						
 					</div>
+					</c:if>
 				</div>
 			</c:forEach>
 		</c:if>
@@ -232,7 +242,7 @@
 						+ "<input type='button' class='btn btn-info btn-sm' value='X' onclick='deleteTag()'>"
 						+ "<textarea class='form-control' rows='2' name='content' placeholder='´ñ±ÛÀ» ³²°ÜÁÖ¼¼¿ä'"
 						+ "<c:if test='${empty sessionScope.userId}'>disabled</c:if>></textarea>"
-						+ "<input class='btn btn-secondary btn-sm' type='submit' value='´ñ±Û´Þ±â'>"
+						+ "<input class='btn btn-secondary btn-sm' type='submit' value='´ñ±Û´Þ±â' <c:if test='${empty sessionScope.userId}'>disabled</c:if>>"
 						+ "</div>"
 			}
 			function deleteTag() {
@@ -245,7 +255,7 @@
 				document.getElementById('inputReply').innerHTML = "<div class='input-group' style='padding:5px 5px 5px 5px; border:1; border-color:#F7F7F7;'>"
 						+ "<textarea class='form-control' rows='2' name='content' placeholder='´ñ±ÛÀ» ³²°ÜÁÖ¼¼¿ä'"
 						+ "<c:if test='${empty sessionScope.userId}'>disabled</c:if>></textarea>"
-						+ "<input class='btn btn-secondary btn-sm' type='submit' value='´ñ±Û´Þ±â'>"
+						+ "<input class='btn btn-secondary btn-sm' type='submit' value='´ñ±Û´Þ±â' <c:if test='${empty sessionScope.userId}'>disabled</c:if>>"
 						+ "</div>"
 			}
 		</script>
@@ -254,7 +264,7 @@
 				style="padding: 5px 5px 5px 5px; border: 1; border-color: #F7F7F7;">
 				<textarea class="form-control" rows="2" name="content"
 					placeholder="´ñ±ÛÀ» ³²°ÜÁÖ¼¼¿ä" <c:if test="${empty sessionScope.userId}">disabled</c:if>></textarea>
-				<input class="btn btn-secondary btn-sm" type="submit" value="´ñ±Û´Þ±â">
+				<input class="btn btn-secondary btn-sm" type="submit" value="´ñ±Û´Þ±â" <c:if test='${empty sessionScope.userId}'>disabled</c:if>>
 			</div>
 		</div>
 	</form>

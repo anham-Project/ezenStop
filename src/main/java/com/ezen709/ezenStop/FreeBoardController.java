@@ -135,10 +135,12 @@ public class FreeBoardController {
 	public ModelAndView freeDetail(@RequestParam int article_num) {
 		String table = "ezen_free_board";
 		boardMapper.A_plusReadCount(article_num,table);
+		List<ReplyDTO> replyList = replyMapper.replyList(article_num);
 		ReviewBoardDTO freeDetail = boardMapper.A_detail(article_num,table);
 		ModelAndView mav = new ModelAndView("board/freeDetail");
 		mav.addObject("uploadPath", uploadPath);
 		mav.addObject("freeDetail", freeDetail);
+		mav.addObject("replyList",replyList);
 		return mav;
 	}
 	@RequestMapping(value="/free_edit.board", method=RequestMethod.GET)
@@ -235,6 +237,7 @@ public class FreeBoardController {
 	@RequestMapping("/free_reply_delete.board")
 	public String free_replyDeletePro(@RequestParam int reply_num, @RequestParam int article_num) {
 		ReplyDTO dto = replyMapper.replyDetail(reply_num);
+		dto.setContent("%$#@!");
 		replyMapper.replyDelete(reply_num, dto);
 		int replyCount = replyMapper.replyCount(article_num);
 		String table = "ezen_free_board";
