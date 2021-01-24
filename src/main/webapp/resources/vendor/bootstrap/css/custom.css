@@ -303,3 +303,19 @@ h4{
   color: inherit;
   text-decoration: none;
 }
+.gapA{
+  line-height: 1.6em;
+  font-size: 1.05em;
+}
+.titleA{
+	font-size: 1.2em;
+	font-weight: bold;
+	display:inline-block;
+}
+.img-index {
+  padding: 0;
+  height: auto;
+  width: 30px; 
+  height: 30px;
+  vertical-align:bottom;
+}
