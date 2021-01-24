@@ -12,9 +12,6 @@
 		}
 		return true
 	}
-	function loginPlz(){
-		alert("게시물을 확인하려면 로그인해야합니다!!")
-	}
 </script>
 	<h5><font size="3">이젠'sTop게시판 > </font><b><a href="notice_list.board" class="blackA">공지사항</a></b></h5>
 <form name="f" action="notice_find.board" method="post" onsubmit="return check()">
@@ -56,15 +53,9 @@
 		<tr>
 			<td align="center"><c:out value="${dto.article_num}"/></td>
 			<td align="left">			
-	<c:if test="${sessionScope.userId != null}">
 				<a href="notice_detail.board?article_num=${dto.article_num}" class="grayA">
 				${dto.subject}
 				</a>
-	</c:if>
-	<c:if test="${sessionScope.userId == null}">
-		<a href="#" onclick="javascript:loginPlz()" class="grayA">${dto.subject}
-		</a>
-	</c:if>
 			</td>
 			<td align="center"><img class="media-object img-circle" style = "width: 30px; height: 30px;" src = "resources/img/${dto.grade }.png">
 				<c:choose>
