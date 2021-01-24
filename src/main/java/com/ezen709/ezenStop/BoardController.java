@@ -147,8 +147,7 @@ public class BoardController {
 			mav.addObject("reviewAddr", reviewAddr);
 		}else if(location.equals("1")) {
 			location = loginMapper.getIdLocation(reply_id);
-			reviewAddr = new String[0];
-			reviewAddr[0] = location;
+			reviewAddr = new String[] {location};
 			mav.addObject("reviewAddr", reviewAddr);
 		}
 		return mav;
@@ -406,8 +405,17 @@ public class BoardController {
 		
 		setEndRowWhenCountIsLessThanEndRow(map, count);
 		
-		List<BoardReportDTO> reportList = boardMapper.getReportList(map.get("startRow"), map.get("endRow"));
+		List<String> list =  boardMapper.getTableHasLocation();
+		List<BoardReportDTO> reportList = new ArrayList<>();
+		for(String table : list) {
+				
+		List<BoardReportDTO> tmpList = boardMapper.getReportList(map.get("startRow"), map.get("endRow"), table);
+		for(BoardReportDTO dto : tmpList) {
+			reportList.add(dto);
+		}
 		
+		}
+		System.out.println(reportList.size());
 		ModelAndView mav = finishMakeModelAndView(map, reportList, count);
 		
 		mav.setViewName("board/reportList");
@@ -608,9 +616,9 @@ public class BoardController {
 		int article_num = Integer.parseInt(req.getParameter("article_num"));
 		commonMapper.changeVisibleStatus(article_num, "ezen_campus_board");
 	}
-	@RequestMapping("/campusupdownPro.board")
+	@RequestMapping("/commonUpdownPro.board")
 	public void campusUpdownPro(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-		String table = "ezen_campus_board";
+		String table = req.getParameter("table");
 		int article_num = Integer.parseInt(req.getParameter("article_num"));
 		String userId = req.getParameter("userId");
 		String somethingDo = req.getParameter("somethingDo");

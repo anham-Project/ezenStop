@@ -48,7 +48,7 @@
  <select id="getIdGrade" parameterType="String" resultType="Integer">
  		select grade from ezen_member where id= #{reply_id}
  </select>
- <select id="getIdLocation" parameterType="String" resultType="Integer">
+ <select id="getIdLocation" parameterType="String" resultType="String">
  		select academyLocation from ezen_member where id= #{reply_id}
  </select>
  <select id="getWaittingMemberList" parameterType="java.util.Map" resultType="ezen_memberDTO">

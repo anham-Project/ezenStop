@@ -29,7 +29,7 @@
 		var table = "ezen_free_board";
 		$.ajax({
 			type : "POST",
-			url : "updownPro.board",
+			url : "commonUpdownPro.board",
 			contentType: 'application/x-www-form-urlencoded; charset=euc-kr',
 			data : {
 				article_num : article_num,

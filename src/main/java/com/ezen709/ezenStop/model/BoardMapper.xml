@@ -128,9 +128,9 @@
 		from (
 			select rownum rn, A.* 
 		 	from (
-		 		select board_report.*, ezen_review_board.visible , ezen_member.academylocation, ezen_member.grade
-		 		from board_report, ezen_review_board, ezen_member
-		 		where board_report.article_num = ezen_review_board.article_num and board_report.userid = ezen_member.id
+		 		select board_report.*, ${table}.visible , ezen_member.academylocation, ezen_member.grade
+		 		from board_report, ${table}, ezen_member
+		 		where board_report.article_num = ${table}.article_num and board_report.userid = ezen_member.id 
 		 		order by board_report.article_num desc)A
 		 	) 
 		where rn between #{start} and #{end}

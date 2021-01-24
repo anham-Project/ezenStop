@@ -26,13 +26,15 @@
 	function somethingDo(somethingDo){
 		var article_num = '${reviewDetail.article_num}';
 		var userId = '${sessionScope.userId}';
+		var table = 'ezen_campus_board';
 		$.ajax({
 			type : "POST",
-			url : "campusupdownPro.board",
+			url : "commonUpdownPro.board",
 			contentType: 'application/x-www-form-urlencoded; charset=euc-kr',
 			data : {
 				article_num : article_num,
 				userId : userId,
+				table : table,
 				somethingDo : somethingDo
 			},
 			datatype : 'text',

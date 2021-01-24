@@ -135,10 +135,11 @@ public class BoardMapper {
 		map.put("tableName",table);
 		return sqlSession.update("setUnvisible", map);
 	}
-	public List<BoardReportDTO> getReportList(int start, int end){
-		Map<String, Integer> map = new Hashtable<>();
+	public List<BoardReportDTO> getReportList(int start, int end, String table){
+		Map<String, Object> map = new Hashtable<>();
 		map.put("start", start);
 		map.put("end", end);
+		map.put("table", table);
 		return sqlSession.selectList("getReportList", map);
 	}
 	public List<BoardReportDTO> SearchReportList(String searchType,String searchString,int start, int end){
