@@ -389,6 +389,7 @@ public class BoardController {
 			dto.setParent_num(0);
 			dto.setId("master");
 			dto.setContent("과도한 논란으로 비활성화 처리되었습니다. 관리자에게 문의해주세요.");
+			res = "2";
 			dto.setReply_num(0);
 			dto.setAticle_num(article_num);
 			replyMapper.insertReply(dto);

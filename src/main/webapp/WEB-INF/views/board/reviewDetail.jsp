@@ -281,6 +281,9 @@
 					alert('중복신고는 불가합니다. 신고글 수정사항이나 취소는 관리자에게 문의하세요.')
 				}else if(result === '1'){
 					alert('신고처리 되었습니다.')
+				}else if(result === '2'){
+					alert('신고로 인해 현재 게시물은 비활성화 되었습니다.')
+					location.href="review_list.board"
 				}else{
 					alert('신고처리 도중 에러가 발생했습니다. 관리자에게 문의하세요')
 				}
@@ -298,7 +301,7 @@
 				<div class="modal-body">
 					<div class="form-group" style="margin:5px; padding:5px;">
 					<h5><b>신고 사유</b></h5>
-					<textarea class="form-control" rows="2" placeholder="신고내역을 입력해주세요."
+					<textarea class="form-control" rows="2" id="reportContent" placeholder="신고내역을 입력해주세요."
 						style="resize: none;"></textarea>
 					</div>
 					<hr/>
