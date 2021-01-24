@@ -233,16 +233,17 @@ public class LJH_boardController {
 	
 	// 중고책 거래 게시판
 	
-	
-	
 	@RequestMapping("/trade_list.board")
 	public ModelAndView trade_list(HttpServletRequest req) {
 		Map<String,Integer> map = setStartRowAndEndRow(req);
 		String table = "ezen_trade_board";
 		int count = boardMapper.A_getCount(table);
 		setEndRowWhenCountIsLessThanEndRow(map, count);
-		List<ReviewBoardDTO> noticeList = boardMapper.A_list(table, map.get("startRow"), map.get("endRow"));
-		ModelAndView mav = finishMakeModelAndView(map, noticeList, count);
+		List<ReviewBoardDTO> tradeList = boardMapper.A_list(table, map.get("startRow"), map.get("endRow"));
+		ModelAndView mav = finishMakeModelAndView(map, tradeList, count);
+		String cate = "TRADE";
+		List<ReviewBoardDTO> noticeList = boardMapper.A_notice_list(cate);
+		mav.addObject("noticeList",noticeList);
 		mav.setViewName("board/tradeList");
 		return mav;
 	}

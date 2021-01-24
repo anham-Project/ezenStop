@@ -88,6 +88,9 @@ public class FreeBoardController {
 		setEndRowWhenCountIsLessThanEndRow(map, count);
 		List<ReviewBoardDTO> freeList = boardMapper.A_list(table, map.get("startRow"), map.get("endRow"));
 		ModelAndView mav = finishMakeModelAndView(map, freeList, count);
+		String cate = "FREE";
+		List<ReviewBoardDTO> noticeList = boardMapper.A_notice_list(cate);
+		mav.addObject("noticeList",noticeList);
 		mav.setViewName("board/freeList");
 		return mav;
 	}

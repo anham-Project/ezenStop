@@ -16,9 +16,9 @@
 				+ "&article_num=" + a_num;
 	}
 	function somethingDo(somethingDo){
-		var article_num = '${reviewDetail.article_num}';
+		var article_num = '${infoDetail.article_num}';
 		var userId = '${sessionScope.userId}';
-		var table = "ezen_info_baord";
+		var table = "ezen_info_board";
 		$.ajax({
 			type : "POST",
 			url : "updownPro.board",

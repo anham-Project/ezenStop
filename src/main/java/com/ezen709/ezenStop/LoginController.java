@@ -3,6 +3,7 @@ package com.ezen709.ezenStop;
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import javax.annotation.Resource;
 import javax.mail.*;
@@ -78,11 +79,16 @@ public class LoginController {
 	@RequestMapping(value="/index.do", method=RequestMethod.GET)//로그인버튼 눌렀을 떄
 	public ModelAndView index() {
 		List<ReviewBoardDTO> hot = boardMapper.getHotBoard();
-		
+		List<ReviewBoardDTO> list = hot.stream().sorted(Comparator.comparing(ReviewBoardDTO::getUpCount).reversed()).collect(Collectors.toList());
+		if(list.size()>=6) {
+		for(int i=6; i<list.size(); i++) {
+		list.remove(i);
+			}
+		}
 		Map<String,List<ReviewBoardDTO>> index = boardMapper.getIndexBoard();
 		
 		ModelAndView mav = new ModelAndView("index");
-		mav.addObject("hotList", hot);
+		mav.addObject("hotList", list);
 		mav.addObject("indexListMap",index);
 		return mav;
 	}
