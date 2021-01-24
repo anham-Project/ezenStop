@@ -66,7 +66,8 @@
 			<select name="dtoList[${status.index}].academyLocation">
 				<option value="none">지점 선택</option>
 				<c:forEach var="list" items="${locationList}">
-				<option <c:if test="${dto.academyLocation==list}">selected</c:if>>[${list}]</option>
+				<option value="${list}" <c:if test="${dto.academyLocation==list}">selected</c:if> >${dto.academyLocation} >> ${list}</option>
+				
 				</c:forEach>
 			</select>
 			</td>

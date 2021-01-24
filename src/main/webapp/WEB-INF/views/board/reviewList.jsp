@@ -108,7 +108,7 @@
 			</td>
 			<td align="center">
 			<c:if test="${dto.grade == 1 }">
-			<img class="media-object img-circle" style = "width: 30px; height: 30px;" src = "resources/img/${dto.academyLocation }.png">
+			<img class="media-object img-circle" style = "width: 30px; height: 30px;" src = "resources/img/${dto.academyLocation}.png">
 			</c:if>
 			<c:if test="${dto.grade != 1 }">
 			<img class="media-object img-circle" style = "width: 30px; height: 30px;" src = "resources/img/${dto.grade }.png">
