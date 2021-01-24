@@ -350,16 +350,17 @@ public class BoardController {
 		int article_num = Integer.parseInt(req.getParameter("article_num"));
 		String userId = req.getParameter("userId");
 		String somethingDo = req.getParameter("somethingDo");
+		String table = req.getParameter("table");
 		String res;
 		int check = boardMapper.checkUserUpDown(article_num, userId);
 		if(check>0) {
 			res = "-2";
 		}else {
 			if(somethingDo.equals("up")) {
-				res = boardMapper.upBoard(article_num, userId, "ezen_review_board")+"";
+				res = boardMapper.upBoard(article_num, userId, table)+"";
 				
 			}else {
-				res = boardMapper.downBoard(article_num, userId, "ezen_review_board")+"";
+				res = boardMapper.downBoard(article_num, userId, table)+"";
 			}
 		}
 		resp.getWriter().write(res);
@@ -387,6 +388,7 @@ public class BoardController {
 			dto.setParent_num(0);
 			dto.setId("master");
 			dto.setContent("과도한 논란으로 비활성화 처리되었습니다. 관리자에게 문의해주세요.");
+			res = "2";
 			dto.setReply_num(0);
 			dto.setAticle_num(article_num);
 			replyMapper.insertReply(dto);

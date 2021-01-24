@@ -68,18 +68,20 @@ function findDetailPage(article_num) {
 		<div class="col-lg-6 col-md-6 mb-4">
 			<div class="card h-100 shadow">
 				<div class="card-header">
-					<a href="#" class="blackA"><h5><b>최신 인기글</b></h5></a>
+					<img class="img-index" src="resources/img/HOT.png">
+					<a href="#" class="blackA titleA">
+					주간 인기글</a>
 				</div>
-				<div class="card-body">
+				<div class="card-body"  style="padding: 0.5rem 2rem;">
 					<p class="card-text">
 						<c:set var="tmp" value="0"/>
 						<c:if test="${empty hotList }">
-							최근 일주일간 게시물이 없습니다. ㅠㅠ
+							<a href="#" class="grayA gapA">최근 일주일간 게시물이 없습니다. ㅠㅠ</a>
 						</c:if>
 						<c:forEach var="dto" items="${hotList }">
 						<form name="f1" onclick="javascript:findDetailPage('${dto.article_num}')">
 							<c:if test="${sessionScope.userId != null}">
-								<a href="#" class="grayA">
+								<a href="#" class="grayA gapA">
 									<font color="#007bff">${dto.category}</font> ${dto.subject} <c:if
 										test="${dto.image != '파일없음' }">
 										<img class="media-object img-circle"
@@ -92,7 +94,7 @@ function findDetailPage(article_num) {
 							</c:if>
 						</form>
 							<c:if test="${sessionScope.userId == null}">
-								<a href="#" onclick="javascript:loginPlz()" class="grayA"><font color="#007bff">${dto.category}</font>
+								<a href="#" onclick="javascript:loginPlz()" class="grayA gapA"><font color="#007bff">${dto.category}</font>
 									${dto.subject} <c:if test="${dto.image != '파일없음' }">
 										<img class="media-object img-circle"
 											style="width: 14px; height: 12px;"
@@ -111,17 +113,18 @@ function findDetailPage(article_num) {
 		<div class="col-lg-6 col-md-6 mb-4">
 			<div class="card h-100 shadow">
 				<div class="card-header">
-					<a href="notice_list.board" class="blackA"><h5><b>공지사항</b></h5></a>
+					<img class="img-index" src="resources/img/NOTICE.png">
+					<a href="notice_list.board" class="blackA titleA">공지사항</a>
 				</div>
-				<div class="card-body">
+				<div class="card-body" style="padding: 0.5rem 2rem;">
 					<p class="card-text">
 						<c:if test="${empty indexListMap['EZEN_NOTICE_BOARD']}">
-							공지사항이 없습니다.
+							<a href="#" class="grayA gapA">공지사항이 없습니다. ㅠㅠ</a>
 						</c:if>
 						<c:forEach var="dto" items="${indexListMap['EZEN_NOTICE_BOARD'] }">
 						<form name="f1" onclick="javascript:findDetailPage('${dto.article_num}')">
 							<c:set var="tmp" value="${tmp+1 }"/>
-								<a href="notice_detail.board?article_num=${dto.article_num}" class="grayA">
+								<a href="notice_detail.board?article_num=${dto.article_num}" class="grayA gapA">
 									${dto.subject}<c:if
 										test="${dto.image != '파일없음' }">
 										<img class="media-object img-circle"
@@ -141,18 +144,19 @@ function findDetailPage(article_num) {
 		<div class="col-lg-6 col-md-6 mb-4">
 			<div class="card h-100 shadow">
 				<div class="card-header">
-					<a href="info_list.board" class="blackA"><h5><b>정보공유 게시판</b></h5></a>
+					<img class="img-index" src="resources/img/INFO.png">
+					<a href="info_list.board" class="blackA titleA">정보 공유 게시판</a>
 				</div>
-				<div class="card-body">
+				<div class="card-body" style="padding: 0.5rem 2rem;">
 					<p class="card-text">
 						<c:if test="${empty indexListMap['EZEN_INFO_BOARD']}">
-							게시물이 없습니다. ㅠㅠ
+							<a href="#" class="grayA gapA">게시물이 없습니다. ㅠㅠ</a>
 						</c:if>
 						<c:forEach var="dto" items="${indexListMap['EZEN_INFO_BOARD'] }">
 						<form name="f1" onclick="javascript:findDetailPage('${dto.article_num}')">
 							<c:set var="tmp" value="${tmp+1 }"/>
 							<c:if test="${sessionScope.userId != null}">
-								<a href="info_detail.board?article_num=${dto.article_num}" class="grayA">
+								<a href="info_detail.board?article_num=${dto.article_num}" class="grayA gapA">
 									<font color="#007bff">${dto.category}</font> ${dto.subject} <c:if
 										test="${dto.image != '파일없음' }">
 										<img class="media-object img-circle"
@@ -164,7 +168,7 @@ function findDetailPage(article_num) {
 								</a>
 							</c:if>
 							<c:if test="${sessionScope.userId == null}">
-								<a href="#" onclick="javascript:loginPlz()" class="grayA"><font color="#007bff">${dto.category}</font>
+								<a href="#" onclick="javascript:loginPlz()" class="grayA gapA"><font color="#007bff">${dto.category}</font>
 									${dto.subject} <c:if test="${dto.image != '파일없음' }">
 										<img class="media-object img-circle"
 											style="width: 14px; height: 12px;"
@@ -184,18 +188,19 @@ function findDetailPage(article_num) {
 		<div class="col-lg-6 col-md-6 mb-4">
 			<div class="card h-100 shadow">
 				<div class="card-header">
-					<a href="review_list.board" class="blackA"><h5><b>지역별 수강후기 게시판</b></h5></a>
+					<img class="img-index" src="resources/img/REVIEW.png">
+					<a href="review_list.board" class="blackA titleA">지역별 수강후기 게시판</a>
 				</div>
-				<div class="card-body">
+				<div class="card-body" style="padding: 0.5rem 2rem;">
 					<p class="card-text">
 						<c:if test="${empty indexListMap['EZEN_REVIEW_BOARD']}">
-							게시물이 없습니다. ㅠㅠ
+							<a href="#" class="grayA gapA">게시물이 없습니다. ㅠㅠ</a>
 						</c:if>
 						<c:forEach var="dto" items="${indexListMap['EZEN_REVIEW_BOARD'] }">
 						<form name="f1" onclick="javascript:findDetailPage('${dto.article_num}')">
 							<c:set var="tmp" value="${tmp+1 }"/>
 							<c:if test="${sessionScope.userId != null}">
-								<a href="review_detail.board?article_num=${dto.article_num}" class="grayA">
+								<a href="review_detail.board?article_num=${dto.article_num}" class="grayA gapA">
 									<font color="#007bff">${dto.category}</font> ${dto.subject} <c:if
 										test="${dto.image != '파일없음' }">
 										<img class="media-object img-circle"
@@ -207,7 +212,7 @@ function findDetailPage(article_num) {
 								</a>
 							</c:if>
 							<c:if test="${sessionScope.userId == null}">
-								<a href="#" onclick="javascript:loginPlz()" class="grayA"><font color="#007bff">${dto.category}</font>
+								<a href="#" onclick="javascript:loginPlz()" class="grayA gapA"><font color="#007bff">${dto.category}</font>
 									${dto.subject} <c:if test="${dto.image != '파일없음' }">
 										<img class="media-object img-circle"
 											style="width: 14px; height: 12px;"
@@ -226,17 +231,18 @@ function findDetailPage(article_num) {
 		<div class="col-lg-6 col-md-6 mb-4">
 			<div class="card h-100 shadow">
 				<div class="card-header">
-					<a href="trade_list.board" class="blackA"><h5><b>사고팔고 게시판</b></h5></a>
+					<img class="img-index" src="resources/img/TRADE.png">
+					<a href="trade_list.board" class="blackA titleA">사고팔고 게시판</a>
 				</div>
-				<div class="card-body">
+				<div class="card-body" style="padding: 0.5rem 2rem;">
 					<p class="card-text">
 						<c:if test="${empty indexListMap['EZEN_TRADE_BOARD']}">
-							게시물이 없습니다. ㅠㅠ
+							<a href="#" class="grayA gapA">게시물이 없습니다. ㅠㅠ</a>
 						</c:if>
 						<c:forEach var="dto" items="${indexListMap['EZEN_TRADE_BOARD'] }">
 						<form name="f1" onclick="javascript:findDetailPage('${dto.article_num}')">
 							<c:set var="tmp" value="${tmp+1 }"/>
-								<a href="trade_detail.board?article_num=${dto.article_num}" class="grayA">
+								<a href="trade_detail.board?article_num=${dto.article_num}" class="grayA gapA">
 									<font color="#007bff">${dto.category}</font> ${dto.subject} <c:if
 										test="${dto.image != '파일없음' }">
 										<img class="media-object img-circle"
@@ -256,17 +262,18 @@ function findDetailPage(article_num) {
 		<div class="col-lg-6 col-md-6 mb-4">
 			<div class="card h-100 shadow">
 				<div class="card-header">
-					<a href="free_list.board" class="blackA"><h5><b>자유게시판</b></h5></a>
+					<img class="img-index" src="resources/img/FREE.png">
+					<a href="free_list.board" class="blackA titleA">자유게시판</a>
 				</div>
-				<div class="card-body">
+				<div class="card-body" style="padding: 0.5rem 2rem;">
 					<p class="card-text">
 						<c:if test="${empty indexListMap['EZEN_FREE_BOARD']}">
-							게시물이 없습니다. ㅠㅠ
+							<a class="grayA gapA">게시물이 없습니다. ㅠㅠ</a>
 						</c:if>
 						<c:forEach var="dto" items="${indexListMap['EZEN_FREE_BOARD'] }">
 						<form name="f1" onclick="javascript:findDetailPage('${dto.article_num}')">
 							<c:set var="tmp" value="${tmp+1 }"/>
-								<a href="free_detail.board?article_num=${dto.article_num}" class="grayA">
+								<a href="free_detail.board?article_num=${dto.article_num}" class="grayA gapA">
 									<font color="#007bff">${dto.category}</font> ${dto.subject} <c:if
 										test="${dto.image != '파일없음' }">
 										<img class="media-object img-circle"

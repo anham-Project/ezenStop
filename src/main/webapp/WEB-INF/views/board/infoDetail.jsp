@@ -16,9 +16,9 @@
 				+ "&article_num=" + a_num;
 	}
 	function somethingDo(somethingDo){
-		var article_num = '${reviewDetail.article_num}';
+		var article_num = '${infoDetail.article_num}';
 		var userId = '${sessionScope.userId}';
-		var table = "ezen_info_baord";
+		var table = "ezen_info_board";
 		$.ajax({
 			type : "POST",
 			url : "updownPro.board",
@@ -274,6 +274,9 @@
 					alert('중복신고는 불가합니다. 신고글 수정사항이나 취소는 관리자에게 문의하세요.')
 				}else if(result === '1'){
 					alert('신고처리 되었습니다.')
+				}else if(result === '2'){
+					alert('신고로 인해 현재 게시물은 비활성화 되었습니다.')
+					window.href="info_list.board"
 				}else{
 					alert('신고처리 도중 에러가 발생했습니다. 관리자에게 문의하세요')
 				}
