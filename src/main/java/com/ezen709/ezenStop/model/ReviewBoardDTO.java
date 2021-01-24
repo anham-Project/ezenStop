@@ -131,4 +131,7 @@ public class ReviewBoardDTO implements Comparable<ReviewBoardDTO> {
 	public int compareTo(ReviewBoardDTO dto) {
 		return Integer.compare(dto.getArticle_num(), this.article_num);
 	}
+	public int compareToUpdown(ReviewBoardDTO dto) {
+		return Integer.compare(dto.getUpCount(), this.article_num);
+	}
 }

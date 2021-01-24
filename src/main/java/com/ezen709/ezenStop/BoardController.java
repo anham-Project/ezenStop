@@ -351,16 +351,17 @@ public class BoardController {
 		int article_num = Integer.parseInt(req.getParameter("article_num"));
 		String userId = req.getParameter("userId");
 		String somethingDo = req.getParameter("somethingDo");
+		String table = req.getParameter("table");
 		String res;
 		int check = boardMapper.checkUserUpDown(article_num, userId);
 		if(check>0) {
 			res = "-2";
 		}else {
 			if(somethingDo.equals("up")) {
-				res = boardMapper.upBoard(article_num, userId, "ezen_review_board")+"";
+				res = boardMapper.upBoard(article_num, userId, table)+"";
 				
 			}else {
-				res = boardMapper.downBoard(article_num, userId, "ezen_review_board")+"";
+				res = boardMapper.downBoard(article_num, userId, table)+"";
 			}
 		}
 		resp.getWriter().write(res);
