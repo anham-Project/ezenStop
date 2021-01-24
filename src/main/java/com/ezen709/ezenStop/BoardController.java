@@ -383,7 +383,7 @@ public class BoardController {
 			String res1 = boardMapper.reportBoard(article_num, userId)+"";
 			if(!res.equals(res1)) res="-3";
 		}
-		if(res.equals("1") && boardMapper.checkReportCount(article_num) == 5) {
+		if(res.equals("1") && boardMapper.checkReportCount(article_num) == 1) {
 			commonMapper.changeVisibleStatus(article_num,table);
 			ReplyDTO dto = new ReplyDTO();
 			dto.setRe_step(0);

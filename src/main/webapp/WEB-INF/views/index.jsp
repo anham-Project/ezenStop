@@ -82,27 +82,40 @@ function findDetailPage(article_num) {
 						<form name="f1" onclick="javascript:findDetailPage('${dto.article_num}')">
 							<c:if test="${sessionScope.userId != null}">
 								<a href="#" class="grayA gapA">
-									<font color="#007bff">${dto.category}</font> ${dto.subject} <c:if
-										test="${dto.image != '파일없음' }">
+									<font color="#007bff">${dto.category}</font> ${dto.subject} 
+									<c:if test="${dto.replyCount != 0}">
+										<font color="orange" size="2">[${dto.replyCount}]</font>
+									</c:if>
+									<c:if test="${dto.image != '파일없음' }">
 										<img class="media-object img-circle"
 											style="width: 14px; height: 12px;"
 											src="resources/img/picture.png">
-									</c:if> <c:if test="${dto.replyCount != 0}">
-										<font color="orange" size="2">[${dto.replyCount}]</font>
-									</c:if>
+									</c:if> 
 								</a>
+								&nbsp;
+								<img class="media-object img-circle"style="width: 15px; height: 15px;"src="resources/img/up.png">
+								<font color="blue"size="2">${dto.upCount}</font>
+								<img class="media-object img-circle"style="width: 15px; height: 15px;"src="resources/img/down.png">
+								<font color="red"size="2">${dto.downCount}</font>
 							</c:if>
 						</form>
 							<c:if test="${sessionScope.userId == null}">
 								<a href="#" onclick="javascript:loginPlz()" class="grayA gapA"><font color="#007bff">${dto.category}</font>
-									${dto.subject} <c:if test="${dto.image != '파일없음' }">
+									${dto.subject} 
+									<c:if test="${dto.replyCount != 0}">
+										<font color="orange" size="2">[${dto.replyCount}]</font>
+									</c:if>
+									<c:if test="${dto.image != '파일없음' }">
 										<img class="media-object img-circle"
 											style="width: 14px; height: 12px;"
 											src="resources/img/picture.png">
-									</c:if> <c:if test="${dto.replyCount != 0}">
-										<font color="orange" size="2">[${dto.replyCount}]</font>
 									</c:if>
 								</a>
+								&nbsp;
+								<img class="media-object img-circle"style="width: 15px; height: 15px;"src="resources/img/up.png">
+								<font color="blue"size="2">${dto.upCount}</font>
+								<img class="media-object img-circle"style="width: 15px; height: 15px;"src="resources/img/down.png">
+								<font color="red"size="2">${dto.downCount}</font>
 							</c:if>
 						</c:forEach>
 					</p>
@@ -125,15 +138,16 @@ function findDetailPage(article_num) {
 						<form name="f1" onclick="javascript:findDetailPage('${dto.article_num}')">
 							<c:set var="tmp" value="${tmp+1 }"/>
 								<a href="notice_detail.board?article_num=${dto.article_num}" class="grayA gapA">
-									${dto.subject}<c:if
+									${dto.subject}<c:if test="${dto.replyCount != 0}">
+										<font color="orange" size="2">[${dto.replyCount}]</font>
+									</c:if><c:if
 										test="${dto.image != '파일없음' }">
 										<img class="media-object img-circle"
 											style="width: 14px; height: 12px;"
 											src="resources/img/picture.png">
-									</c:if> <c:if test="${dto.replyCount != 0}">
-										<font color="orange" size="2">[${dto.replyCount}]</font>
-									</c:if>
+									</c:if> 
 								</a>
+								
 							</form>
 						</c:forEach>
 					</p>
@@ -157,27 +171,39 @@ function findDetailPage(article_num) {
 							<c:set var="tmp" value="${tmp+1 }"/>
 							<c:if test="${sessionScope.userId != null}">
 								<a href="info_detail.board?article_num=${dto.article_num}" class="grayA gapA">
-									<font color="#007bff">${dto.category}</font> ${dto.subject} <c:if
+									<font color="#007bff">${dto.category}</font> ${dto.subject}
+									<c:if test="${dto.replyCount != 0}">
+										<font color="orange" size="2">[${dto.replyCount}]</font>
+									</c:if> <c:if
 										test="${dto.image != '파일없음' }">
 										<img class="media-object img-circle"
 											style="width: 14px; height: 12px;"
 											src="resources/img/picture.png">
-									</c:if> <c:if test="${dto.replyCount != 0}">
-										<font color="orange" size="2">[${dto.replyCount}]</font>
-									</c:if>
+									</c:if> 
 								</a>
+								&nbsp;
+								<img class="media-object img-circle"style="width: 15px; height: 15px;"src="resources/img/up.png">
+								<font color="blue"size="2">${dto.upCount}</font>
+								<img class="media-object img-circle"style="width: 15px; height: 15px;"src="resources/img/down.png">
+								<font color="red"size="2">${dto.downCount}</font>
 							</c:if>
 						</form>
 							<c:if test="${sessionScope.userId == null}">
 								<a href="#" onclick="javascript:loginPlz()" class="grayA gapA"><font color="#007bff">${dto.category}</font>
-									${dto.subject} <c:if test="${dto.image != '파일없음' }">
+									${dto.subject}  <c:if test="${dto.replyCount != 0}">
+										<font color="orange" size="2">[${dto.replyCount}]</font>
+									</c:if>
+									<c:if test="${dto.image != '파일없음' }">
 										<img class="media-object img-circle"
 											style="width: 14px; height: 12px;"
 											src="resources/img/picture.png">
-									</c:if> <c:if test="${dto.replyCount != 0}">
-										<font color="orange" size="2">[${dto.replyCount}]</font>
 									</c:if>
 								</a>
+								&nbsp;
+								<img class="media-object img-circle"style="width: 15px; height: 15px;"src="resources/img/up.png">
+								<font color="blue"size="2">${dto.upCount}</font>
+								<img class="media-object img-circle"style="width: 15px; height: 15px;"src="resources/img/down.png">
+								<font color="red"size="2">${dto.downCount}</font>
 							</c:if>
 						</c:forEach>
 					</p>
@@ -201,27 +227,39 @@ function findDetailPage(article_num) {
 							<c:set var="tmp" value="${tmp+1 }"/>
 							<c:if test="${sessionScope.userId != null}">
 								<a href="review_detail.board?article_num=${dto.article_num}" class="grayA gapA">
-									<font color="#007bff">${dto.category}</font> ${dto.subject} <c:if
+									<font color="#007bff">${dto.category}</font> ${dto.subject} <c:if test="${dto.replyCount != 0}">
+										<font color="orange" size="2">[${dto.replyCount}]</font>
+									</c:if>
+									<c:if
 										test="${dto.image != '파일없음' }">
 										<img class="media-object img-circle"
 											style="width: 14px; height: 12px;"
 											src="resources/img/picture.png">
-									</c:if> <c:if test="${dto.replyCount != 0}">
-										<font color="orange" size="2">[${dto.replyCount}]</font>
-									</c:if>
+									</c:if> 
 								</a>
+								&nbsp;
+								<img class="media-object img-circle"style="width: 15px; height: 15px;"src="resources/img/up.png">
+								<font color="blue"size="2">${dto.upCount}</font>
+								<img class="media-object img-circle"style="width: 15px; height: 15px;"src="resources/img/down.png">
+								<font color="red"size="2">${dto.downCount}</font>
 							</c:if>
 						</form>
 							<c:if test="${sessionScope.userId == null}">
 								<a href="#" onclick="javascript:loginPlz()" class="grayA gapA"><font color="#007bff">${dto.category}</font>
-									${dto.subject} <c:if test="${dto.image != '파일없음' }">
+									${dto.subject} <c:if test="${dto.replyCount != 0}">
+										<font color="orange" size="2">[${dto.replyCount}]</font>
+									</c:if>
+									<c:if test="${dto.image != '파일없음' }">
 										<img class="media-object img-circle"
 											style="width: 14px; height: 12px;"
 											src="resources/img/picture.png">
-									</c:if> <c:if test="${dto.replyCount != 0}">
-										<font color="orange" size="2">[${dto.replyCount}]</font>
-									</c:if>
+									</c:if> 
 								</a>
+								&nbsp;
+								<img class="media-object img-circle"style="width: 15px; height: 15px;"src="resources/img/up.png">
+								<font color="blue"size="2">${dto.upCount}</font>
+								<img class="media-object img-circle"style="width: 15px; height: 15px;"src="resources/img/down.png">
+								<font color="red"size="2">${dto.downCount}</font>
 							</c:if>
 						</c:forEach>
 					</p>
@@ -243,15 +281,21 @@ function findDetailPage(article_num) {
 						<form name="f1" onclick="javascript:findDetailPage('${dto.article_num}')">
 							<c:set var="tmp" value="${tmp+1 }"/>
 								<a href="trade_detail.board?article_num=${dto.article_num}" class="grayA gapA">
-									<font color="#007bff">${dto.category}</font> ${dto.subject} <c:if
+									<font color="#007bff">${dto.category}</font> ${dto.subject} <c:if test="${dto.replyCount != 0}">
+										<font color="orange" size="2">[${dto.replyCount}]</font>
+									</c:if>
+									 <c:if
 										test="${dto.image != '파일없음' }">
 										<img class="media-object img-circle"
 											style="width: 14px; height: 12px;"
 											src="resources/img/picture.png">
-									</c:if> <c:if test="${dto.replyCount != 0}">
-										<font color="orange" size="2">[${dto.replyCount}]</font>
 									</c:if>
 								</a>
+								&nbsp;
+								<img class="media-object img-circle"style="width: 15px; height: 15px;"src="resources/img/up.png">
+								<font color="blue"size="2">${dto.upCount}</font>
+								<img class="media-object img-circle"style="width: 15px; height: 15px;"src="resources/img/down.png">
+								<font color="red"size="2">${dto.downCount}</font>
 							</form>
 						</c:forEach>
 					</p>
@@ -274,15 +318,21 @@ function findDetailPage(article_num) {
 						<form name="f1" onclick="javascript:findDetailPage('${dto.article_num}')">
 							<c:set var="tmp" value="${tmp+1 }"/>
 								<a href="free_detail.board?article_num=${dto.article_num}" class="grayA gapA">
-									<font color="#007bff">${dto.category}</font> ${dto.subject} <c:if
+									<font color="#007bff">${dto.category}</font> ${dto.subject} <c:if test="${dto.replyCount != 0}">
+										<font color="orange" size="2">[${dto.replyCount}]</font>
+									</c:if>
+									<c:if
 										test="${dto.image != '파일없음' }">
 										<img class="media-object img-circle"
 											style="width: 14px; height: 12px;"
 											src="resources/img/picture.png">
-									</c:if> <c:if test="${dto.replyCount != 0}">
-										<font color="orange" size="2">[${dto.replyCount}]</font>
-									</c:if>
+									</c:if> 
 								</a>
+								&nbsp;
+								<img class="media-object img-circle"style="width: 15px; height: 15px;"src="resources/img/up.png">
+								<font color="blue"size="2">${dto.upCount}</font>
+								<img class="media-object img-circle"style="width: 15px; height: 15px;"src="resources/img/down.png">
+								<font color="red"size="2">${dto.downCount}</font>
 							</form>
 						</c:forEach>
 					</p>
