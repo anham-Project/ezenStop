@@ -122,7 +122,9 @@ public class BoardController {
 		
 		//ModelAndView mav = new ModelAndView("board/reviewList");
 		ModelAndView mav = finishMakeModelAndView(map, reviewList, count);
-		
+		String cate = "REVIEW";
+		List<ReviewBoardDTO> noticeList = commonMapper.A_notice_list(cate);
+		mav.addObject("noticeList",noticeList);
 		mav.setViewName("board/reviewList");
 		return mav;
 		/*mav.addObject("count", count);
