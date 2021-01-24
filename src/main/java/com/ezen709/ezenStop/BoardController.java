@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
@@ -329,6 +331,7 @@ public class BoardController {
 	@RequestMapping("/review_reply_delete.board")
 	public String replyDeletePro(@RequestParam int reply_num, @RequestParam int article_num) {
 		ReplyDTO dto = replyMapper.replyDetail(reply_num);
+		dto.setContent("%$#@!");
 		replyMapper.replyDelete(reply_num, dto);
 		int replyCount = replyMapper.replyCount(article_num);
 		boardMapper.updateReplyCount(article_num, replyCount);
@@ -417,7 +420,7 @@ public class BoardController {
 		}
 		
 		}
-		System.out.println(reportList.size());
+		Collections.sort(reportList);
 		ModelAndView mav = finishMakeModelAndView(map, reportList, count);
 		
 		mav.setViewName("board/reportList");

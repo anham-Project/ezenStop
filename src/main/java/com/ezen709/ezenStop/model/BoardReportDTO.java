@@ -1,6 +1,6 @@
 package com.ezen709.ezenStop.model;
 
-public class BoardReportDTO {
+public class BoardReportDTO implements Comparable<BoardReportDTO>{
 	private int article_num;
 	private String userId;
 	private String reportContent;
@@ -49,5 +49,8 @@ public class BoardReportDTO {
 	}
 	public void setReportDate(String reportDate) {
 		this.reportDate = reportDate;
+	}
+	public int compareTo(BoardReportDTO dto) {
+		return Integer.compare(dto.getArticle_num(), this.article_num);
 	}
 }
