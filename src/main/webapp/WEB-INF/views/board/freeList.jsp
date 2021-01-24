@@ -12,12 +12,6 @@
 		}
 		return true
 	}
-	function loginPlz(){
-		alert("게시물을 확인하려면 로그인해야합니다!!")
-	}
-	function certificationPlz(){
-		alert("후기를 작성하려면 학원인증을 해야합니다!!")
-	}
 </script>
 	<h5><font size="3">이젠'sTop게시판 > </font><a href="free_list.board" class="blackA"><b>자유게시판</b></a></h5>
 <form name="f" action="free_find.board" method="post" onsubmit="return check()">
@@ -60,7 +54,6 @@
 		<tr>
 			<td align="center"><c:out value="${dto.article_num}"/></td>
 			<td align="left">			
-	<c:if test="${sessionScope.userId != null}">
 				<a class="grayA" href="free_detail.board?article_num=${dto.article_num}">
 				<font color="#007bff">${dto.category}</font> ${dto.subject}
 				<c:if test="${dto.image != '파일없음' }">
@@ -70,17 +63,6 @@
 			<font color="orange" size="2">[${dto.replyCount}]</font>
 		</c:if>
 				</a>
-	</c:if>
-	<c:if test="${sessionScope.userId == null}">
-		<a class="grayA" href="login.login" onclick="javascript:loginPlz()">${dto.category} ${dto.subject}
-		<c:if test="${dto.image != '파일없음' }">
-				<img class="media-object img-circle" style = "width: 14px; height: 12px;" src = "resources/img/picture.png">
-		</c:if>
-		<c:if test="${dto.replyCount != 0}">
-			<font color="orange" size="2">[${dto.replyCount}]</font>
-		</c:if>
-		</a>
-	</c:if>
 			</td>
 			<td align="center">
 			<c:if test="${dto.grade == 1 }">
@@ -130,30 +112,18 @@
 	</ul>
 	</div>
 	<div class="col-md-2 text-center">
-	<c:choose>
-	<c:when test="${sessionScope.userId == null}">
-	</c:when>
-	<c:when test="${sessionScope.userGrade == 1 || sessionScope.userGrade == 2}">
+	<c:if test="${sessionScope.userId != null}">
 	<a class="btn btn-secondary pull-right" href="free_write.board?id=${sessionScope.userId}">글쓰기</a>
-	</c:when>
-	<c:otherwise><a class="grayA" href="#" class="btn btn-secondary pull-right" onclick="javascript:certificationPlz()">글쓰기</a>
-	</c:otherwise>
-	</c:choose>
+	</c:if>
 	</div>
 </c:if>
 <c:if test="${count == 0}">
 	<div class="col-md-10 text-center">
 	</div>
 	<div class="col-md-2 text-center">
-	<c:choose>
-	<c:when test="${sessionScope.userId == null}">
-	</c:when>
-	<c:when test="${sessionScope.userGrade == 1 || sessionScope.userGrade == 2}">
+	<c:if test="${sessionScope.userId != null}">
 	<a class="btn btn-secondary pull-right" href="free_write.board?id=${sessionScope.userId}">글쓰기</a>
-	</c:when>
-	<c:otherwise><a class="grayA" href="#" class="btn btn-secondary pull-right" onclick="javascript:certificationPlz()">글쓰기</a>
-	</c:otherwise>
-	</c:choose>
+	</c:if>
 	</div>
 </c:if>
 	</div>
