@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
@@ -417,7 +419,7 @@ public class BoardController {
 		}
 		
 		}
-		System.out.println(reportList.size());
+		Collections.sort(reportList);
 		ModelAndView mav = finishMakeModelAndView(map, reportList, count);
 		
 		mav.setViewName("board/reportList");
