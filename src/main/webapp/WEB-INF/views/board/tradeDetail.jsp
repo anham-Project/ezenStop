@@ -168,8 +168,9 @@
 					style="padding: 5px 5px 5px ${5+dto.re_level*13}px; background-color: #F7F7F7;">
 					<div class="col-md-12" align="left">
 						<c:if test="${dto.re_level>0}">
-					&nbsp;&nbsp;&nbsp;&nbsp;
-					</c:if>
+							<img class="media-object img-circle"
+								style="width: 20px; height: 20px;" src="resources/img/reply.png">
+						</c:if>
 						<c:if test="${dto.grade == 1 }">
 							<img class="media-object img-circle"
 								style="width: 30px; height: 30px;"
@@ -189,21 +190,31 @@
 							${dto.regdate_time} | </font>
 						<c:if
 							test="${sessionScope.userId == dto.id || sessionScope.userGrade == 2}">
+							<c:if test="${dto.content != '%$#@!'}">
 							<a
 								href="javascript:deleteReply('${dto.reply_num}','${tradeDetail.article_num}');">[삭제]</a>
+							</c:if>
 						</c:if>
 					</div>
 					<div class="col-md-12" align="left">
 						<c:if test="${dto.re_level>0}">
-							<img class="media-object img-circle"
-								style="width: 20px; height: 20px;" src="resources/img/reply.png">
+						&nbsp;&nbsp;&nbsp;&nbsp;
 						</c:if>
+						<c:choose>
+						<c:when test="${dto.content == '%$#@!'}">
+						<font color="red">[요청에 의해 삭제 된 댓글입니다.]<br>&nbsp;</font>
+						</c:when>
+						<c:otherwise>
 						${dto.content}
+						</c:otherwise>
+						</c:choose>
 					</div>
+					<c:if test="${dto.content != '%$#@!'}">
 					<div class="col-md-12" align="right" id="buttontype">
 						<input type="button" class="btn btn-info btn-sm" value="답글쓰기"
 							onclick="addInput('${dto.reply_num}','${dto.id}');" />
 					</div>
+					</c:if>
 				</div>
 			</c:forEach>
 		</c:if>
@@ -220,8 +231,9 @@
 						+ "<input type='hidden' name='reply_num' value='"+num+"'>"
 						+ "<input type='button' class='btn btn-info btn-sm' value='@"+id+"' readonly>"
 						+ "<input type='button' class='btn btn-info btn-sm' value='X' onclick='deleteTag()'>"
-						+ "<textarea class='form-control' rows='2' name='content' placeholder='댓글을 남겨주세요'></textarea>"
-						+ "<input class='btn btn-secondary btn-sm' type='submit' value='댓글달기'>"
+						+ "<textarea class='form-control' rows='2' name='content' placeholder='댓글을 남겨주세요'"
+						+ "<c:if test='${empty sessionScope.userId}'>disabled</c:if>></textarea>"
+						+ "<input class='btn btn-secondary btn-sm' type='submit' value='댓글달기' <c:if test='${empty sessionScope.userId}'>disabled</c:if>>"
 						+ "</div>"
 			}
 			function deleteTag() {
@@ -232,17 +244,18 @@
 			}
 			function originReply() {
 				document.getElementById('inputReply').innerHTML = "<div class='input-group' style='padding:5px 5px 5px 5px; border:1; border-color:#F7F7F7;'>"
-						+ "<textarea class='form-control' rows='2' name='content' placeholder='댓글을 남겨주세요'></textarea>"
-						+ "<input class='btn btn-secondary btn-sm' type='submit' value='댓글달기'>"
-						+ "</div>"
+					+ "<textarea class='form-control' rows='2' name='content' placeholder='댓글을 남겨주세요'"
+					+ "<c:if test='${empty sessionScope.userId}'>disabled</c:if>></textarea>"
+					+ "<input class='btn btn-secondary btn-sm' type='submit' value='댓글달기' <c:if test='${empty sessionScope.userId}'>disabled</c:if>>"
+					+ "</div>"
 			}
 		</script>
 		<div id="inputReply">
 			<div class="input-group"
 				style="padding: 5px 5px 5px 5px; border: 1; border-color: #F7F7F7;">
 				<textarea class="form-control" rows="2" name="content"
-					placeholder="댓글을 남겨주세요"></textarea>
-				<input class="btn btn-secondary btn-sm" type="submit" value="댓글달기">
+					placeholder="댓글을 남겨주세요" <c:if test="${empty sessionScope.userId}">disabled</c:if>></textarea>
+				<input class="btn btn-secondary btn-sm" type="submit" value="댓글달기" <c:if test='${empty sessionScope.userId}'>disabled</c:if>>
 			</div>
 		</div>
 	</form>
@@ -285,18 +298,24 @@
 	}
 	</script>
 		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					게시물 신고하기
+			<div class="modal-content" style="background-color:#F8D7DA;">
+				<div class="lingBox rounded bg-light shadow" style="margin:15px;">
+				<div class="modal-header" style="margin:5px 15px 5px 15px; padding:5px;">
+					<h4><b>게시물 신고하기</b></h4>
 					<button class="close" data-dismiss="modal">&times;</button>
 				</div>
-				<div class="modal-body" style="text-align: center;">
-					신고 내용<br>
-					<textarea id="reportContent" placeholder="신고내역을 입력해주세요."
+				<div class="modal-body">
+					<div class="form-group" style="margin:5px; padding:5px;">
+					<h5><b>신고 사유</b></h5>
+					<textarea class="form-control" rows="2" id="reportContent" placeholder="신고내역을 입력해주세요."
 						style="resize: none;"></textarea>
-					<hr>
-					<button class="close btn-danger" data-dismiss="modal"
+					</div>
+					<hr/>
+					<div align="right">
+					<button class="btn btn-danger" data-dismiss="modal"
 						onclick="javascript:reportBoard()">신고하기</button>
+					</div>
+				</div>
 				</div>
 			</div>
 		</div>
