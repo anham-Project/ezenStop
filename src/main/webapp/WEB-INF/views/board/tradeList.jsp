@@ -34,7 +34,7 @@
         </div>
 	</div>
  </form>
-	<table class="table table-hover text-center">
+	<table class="table table-condensed table-hover text-center">
 	<thead>
 		<tr>
 			<th width="8%"></th>
