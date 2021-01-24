@@ -199,7 +199,7 @@
 					<c:if test="${dto.content != '%$#@!'}">
 					<div class="col-md-12" align="right" id="buttontype">
 						<input type="button" class="btn btn-info btn-sm" value="답글쓰기"
-							onclick="addInput('${dto.reply_num}','${dto.id}');" />
+							onclick="addInput('${dto.reply_num}','${dto.randomId}');" />
 					</div>
 					</c:if>
 				</div>
