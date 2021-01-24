@@ -55,11 +55,7 @@ public class ReplyMapper {
 	}
 	public void replyDelete(int reply_num, ReplyDTO dto) {
 		Map<String, String> map = new Hashtable<>();
-		String sql = "update ezen_reply set re_step = re_step + 1 where re_step <= " + dto.getRe_step() + " and "
-					+ "article_num = " + dto.getAticle_num();
-		map.put("sql", sql);
-		sqlSession.update("plusStep", map);
-		sqlSession.delete("replyDelete", dto);
+		sqlSession.update("replyDelete", dto);
 	}
 	public ReplyDTO replyDetail(int reply_num) {
 		return sqlSession.selectOne("replyDetail", reply_num);
