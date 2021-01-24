@@ -271,7 +271,7 @@
 		<script type="text/javascript">
 	function reportBoard(){
 		var reportContent = $('#reportContent').val();
-		var table = "ezen_notice_board";
+		var table = "ezen_review_board";
 		if(reportContent == null || reportContent ===""){
 			alert("신고내용을 입력하지않아 취소됩니다.");
 			return;

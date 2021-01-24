@@ -6,7 +6,7 @@
  	<select id="replyList" parameterType="java.util.Map" resultType="ReplyDTO">
 		select * 
 		from (select rownum rn, A.*
-		from (select ezen_reply.*, ezen_member.grade
+		from (select ezen_reply.*, ezen_member.grade, ezen_member.academylocation
 			 from ezen_reply, ezen_member
 			 where ezen_reply.id = ezen_member.id
 			  order by re_step asc)A) 

@@ -276,7 +276,7 @@
 					alert('신고처리 되었습니다.')
 				}else if(result === '2'){
 					alert('신고로 인해 현재 게시물은 비활성화 되었습니다.')
-					window.href="info_list.board"
+					location.href="info_list.board"
 				}else{
 					alert('신고처리 도중 에러가 발생했습니다. 관리자에게 문의하세요')
 				}

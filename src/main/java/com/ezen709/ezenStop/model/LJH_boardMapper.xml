@@ -8,7 +8,7 @@
 		from(
 				select rownum rn, A.*
 				from(
-						select B.* , ezen_member.grade
+						select B.* , ezen_member.grade, ezen_member.academylocation
 						from ${tableName} B, ezen_member
 						where ((B.id = ezen_member.id) and (B.visible = 1))
 						order by B.article_num desc)A
