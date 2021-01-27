@@ -138,6 +138,9 @@
  	<select id="getTableHasLocation" resultType="String">
  		select TABLE_NAME from user_tab_columns where column_name = 'DETAILLOCATION'
  	</select>
+ 	<select id="getTableHasArticle_num" resultType="String">
+ 		select TABLE_NAME from user_tab_columns where column_name = 'ARTICLE_NUM'
+ 	</select>
  	<select id="getLocation" parameterType="java.util.Map" resultType="String">
  		select detaillocation from ${tableName} where article_num = to_number(#{article_num})
  	</select>
@@ -221,4 +224,7 @@
  	<select id="checkAnonymousInsert" parameterType="java.util.Map" resultType="Integer">
  		select count(*) from anonymous_board where article_num = #{article_num} and id = #{id}
  	</select>
+ 	<delete id="deleteHasArticle_num" parameterType="java.util.Map">
+ 		delete from ${tableName} where article_num = #{article_num}
+ 	</delete>
 </mapper>

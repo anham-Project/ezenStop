@@ -140,7 +140,6 @@ public class LoginController {
 	@RequestMapping(value="/sign_up_ok.login", method=RequestMethod.POST)
 	public ModelAndView sign_up_ok(HttpServletRequest req, @ModelAttribute Ezen_memberDTO dto, BindingResult result) {
 		if(result.hasErrors()) {
-			System.out.println("예외처리");
 		}
 		dto.setAcademyLocation("none");
 		dto.setGrade(0);
@@ -216,7 +215,6 @@ public class LoginController {
 	public void email_check(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 		String email = req.getParameter("email");
 		String res = String.valueOf(loginMapper.emailCheck(email));
-		System.out.println(res);
 		resp.getWriter().write(res);
 	}
 
@@ -390,10 +388,8 @@ public class LoginController {
 				loginMapper.update_certification(id,academy,file_name,filesize);//회원 인증 신청 db에 update
 				msg = "인증 수정완료";
 				}catch (IllegalStateException e) {
-					System.out.println("status>0일때 오류");
 					e.printStackTrace();
 				} catch (IOException e) {
-					System.out.println("status>0일때 오류");
 					e.printStackTrace();
 				}
 			}

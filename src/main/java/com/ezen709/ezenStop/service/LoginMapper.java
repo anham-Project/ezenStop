@@ -74,6 +74,7 @@ public class LoginMapper {
 		return al;
 	}
 	public void dropId(String id) {
+		
 		sqlSession.delete("dropId",id);
 	}
 	public void dropChat(String id) {
