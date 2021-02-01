@@ -24,7 +24,7 @@
     <div id="mycer"><a class="nav-link" data-toggle="tab" href="certification.login">학생 인증 신청</a></div>
   </li>
   <li class="nav-item">
-    <div id="mydrop"><a class="nav-link" data-toggle="tab" href="blockList.login">차단 목록</a></div>
+    <div id="mydrop"><a class="nav-link" data-toggle="tab" href="blockList.login?id=${sessionScope.userId}">차단 목록</a></div>
   </li>
    <li class="nav-item">
     <div id="mydrop"><a class="nav-link" data-toggle="tab" href="dropId.login">회원탈퇴</a></div>

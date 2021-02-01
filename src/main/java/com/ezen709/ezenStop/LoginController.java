@@ -221,7 +221,7 @@ public class LoginController {
 	}
 
 	@RequestMapping("/email_confirm.login") //인증번호 발송 
-	public ModelAndView email_confirm(HttpServletRequest request, ModelMap mo) throws Exception{
+	public ModelAndView email_confirm(HttpServletRequest request) throws Exception{
 			ModelAndView mav = new ModelAndView("login/email_ok");
 			String toEmail = request.getParameter("email"); // 받는사람메일
 		try {
@@ -478,7 +478,7 @@ public class LoginController {
 		return mav;
 	}
 	@RequestMapping("/myBoard_find.board")
-	public ModelAndView search_myBoard(HttpServletRequest req, HttpServletResponse resp) {
+	public ModelAndView search_myBoard(HttpServletRequest req) {
 		String searchType = req.getParameter("searchType");
 		String searchString = "%"+req.getParameter("searchString")+"%";
 		String id = req.getParameter("id");
@@ -499,5 +499,51 @@ public class LoginController {
 	        return pa;
 	    }
 	}
-	
+	@RequestMapping("/blockList.login")
+	public ModelAndView blockList(@RequestParam String id,HttpServletRequest req) {
+		String pageNum = req.getParameter("pageNum");
+		if (pageNum == null) {
+			pageNum = "1";
+		}
+		int pageSize = 5;
+		int currentPage = Integer.parseInt(pageNum);
+		int startRow = pageSize * currentPage - (pageSize - 1);
+		int endRow = pageSize * currentPage;
+		Map<String,Integer> map = new Hashtable<>();
+		map.put("currentPage", currentPage);
+		map.put("startRow", startRow);
+		map.put("endRow", endRow);
+		map.put("pageSize", pageSize);
+		int count = loginMapper.myBlockListCount(id);
+		setEndRowWhenCountIsLessThanEndRow(map, count);
+		List<BlockDTO> list = loginMapper.blockList(id,map.get("startRow"),map.get("endRow"));
+		ModelAndView mav = finishMakeModelAndView(map, list, count);
+		mav.setViewName("login/blockList");
+		return mav;
+	}
+	@RequestMapping("blockList_search.login")
+	public ModelAndView search_blockList(HttpServletRequest req) {
+		String searchType = req.getParameter("searchType");
+		String searchString = "%"+req.getParameter("searchString")+"%";
+		String id = req.getParameter("id");
+		String pageNum = req.getParameter("pageNum");
+		if (pageNum == null) {
+			pageNum = "1";
+		}
+		int pageSize = 5;
+		int currentPage = Integer.parseInt(pageNum);
+		int startRow = pageSize * currentPage - (pageSize - 1);
+		int endRow = pageSize * currentPage;
+		Map<String,Integer> map = new Hashtable<>();
+		map.put("currentPage", currentPage);
+		map.put("startRow", startRow);
+		map.put("endRow", endRow);
+		map.put("pageSize", pageSize);
+		int count = loginMapper.search_myBlockListCount(id,searchType,searchString);
+		setEndRowWhenCountIsLessThanEndRow(map, count);
+		List<BlockDTO> list = loginMapper.search_blockList(id,searchType,searchString,map.get("startRow"),map.get("endRow"));
+		ModelAndView mav = finishMakeModelAndView(map, list, count);
+		mav.setViewName("login/blockList");
+		return mav;
+	}
 }

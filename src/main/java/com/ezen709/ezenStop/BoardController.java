@@ -327,7 +327,7 @@ public class BoardController {
 		dto.setAticle_num(article_num);
 		int res = replyMapper.insertReply(dto);
 		int replyCount = replyMapper.replyCount(dto.getArticle_num());
-		boardMapper.updateReplyCount(dto.getArticle_num(), replyCount);
+		boardMapper.updateReplyCount("ezen_review_board",dto.getArticle_num(), replyCount);
 		return "redirect:review_detail.board?article_num="+article_num;
 	}
 	@RequestMapping("/review_reply_delete.board")
@@ -336,7 +336,7 @@ public class BoardController {
 		dto.setContent("%$#@!");
 		replyMapper.replyDelete(reply_num, dto);
 		int replyCount = replyMapper.replyCount(article_num);
-		boardMapper.updateReplyCount(article_num, replyCount);
+		boardMapper.updateReplyCount("ezen_review_board",article_num, replyCount);
 		return "redirect:review_detail.board?article_num="+article_num;
 	}
 	@RequestMapping("/getWriterGrade.board")
@@ -398,7 +398,7 @@ public class BoardController {
 			dto.setAticle_num(article_num);
 			replyMapper.insertReply(dto);
 			int replyCount = replyMapper.replyCount(dto.getArticle_num());
-			boardMapper.updateReplyCount(dto.getArticle_num(), replyCount);
+			boardMapper.updateReplyCount(table,dto.getArticle_num(), replyCount);
 		}
 		resp.getWriter().write(res);
 		
@@ -752,11 +752,12 @@ public class BoardController {
 	}
 	@RequestMapping("/campus_reply_delete.board")
 	public String campusDeletePro(@RequestParam int reply_num, @RequestParam int article_num, @RequestParam int where) {
+		String table ="ezen_campus_board";
 		ReplyDTO dto = replyMapper.replyDetail(reply_num);
 		dto.setContent("%$#@!");
 		replyMapper.replyDelete(reply_num, dto);
 		int replyCount = replyMapper.replyCount(article_num);
-		boardMapper.updateReplyCount(article_num, replyCount);
+		boardMapper.updateReplyCount(table,article_num, replyCount);
 		return "redirect:campus_detail.board?article_num="+article_num+"&where=" +where;
 	}
 }

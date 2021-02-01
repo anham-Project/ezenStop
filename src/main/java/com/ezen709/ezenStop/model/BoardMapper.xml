@@ -57,7 +57,7 @@
  		where article_num = #{article_num}
  	</update>
  	<update id="updateReplyCount" parameterType="java.util.Map">
- 		update ezen_review_board 
+ 		update ${tableName}
  		set replycount = #{replyCount} 
  		where article_num = #{article_num}
  	</update>

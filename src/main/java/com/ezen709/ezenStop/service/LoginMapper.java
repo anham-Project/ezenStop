@@ -225,6 +225,32 @@ public class LoginMapper {
 		}
 		return sortedList;
 	}
-
-
+	public int myBlockListCount(String id) {
+		return sqlSession.selectOne("myBlockListCount",id);
+	}
+	public List<BlockDTO> blockList(String id, int start, int end){
+		Map<String,Object> map = new Hashtable<>();
+		map.put("id",id);
+		map.put("start", start);
+		map.put("end", end);
+		List<BlockDTO> list = sqlSession.selectList("blockList",map);
+		return list;
+	}
+	public int search_myBlockListCount(String id,String searchType,String searchString) {
+		Map<String,String> map = new Hashtable<>();
+		map.put("id",id);
+		map.put("searchType",searchType);
+		map.put("searchString",searchString);
+		return sqlSession.selectOne("search_myBlockListCount",map);
+	}
+	public List<BlockDTO> search_blockList(String id,String searchType,String searchString,int start, int end){
+		Map<String,Object> map = new Hashtable<>();
+		map.put("id",id);
+		map.put("searchType",searchType);
+		map.put("searchString",searchString);
+		map.put("start", start);
+		map.put("end", end);
+		List<BlockDTO> list = sqlSession.selectList("search_blockList",map);
+		return list;
+	}
 }
