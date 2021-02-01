@@ -32,6 +32,27 @@
 		where category = 'ALL'
 		order by article_num desc
 	</select>
+	
+	<select id="A_replyList" parameterType="java.util.Map" resultType="ReplyDTO">
+		select * 
+		from (select rownum rn, A.*
+		from (select ezen_reply.*, ezen_member.grade, ezen_member.academylocation
+			 from ezen_reply, ezen_member
+			 where ezen_reply.id = ezen_member.id and parent_num=0
+			  order by reply_num asc)A) 
+		where article_num = #{article_num}
+ 	</select>
+ 	
+ 	<select id="re_replyList" parameterType="java.util.Map" resultType="ReplyDTO">
+		select * 
+		from (select rownum rn, A.*
+		from (select ezen_reply.*, ezen_member.grade, ezen_member.academylocation
+			 from ezen_reply, ezen_member
+			 where ezen_reply.id = ezen_member.id and ezen_reply.parent_num= #{parent_num}
+			  order by reply_num asc)A) 
+		where article_num = #{article_num}
+ 	</select>
+ 	
  	<select id="A_getCount" parameterType="java.util.Map" resultType="Integer">
  		select count(*) from ${tableName}
  	</select>
@@ -90,6 +111,12 @@
  		set visible = (visible * -1)
  		where article_num = #{article_num}
  	</update>
+ 	
+ 	<insert id="A_insertReply" parameterType="ReplyDTO">
+ 		insert into ezen_reply 
+ 		values (ezen_reply_seq.nextval, #{article_num}, #{re_step}, #{re_level}, #{parent_num},
+ 		 #{id}, #{content}, to_char(sysdate,'yyyy-mm-dd'), to_char(sysdate,'hh24:mi'))
+ 	</insert>
  	
  	<update id="A_updateReplyCount" parameterType="java.util.Map">
  		update ${tableName}

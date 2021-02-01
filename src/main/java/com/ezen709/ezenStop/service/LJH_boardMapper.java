@@ -156,4 +156,19 @@ public class LJH_boardMapper {
 			sqlSession.delete("deleteHasArticle_num", map);
 		}
 	}
+	public int insertReply(ReplyDTO dto) {
+		int res = sqlSession.insert("A_insertReply", dto);
+		return res;
+	}
+	public List<ReplyDTO> replyList(int article_num){
+		Map<String, Integer> map = new Hashtable<>();
+		map.put("article_num", article_num);
+		return sqlSession.selectList("A_replyList", map);
+	}
+	public List<ReplyDTO> re_replyList(int article_num, int reply_num){
+		Map<String, Integer> map = new Hashtable<>();
+		map.put("article_num", article_num);
+		map.put("parent_num", reply_num);
+		return sqlSession.selectList("re_replyList", map);
+	}
 }

@@ -283,7 +283,7 @@ public class LJH_boardController {
 		int res = boardMapper.A_insert(dto,table);
 		return "redirect:trade_list.board";
 	}
-	@RequestMapping("/trade_detail.board")
+/*	@RequestMapping("/trade_detail.board")
 	public ModelAndView tradeDetail(@RequestParam int article_num) {
 		String table = "ezen_trade_board";
 		boardMapper.A_plusReadCount(article_num,table);
@@ -295,6 +295,7 @@ public class LJH_boardController {
 		mav.addObject("replyList",replyList);
 		return mav;
 	}
+	*/
 	@RequestMapping(value="/trade_edit.board", method=RequestMethod.GET)
 	public ModelAndView tradeEdit(@RequestParam int article_num) {
 		String table = "ezen_trade_board";
@@ -396,7 +397,7 @@ public class LJH_boardController {
 		return "redirect:trade_detail.board?article_num="+article_num;
 	}
 	@RequestMapping("/trade_reply_write.board")
-	public String replyWritePro(@RequestParam int article_num, HttpServletRequest req,
+	public String trade_replyWritePro(@RequestParam int article_num, HttpServletRequest req,
 			@RequestParam String id, @RequestParam String content) {
 		ReplyDTO dto = new ReplyDTO();
 		int reply_num = 0;
@@ -624,4 +625,56 @@ public class LJH_boardController {
 		boardMapper.A_updateReplyCount(dto.getArticle_num(), replyCount, table);
 		return "redirect:info_detail.board?article_num="+article_num;
 	}
+/*	@RequestMapping("/trade_reply_write.board")
+	public String test_replyWritePro(@RequestParam int article_num, HttpServletRequest req,
+			@RequestParam String id, @RequestParam String content) {
+		ReplyDTO dto = new ReplyDTO();
+		int reply_num = 0;
+		if(StringUtils.isEmpty(req.getParameter("reply_num"))) {
+			dto.setRe_step(0);
+			dto.setRe_level(0);
+			dto.setParent_num(0);
+		}else {
+			reply_num = Integer.parseInt(req.getParameter("reply_num"));
+			ReplyDTO dto2 = replyMapper.replyDetail(reply_num);
+			dto.setRe_level(dto2.getRe_level()+1);
+			dto.setParent_num(reply_num);
+		}
+		dto.setId(id);
+		dto.setContent(content);
+		dto.setReply_num(reply_num);
+		dto.setAticle_num(article_num);
+		int res = boardMapper.insertReply(dto);
+		int replyCount = replyMapper.replyCount(dto.getArticle_num());
+		String table = "ezen_trade_board";
+		boardMapper.A_updateReplyCount(dto.getArticle_num(), replyCount, table);
+		return "redirect:trade_detail.board?article_num="+article_num;
+	}
+	*/
+	@RequestMapping("/trade_detail.board")
+	public ModelAndView testDetail(@RequestParam int article_num) {
+		String table = "ezen_trade_board";
+		boardMapper.A_plusReadCount(article_num,table);
+		List<ReplyDTO> replyList = boardMapper.replyList(article_num);
+		List<ReplyDTO> re_replyList;
+		List<ReplyDTO> list = new ArrayList<>();
+		for(int i=0; i<replyList.size(); i++) {
+			ReplyDTO dto = replyList.get(i);
+			int reply_num = dto.getReply_num();
+			re_replyList = boardMapper.re_replyList(article_num, reply_num);
+			list.add(dto);
+			for(int j = 0 ; j<re_replyList.size(); j++) {
+				list.add(re_replyList.get(j));
+				System.out.println(list.size());
+			}
+		}
+		ReviewBoardDTO noticeDetail = boardMapper.A_detail(article_num,table);
+		ModelAndView mav = new ModelAndView("board/tradeDetail");
+		mav.addObject("uploadPath", uploadPath);
+		mav.addObject("tradeDetail", noticeDetail);
+		mav.addObject("replyList",list);
+		System.out.println(list.size());
+		return mav;
+	}
+	
 }
