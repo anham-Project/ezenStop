@@ -147,4 +147,13 @@ public class LJH_boardMapper {
 		dto.setUserId(userId);
 		return sqlSession.selectOne("A_checkUserUpDown", dto);
 	}
+	public void A_AllDelete(int article_num) {
+		List<String> tableList = sqlSession.selectList("getTableHasArticle_num");
+		for(String tableName : tableList) {
+			Map<String,Object> map = new Hashtable<>();
+			map.put("article_num", article_num);
+			map.put("tableName", tableName);
+			sqlSession.delete("deleteHasArticle_num", map);
+		}
+	}
 }

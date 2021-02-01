@@ -60,8 +60,8 @@
        }
        if(f.passwd.value != f.checkpasswd.value) {
            alert("비밀번호가 다릅니다. 다시 확인해 주세요.");
-           join.checkpasswd.value = "";
-           join.checkpasswd.focus();
+           f.checkpasswd.value = "";
+           f.checkpasswd.focus();
            return false;
        }
        if(f.idCheck.value == "false"){

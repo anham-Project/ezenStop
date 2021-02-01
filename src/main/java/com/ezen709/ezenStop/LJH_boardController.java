@@ -195,7 +195,6 @@ public class LJH_boardController {
 	public String noticeDelete(@RequestParam int article_num) {
 		String table = "ezen_notice_board";
 		ReviewBoardDTO noticeDetail = boardMapper.A_detail(article_num,table);
-		System.out.println(noticeDetail.getArticle_num()+"<글번호 파일크기>"+noticeDetail.getFilesize());
 		if(noticeDetail.getFilesize() == 0) {
 			boardMapper.A_delete(article_num,table);
 		}
@@ -350,13 +349,14 @@ public class LJH_boardController {
 	public String tradeDelete(@RequestParam int article_num) {
 		String table = "ezen_trade_board";
 		ReviewBoardDTO noticeDetail = boardMapper.A_detail(article_num,table);
-		System.out.println(noticeDetail.getArticle_num()+"<글번호 파일크기>"+noticeDetail.getFilesize());
 		if(noticeDetail.getFilesize() == 0) {
 			boardMapper.A_delete(article_num,table);
+			boardMapper.A_AllDelete(article_num);
 		}
 		else{
 			String image = noticeDetail.getImage();
 			int res = boardMapper.A_delete(article_num,table);
+			boardMapper.A_AllDelete(article_num);
 			if(res>0) {
 				File target = new File(uploadPath, image);
 				noticeDetail.setFilesize(0);
@@ -549,7 +549,6 @@ public class LJH_boardController {
 	public String infoDelete(@RequestParam int article_num) {
 		String table = "ezen_info_board";
 		ReviewBoardDTO noticeDetail = boardMapper.A_detail(article_num,table);
-		System.out.println(noticeDetail.getArticle_num()+"<글번호 파일크기>"+noticeDetail.getFilesize());
 		if(noticeDetail.getFilesize() == 0) {
 			boardMapper.A_delete(article_num,table);
 		}

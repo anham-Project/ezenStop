@@ -145,9 +145,6 @@ public class BoardController {
 		String[] reviewAddr;
 		if(location.equals("2")){
 			reviewAddr = campusModel.getLocationList();
-			for(int i = 0; i < reviewAddr.length; i++) {
-				System.out.println(reviewAddr[i]+", ");
-			}
 			mav.addObject("reviewAddr", reviewAddr);
 		}else if(location.equals("1")) {
 			location = loginMapper.getIdLocation(reply_id);

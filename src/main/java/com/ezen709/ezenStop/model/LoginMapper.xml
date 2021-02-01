@@ -118,7 +118,7 @@
  		delete from chat where toid=#{id} or fromid=#{id}
  </delete>
  <delete id="dropImage" parameterType="String">
- 		delete from ezen_certification where id = ${id}
+ 		delete from ezen_certification where id = #{id}
  </delete>
  </mapper>
  

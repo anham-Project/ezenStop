@@ -27,23 +27,24 @@ function validate() {
         email.focus();
         return false;
     }
-    //if(!check(re2, email, "적합하지 않은 이메일 형식입니다.")) {
-    //    return false;
-    //}
+    if(!check(re2, email, "적합하지 않은 이메일 형식입니다.")) {
+        return false;
+    }
     alert(email_check())
 }
 function email_check(){
 	var email = $('#email').val();
-	//var re2 =  /^[A-Za-z0-9_]+[A-Za-z0-9]*[@]{1}[A-Za-z0-9]+[A-Za-z0-9]*[.]{1}[A-Za-z]{1,3}$/;
+	var email2 = document.getElementById("email");
+	var re2 =  /^[A-Za-z0-9_]?[A-Za-z0-9]*[@]{1}[A-Za-z0-9]?[A-Za-z0-9]*[.]{1}[A-Za-z]{1,3}$/;
     // ------------ 이메일 까지 -----------
     if(f.email.value=="") {
         alert("이메일을 입력해 주세요");
         email.focus();
         return;
     }
-    //if(!check(re2, email, "적합하지 않은 이메일 형식입니다.")) {
-    //    return false;
-    //}
+    if(!check(re2, email2, "적합하지 않은 이메일 형식입니다.")) {
+        return false;
+    }
 	$.ajax({
 		type : "POST",
 		url : "email_check.login",
