@@ -42,11 +42,18 @@ public class ReplyMapper {
 		Map<String, Integer> map = new Hashtable<>();
 		map.put("parent_num", parent_num);
 		map.put("article_num", article_num);
-		if(sqlSession.selectOne("replyMaxRe_step", map) == null) {
-			return 0;
-		}else {
-			return sqlSession.selectOne("replyMaxRe_step", map);
+		try {
+		int res =sqlSession.selectOne("replyMaxRe_step", map);
+		System.out.println("max : "+res);
+		return res;
+		}catch(Exception e) {
+			return 1;
 		}
+//		if(sqlSession.selectOne("replyMaxRe_step", map) == null) {
+//			return 0;
+//		}else {
+//			return sqlSession.selectOne("replyMaxRe_step", map);
+//		}
 	}
 	public int replyCount(int article_num) {
 		Map<String, Integer> map = new Hashtable<>();

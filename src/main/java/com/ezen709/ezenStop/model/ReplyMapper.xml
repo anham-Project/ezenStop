@@ -48,6 +48,6 @@
  	<select id="replyMaxRe_step" parameterType="java.util.Map" resultType="Integer">
  		select max(re_step) 
  		from ezen_reply 
- 		where parent_num != 0 and parent_num >= #{parent_num} and article_num = #{article_num}
+ 		where parent_num = #{parent_num} and article_num = #{article_num}
  	</select>
 </mapper>

@@ -203,6 +203,12 @@
 								href="javascript:deleteReply('${dto.reply_num}','${freeDetail.article_num}');">[삭제]</a>
 							</c:if>
 						</c:if>
+							<c:if test="${dto.content != '%$#@!'}">
+							<c:if test="${dto.re_level == 0}">
+								<input type="button" class="btn btn-info btn-sm" align="right"value="답글쓰기"
+									onclick="addInput('${dto.reply_num}','${dto.id}');" />
+							</c:if>
+							</c:if>
 					</div>
 					<div class="col-md-12" align="left">
 						<c:if test="${dto.re_level>0}">
@@ -217,12 +223,7 @@
 						</c:otherwise>
 						</c:choose>
 					</div>
-					<c:if test="${dto.content != '%$#@!'}">
-					<div class="col-md-12" align="right" id="buttontype">
-						<input type="button" class="btn btn-info btn-sm" value="답글쓰기"
-							onclick="addInput('${dto.reply_num}','${dto.id}');" />
-					</div>
-					</c:if>
+					
 				</div>
 			</c:forEach>
 		</c:if>

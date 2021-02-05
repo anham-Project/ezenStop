@@ -409,7 +409,7 @@ public class LJH_boardController {
 			reply_num = Integer.parseInt(req.getParameter("reply_num"));
 			ReplyDTO dto2 = replyMapper.replyDetail(reply_num);
 			int re_step = replyMapper.replyMaxRe_step(reply_num, article_num);
-			if(re_step == 0) {
+			if(re_step == 1) {
 				dto.setRe_step(dto2.getRe_step());
 			}else {
 				dto.setRe_step(re_step);
@@ -607,7 +607,7 @@ public class LJH_boardController {
 			reply_num = Integer.parseInt(req.getParameter("reply_num"));
 			ReplyDTO dto2 = replyMapper.replyDetail(reply_num);
 			int re_step = replyMapper.replyMaxRe_step(reply_num, article_num);
-			if(re_step == 0) {
+			if(re_step == 1) {
 				dto.setRe_step(dto2.getRe_step());
 			}else {
 				dto.setRe_step(re_step);
