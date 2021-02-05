@@ -83,6 +83,18 @@
  <select id="search_myBoard" parameterType="java.util.Map" resultType="reviewBoardDTO"> 
  	select *  FROM ${tableName} where id = #{id} and ${searchType} like #{searchString}
  </select> 
+ <select id="myBlockListCount" parameterType="String" resultType="Integer">
+ 		select count(*) from ezen_block where id=#{id}
+ </select>
+ <select id="blockList" parameterType="java.util.Map" resultType="blockDTO">
+ 		select * from ezen_block where id=#{id}
+ </select>
+  <select id="search_myBlockListCount" parameterType="java.util.Map" resultType="Integer">
+ 		select count(*) from ezen_block where id=#{id} and ${searchType} like #{searchString}
+ </select>
+ <select id="search_blockList" parameterType="java.util.Map" resultType="blockDTO">
+ 		select * from ezen_block where id=#{id} and ${searchType} like #{searchString}
+ </select>
  
  
  <update id="change_passwd" parameterType="java.util.Map">

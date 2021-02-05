@@ -48,8 +48,9 @@ public class BoardMapper {
 	public void plusReadCount(int article_num) {
 		sqlSession.update("plusReadCount", article_num);
 	}
-	public void updateReplyCount(int article_num, int replyCount) {
-		Map<String, Integer> map = new Hashtable<>();
+	public void updateReplyCount(String table,int article_num, int replyCount) {
+		Map<String, Object> map = new Hashtable<>();
+		map.put("tableName", table);
 		map.put("article_num", article_num);
 		map.put("replyCount", replyCount);
 		sqlSession.update("updateReplyCount", map);
