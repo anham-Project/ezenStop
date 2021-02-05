@@ -175,7 +175,7 @@
 			<c:forEach var="dto" items="${replyList}">
 				<div class="row"
 					style="padding: 5px 5px 5px ${5+dto.re_level*13}px; background-color: #F7F7F7;">
-					<div class="col-md-12" align="left">
+					<div class="col-md-6"  style="padding:5px" align="left">
 						<c:if test="${dto.re_level>0}">
 							<img class="media-object img-circle"
 								style="width: 20px; height: 20px;" src="resources/img/reply.png">
@@ -203,13 +203,16 @@
 								href="javascript:deleteReply('${dto.reply_num}','${freeDetail.article_num}');">[삭제]</a>
 							</c:if>
 						</c:if>
+					</div>
 							<c:if test="${dto.content != '%$#@!'}">
 							<c:if test="${dto.re_level == 0}">
-								<input type="button" class="btn btn-info btn-sm" align="right"value="답글쓰기"
-									onclick="addInput('${dto.reply_num}','${dto.id}');" />
+								<div class="col-md-6" style="padding:5px"align="right" id="buttontype">
+									<input type="button" class="btn btn-info btn-sm" value="답글쓰기"
+										onclick="addInput('${dto.reply_num}','${dto.id}');" />
+								</div>
 							</c:if>
 							</c:if>
-					</div>
+					
 					<div class="col-md-12" align="left">
 						<c:if test="${dto.re_level>0}">
 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
