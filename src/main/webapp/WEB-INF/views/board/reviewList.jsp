@@ -67,8 +67,13 @@
 				</a>
 			</td>
 			<td align="center">
-				<img class="media-object img-circle" style = "width: 30px; height: 30px;" src = "resources/img/2.png">
-			<font style="color:#FF0000;  font-weight:bold;">${dto.id}</font>
+				<img class="media-object img-circle" style = "width: 30px; height: 30px; float:left;" src = "resources/img/2.png">
+				<a class="btn btn-default dropdown" data-toggle="dropdown"  style="padding:0; margin:0;"> 
+					<font style="color:#FF0000;  font-weight:bold;">${dto.id}</font>
+				</a>
+					<div class="dropdown-menu">
+						<a class="dropdown-item" href="">작성글검색</a>
+					</div>
 			</td>
 			<td align="center">${dto.regdate}</td>
 			<td align="center">${dto.readCount}</td>
@@ -108,14 +113,28 @@
 			</td>
 			<td align="center">
 			<c:if test="${dto.grade == 1 }">
-			<img class="media-object img-circle" style = "width: 30px; height: 30px;" src = "resources/img/${dto.academyLocation}.png">
+			<img class="media-object img-circle" style = "width: 30px; height: 30px; float:left;" src = "resources/img/${dto.academyLocation}.png">
 			</c:if>
 			<c:if test="${dto.grade != 1 }">
-			<img class="media-object img-circle" style = "width: 30px; height: 30px;" src = "resources/img/${dto.grade }.png">
+			<img class="media-object img-circle" style = "width: 30px; height: 30px; float:left;" src = "resources/img/${dto.grade }.png">
 			</c:if>
 			<c:choose>
-					<c:when test="${dto.grade==2}"><font style="color:#FF0000;  font-weight:bold;">${dto.id}</font></c:when>
-					<c:otherwise>${dto.id}</c:otherwise>
+					<c:when test="${dto.grade==2}">
+						<a class="btn btn-default dropdown" data-toggle="dropdown"  style="padding:0; margin:0;"> 
+							<font style="color:#FF0000;  font-weight:bold;">${dto.id}</font>
+						 </a>
+						<div class="dropdown-menu">
+							 <a class="dropdown-item" href="">작성글검색</a>
+						</div>
+					</c:when>
+					<c:otherwise>
+						<a class="btn btn-default dropdown" data-toggle="dropdown" style="padding:0; margin:0;"> ${dto.id} </a>
+						<div class="dropdown-menu">
+							 <a class="dropdown-item" href="">정보보기</a>
+							 <a class="dropdown-item" href="">친구등록</a>
+							 <a class="dropdown-item" href="">차단하기</a>
+							 <a class="dropdown-item" href="">작성글검색</a>
+						</div></c:otherwise>
 				</c:choose></td>
 			<td align="center">${dto.regdate}</td>
 			<td align="center">${dto.readCount}</td>
