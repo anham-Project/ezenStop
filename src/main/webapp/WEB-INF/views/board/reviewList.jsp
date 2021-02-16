@@ -18,12 +18,12 @@
 	function certificationPlz(){
 		alert("후기를 작성하려면 학원인증을 해야합니다!!")
 	}
-	function block(blockId){
+	function block(id,blockId){
 		var popupWidth = 704;
 		var popupHeight = 450;
 		var popupX = (window.screen.width / 2) - (popupWidth / 2);
 		var popupY= (window.screen.height / 2) - (popupHeight / 2);
-		window.open('addBlock.login?id=${sessionScope.userId}?blockId='+blockId, "이메일 인증", 'status=no, height=' + popupHeight  + ', width=' + popupWidth  + ', left='+ popupX + ', top='+ popupY)
+		window.open('addBlock.login?id='+id+'&blockId='+blockId, "이메일 인증", 'status=no, height=' + popupHeight  + ', width=' + popupWidth  + ', left='+ popupX + ', top='+ popupY)
 	}
 </script>
 	<h5><font size="3">이젠'sTop게시판 > </font><a href="review_list.board" class="blackA"><b>지역별 수강후기 게시판</b></a></h5>
@@ -139,7 +139,7 @@
 						<div class="dropdown-menu">
 							 <a class="dropdown-item" href="">정보보기</a>
 							 <a class="dropdown-item" href="">친구등록</a>
-							 <a class="dropdown-item" href="javascript:block('${dto.id}')">차단하기</a>
+							 <a class="dropdown-item" href="javascript:block('${sessionScope.userId}','${dto.id}')">차단하기</a>
 							 <a class="dropdown-item" href="">작성글검색</a>
 						</div></c:otherwise>
 				</c:choose></td>

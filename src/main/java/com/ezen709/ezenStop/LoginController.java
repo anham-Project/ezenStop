@@ -542,4 +542,14 @@ public class LoginController {
 		mav.setViewName("login/blockList");
 		return mav;
 	}
+	@RequestMapping("addBlock.login")
+	public ModelAndView block_user(HttpServletRequest req) {
+		String blockId = req.getParameter("blockId");
+		String id = req.getParameter("id");
+		ModelAndView mav = new ModelAndView("login/block_user");
+		System.out.print(id);
+		mav.addObject("id",id);
+		mav.addObject("blockId",blockId);
+		return mav;
+	}
 }
