@@ -34,31 +34,6 @@
 			alert.hide()
 		}, delay);
 	}
-	function submitFunction() {
-		var fromId = '${userId}';
-		var toId = '${toId}';
-		var chatContent = $('#chatContent').val();
-		$.ajax({
-			type : "POST",
-			url : "chatSubmit.chat",
-			contentType: 'application/x-www-form-urlencoded; charset=euc-kr',
-			data : {
-				fromId : encodeURIComponent(fromId),
-				toId : encodeURIComponent(toId),
-				chatContent : chatContent,
-			},
-			success : function(result) {
-				if (result = 1) {
-					autoClosingAlert('#successMessage', 2000);
-				} else if (result = 0) {
-					autoClosingAlert('#dangerMessage', 2000);
-				} else {
-					autoClosingAlert('#warningMessage', 2000);
-				}
-			}
-		})
-		$('#chatContent').val('');
-	}
 	var lastId = 0;
 	function chatListFunction(type) {
 		var fromId = '${userId}';

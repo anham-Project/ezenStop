@@ -1,8 +1,97 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
 	pageEncoding="EUC-KR"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.5/sockjs.min.js"></script>
 <jsp:include page="../header.jsp" />
-
+<script type="text/javascript">
+	
+	var ws;
+	var userId = '${sessionScope.userId}' //사용자의 아이디
+	var toId = '${sessionScope.toId}'	//받는 회원의 아이디
+	
+	function connect(){
+		//웹소켓 객체 생성
+		//핸들러 등록(연결 생성, 메세지 수신, 연결 종료)
+		
+		//url 연결할 서버의 경로
+		ws = new WebSocket('ws://localhost:8081/ezenStop/echo/')
+		
+		ws.onopen = function(){
+			console.log('연결 생성');
+			register();
+		};
+		ws.onmessage = function(e){
+			console.log('메세지 받음');
+			var data = e.data;
+			//alert("받은메세지 :" + data);
+			addMsg(data);
+		};
+		ws.onclose = function(){
+			console.log('연결 끊김');
+		};
+	}
+	
+	function addMsg(msg){ //원래 채팅 메세지에 방금 받은 메세지 더해서 설정하기
+		var chat = $('#msgArea').val();
+		chat = chat + "\n상대방 : " + msg;
+		$('#msgArea').val(chat);
+	}
+	function register(){ //메세지 수신을 위한 서버에 id 등록하기
+		var msg = {
+				type : "register", //메세지 구분하는 구분자 - 상대방 아이디와 메세지 포함해서 보냄
+				userId : userId
+		};
+		ws.send(JSON.stringfy(msg));
+	}
+	function sendMsg(){
+		//var msg = $("#chatMsg").val();
+		//ws.send(userId + " : " + msg);
+		var msg = {
+				type : "chat", //메세지 구분하는 구분자 - 상대방 아이디와 메세지 포함해서 보냄
+				target : toId
+				message = $("#chatMsg").val()
+		};
+		ws.send(JSON.stringify(msg));
+	}
+	
+	//페이지가 로딩되면 connect 실행
+	$(function(){
+		connect();
+		$('#btnSend').on("click",function(){
+			var chat = $("#msgArea").val();
+			chat = chat + "\n나 : "+$("#chatMsg").val();
+			$("#msgArea").val(chat);
+			sendMsg();
+			$("#chatMsg").val("");
+		})
+	});
+	function submitFunction() {
+		var fromId = '${userId}';
+		var toId = '${toId}';
+		var chatContent = $('#chatContent').val();
+		$.ajax({
+			type : "POST",
+			url : "chatSubmit.chat",
+			contentType: 'application/x-www-form-urlencoded; charset=euc-kr',
+			data : {
+				fromId : encodeURIComponent(fromId),
+				toId : encodeURIComponent(toId),
+				chatContent : chatContent,
+			},
+			success : function(result) {
+				if (result = 1) {
+					autoClosingAlert('#successMessage', 2000);
+				} else if (result = 0) {
+					autoClosingAlert('#dangerMessage', 2000);
+				} else {
+					autoClosingAlert('#warningMessage', 2000);
+				}
+			}
+		})
+		$('#chatContent').val('');
+	}
+</script>
 <div class="container bootstrap snippset mt-4">
 	<div class="row">
 		<div class="col-12">
@@ -23,6 +112,9 @@
 							<div class="form-group col-11">
 								<textarea style="height: 80px;" id="chatContent" name="chatContent"
 									class="form-control" placeholder="메세지를 입력하세요." maxlength="100"></textarea>
+								<input type="text" id="chatMsg"/>
+								<input type="button" id="btnSend" value="전송" />
+								<div id="messageArea"></div>
 							</div>
 							<div class="form-group col-1">
 								<button type="button" class="btn btn-warning btn-sm shadow"
