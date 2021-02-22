@@ -9,6 +9,10 @@
  <insert id= "insert_certification" parameterType="ezen_certificationDTO">
  		insert into ezen_certification values(#{id},#{name},#{academyLocation},#{image},#{filesize},sysdate)
  </insert>
+ <insert id= "addBlock" parameterType="blockDTO">
+ 		insert into ezen_block values(#{id},#{blockId},#{memo})
+ </insert>
+ 
  <select id="id_check" parameterType="String" resultType="Integer">
 		 select count(*) from ezen_member where id=#{id}
  </select>
@@ -95,6 +99,9 @@
  <select id="search_blockList" parameterType="java.util.Map" resultType="blockDTO">
  		select * from ezen_block where id=#{id} and ${searchType} like #{searchString}
  </select>
+ <select id="blockIdList" parameterType="String" resultType="String">
+ 		select blockId from ezen_block where id=#{id}
+ </select>
  
  
  <update id="change_passwd" parameterType="java.util.Map">
@@ -119,6 +126,9 @@
  </delete>
  <delete id="dropImage" parameterType="String">
  		delete from ezen_certification where id = #{id}
+ </delete>
+ <delete id="release_block" parameterType="java.util.Map">
+ 		delete from ezen_block where id = #{userId} and blockid = #{blockid}
  </delete>
  </mapper>
  

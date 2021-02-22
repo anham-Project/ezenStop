@@ -98,6 +98,11 @@ public class BoardController {
 	}
 	@RequestMapping("/review_list.board")
 	public ModelAndView reviewList(HttpServletRequest req) {
+		HttpSession session = req.getSession();
+		String id =(String)session.getAttribute("userId");
+		if (id==null) {
+			id = "";
+		}
 	/*	String pageNum = req.getParameter("pageNum");
 		if (pageNum == null) {
 			pageNum = "1";
@@ -108,11 +113,12 @@ public class BoardController {
 		int endRow = pageSize * currentPage;
 		int count = boardMapper.reviewGetCount();  */
 		Map<String,Integer> map = setStartRowAndEndRow(req);
-		int count = boardMapper.reviewGetCount();
+		int count = boardMapper.reviewGetCount(id);
 		//if (endRow>count) endRow = count;
+		
 		setEndRowWhenCountIsLessThanEndRow(map, count);
 		//List<ReviewBoardDTO> reviewList = boardMapper.reviewList(startRow, endRow);
-		List<ReviewBoardDTO> reviewList = boardMapper.reviewList(map.get("startRow"), map.get("endRow"));
+		List<ReviewBoardDTO> reviewList = boardMapper.reviewList(map.get("startRow"), map.get("endRow"),id);
 		/*int startNum = count - ((currentPage-1) * pageSize);
 		int pageBlock = 3;
 		int pageCount = count/pageSize + (count%pageSize == 0 ? 0 : 1);
@@ -124,6 +130,18 @@ public class BoardController {
 		ModelAndView mav = finishMakeModelAndView(map, reviewList, count);
 		String cate = "REVIEW";
 		List<ReviewBoardDTO> noticeList = commonMapper.A_notice_list(cate);
+		//차단아이디로 리스트 제외시키기
+//		HttpSession session = req.getSession();
+//		List<String> blockList = (List<String>)session.getAttribute("blockList");
+//		for (int i = 0; i<noticeList.size();i++) {
+//			ReviewBoardDTO dto = noticeList.get(i);
+//			for (int y = 0; y<blockList.size(); y++) {
+//				if(dto.getId()==blockList.get(y)) {
+//					
+//				}
+//			}
+//		}
+		//
 		mav.addObject("noticeList",noticeList);
 		mav.setViewName("board/reviewList");
 		return mav;

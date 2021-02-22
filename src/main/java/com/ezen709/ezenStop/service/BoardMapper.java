@@ -21,14 +21,15 @@ public class BoardMapper {
 	@Autowired
 	private SqlSession sqlSession;
 	
-	public List<ReviewBoardDTO> reviewList(int start,int end){
-		Map<String, Integer> map = new Hashtable<>();
+	public List<ReviewBoardDTO> reviewList(int start,int end, String id){
+		Map<String, Object> map = new Hashtable<>();
 		map.put("start", start);
 		map.put("end", end);
+		map.put("id",id);
 		return sqlSession.selectList("reviewList", map);
 	}
-	public int reviewGetCount() {
-		return sqlSession.selectOne("reviewGetCount");
+	public int reviewGetCount(String id) {
+		return sqlSession.selectOne("reviewGetCount",id);
 	}
 	public int reviewInsert(ReviewBoardDTO dto) {
 		return sqlSession.insert("reviewInsert", dto);

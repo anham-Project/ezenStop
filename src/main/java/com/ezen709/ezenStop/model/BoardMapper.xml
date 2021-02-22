@@ -20,7 +20,8 @@
 				from(
 						select ezen_review_board.* , ezen_member.grade, ezen_member.academylocation
 						from ezen_review_board, ezen_member
-						where ((ezen_review_board.id = ezen_member.id) and (ezen_review_board.visible = 1))
+						where ((ezen_review_board.id = ezen_member.id) and (ezen_review_board.visible = 1)
+						and ezen_review_board.id not in (select blockid from ezen_block where id =#{id} group by blockid))
 						order by ezen_review_board.article_num desc)A
 					)
 		where rn between #{start} and #{end}
@@ -32,7 +33,7 @@
 	<select id="reviewGetCount" resultType="Integer">
 		select count(*)
 		from ezen_review_board
-		where visible = 1
+		where visible = 1 and (id not in (select blockid from ezen_block where id =#{id} group by blockid))
 	</select>
 	<select id="searchReview" parameterType="java.util.Map" resultType="ReviewBoardDTO">
   		select * 

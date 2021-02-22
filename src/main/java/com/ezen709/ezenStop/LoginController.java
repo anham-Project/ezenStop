@@ -547,9 +547,42 @@ public class LoginController {
 		String blockId = req.getParameter("blockId");
 		String id = req.getParameter("id");
 		ModelAndView mav = new ModelAndView("login/block_user");
-		System.out.print(id);
-		mav.addObject("id",id);
+		HttpSession session =req.getSession();
+		session.setAttribute("id", id);
 		mav.addObject("blockId",blockId);
+		return mav;
+	}
+	@RequestMapping("addBlock_ok.login")
+	public ModelAndView block_user_ok(@ModelAttribute BlockDTO dto,HttpServletRequest req) {
+		ModelAndView mav = new ModelAndView("message2");
+		HttpSession session = req.getSession();
+		int res = loginMapper.addBlock(dto);
+		if (res>0) {
+			String url="addBlock";
+			String msg="차단되었습니다.";
+			mav.addObject("url",url);
+			mav.addObject("msg",msg);
+			List<String> blockList = loginMapper.blockIdList(dto.getId());
+			session.setAttribute("blockList",blockList);
+		} else {
+			System.out.print("차단 오류");
+		}
+		return mav;
+	}
+	@RequestMapping("release_block.login")
+	public ModelAndView release_block(@RequestParam String userId, @RequestParam String blockId) {
+		ModelAndView mav = new ModelAndView("message2");
+		int res = loginMapper.release_block(userId,blockId);
+		if (res>0) {
+			String fun = "release_block";
+			String url = "blockList.login?id="+userId;
+			String msg = "차단이 해제되었습니다!";
+			mav.addObject("fun",fun);
+			mav.addObject("url",url);
+			mav.addObject("msg",msg);
+		}else {
+			System.out.print("차단해제 오류");
+		}
 		return mav;
 	}
 }
