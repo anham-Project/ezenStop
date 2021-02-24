@@ -15,7 +15,7 @@
 		//핸들러 등록(연결 생성, 메세지 수신, 연결 종료)
 		
 		//url 연결할 서버의 경로
-		ws = new WebSocket('ws://localhost:8081/ezenStop/echo/')
+		ws = new WebSocket('ws://localhost:8081/ezenStop/echo')
 		
 		ws.onopen = function(){
 			console.log('연결 생성');
@@ -34,38 +34,39 @@
 	
 	function addMsg(msg){ //원래 채팅 메세지에 방금 받은 메세지 더해서 설정하기
 		var chat = $('#msgArea').val();
-		chat = chat + "\n상대방 : " + msg;
-		$('#msgArea').val(chat);
+		chat = "\n상대방 : " + msg;
+		$('#msgArea').append(chat);
 	}
 	function register(){ //메세지 수신을 위한 서버에 id 등록하기
 		var msg = {
 				type : "register", //메세지 구분하는 구분자 - 상대방 아이디와 메세지 포함해서 보냄
 				userId : userId
 		};
-		ws.send(JSON.stringfy(msg));
+		ws.send(JSON.stringify(msg));
 	}
 	function sendMsg(){
 		//var msg = $("#chatMsg").val();
 		//ws.send(userId + " : " + msg);
 		var msg = {
 				type : "chat", //메세지 구분하는 구분자 - 상대방 아이디와 메세지 포함해서 보냄
-				target : toId
-				message = $("#chatMsg").val()
+				target : toId,
+				content : $('#chatMsg').val()
 		};
 		ws.send(JSON.stringify(msg));
 	}
 	
 	//페이지가 로딩되면 connect 실행
-	$(function(){
+	$(document).ready(function(){
 		connect();
-		$('#btnSend').on("click",function(){
-			var chat = $("#msgArea").val();
-			chat = chat + "\n나 : "+$("#chatMsg").val();
-			$("#msgArea").val(chat);
-			sendMsg();
-			$("#chatMsg").val("");
-		})
-	});
+	})
+	
+	function testsubmit(){
+		var chat = $("#msgArea").val();
+		chat = chat + "\n나 : "+$("#chatMsg").val();
+		$("#msgArea").val(chat);
+		sendMsg();
+		$("#chatMsg").val("");
+	}
 	function submitFunction() {
 		var fromId = '${userId}';
 		var toId = '${toId}';
@@ -113,8 +114,8 @@
 								<textarea style="height: 80px;" id="chatContent" name="chatContent"
 									class="form-control" placeholder="메세지를 입력하세요." maxlength="100"></textarea>
 								<input type="text" id="chatMsg"/>
-								<input type="button" id="btnSend" value="전송" />
-								<div id="messageArea"></div>
+								<input type="button" id="btnSend" value="전송" onclick="testsubmit()"></button>
+								<div id="msgArea"></div>
 							</div>
 							<div class="form-group col-1">
 								<button type="button" class="btn btn-warning btn-sm shadow"

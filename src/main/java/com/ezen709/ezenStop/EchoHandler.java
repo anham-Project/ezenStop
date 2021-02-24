@@ -47,9 +47,10 @@ public class EchoHandler extends TextWebSocketHandler {
 			//Map에서 상대방 아이디에 해당하는 WebSocket을 꺼내와서 메세지 전송
 			String target = object.getString("target");
 			WebSocketSession ws = (WebSocketSession)userMap.get(target);
-			String msg = object.getString("message");
+			String msg = object.getString("content");
 			if(ws!=null) {
 				ws.sendMessage(new TextMessage(msg));
+				System.out.println("메세지 전송 성공!");
 			}
 		}
 	}
