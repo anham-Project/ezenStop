@@ -71,7 +71,7 @@
 								+ '<a class="pull-left" href="#">'
 								+ '</a>' + '<div class="media-body">'
 								+ '<h4 class="media-heading">' + chatName
-								+ '<span class="small pull-right">' + chatTime
+								+ '<span class="small pull-right">' + "    "+chatTime
 								+ '</span>' + '</h4>' + '<p>' + chatContent
 								+ '</p>' + '</div>' + '</div>' + '</div>'
 								+ '</div>' + '<hr>');

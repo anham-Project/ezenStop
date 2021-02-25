@@ -33,9 +33,10 @@
 	}
 	
 	function addMsg(msg){ //원래 채팅 메세지에 방금 받은 메세지 더해서 설정하기
-		var chat = $('#msgArea').val();
-		chat = "\n상대방 : " + msg;
-		$('#msgArea').append(chat);
+		//var chat = $('#msgArea').val();
+		//chat = "\n상대방 : " + msg;
+		var today = new Date();
+		addChat('${sessionScope.toId}',msg,today.toLocaleString())
 	}
 	function register(){ //메세지 수신을 위한 서버에 id 등록하기
 		var msg = {
@@ -44,13 +45,13 @@
 		};
 		ws.send(JSON.stringify(msg));
 	}
-	function sendMsg(){
+	function sendMsg(chat){
 		//var msg = $("#chatMsg").val();
 		//ws.send(userId + " : " + msg);
 		var msg = {
 				type : "chat", //메세지 구분하는 구분자 - 상대방 아이디와 메세지 포함해서 보냄
 				target : toId,
-				content : $('#chatMsg').val()
+				content : chat
 		};
 		ws.send(JSON.stringify(msg));
 	}
@@ -60,12 +61,14 @@
 		connect();
 	})
 	
-	function testsubmit(){
-		var chat = $("#msgArea").val();
-		chat = chat + "\n나 : "+$("#chatMsg").val();
-		$("#msgArea").val(chat);
-		sendMsg();
-		$("#chatMsg").val("");
+	function testsubmit(chat){
+		//var chat = $("#msgArea").val();
+		//chat = chat + "\n나 : "+$("#chatMsg").val();
+		//$("#msgArea").append(chat);
+		var today = new Date();
+		addChat('나',chat,today.toLocaleString())
+		sendMsg(chat);
+		$("#chatContent").val("");
 	}
 	function submitFunction() {
 		var fromId = '${userId}';
@@ -83,6 +86,7 @@
 			success : function(result) {
 				if (result = 1) {
 					autoClosingAlert('#successMessage', 2000);
+					testsubmit(chatContent)
 				} else if (result = 0) {
 					autoClosingAlert('#dangerMessage', 2000);
 				} else {
@@ -113,9 +117,6 @@
 							<div class="form-group col-11">
 								<textarea style="height: 80px;" id="chatContent" name="chatContent"
 									class="form-control" placeholder="메세지를 입력하세요." maxlength="100"></textarea>
-								<input type="text" id="chatMsg"/>
-								<input type="button" id="btnSend" value="전송" onclick="testsubmit()"></button>
-								<div id="msgArea"></div>
 							</div>
 							<div class="form-group col-1">
 								<button type="button" class="btn btn-warning btn-sm shadow"
@@ -144,8 +145,7 @@
 </div>
 <script type="text/javascript">
 $(document).ready(function() {
-	getUnread();
-	getInfiniteChat();
+	chatListFunction(0)
 });
 </script>
 <jsp:include page="../footer.jsp" />
