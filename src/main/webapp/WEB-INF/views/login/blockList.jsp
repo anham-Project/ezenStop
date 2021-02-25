@@ -10,6 +10,12 @@
 		}
 		return true
 	}
+	function question(userId, blockId){
+		var question = confirm("차단을 해제하시겠습니까?")
+		if(question==true){
+			location.href="release_block.login?userId="+userId+"&blockId="+blockId
+		}else return
+	}
 </script>
 <form name="f" action="blockList_search.login" method="post" onsubmit="return check()">
 	<div class="row" style="padding-bottom:5px">
@@ -48,7 +54,7 @@
 		<tr>
 			<td align="center">${dto.blockId}</td>
 			<td align="center">${dto.memo}</td>
-			<td align="center"><a href="#">차단 해제</a></td>
+			<td align="center"><a href="javascript:question('${sessionScope.userId}','${dto.blockId}')">차단 해제</a></td>
 		</tr>
 </c:forEach>
 	</tbody>

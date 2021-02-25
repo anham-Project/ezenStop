@@ -7,6 +7,10 @@
 	if("${url}"=="cancel"){
 		alert("${msg}")
 		self.close()
+	}else if("${fun}"=="release_block"){
+		alert("${msg}")
+		opener.location.reload();
+		location.href="${url}"
 	}
 	else if("${url}"=="confirm"){
 		alert("${msg}")
@@ -15,6 +19,12 @@
 		alert("${msg}")
 		opener.location.href="index.do"
 		self.close()
+	}else if("${url}"=="addBlock"){
+		alert("${msg}")
+		opener.location.reload();  
+		self.close();  
+	}else if("${url}"=="reload"){
+		location.reload();
 	}else{
          alert("${msg}")
          location.href="${url}"

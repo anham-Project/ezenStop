@@ -232,8 +232,8 @@ public class LoginMapper {
 	public List<BlockDTO> blockList(String id, int start, int end){
 		Map<String,Object> map = new Hashtable<>();
 		map.put("id",id);
-		map.put("start", start);
-		map.put("end", end);
+//		map.put("start", start);
+//		map.put("end", end);
 		List<BlockDTO> list = sqlSession.selectList("blockList",map);
 		return list;
 	}
@@ -253,5 +253,20 @@ public class LoginMapper {
 		map.put("end", end);
 		List<BlockDTO> list = sqlSession.selectList("search_blockList",map);
 		return list;
+	}
+	public int addBlock(BlockDTO dto) {
+		int res = sqlSession.insert("addBlock",dto);
+		return res;
+	}
+	public List<String> blockIdList(String id){
+		List<String> list = sqlSession.selectList("blockIdList",id);
+		return list;
+	}
+	public int release_block(String userId, String blockId) {
+		Map<String,String> map = new Hashtable<>();
+		map.put("userId",userId);
+		map.put("blockid",blockId);
+		int res = sqlSession.delete("release_block",map);
+		return res;
 	}
 }
