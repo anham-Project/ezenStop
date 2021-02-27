@@ -225,7 +225,6 @@ public class BoardController {
 			location = loginMapper.getIdLocation(reviewDetail.getId());
 			reviewAddrList = new String[0];
 			reviewAddrList[0] = location;
-			System.out.print(location);
 			mav.addObject("reviewAddrList",reviewAddrList);
 		}
 		String addrAndSuject = reviewDetail.getSubject();
