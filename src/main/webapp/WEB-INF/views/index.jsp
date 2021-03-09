@@ -25,7 +25,10 @@ function findDetailPage(article_num) {
 			})
 
 }
+
 </script>
+
+
 <div class="container">
 
 	<!-- Jumbotron Header -->
