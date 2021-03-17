@@ -14,6 +14,22 @@
 		<org.slf4j-version>1.6.6</org.slf4j-version>
 	</properties>
 	<dependencies>
+		<!-- 실시간 socket채팅 -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-websocket</artifactId>
+			<version>${org.springframework-version}</version>
+		</dependency>
+		<dependency>
+   			<groupId>org.springframework</groupId>
+   			<artifactId>spring-messaging</artifactId>
+   			<version>${org.springframework-version}</version>
+		</dependency>
+		<dependency>
+    		<groupId>org.json</groupId>
+   		 	<artifactId>json</artifactId>
+  		 	<version>20160810</version>
+		</dependency>
 		<!-- 이미지 업로드 -->
 		<!-- https://mvnrepository.com/artifact/org.imgscalr/imgscalr-lib-->      
 		<dependency>
