@@ -84,6 +84,7 @@ public class LoginMapper {
 		sqlSession.delete("dropImage", id);
 	}
 	public int insert_certification(Ezen_certificationDTO dto) {
+		System.out.print(dto.getId()+"s");
 		int res = sqlSession.insert("insert_certification",dto);
 		return res;
 	}

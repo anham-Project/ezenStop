@@ -385,6 +385,7 @@ public class LoginController {
 				}
 				file.transferTo(target);
 				filesize = (int)file.getSize();
+				System.out.print(file_name);
 				loginMapper.update_certification(id,academy,file_name,filesize);//회원 인증 신청 db에 update
 				msg = "인증 수정완료";
 				}catch (IllegalStateException e) {

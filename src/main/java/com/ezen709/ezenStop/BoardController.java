@@ -205,6 +205,9 @@ public class BoardController {
 		boardMapper.plusReadCount(article_num);
 		ReviewBoardDTO reviewDetail = boardMapper.reviewDetail(article_num);
 		List<ReplyDTO> replyList = replyMapper.replyList(article_num);
+		String content = reviewDetail.getContent();
+		content = content.replaceAll("\r\n","<br>");
+		reviewDetail.setContent(content);
 		ModelAndView mav = new ModelAndView("board/reviewDetail");
 		mav.addObject("uploadPath", uploadPath);
 		mav.addObject("reviewDetail", reviewDetail);
