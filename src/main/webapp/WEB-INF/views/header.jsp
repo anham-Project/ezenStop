@@ -377,7 +377,8 @@ label[for=chkday] {
 			</div>
 		</div>
 	</nav>
-	<div class="row" style="margin-top:15px">
+<div class = "container" style="min-height: 600px; margin-top:30px; margin-bottom:10px">
+<!--	<div class="row" style="margin-top:15px">
 	<div class="col-1" id="leftBanner"
 		style="position: relative; display: block; z-index: 100;padding-right: 0px;">
 		<img src="resources/img/loading.gif" style="width:100%; margin-top: 50px; margin-bottom: 10px;">
@@ -386,4 +387,5 @@ label[for=chkday] {
 
 	<div class="container col-10"
 		style="min-height: 600px; margin-top: 50px; margin-bottom: 10px;padding-left:5px; padding-right:5px;">
+		 -->
 			

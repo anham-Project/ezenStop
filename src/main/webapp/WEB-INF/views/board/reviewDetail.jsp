@@ -174,7 +174,7 @@
 			<c:forEach var="dto" items="${replyList}">
 				<div class="row"
 					style="padding: 5px 5px 5px ${5+dto.re_level*15}px; background-color: #F7F7F7;">
-					<div class="col-md-12" align="left">
+					<div class="col-md-6" align="left">
 						<c:if test="${dto.re_level>0}">
 							<img class="media-object img-circle"
 								style="width: 20px; height: 20px;" src="resources/img/reply.png">

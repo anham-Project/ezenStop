@@ -183,7 +183,7 @@
 							</c:if>
 						</c:if>
 					</div>
-					<div class="col-md-12" align="left">
+					<div class="col-md-6" align="left">
 						<c:if test="${dto.re_level>0}">
 						&nbsp;&nbsp;&nbsp;&nbsp;
 						</c:if>
@@ -197,11 +197,13 @@
 						</c:choose>
 					</div>
 					<c:if test="${dto.content != '%$#@!'}">
-					<div class="col-md-12" align="right" id="buttontype">
-						<input type="button" class="btn btn-info btn-sm" value="답글쓰기"
-							onclick="addInput('${dto.reply_num}','${dto.randomId}');" />
-					</div>
-					</c:if>
+							<c:if test="${dto.re_level == 0}">
+								<div class="col-md-6" style="padding:5px"align="right" id="buttontype">
+									<input type="button" class="btn btn-info btn-sm" value="답글쓰기"
+										onclick="addInput('${dto.reply_num}','${dto.randomId}');" />
+								</div>
+							</c:if>
+							</c:if>
 				</div>
 			</c:forEach>
 		</c:if>
