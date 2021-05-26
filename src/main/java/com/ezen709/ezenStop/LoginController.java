@@ -228,7 +228,7 @@ public class LoginController {
 			String mailHost = "smtp.gmail.com";
 			String mailPort = "587";
 			String mailId = "ezenstop@gmail.com"; // 구글계정
-			String mailPassword = "ezen9510008"; // 구글계정 비밀번호
+			String mailPassword = "stop9510008"; // 구글계정 비밀번호
 			String fromName = "이젠그만";			//보내는사람 이름
 			String fromEmail = "ezenstop@gmail.com"; // 보내는 사람 메일
 			String toName = "받는사람이름";
