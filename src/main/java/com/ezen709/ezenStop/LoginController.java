@@ -10,14 +10,23 @@ import javax.mail.*;
 import javax.mail.internet.*;
 import javax.servlet.http.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.MultipartRequest;
@@ -26,6 +35,10 @@ import org.springframework.web.servlet.ModelAndView;
 import com.ezen709.ezenStop.model.*;
 import com.ezen709.ezenStop.service.BoardMapper;
 import com.ezen709.ezenStop.service.LoginMapper;
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.Data;
 
 @Controller
 public class LoginController {
@@ -93,6 +106,7 @@ public class LoginController {
 		mav.addObject("indexListMap",index);
 		return mav;
 	}
+	
 	@RequestMapping(value="/login.login", method=RequestMethod.GET)//로그인버튼 눌렀을 떄
 	public String login() {
 		return "login/login";
@@ -123,6 +137,76 @@ public class LoginController {
 		return mav;
 		}
 	}
+	@RequestMapping(value="/kakao.login")
+	public ModelAndView kbk(String code) {
+		ModelAndView mav = new ModelAndView("login/kakao");
+		// POST방식으로 key=value 데이터를 요청(카카오쪽으로)
+		//Retrofit2 --안드로이드에서 많이 씀
+		//Okhttp 
+		//RestTemplate
+		RestTemplate rt = new RestTemplate();
+		//HttpHeader 오브젝트 생성
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Content-type", "application/x-www-form-urlencoded;chareset=utf-8");
+		//HttpBody 오브젝트 생성
+		MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+		params.add("client_id","270731007f2c443403dd4204eaf7e9b2"); //원래는 변수화 시켜서 사용하는게 좋다.
+		params.add("grant_type","authorization_code");
+		params.add("redirect_uri","http://localhost:8081/ezenStop/kakao.login");
+		params.add("code",code);
+		//HttpHeader와 HttpBody를 하나의 오브젝트에 담기
+		HttpEntity<MultiValueMap<String,String>> kakaoTokenRequest = new HttpEntity<>(params,headers);
+		
+		
+		// Http 요청하기 - post방식으로 - 그리고 responese 변수의 응답 받음
+		ResponseEntity<String> response =rt.exchange(
+				"https://kauth.kakao.com/oauth/token",
+				HttpMethod.POST,
+				kakaoTokenRequest,
+				String.class
+		);
+		//Gson,Json Simple, ObjectMapper -- json형태 데이터 받기
+		ObjectMapper objectMapper = new ObjectMapper();
+		OAuthToken oauthToken = null;
+		try {
+			oauthToken = objectMapper.readValue(response.getBody(), OAuthToken.class);
+		} catch (JsonParseException e) {
+			e.printStackTrace();
+		} catch (JsonMappingException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		//사용자 정보 가져오기 요청
+		RestTemplate rt2 = new RestTemplate();
+		HttpHeaders headers2 = new HttpHeaders();
+		headers2.add("Content-type", "application/x-www-form-urlencoded;chareset=utf-8");
+		headers2.add("Authorization", "Bearer "+oauthToken.getAccess_token());
+		HttpEntity<MultiValueMap<String,String>> kakaoProfileRequest2 = new HttpEntity<>(headers2);
+		ResponseEntity<String> response2 =rt2.exchange(
+				"https://kapi.kakao.com/v2/user/me",
+				HttpMethod.POST,
+				kakaoProfileRequest2,
+				String.class
+		);
+		ObjectMapper objectMapper2 = new ObjectMapper();
+		KakaoProfile kakaoProfile = null;
+		try {
+			kakaoProfile = objectMapper2.readValue(response2.getBody(), KakaoProfile.class);
+		} catch (JsonParseException e) {
+			e.printStackTrace();
+		} catch (JsonMappingException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		mav.addObject("response",response2);
+		int res = loginMapper.Kakao_check(kakaoProfile.kakao_account.email);
+		//if(res == 1)
+		return mav;
+	}
+	
 	@RequestMapping(value="/logout.login")//로그아웃버튼 눌렀을 떄
 	public ModelAndView logout(HttpServletRequest req ) {
 		ModelAndView mav = new ModelAndView("message2");
@@ -166,6 +250,7 @@ public class LoginController {
 		String res = String.valueOf(loginMapper.id_check(id));
 		resp.getWriter().write(res);
 	}
+
 	@RequestMapping(value="/email.login", method=RequestMethod.GET)//회원가입버튼 눌렀을 때 이메일 인증페이지
 	public String email() {
 		return "login/email";

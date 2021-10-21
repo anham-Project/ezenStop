@@ -73,6 +73,15 @@ public class LJH_boardController {
 		mav.addObject("list", list); // 리스트 이름 list로했습니다. jsp파일 꼭확인하세요!!
 		return mav;			//객체들만 담아주고 경로는 안담아줌 .. 경로설정꼭 하세요!!
 	}
+	@RequestMapping("example_board.board")
+	public ModelAndView example_list(HttpServletRequest req) {
+		Map<String,Integer> map = setStartRowAndEndRow(req);
+		String table = "ezen_example_board";
+		int count = boardMapper.A_getCount(table);
+		setEndRowWhenCountIsLessThanEndRow(map, count);
+		ModelAndView mav = new ModelAndView();
+		return mav;
+	}
 	@RequestMapping("/A_changeVisibleStatus.board")
 	public void changeVisibleStatus(HttpServletRequest req, HttpServletResponse resp) throws IOException{
 		int article_num = Integer.parseInt(req.getParameter("article_num"));

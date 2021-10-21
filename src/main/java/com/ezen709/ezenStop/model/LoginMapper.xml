@@ -102,6 +102,9 @@
  <select id="blockIdList" parameterType="String" resultType="String">
  		select blockId from ezen_block where id=#{id}
  </select>
+ <select id="Kakao_check" parameterType="STring" resultType="Integer">
+ 		select count(*) from ezen_member where email=#{email}
+ </select>
  
  
  <update id="change_passwd" parameterType="java.util.Map">

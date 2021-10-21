@@ -2,12 +2,21 @@
 	pageEncoding="EUC-KR"%>
 <!-- login.jsp-->
 <jsp:include page="../header.jsp" />
+<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 <script type="text/javascript">
 
 
 
 window.open('', '', 'status=no, height=300, width=200, left='+ popupX + ', top='+ popupY);
-
+		function kakao(){
+			var popupWidth = 450;
+			var popupHeight = 450;
+			var popupX = (window.screen.width / 2) - (popupWidth / 2);
+			var popupY= (window.screen.height / 2) - (popupHeight / 2);
+			
+			window.open("https://kauth.kakao.com/oauth/authorize?client_id=270731007f2c443403dd4204eaf7e9b2&redirect_uri=http://localhost:8081/ezenStop/kakao.login&response_type=code",
+					"카카오 로그인", 'status=no, height=' + popupHeight  + ', width=' + popupWidth  + ', left='+ popupX + ', top='+ popupY)
+		}
 		function checkMember(){
 			var popupWidth = 450;
 			var popupHeight = 450;
@@ -52,6 +61,7 @@ window.open('', '', 'status=no, height=300, width=200, left='+ popupX + ', top='
 		</div>
 	</form>
 	<div align="right" style="padding:0px 0px 0px 0px;">
+	<a href="javascript:kakao()"><img height="31"  src="resources/img/kakao_login_medium.png"/></a>
 	<a class="btn btn-outline-secondary btn-sm" href="javascript:checkMember()">회원가입</a> <a
 		class="btn btn-outline-secondary btn-sm" href="javascript:findMember()">아이디|비밀번호 찾기</a>
 	</div>

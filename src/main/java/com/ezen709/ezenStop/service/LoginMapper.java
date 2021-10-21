@@ -270,4 +270,8 @@ public class LoginMapper {
 		int res = sqlSession.delete("release_block",map);
 		return res;
 	}
+	public int Kakao_check(String email) {
+		int res = sqlSession.selectOne("Kakao_check",email);
+		return res;
+	}
 }
