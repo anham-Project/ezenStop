@@ -38,7 +38,6 @@ import com.ezen709.ezenStop.service.LoginMapper;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.Data;
 
 @Controller
 public class LoginController {
@@ -138,7 +137,8 @@ public class LoginController {
 		}
 	}
 	@RequestMapping(value="/kakao.login")
-	public ModelAndView kbk(String code) {
+	public ModelAndView kbk(String code, HttpServletRequest req) {
+		HttpSession session = req.getSession();
 		ModelAndView mav = new ModelAndView("login/kakao");
 		// POST방식으로 key=value 데이터를 요청(카카오쪽으로)
 		//Retrofit2 --안드로이드에서 많이 씀
@@ -152,11 +152,10 @@ public class LoginController {
 		MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
 		params.add("client_id","270731007f2c443403dd4204eaf7e9b2"); //원래는 변수화 시켜서 사용하는게 좋다.
 		params.add("grant_type","authorization_code");
-		params.add("redirect_uri","http://localhost:8081/ezenStop/kakao.login");
+		params.add("redirect_uri","http://localhost:8005/ezenStop/kakao.login");
 		params.add("code",code);
 		//HttpHeader와 HttpBody를 하나의 오브젝트에 담기
 		HttpEntity<MultiValueMap<String,String>> kakaoTokenRequest = new HttpEntity<>(params,headers);
-		
 		
 		// Http 요청하기 - post방식으로 - 그리고 responese 변수의 응답 받음
 		ResponseEntity<String> response =rt.exchange(
@@ -170,6 +169,7 @@ public class LoginController {
 		OAuthToken oauthToken = null;
 		try {
 			oauthToken = objectMapper.readValue(response.getBody(), OAuthToken.class);
+			session.setAttribute("ACT", oauthToken.getAccess_token());
 		} catch (JsonParseException e) {
 			e.printStackTrace();
 		} catch (JsonMappingException e) {
@@ -200,13 +200,27 @@ public class LoginController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+		String get_email = kakaoProfile.kakao_account.email;
 		mav.addObject("response",response2);
-		int res = loginMapper.Kakao_check(kakaoProfile.kakao_account.email);
-		//if(res == 1)
+		int res = loginMapper.kakao_check(get_email);
+		System.out.println(res);
+		if(res == 1) {
+			Ezen_memberDTO dto = loginMapper.get_info(get_email);
+			String url, msg;
+			url = "dropId";
+			msg = "로그인 되었습니다.";
+			mav = new ModelAndView("message2");
+			mav.addObject("url",url);
+			mav.addObject("msg",msg);
+			session.setAttribute("userId", dto.getId());
+			session.setAttribute("userGrade", dto.getGrade());
+		}else {
+			System.out.print("여기까진 완료");
+//			mav = new ModelAndView("redirect:/sign_up.login");
+//			session.setAttribute("email",get_email);
+		}
 		return mav;
 	}
-	
 	@RequestMapping(value="/logout.login")//로그아웃버튼 눌렀을 떄
 	public ModelAndView logout(HttpServletRequest req ) {
 		ModelAndView mav = new ModelAndView("message2");

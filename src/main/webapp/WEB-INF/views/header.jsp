@@ -365,7 +365,7 @@ label[for=chkday] {
 								<a class="dropdown-item"
 									href="myBoard.login?id=${sessionScope.userId}">내 게시글</a> <a
 									class="dropdown-item" href="javascript:myPage()">마이페이지</a> <a
-									class="dropdown-item" href="logout.login">로그아웃</a>
+									class="dropdown-item" href="https://kauth.kakao.com/oauth/logout?client_id=270731007f2c443403dd4204eaf7e9b2&logout_redirect_uri=http://localhost:8005/ezenStop/logout.login">로그아웃</a>
 							</div></li>
 					</ul>
 				</c:if>

@@ -14,7 +14,7 @@ window.open('', '', 'status=no, height=300, width=200, left='+ popupX + ', top='
 			var popupX = (window.screen.width / 2) - (popupWidth / 2);
 			var popupY= (window.screen.height / 2) - (popupHeight / 2);
 			
-			window.open("https://kauth.kakao.com/oauth/authorize?client_id=270731007f2c443403dd4204eaf7e9b2&redirect_uri=http://localhost:8081/ezenStop/kakao.login&response_type=code",
+			window.open("https://kauth.kakao.com/oauth/authorize?client_id=270731007f2c443403dd4204eaf7e9b2&redirect_uri=http://localhost:8005/ezenStop/kakao.login&response_type=code",
 					"카카오 로그인", 'status=no, height=' + popupHeight  + ', width=' + popupWidth  + ', left='+ popupX + ', top='+ popupY)
 		}
 		function checkMember(){
