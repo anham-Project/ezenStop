@@ -215,9 +215,9 @@ public class LoginController {
 			session.setAttribute("userId", dto.getId());
 			session.setAttribute("userGrade", dto.getGrade());
 		}else {
-			System.out.print("여기까진 완료");
-//			mav = new ModelAndView("redirect:/sign_up.login");
-//			session.setAttribute("email",get_email);
+			System.out.print("여기까진 완료"+get_email);
+			session.setAttribute("email",get_email);
+			mav = new ModelAndView("login/sign_up");
 		}
 		return mav;
 	}
