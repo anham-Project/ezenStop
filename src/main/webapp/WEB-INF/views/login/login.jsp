@@ -9,8 +9,8 @@
 
 window.open('', '', 'status=no, height=300, width=200, left='+ popupX + ', top='+ popupY);
 		function kakao(){
-			var popupWidth = 450;
-			var popupHeight = 450;
+			var popupWidth = 500;
+			var popupHeight = 600;
 			var popupX = (window.screen.width / 2) - (popupWidth / 2);
 			var popupY= (window.screen.height / 2) - (popupHeight / 2);
 			

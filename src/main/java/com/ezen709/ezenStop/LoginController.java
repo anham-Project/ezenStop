@@ -15,21 +15,17 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
-import org.springframework.web.multipart.MultipartRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ezen709.ezenStop.model.*;
@@ -141,9 +137,6 @@ public class LoginController {
 		HttpSession session = req.getSession();
 		ModelAndView mav = new ModelAndView("login/kakao");
 		// POST방식으로 key=value 데이터를 요청(카카오쪽으로)
-		//Retrofit2 --안드로이드에서 많이 씀
-		//Okhttp 
-		//RestTemplate
 		RestTemplate rt = new RestTemplate();
 		//HttpHeader 오브젝트 생성
 		HttpHeaders headers = new HttpHeaders();
@@ -215,7 +208,6 @@ public class LoginController {
 			session.setAttribute("userId", dto.getId());
 			session.setAttribute("userGrade", dto.getGrade());
 		}else {
-			System.out.print("여기까진 완료"+get_email);
 			session.setAttribute("email",get_email);
 			mav = new ModelAndView("login/sign_up");
 		}
